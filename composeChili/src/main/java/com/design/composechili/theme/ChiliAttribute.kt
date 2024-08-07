@@ -42,6 +42,18 @@ data class ChiliAttribute(
     val chiliSnackbarBackgroundCornerRadius:Dp,
     val chiliSnackbarElevation:Dp,
 
+    // Button
+    val ChiliPrimaryButtonPaddingTop:Dp,
+    val ChiliPrimaryButtonPaddingBottom:Dp,
+    val ChiliPrimaryButtonPaddingStart:Dp,
+    val ChiliPrimaryButtonPaddingEnd:Dp,
+
+    // PrimaryButton
+    val ChiliPrimaryButtonCornerRadius:Dp,
+    val ChiliPrimaryButtonTextSize:TextUnit,
+    val ChiliPrimaryButtonTextFont:Font,
+    val ChiliPrimaryButtonTextAllCaps:Boolean
+
 
 ){
 
@@ -68,7 +80,15 @@ data class ChiliAttribute(
             chiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
             chiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
             chiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            chiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp)
+            chiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
+            ChiliPrimaryButtonPaddingTop = dimensionResource(R.dimen.padding_14dp),
+            ChiliPrimaryButtonPaddingBottom = dimensionResource(R.dimen.padding_14dp),
+            ChiliPrimaryButtonPaddingEnd = dimensionResource(R.dimen.padding_24dp),
+            ChiliPrimaryButtonPaddingStart = dimensionResource(R.dimen.padding_24dp),
+            ChiliPrimaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
+            ChiliPrimaryButtonTextFont = Font(R.font.roboto_medium),
+            ChiliPrimaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
+            ChiliPrimaryButtonTextAllCaps = false
         )
 
 

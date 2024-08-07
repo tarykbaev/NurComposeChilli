@@ -35,6 +35,8 @@ fun BaseInput(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
     hint:String = String(),
+    isEnabled: Boolean = true,
+    isError:Boolean = false,
     params:BaseInputParams = BaseInputParams.Default,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
@@ -62,8 +64,9 @@ fun BaseInput(
                 value = textFieldValue,
                 onValueChange = onValueChange,
                 textStyle = params.textStyle,
+                enabled = isEnabled,
+                isError = isError,
                 maxLines = 1,
-                enabled = params.isEnabled,
                 keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
                 shape = CircleShape.copy(CornerSize(8.dp)),
                 colors = TextFieldDefaults.colors().copy(
@@ -109,7 +112,6 @@ fun BaseInput(
 }
 
 data class BaseInputParams(
-    val isEnabled: Boolean,
     val textStyle: TextStyle,
     val errorTextColor: Color ,
     val cursorColor: Color,
@@ -125,7 +127,6 @@ data class BaseInputParams(
         val Default
             @Composable
             get() = BaseInputParams(
-                isEnabled = true,
                 textStyle = ChiliTextStyle.get(
                     ChiliTheme.attribute.chiliTextSizeH8,
                     ChiliTheme.colors.chiliPrimaryTextColor
