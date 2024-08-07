@@ -69,7 +69,7 @@ object ChiliTheme {
     /**
      * Retrieves the current [ChiliAttribute] at the call site's position in the hierarchy.
      */
-    val attribute: ChiliAttribute
+    val Attribute: ChiliAttribute
         @Composable
         @ReadOnlyComposable
         get() = LocalAttribute.current

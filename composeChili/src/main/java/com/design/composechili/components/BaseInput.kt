@@ -23,7 +23,7 @@ fun BaseInput(
     textFieldValue: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     isEnabled: Boolean = true,
-    textStyle: TextStyle = ChiliTextStyle.get(ChiliTheme.attribute.chiliTextSizeH8, ChiliTheme.),
+    textStyle: TextStyle = ChiliTextStyle.get(ChiliTheme.Attribute.chiliTextDimensions.textSizeH8),
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
 ) {
