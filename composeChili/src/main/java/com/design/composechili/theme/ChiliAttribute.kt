@@ -8,8 +8,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.utils.asSp
+
+object DimensTest{
+    val H1 = 24.dp
+}
 
 @Immutable
 data class ChiliAttribute(
@@ -52,9 +57,17 @@ data class ChiliAttribute(
     val ChiliPrimaryButtonCornerRadius:Dp,
     val ChiliPrimaryButtonTextSize:TextUnit,
     val ChiliPrimaryButtonTextFont:Font,
-    val ChiliPrimaryButtonTextAllCaps:Boolean
+    val ChiliPrimaryButtonTextAllCaps:Boolean,
 
+    // Secondary Button
+    val ChiliSecondaryButtonCornerRadius:Dp,
+    val ChiliSecondaryButtonTextSize:TextUnit,
+    val ChiliSecondaryButtonTextFont:Font,
 
+    // Additional
+    val ChiliAdditionalButtonCornerRadius:Dp,
+    val ChiliAdditionalButtonTextSize:TextUnit,
+    val ChiliAdditionalButtonTextFont:Font
 ){
 
     companion object{
@@ -88,12 +101,15 @@ data class ChiliAttribute(
             ChiliPrimaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
             ChiliPrimaryButtonTextFont = Font(R.font.roboto_medium),
             ChiliPrimaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
-            ChiliPrimaryButtonTextAllCaps = false
+            ChiliPrimaryButtonTextAllCaps = false,
+            ChiliSecondaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
+            ChiliSecondaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
+            ChiliSecondaryButtonTextFont = Font(R.font.roboto_medium),
+            ChiliAdditionalButtonCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
+            ChiliAdditionalButtonTextSize = dimensionResource(id = R.dimen.text_14sp).asSp(),
+            ChiliAdditionalButtonTextFont = Font(R.font.roboto_medium)
         )
 
-
-        //
-        private fun Dp.asSp() = this.value.sp
     }
 
 }

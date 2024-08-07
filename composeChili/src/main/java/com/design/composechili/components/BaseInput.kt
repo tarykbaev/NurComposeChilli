@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Text
@@ -34,10 +33,10 @@ fun BaseInput(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     onValueChange: (String) -> Unit,
-    hint:String = String(),
+    hint: String = String(),
     isEnabled: Boolean = true,
-    isError:Boolean = false,
-    params:BaseInputParams = BaseInputParams.Default,
+    isError: Boolean = false,
+    params: BaseInputParams = BaseInputParams.Default,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
 ) {
@@ -74,6 +73,7 @@ fun BaseInput(
                     unfocusedContainerColor = params.fieldBackground,
                     disabledContainerColor = params.fieldBackground,
                     errorTextColor = params.errorTextColor,
+                    errorIndicatorColor = Color.Transparent,
                     errorCursorColor = params.errorTextColor,
                     textSelectionColors = TextSelectionColors(
                         params.cursorColor,
@@ -113,7 +113,7 @@ fun BaseInput(
 
 data class BaseInputParams(
     val textStyle: TextStyle,
-    val errorTextColor: Color ,
+    val errorTextColor: Color,
     val cursorColor: Color,
     val fieldBackground: Color,
     val selectionBackgroundColor: Color,

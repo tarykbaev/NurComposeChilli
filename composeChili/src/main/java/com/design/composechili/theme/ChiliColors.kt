@@ -52,6 +52,21 @@ public data class ChiliColors(
     val ChiliPrimaryButtonRippleColor:Color,
     val ChiliPrimaryButtonBorderColor:Color,
 
+    // Secondary Button
+    val ChiliSecondaryButtonBackgroundActive:Color,
+    val ChiliSecondaryButtonBackgroundDisabled:Color,
+    val ChiliSecondaryButtonTextColorActive:Color,
+    val ChiliSecondaryButtonTextColorPressed:Color,
+    val ChiliSecondaryButtonTextColorDisabled:Color,
+
+    // Additional Button
+    val ChiliAdditionalButtonBackgroundActive:Color,
+    val ChiliAdditionalButtonBackgroundDisabled:Color,
+    val ChiliAdditionalButtonTextColorActive:Color,
+    val ChiliAdditionalButtonTextColorPressed:Color,
+    val ChiliAdditionalButtonTextColorDisabled:Color,
+
+    val ChiliAdditionalButtonBorderColor:Color
 
 
 
@@ -81,12 +96,23 @@ public data class ChiliColors(
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.gray_3),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
-            ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_3),
+            ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonTextColorPressed = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonTextColorDisabled = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonRippleColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliPrimaryButtonBorderColor = Color.Transparent,
+            ChiliSecondaryButtonBackgroundActive = Color.Transparent,
+            ChiliSecondaryButtonBackgroundDisabled = Color.Transparent,
+            ChiliSecondaryButtonTextColorDisabled = colorResource(id = R.color.black_1_alpha_50),
+            ChiliSecondaryButtonTextColorActive = colorResource(id = R.color.blue_1),
+            ChiliSecondaryButtonTextColorPressed = colorResource(id = R.color.gray_1),
+            ChiliAdditionalButtonBackgroundActive = colorResource(id = R.color.black_5),
+            ChiliAdditionalButtonBackgroundDisabled = colorResource(id = R.color.black_5),
+            ChiliAdditionalButtonTextColorActive = colorResource(id = R.color.white_1),
+            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.white_1),
+            ChiliAdditionalButtonTextColorPressed = colorResource(id = R.color.gray_1),
+            ChiliAdditionalButtonBorderColor = colorResource(id = R.color.black_5)
         )
 
         @Composable
@@ -111,12 +137,23 @@ public data class ChiliColors(
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.black_5),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_2),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
-            ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
+            ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_3),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonTextColorDisabled = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonTextColorPressed = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonRippleColor = colorResource(id = R.color.black_1_alpha_20),
-            ChiliPrimaryButtonBorderColor = Color.Transparent
+            ChiliPrimaryButtonBorderColor = Color.Transparent,
+            ChiliSecondaryButtonBackgroundActive = Color.Transparent,
+            ChiliSecondaryButtonBackgroundDisabled = Color.Transparent,
+            ChiliSecondaryButtonTextColorDisabled = colorResource(id = R.color.black_1_alpha_50),
+            ChiliSecondaryButtonTextColorActive = colorResource(id = R.color.blue_1),
+            ChiliSecondaryButtonTextColorPressed = colorResource(id = R.color.gray_1),
+            ChiliAdditionalButtonBackgroundActive = colorResource(id = R.color.gray_5),
+            ChiliAdditionalButtonBackgroundDisabled = colorResource(id = R.color.gray_5),
+            ChiliAdditionalButtonTextColorActive = colorResource(id = R.color.black_1),
+            ChiliAdditionalButtonTextColorPressed = colorResource(id = R.color.gray_1),
+            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.gray_1_alpha_50),
+            ChiliAdditionalButtonBorderColor = colorResource(id = R.color.gray_5)
         )
     }
 
