@@ -13,8 +13,6 @@ import com.design.composechili.R
 
 @Immutable
 data class ChiliAttribute(
-    val h1:TextUnit
-
     val chiliTextSizeH1: TextUnit,
     val chiliTextSizeH2:TextUnit,
     val chiliTextSizeH3:TextUnit,
@@ -51,6 +49,7 @@ data class ChiliAttribute(
 
         @Composable
         fun getDefault() = ChiliAttribute(
+
             chiliTextSizeH1 = dimensionResource(R.dimen.text_64sp).asSp(),
             chiliTextSizeH2 = dimensionResource(R.dimen.text_32sp).asSp(),
             chiliTextSizeH3 = dimensionResource(R.dimen.text_28sp).asSp(),
