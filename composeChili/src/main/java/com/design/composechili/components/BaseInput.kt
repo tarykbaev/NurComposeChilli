@@ -73,6 +73,7 @@ fun BaseInput(
                     unfocusedContainerColor = params.fieldBackground,
                     disabledContainerColor = params.fieldBackground,
                     errorTextColor = params.errorTextColor,
+                    errorIndicatorColor = Color.Transparent,
                     errorCursorColor = params.errorTextColor,
                     textSelectionColors = TextSelectionColors(
                         params.cursorColor,

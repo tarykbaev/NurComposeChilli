@@ -8,8 +8,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+
 @Immutable
-public data class ChiliBackground(
+data class ChiliBackground(
     val color: Color = Color.Unspecified,
     val tonalElevation: Dp = Dp.Unspecified,
 ) {
