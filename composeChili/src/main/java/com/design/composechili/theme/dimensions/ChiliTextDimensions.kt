@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.TextUnit
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTheme.asSp
+import com.design.composechili.utils.asSp
 
 @Immutable
 data class ChiliTextDimensions(

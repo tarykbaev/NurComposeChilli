@@ -39,10 +39,10 @@ fun BaseButton(
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
-    contentPaddingTop: Dp = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.PaddingTop,
-    contentPaddingBottom: Dp = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.PaddingBottom,
-    contentPaddingStart: Dp = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.PaddingStart,
-    contentPaddingEnd: Dp = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.PaddingEnd,
+    contentPaddingTop: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingTop,
+    contentPaddingBottom: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingBottom,
+    contentPaddingStart: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
+    contentPaddingEnd: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
 ) {
@@ -112,11 +112,11 @@ data class ChiliButtonStyle(
                 backgroundDisabledColor = ChiliTheme.colors.ChiliPrimaryButtonBackgroundDisabled,
                 textActiveColor = ChiliTheme.colors.ChiliPrimaryButtonTextColorActive,
                 textDisabledColor = ChiliTheme.colors.ChiliPrimaryButtonTextColorDisabled,
-                cornerSize = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.CornerRadius,
-                buttonTextSize = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.TextSize,
+                cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonCornerRadius,
+                buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonTextSize,
                 borderColor = ChiliTheme.colors.ChiliPrimaryButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
-                textFont = ChiliTheme.Attribute.ChiliPrimaryButtonAttribute.TextFont
+                textFont = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonTextFont
             )
 
         val Secondary
@@ -126,11 +126,11 @@ data class ChiliButtonStyle(
                 backgroundDisabledColor = ChiliTheme.colors.ChiliSecondaryButtonBackgroundDisabled,
                 textActiveColor = ChiliTheme.colors.ChiliSecondaryButtonTextColorActive,
                 textDisabledColor = ChiliTheme.colors.ChiliSecondaryButtonTextColorDisabled,
-                cornerSize = ChiliTheme.Attribute.ChiliSecondaryButtonCornerRadius,
-                buttonTextSize = ChiliTheme.Attribute.ChiliSecondaryButtonTextSize,
+                cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonCornerRadius,
+                buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonTextSize,
                 borderColor = ChiliTheme.colors.ChiliPrimaryButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
-                textFont = ChiliTheme.Attribute.ChiliSecondaryButtonTextFont
+                textFont = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonTextFont
             )
 
         val Additional
@@ -140,11 +140,11 @@ data class ChiliButtonStyle(
                 backgroundDisabledColor = ChiliTheme.colors.ChiliAdditionalButtonBackgroundDisabled,
                 textActiveColor = ChiliTheme.colors.ChiliAdditionalButtonTextColorActive,
                 textDisabledColor = ChiliTheme.colors.ChiliAdditionalButtonTextColorDisabled,
-                cornerSize = ChiliTheme.Attribute.ChiliAdditionalButtonCornerRadius,
-                buttonTextSize = ChiliTheme.Attribute.ChiliAdditionalButtonTextSize,
+                cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonCornerRadius,
+                buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonTextSize,
                 borderColor = ChiliTheme.colors.ChiliAdditionalButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
-                textFont = ChiliTheme.Attribute.ChiliAdditionalButtonTextFont
+                textFont = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonTextFont
             )
     }
 

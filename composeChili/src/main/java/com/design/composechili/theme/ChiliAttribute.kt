@@ -7,21 +7,23 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import com.design.composechili.R
 import com.design.composechili.theme.dimensions.ChiliElevationDimensions
 import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 import com.design.composechili.theme.dimensions.ChiliViewDimensions
-import com.design.composechili.utils.asSp
 
 @Immutable
 data class ChiliAttribute(
+
+    // Dimens
     val ChiliTextDimensions: ChiliTextDimensions,
     val ChiliViewDimensions: ChiliViewDimensions,
     val ChiliPaddingDimensions: ChiliPaddingDimensions,
     val ChiliRadiusDimensions: ChiliRadiusDimensions,
     val ChiliElevationDimensions: ChiliElevationDimensions,
+
+    // Font
     val ChiliRegularTextFont: Font,
     val ChiliBoldTextFont: Font,
     val ChiliItalicTextFont: Font,
@@ -38,20 +40,7 @@ data class ChiliAttribute(
 
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
-    val ChiliSnackbarElevation: Dp,
-
-    //PrimaryButton
-    val ChiliPrimaryButtonAttribute: ChiliPrimaryButtonAttribute,
-
-    // Secondary Button
-    val ChiliSecondaryButtonCornerRadius: Dp,
-    val ChiliSecondaryButtonTextSize: TextUnit,
-    val ChiliSecondaryButtonTextFont: Font,
-
-    // Additional
-    val ChiliAdditionalButtonCornerRadius: Dp,
-    val ChiliAdditionalButtonTextSize: TextUnit,
-    val ChiliAdditionalButtonTextFont: Font
+    val ChiliSnackbarElevation: Dp
 ) {
     companion object {
         @Composable
@@ -69,14 +58,7 @@ data class ChiliAttribute(
             ChiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
             ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
             ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
-            ChiliPrimaryButtonAttribute = ChiliPrimaryButtonAttribute.getDefault(),
-            ChiliSecondaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSecondaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
-            ChiliSecondaryButtonTextFont = Font(R.font.roboto_medium),
-            ChiliAdditionalButtonCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
-            ChiliAdditionalButtonTextSize = dimensionResource(id = R.dimen.text_14sp).asSp(),
-            ChiliAdditionalButtonTextFont = Font(R.font.roboto_medium)
+            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp)
         )
     }
 }

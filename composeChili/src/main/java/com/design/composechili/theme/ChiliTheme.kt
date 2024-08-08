@@ -8,8 +8,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.sp
 
 /**
  * Local providers for various properties we connect to our components, for styling.
@@ -19,6 +17,10 @@ private val LocalColors = compositionLocalOf<ChiliColors> {
 }
 
 private val LocalAttribute = compositionLocalOf<ChiliAttribute> {
+    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
+}
+
+private val LocalButtonAttribute = compositionLocalOf<ChiliButtonAttribute> {
     error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
 }
 
@@ -32,12 +34,14 @@ fun ChiliTheme(
     },
     background: ChiliBackground = ChiliBackground.defaultBackground(darkTheme),
     attribute: ChiliAttribute = ChiliAttribute.getDefault(),
+    buttonAttribute: ChiliButtonAttribute = ChiliButtonAttribute.getDefault(),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
         LocalColors provides colors,
         LocalBackgroundTheme provides background,
-        LocalAttribute provides attribute
+        LocalAttribute provides attribute,
+        LocalButtonAttribute provides buttonAttribute
     ) {
         Box(
             modifier = Modifier
@@ -77,5 +81,11 @@ object ChiliTheme {
         @ReadOnlyComposable
         get() = LocalAttribute.current
 
-    fun Dp.asSp() = this.value.sp
+    /**
+     * Retrieves the current [ChiliButtonAttribute] at the call site's position in the hierarchy.
+     */
+    val ChiliButtonAttribute: ChiliButtonAttribute
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalButtonAttribute.current
 }
