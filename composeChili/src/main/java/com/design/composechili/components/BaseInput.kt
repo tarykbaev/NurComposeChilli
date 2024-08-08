@@ -129,9 +129,9 @@ data class BaseInputParams(
             get() = BaseInputParams(
                 textStyle = ChiliTextStyle.get(
                     ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.colors.chiliPrimaryTextColor
+                    ChiliTheme.Colors.ChiliPrimaryTextColor
                 ),
-                errorTextColor = ChiliTheme.colors.chiliErrorTextColor,
+                errorTextColor = ChiliTheme.Colors.chiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
                 fieldBackground = colorResource(id = R.color.gray_5),
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),
