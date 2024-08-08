@@ -6,8 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,8 +39,8 @@ class MainActivity : ComponentActivity() {
                 var textIsError by remember { mutableStateOf(false) }
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize()
+                        .fillMaxSize()
+                        .padding(WindowInsets.systemBars.asPaddingValues())
                 )
                 {
                     var text by remember { mutableStateOf(String()) }
@@ -47,6 +52,7 @@ class MainActivity : ComponentActivity() {
                         isError = textIsError,
                         hint = "Test Hint Test Hint"
                     )
+                    Greeting("Android")
                     Spacer(modifier = Modifier.size(16.dp))
 //                    BaseButton(buttonStyle = ChiliButtonStyle.Primary)
                 }
@@ -60,7 +66,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
         modifier = modifier,
-        fontSize = ChiliTheme.Attribute.chiliTextDimensions.textSizeH4,
+        fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
         color = ChiliTheme.colors.chiliPrimaryTextColor
     )
 }

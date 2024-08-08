@@ -8,6 +8,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.sp
 
 /**
  * Local providers for various properties we connect to our components, for styling.
@@ -16,8 +18,9 @@ private val LocalColors = compositionLocalOf<ChiliColors> {
     error("No colors provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
 }
 
-private val LocalAttribute = compositionLocalOf<ChiliAttribute>{
-    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.") }
+private val LocalAttribute = compositionLocalOf<ChiliAttribute> {
+    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
+}
 
 @Composable
 fun ChiliTheme(
@@ -74,5 +77,5 @@ object ChiliTheme {
         @ReadOnlyComposable
         get() = LocalAttribute.current
 
-
+    fun Dp.asSp() = this.value.sp
 }
