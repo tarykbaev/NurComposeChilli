@@ -7,109 +7,58 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.utils.asSp
-
-object DimensTest{
-    val H1 = 24.dp
-}
+import com.design.composechili.theme.dimensions.ChiliElevationDimensions
+import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
+import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
+import com.design.composechili.theme.dimensions.ChiliViewDimensions
 
 @Immutable
 data class ChiliAttribute(
-    val chiliTextSizeH1: TextUnit,
-    val chiliTextSizeH2:TextUnit,
-    val chiliTextSizeH3:TextUnit,
-    val chiliTextSizeH4:TextUnit,
-    val chiliTextSizeH5:TextUnit,
-    val chiliTextSizeH6:TextUnit,
-    val chiliTextSizeH7:TextUnit,
-    val chiliTextSizeH8:TextUnit,
-    val chiliTextSizeH9:TextUnit,
-    val chiliTextSizeH10:TextUnit,
 
-    val chiliRegularTextFont: Font,
-    val chiliBoldTextFont:Font,
-    val chiliItalicTextFont:Font,
-    val chili700TextFont:Font,
+    // Dimens
+    val ChiliTextDimensions: ChiliTextDimensions,
+    val ChiliViewDimensions: ChiliViewDimensions,
+    val ChiliPaddingDimensions: ChiliPaddingDimensions,
+    val ChiliRadiusDimensions: ChiliRadiusDimensions,
+    val ChiliElevationDimensions: ChiliElevationDimensions,
+
+    // Font
+    val ChiliRegularTextFont: Font,
+    val ChiliBoldTextFont: Font,
+    val ChiliItalicTextFont: Font,
+    val Chili700TextFont: Font,
 
     // Ripple
-    val chiliRippleForegroundCornerRadius:Dp,
+    val ChiliRippleForegroundCornerRadius: Dp,
 
     // Divider
-    val chiliDividerHeightSize:Dp,
+    val ChiliDividerHeightSize: Dp,
 
     // Chevron
-    val chiliChevronDrawable:Painter,
+    val ChiliChevronDrawable: Painter,
 
     // Snackbar
-    val chiliSnackbarBackgroundCornerRadius:Dp,
-    val chiliSnackbarElevation:Dp,
-
-    // Button
-    val ChiliPrimaryButtonPaddingTop:Dp,
-    val ChiliPrimaryButtonPaddingBottom:Dp,
-    val ChiliPrimaryButtonPaddingStart:Dp,
-    val ChiliPrimaryButtonPaddingEnd:Dp,
-
-    // PrimaryButton
-    val ChiliPrimaryButtonCornerRadius:Dp,
-    val ChiliPrimaryButtonTextSize:TextUnit,
-    val ChiliPrimaryButtonTextFont:Font,
-    val ChiliPrimaryButtonTextAllCaps:Boolean,
-
-    // Secondary Button
-    val ChiliSecondaryButtonCornerRadius:Dp,
-    val ChiliSecondaryButtonTextSize:TextUnit,
-    val ChiliSecondaryButtonTextFont:Font,
-
-    // Additional
-    val ChiliAdditionalButtonCornerRadius:Dp,
-    val ChiliAdditionalButtonTextSize:TextUnit,
-    val ChiliAdditionalButtonTextFont:Font
-){
-
-    companion object{
-
+    val ChiliSnackbarBackgroundCornerRadius: Dp,
+    val ChiliSnackbarElevation: Dp
+) {
+    companion object {
         @Composable
         fun getDefault() = ChiliAttribute(
-
-            chiliTextSizeH1 = dimensionResource(R.dimen.text_64sp).asSp(),
-            chiliTextSizeH2 = dimensionResource(R.dimen.text_32sp).asSp(),
-            chiliTextSizeH3 = dimensionResource(R.dimen.text_28sp).asSp(),
-            chiliTextSizeH4 = dimensionResource(R.dimen.text_24sp).asSp(),
-            chiliTextSizeH5 = dimensionResource(R.dimen.text_20sp).asSp(),
-            chiliTextSizeH6 = dimensionResource(R.dimen.text_18sp).asSp(),
-            chiliTextSizeH7 = dimensionResource(R.dimen.text_16sp).asSp(),
-            chiliTextSizeH8 = dimensionResource(R.dimen.text_14sp).asSp(),
-            chiliTextSizeH9 = dimensionResource(R.dimen.text_12sp).asSp(),
-            chiliTextSizeH10 = dimensionResource(R.dimen.text_10sp).asSp(),
-            chiliRegularTextFont = Font(R.font.roboto_regular),
-            chiliBoldTextFont = Font(R.font.roboto_medium),
-            chiliItalicTextFont = Font(R.font.roboto_italic),
-            chili700TextFont = Font(R.font.roboto_700),
-            chiliRippleForegroundCornerRadius = dimensionResource(R.dimen.radius_4dp),
-            chiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
-            chiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
-            chiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            chiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
-            ChiliPrimaryButtonPaddingTop = dimensionResource(R.dimen.padding_14dp),
-            ChiliPrimaryButtonPaddingBottom = dimensionResource(R.dimen.padding_14dp),
-            ChiliPrimaryButtonPaddingEnd = dimensionResource(R.dimen.padding_24dp),
-            ChiliPrimaryButtonPaddingStart = dimensionResource(R.dimen.padding_24dp),
-            ChiliPrimaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliPrimaryButtonTextFont = Font(R.font.roboto_medium),
-            ChiliPrimaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
-            ChiliPrimaryButtonTextAllCaps = false,
-            ChiliSecondaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSecondaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
-            ChiliSecondaryButtonTextFont = Font(R.font.roboto_medium),
-            ChiliAdditionalButtonCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
-            ChiliAdditionalButtonTextSize = dimensionResource(id = R.dimen.text_14sp).asSp(),
-            ChiliAdditionalButtonTextFont = Font(R.font.roboto_medium)
+            ChiliTextDimensions = ChiliTextDimensions.fromResources(),
+            ChiliViewDimensions = ChiliViewDimensions.fromResources(),
+            ChiliPaddingDimensions = ChiliPaddingDimensions.fromResources(),
+            ChiliRadiusDimensions = ChiliRadiusDimensions.fromResources(),
+            ChiliElevationDimensions = ChiliElevationDimensions.fromResources(),
+            ChiliRegularTextFont = Font(R.font.roboto_regular),
+            ChiliBoldTextFont = Font(R.font.roboto_medium),
+            ChiliItalicTextFont = Font(R.font.roboto_italic),
+            Chili700TextFont = Font(R.font.roboto_700),
+            ChiliRippleForegroundCornerRadius = dimensionResource(R.dimen.radius_4dp),
+            ChiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
+            ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
+            ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
+            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp)
         )
-
     }
-
 }

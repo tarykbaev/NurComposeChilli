@@ -16,8 +16,13 @@ private val LocalColors = compositionLocalOf<ChiliColors> {
     error("No colors provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
 }
 
-private val LocalAttribute = compositionLocalOf<ChiliAttribute>{
-    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.") }
+private val LocalAttribute = compositionLocalOf<ChiliAttribute> {
+    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
+}
+
+private val LocalButtonAttribute = compositionLocalOf<ChiliButtonAttribute> {
+    error("No attribute provided! Make sure to wrap all usages of Chili components in ChiliTheme.")
+}
 
 @Composable
 fun ChiliTheme(
@@ -29,12 +34,14 @@ fun ChiliTheme(
     },
     background: ChiliBackground = ChiliBackground.defaultBackground(darkTheme),
     attribute: ChiliAttribute = ChiliAttribute.getDefault(),
+    buttonAttribute: ChiliButtonAttribute = ChiliButtonAttribute.getDefault(),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
         LocalColors provides colors,
         LocalBackgroundTheme provides background,
-        LocalAttribute provides attribute
+        LocalAttribute provides attribute,
+        LocalButtonAttribute provides buttonAttribute
     ) {
         Box(
             modifier = Modifier
@@ -69,10 +76,16 @@ object ChiliTheme {
     /**
      * Retrieves the current [ChiliAttribute] at the call site's position in the hierarchy.
      */
-    val attribute: ChiliAttribute
+    val Attribute: ChiliAttribute
         @Composable
         @ReadOnlyComposable
         get() = LocalAttribute.current
 
-
+    /**
+     * Retrieves the current [ChiliButtonAttribute] at the call site's position in the hierarchy.
+     */
+    val ChiliButtonAttribute: ChiliButtonAttribute
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalButtonAttribute.current
 }

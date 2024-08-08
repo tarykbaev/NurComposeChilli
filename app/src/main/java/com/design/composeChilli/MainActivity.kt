@@ -19,9 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
-import com.design.composechili.components.buttons.BaseButton
-import com.design.composechili.components.BaseInput
-import com.design.composechili.components.buttons.ChiliButtonStyle
 import com.design.composechili.components.buttons.LoaderButton
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.delay
@@ -46,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     LoaderButton(isLoading = isVisible, onClick = {
                         isVisible = !isVisible
 
-                        if(isVisible){
+                        if (isVisible) {
                             composableScope.launch {
                                 delay(3_000)
                                 isVisible = !isVisible
@@ -65,7 +62,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
         modifier = modifier,
-        fontSize = ChiliTheme.attribute.chiliTextSizeH1,
+        fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
         color = ChiliTheme.colors.chiliErrorTextColor
     )
 }

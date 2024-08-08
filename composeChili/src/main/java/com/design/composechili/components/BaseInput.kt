@@ -128,7 +128,7 @@ data class BaseInputParams(
             @Composable
             get() = BaseInputParams(
                 textStyle = ChiliTextStyle.get(
-                    ChiliTheme.attribute.chiliTextSizeH8,
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     ChiliTheme.colors.chiliPrimaryTextColor
                 ),
                 errorTextColor = ChiliTheme.colors.chiliErrorTextColor,
