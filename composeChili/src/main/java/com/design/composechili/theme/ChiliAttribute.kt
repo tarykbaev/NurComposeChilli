@@ -40,7 +40,11 @@ data class ChiliAttribute(
 
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
-    val ChiliSnackbarElevation: Dp
+    val ChiliSnackbarElevation: Dp,
+
+    // Cell
+    val ChiliCellCornerRadius:Dp,
+
 ) {
     companion object {
         @Composable
@@ -58,7 +62,8 @@ data class ChiliAttribute(
             ChiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
             ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
             ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp)
+            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
+            ChiliCellCornerRadius = dimensionResource(id = R.dimen.padding_12dp)
         )
     }
 }

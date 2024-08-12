@@ -43,12 +43,7 @@ fun ChiliTheme(
         LocalAttribute provides attribute,
         LocalButtonAttribute provides buttonAttribute
     ) {
-        Box(
-            modifier = Modifier
-                .background(background.color)
-        ) {
-            content()
-        }
+        content()
     }
 }
 
