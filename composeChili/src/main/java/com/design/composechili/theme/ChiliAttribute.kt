@@ -41,11 +41,20 @@ data class ChiliAttribute(
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
     val ChiliSnackbarElevation: Dp,
+    val ChiliSnackbarMarginStart:Dp,
+    val ChiliSnackbarMarginEnd:Dp,
+    val ChiliSnackbarMarginTop:Dp,
+    val ChiliSnackbarMarginBottom:Dp,
+    val ChiliSnackbarContentPaddingHorizontal:Dp,
+    val ChiliSnackbarContentPaddingVertical:Dp,
+    val ChiliSnackbarIconWidth:Dp,
+    val ChiliSnackbarIconHeight:Dp,
+    val ChiliSnackbarTextMarginStart:Dp,
 
     // Cell
     val ChiliCellCornerRadius:Dp,
 
-) {
+    ) {
     companion object {
         @Composable
         fun getDefault() = ChiliAttribute(
@@ -63,7 +72,16 @@ data class ChiliAttribute(
             ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
             ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
             ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
-            ChiliCellCornerRadius = dimensionResource(id = R.dimen.padding_12dp)
+            ChiliCellCornerRadius = dimensionResource(id = R.dimen.padding_12dp),
+            ChiliSnackbarMarginTop = dimensionResource(id = R.dimen.padding_0dp),
+            ChiliSnackbarMarginEnd = dimensionResource(id = R.dimen.padding_16dp),
+            ChiliSnackbarMarginStart = dimensionResource(id = R.dimen.padding_16dp),
+            ChiliSnackbarMarginBottom = dimensionResource(id = R.dimen.padding_16dp),
+            ChiliSnackbarIconWidth = dimensionResource(id = R.dimen.view_32dp),
+            ChiliSnackbarIconHeight = dimensionResource(id = R.dimen.view_32dp),
+            ChiliSnackbarContentPaddingVertical = dimensionResource(id = R.dimen.padding_10dp),
+            ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
+            ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp)
         )
     }
 }
