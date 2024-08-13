@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                                 BaseSnackBar(
                                     text = it.visuals.message,
                                     actionText = it.visuals.actionLabel.orEmpty(),
-                                    isLoading = true,
+                                    startIcon = com.design.composechili.R.drawable.ic_cat,
                                     actionListener = {
                                         it.dismiss()
                                     })

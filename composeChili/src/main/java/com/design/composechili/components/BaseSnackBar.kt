@@ -49,7 +49,10 @@ fun BaseSnackBar(
             containerColor = baseSnackBarParams.containerColor,
             action = {
                 Text(actionText, color = baseSnackBarParams.actionTextColor, modifier = Modifier
-                    .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp), vertical =  ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical)
+                    .padding(
+                        horizontal = dimensionResource(id = R.dimen.padding_16dp),
+                        vertical =  ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
+                    )
                     .clickable { actionListener?.invoke() })
             },
             dismissAction = { dismissAction?.invoke() },
@@ -61,8 +64,7 @@ fun BaseSnackBar(
                     if (isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier
-                                .width(dimensionResource(id = R.dimen.view_32dp))
-                            ,
+                                .width(dimensionResource(id = R.dimen.view_32dp)),
                             color = baseSnackBarParams.containerColor,
                             strokeCap = StrokeCap.Round,
                             trackColor = baseSnackBarParams.textColor
@@ -74,9 +76,7 @@ fun BaseSnackBar(
                                 .size(
                                     width = ChiliTheme.Attribute.ChiliSnackbarIconWidth,
                                     height = ChiliTheme.Attribute.ChiliSnackbarIconHeight
-                                )
-                                .padding(end = 12.dp),
-
+                                ),
                             painter = painterResource(id = startIcon),
                             contentDescription = "Base SnackBar start icon"
                         )
