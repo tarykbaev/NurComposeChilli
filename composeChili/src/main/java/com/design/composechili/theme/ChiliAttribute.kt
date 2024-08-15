@@ -40,7 +40,11 @@ data class ChiliAttribute(
 
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
-    val ChiliSnackbarElevation: Dp
+    val ChiliSnackbarElevation: Dp,
+
+    // Toolbar
+    val ChiliToolbarThicknessSize: Dp,
+    val ChiliToolbarHeightSize: Dp
 ) {
     companion object {
         @Composable
@@ -54,11 +58,13 @@ data class ChiliAttribute(
             ChiliBoldTextFont = Font(R.font.roboto_medium),
             ChiliItalicTextFont = Font(R.font.roboto_italic),
             Chili700TextFont = Font(R.font.roboto_700),
-            ChiliRippleForegroundCornerRadius = dimensionResource(R.dimen.radius_4dp),
-            ChiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
+            ChiliRippleForegroundCornerRadius = dimensionResource(id = R.dimen.radius_4dp),
+            ChiliDividerHeightSize = dimensionResource(id = R.dimen.view_1dp),
             ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
-            ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp)
+            ChiliSnackbarBackgroundCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
+            ChiliSnackbarElevation = dimensionResource(id = R.dimen.elevation_4dp),
+            ChiliToolbarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
+            ChiliToolbarHeightSize = dimensionResource(id = R.dimen.view_56dp)
         )
     }
 }
