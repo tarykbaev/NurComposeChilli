@@ -88,7 +88,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier,
         fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        color = ChiliTheme.colors.chiliErrorTextColor
+        color = ChiliTheme.Colors.chiliErrorTextColor
     )
 }
 

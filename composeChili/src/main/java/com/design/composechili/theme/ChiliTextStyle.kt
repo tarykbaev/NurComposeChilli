@@ -10,12 +10,13 @@ import com.design.composechili.R
 internal object ChiliTextStyle {
 
     fun get(
-        font: TextUnit = TextUnit.Unspecified,
+        textSize: TextUnit = TextUnit.Unspecified,
         color: Color = Color.Unspecified,
-        fontFamily: Font = Font(R.font.roboto_regular)
+        font: Font = Font(R.font.roboto_regular)
     ): TextStyle {
-        return TextStyle(fontSize = font, color = color, fontFamily = fontFamily.toFontFamily())
+        return TextStyle(fontSize = textSize, color = color, fontFamily = font.toFontFamily())
     }
+
 
 
 }

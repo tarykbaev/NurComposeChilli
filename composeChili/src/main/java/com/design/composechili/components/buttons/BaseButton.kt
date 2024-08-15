@@ -34,7 +34,7 @@ fun BaseButton(
     title: String,
     titleStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        ChiliTheme.colors.chiliPrimaryTextColor
+        ChiliTheme.Colors.chiliPrimaryTextColor
     ),
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
@@ -108,13 +108,13 @@ data class ChiliButtonStyle(
         val Primary
             @Composable
             get() = ChiliButtonStyle(
-                backgroundActiveColor = ChiliTheme.colors.ChiliPrimaryButtonBackgroundActive,
-                backgroundDisabledColor = ChiliTheme.colors.ChiliPrimaryButtonBackgroundDisabled,
-                textActiveColor = ChiliTheme.colors.ChiliPrimaryButtonTextColorActive,
-                textDisabledColor = ChiliTheme.colors.ChiliPrimaryButtonTextColorDisabled,
+                backgroundActiveColor = ChiliTheme.Colors.ChiliPrimaryButtonBackgroundActive,
+                backgroundDisabledColor = ChiliTheme.Colors.ChiliPrimaryButtonBackgroundDisabled,
+                textActiveColor = ChiliTheme.Colors.ChiliPrimaryButtonTextColorActive,
+                textDisabledColor = ChiliTheme.Colors.ChiliPrimaryButtonTextColorDisabled,
                 cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonCornerRadius,
                 buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonTextSize,
-                borderColor = ChiliTheme.colors.ChiliPrimaryButtonBorderColor,
+                borderColor = ChiliTheme.Colors.ChiliPrimaryButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
                 textFont = ChiliTheme.ChiliButtonAttribute.ChiliPrimaryButtonTextFont
             )
@@ -122,13 +122,13 @@ data class ChiliButtonStyle(
         val Secondary
             @Composable
             get() = ChiliButtonStyle(
-                backgroundActiveColor = ChiliTheme.colors.ChiliSecondaryButtonBackgroundActive,
-                backgroundDisabledColor = ChiliTheme.colors.ChiliSecondaryButtonBackgroundDisabled,
-                textActiveColor = ChiliTheme.colors.ChiliSecondaryButtonTextColorActive,
-                textDisabledColor = ChiliTheme.colors.ChiliSecondaryButtonTextColorDisabled,
+                backgroundActiveColor = ChiliTheme.Colors.ChiliSecondaryButtonBackgroundActive,
+                backgroundDisabledColor = ChiliTheme.Colors.ChiliSecondaryButtonBackgroundDisabled,
+                textActiveColor = ChiliTheme.Colors.ChiliSecondaryButtonTextColorActive,
+                textDisabledColor = ChiliTheme.Colors.ChiliSecondaryButtonTextColorDisabled,
                 cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonCornerRadius,
                 buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonTextSize,
-                borderColor = ChiliTheme.colors.ChiliPrimaryButtonBorderColor,
+                borderColor = ChiliTheme.Colors.ChiliPrimaryButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
                 textFont = ChiliTheme.ChiliButtonAttribute.ChiliSecondaryButtonTextFont
             )
@@ -136,13 +136,13 @@ data class ChiliButtonStyle(
         val Additional
             @Composable
             get() = ChiliButtonStyle(
-                backgroundActiveColor = ChiliTheme.colors.ChiliAdditionalButtonBackgroundActive,
-                backgroundDisabledColor = ChiliTheme.colors.ChiliAdditionalButtonBackgroundDisabled,
-                textActiveColor = ChiliTheme.colors.ChiliAdditionalButtonTextColorActive,
-                textDisabledColor = ChiliTheme.colors.ChiliAdditionalButtonTextColorDisabled,
+                backgroundActiveColor = ChiliTheme.Colors.ChiliAdditionalButtonBackgroundActive,
+                backgroundDisabledColor = ChiliTheme.Colors.ChiliAdditionalButtonBackgroundDisabled,
+                textActiveColor = ChiliTheme.Colors.ChiliAdditionalButtonTextColorActive,
+                textDisabledColor = ChiliTheme.Colors.ChiliAdditionalButtonTextColorDisabled,
                 cornerSize = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonCornerRadius,
                 buttonTextSize = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonTextSize,
-                borderColor = ChiliTheme.colors.ChiliAdditionalButtonBorderColor,
+                borderColor = ChiliTheme.Colors.ChiliAdditionalButtonBorderColor,
                 borderWidth = dimensionResource(id = R.dimen.view_1dp),
                 textFont = ChiliTheme.ChiliButtonAttribute.ChiliAdditionalButtonTextFont
             )

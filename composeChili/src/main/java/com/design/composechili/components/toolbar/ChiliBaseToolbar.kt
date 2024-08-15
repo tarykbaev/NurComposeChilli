@@ -36,14 +36,14 @@ fun ChiliBaseToolbar(
     title: String,
     titleStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-        ChiliTheme.colors.chiliPrimaryTextColor,
+        ChiliTheme.Colors.chiliPrimaryTextColor,
         ChiliTheme.Attribute.ChiliBoldTextFont
     ),
     isDividerVisible: Boolean = true,
     additionalText: String? = null,
     additionalTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        ChiliTheme.colors.chiliSecondaryTextColor
+        ChiliTheme.Colors.chiliSecondaryTextColor
     ),
     @DrawableRes navigationIcon: Int? = null,
     navigationIconSize: Dp? = null,
@@ -51,8 +51,8 @@ fun ChiliBaseToolbar(
     startIconSize: Dp? = null,
     @DrawableRes endIcon: Int? = null,
     endIconSize: Dp? = null,
-    containerColor: Color = ChiliTheme.colors.ChiliToolbarBackground,
-    dividerColor: Color = ChiliTheme.colors.ChiliToolbarDividerColor,
+    containerColor: Color = ChiliTheme.Colors.ChiliToolbarBackground,
+    dividerColor: Color = ChiliTheme.Colors.ChiliToolbarDividerColor,
     dividerThickness: Dp = ChiliTheme.Attribute.ChiliToolbarThicknessSize,
     onNavigationClick: (() -> Unit)? = null
 ) {
@@ -104,7 +104,7 @@ fun ChiliBaseToolbar(
                                             ),
                                         painter = painterResource(icon),
                                         contentDescription = "Back",
-                                        tint = ChiliTheme.colors.ChiliToolbarIconsTint
+                                        tint = ChiliTheme.Colors.ChiliToolbarIconsTint
                                     )
                                 }
                             }

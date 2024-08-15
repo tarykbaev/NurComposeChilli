@@ -43,12 +43,7 @@ fun ChiliTheme(
         LocalAttribute provides attribute,
         LocalButtonAttribute provides buttonAttribute
     ) {
-        Box(
-            modifier = Modifier
-                .background(background.color)
-        ) {
-            content()
-        }
+        content()
     }
 }
 
@@ -60,7 +55,7 @@ object ChiliTheme {
     /**
      * Retrieves the current [ChiliColors] at the call site's position in the hierarchy.
      */
-    public val colors: ChiliColors
+    public val Colors: ChiliColors
         @Composable
         @ReadOnlyComposable
         get() = LocalColors.current
@@ -68,7 +63,7 @@ object ChiliTheme {
     /**
      * Retrieves the current [ChiliBackground] at the call site's position in the hierarchy.
      */
-    public val background: ChiliBackground
+    public val Background: ChiliBackground
         @Composable
         @ReadOnlyComposable
         get() = LocalBackgroundTheme.current
