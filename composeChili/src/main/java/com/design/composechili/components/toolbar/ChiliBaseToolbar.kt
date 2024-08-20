@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
@@ -40,6 +42,7 @@ fun ChiliBaseToolbar(
         ChiliTheme.Attribute.ChiliBoldTextFont
     ),
     isDividerVisible: Boolean = true,
+    isCenteredTitle: Boolean = true,
     additionalText: String? = null,
     additionalTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
@@ -62,29 +65,34 @@ fun ChiliBaseToolbar(
                 modifier = modifier
                     .height(ChiliTheme.Attribute.ChiliToolbarHeightSize),
                 title = {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        startIcon?.let { icon ->
-                            IconButton({
-
-                            }) {
-                                Image(
-                                    modifier = Modifier
-                                        .size(
-                                            startIconSize ?: dimensionResource(R.dimen.view_24dp)
-                                        ),
-                                    painter = painterResource(icon),
-                                    contentDescription = "startIcon",
+                    when (isCenteredTitle) {
+                        true -> {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier,
+                                    textAlign = TextAlign.Center,
+                                    text = title,
+                                    style = titleStyle,
                                 )
                             }
                         }
-                        Text(
-                            modifier = Modifier,
-                            text = title,
-                            style = titleStyle,
-                        )
+
+                        false -> {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Text(
+                                    modifier = Modifier,
+                                    textAlign = TextAlign.Center,
+                                    text = title,
+                                    style = titleStyle,
+                                )
+                            }
+                        }
                     }
                 },
                 navigationIcon = {
