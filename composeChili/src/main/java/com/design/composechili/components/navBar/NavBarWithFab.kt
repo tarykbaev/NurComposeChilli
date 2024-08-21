@@ -54,14 +54,17 @@ fun NavBarWithFab(
     ) {
         items.forEachIndexed { index, chiliNavItems ->
             if (chiliNavItems.isFab) {
-                ChiliNavFabItem(icon = chiliNavItems.selectedIcon)
+                ChiliNavFabItem(icon = chiliNavItems.selectedIcon) { navigate(chiliNavItems.text) }
             } else {
                 ChiliNavItem(
                     text = chiliNavItems.text,
                     selectedIcon = chiliNavItems.selectedIcon,
                     unselectedIcon = chiliNavItems.unselectedIcon,
                     isSelected = selectedItem == index,
-                    onClick = { selectedItem = index }
+                    onClick = {
+                        selectedItem = index
+                        navigate(chiliNavItems.text)
+                    }
                 )
             }
         }
