@@ -24,11 +24,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composechili.R
 import com.design.composechili.theme.ChiliColors
 import com.design.composechili.theme.ChiliTextDimensions
 import com.design.composechili.theme.ChiliTextStyle
@@ -44,7 +41,8 @@ fun ChiliNavItem(
 ) {
 
     val icon = if (isSelected) selectedIcon else unselectedIcon
-    val textColor = if (isSelected) ChiliColors.defaultLightColors().chiliLinkTextColor else ChiliColors.defaultLightColors().chiliValueTextColor
+    val textColor =
+        if (isSelected) ChiliColors.defaultLightColors().chiliLinkTextColor else ChiliColors.defaultLightColors().chiliValueTextColor
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
