@@ -1,4 +1,4 @@
-package com.design.composechili.components.toolbar
+package com.design.composechili.components.topAppBar
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -53,39 +51,38 @@ fun ChiliCustomBaseTopAppBar(
     navigationIconSize: Dp? = null,
     @DrawableRes endIcon: Int? = null,
     endIconSize: Dp? = null,
-    containerColor: Color = ChiliTheme.Colors.ChiliToolbarBackground,
-    dividerColor: Color = ChiliTheme.Colors.ChiliToolbarDividerColor,
-    dividerThickness: Dp = ChiliTheme.Attribute.ChiliToolbarThicknessSize,
+    containerColor: Color = ChiliTheme.Colors.ChiliTopAppBarBackground,
+    dividerColor: Color = ChiliTheme.Colors.ChiliTopAppBarDividerColor,
+    dividerThickness: Dp = ChiliTheme.Attribute.ChiliTopAppBarThicknessSize,
     isCenteredTitle: Boolean = false,
-    onNavigationClick: (() -> Unit)? = null
+    onNavigationClick: (() -> Unit)? = null,
+    onEndIconClick: (() -> Unit)? = null
 ) {
     ChiliTheme {
         Column {
             Box(
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(ChiliTheme.Attribute.ChiliToolbarHeightSize)
+                    .height(ChiliTheme.Attribute.ChiliTopAppBarHeightSize)
                     .background(containerColor)
             ) {
                 var navigationIconWidth by remember { mutableStateOf(0) }
-                var endIconWidth by remember { mutableStateOf(0) }
 
                 navigationIcon?.let { icon ->
                     IconButton(
                         modifier = Modifier
-                            .padding(4.dp)
+                            .padding(dimensionResource(R.dimen.padding_4dp))
                             .onGloballyPositioned { coordinates ->
                                 navigationIconWidth = coordinates.size.width
                             },
                         onClick = onNavigationClick ?: {}
                     ) {
-                        Icon(
+                        Image(
                             modifier = Modifier.size(
                                 navigationIconSize ?: dimensionResource(R.dimen.view_24dp)
                             ),
                             painter = painterResource(icon),
                             contentDescription = "back",
-                            tint = ChiliTheme.Colors.ChiliToolbarIconsTint
                         )
                     }
                 }
@@ -106,11 +103,8 @@ fun ChiliCustomBaseTopAppBar(
                     endIcon?.let { icon ->
                         IconButton(
                             modifier = Modifier
-                                .padding(4.dp)
-                                .onGloballyPositioned { coordinates ->
-                                    endIconWidth = coordinates.size.width
-                                },
-                            onClick = {}
+                                .padding(dimensionResource(R.dimen.padding_4dp)),
+                            onClick = onEndIconClick ?: {}
                         ) {
                             Image(
                                 modifier = Modifier.size(
@@ -123,29 +117,37 @@ fun ChiliCustomBaseTopAppBar(
                     }
                 }
 
-                Text(
+                Box(
                     modifier = Modifier
                         .align(if (isCenteredTitle) Alignment.Center else Alignment.CenterStart)
                         .offset(
-                            x = if (isCenteredTitle) {
-                                (navigationIconWidth.pxToDp() - endIconWidth.pxToDp()) / 2
-                            } else {
-                                navigationIconWidth.pxToDp() + 8.dp
+                            x = when {
+                                isCenteredTitle -> dimensionResource(R.dimen.padding_0dp)
+
+                                !isCenteredTitle && navigationIcon != null -> {
+                                    navigationIconWidth.pxToDp() + dimensionResource(R.dimen.padding_24dp)
+                                }
+
+                                else -> dimensionResource(R.dimen.padding_16dp)
                             }
                         )
-                        .padding(start = if (!isCenteredTitle) 0.dp else 0.dp),
-                    text = title,
-                    style = titleStyle,
-                )
+                ) {
+                    Text(
+                        modifier = Modifier,
+                        text = title,
+                        style = titleStyle,
+                    )
+                }
             }
 
-            if (isDividerVisible) {
-                HorizontalDivider(
-                    color = dividerColor,
-                    thickness = dividerThickness
-                )
+            when {
+                isDividerVisible -> {
+                    HorizontalDivider(
+                        color = dividerColor,
+                        thickness = dividerThickness
+                    )
+                }
             }
         }
     }
 }
-

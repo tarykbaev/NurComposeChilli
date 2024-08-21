@@ -54,9 +54,9 @@ data class ChiliAttribute(
     // Cell
     val ChiliCellCornerRadius:Dp,
 
-    // Toolbar
-    val ChiliToolbarThicknessSize: Dp,
-    val ChiliToolbarHeightSize: Dp
+    // TopAppBar
+    val ChiliTopAppBarThicknessSize: Dp,
+    val ChiliTopAppBarHeightSize: Dp
 
     ) {
     companion object {
@@ -86,8 +86,8 @@ data class ChiliAttribute(
             ChiliSnackbarContentPaddingVertical = dimensionResource(id = R.dimen.padding_10dp),
             ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
             ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp),
-            ChiliToolbarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
-            ChiliToolbarHeightSize = dimensionResource(id = R.dimen.view_56dp)
+            ChiliTopAppBarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
+            ChiliTopAppBarHeightSize = dimensionResource(id = R.dimen.view_56dp)
         )
     }
 }

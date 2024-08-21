@@ -82,11 +82,11 @@ public data class ChiliColors(
     val ChiliCellViewBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
-    // Toolbar
-    val ChiliToolbarDividerColor: Color,
-    val ChiliToolbarIconsTint: Color,
-    val ChiliToolbarBackground: Color,
-    val ChiliStartIconToolbarBackground: Color
+    // TopAppBar
+    val ChiliTopAppBarDividerColor: Color,
+    val ChiliTopAppBarIconsTint: Color,
+    val ChiliTopAppBarBackground: Color,
+    val ChiliStartIconTopAppBarBackground: Color
 ) {
 
     companion object {
@@ -138,10 +138,10 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
             ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
-            ChiliToolbarDividerColor = colorResource(id = R.color.black_4),
-            ChiliToolbarIconsTint = colorResource(id = R.color.white_1),
-            ChiliToolbarBackground = colorResource(id = R.color.black_3),
-            ChiliStartIconToolbarBackground = colorResource(R.color.black_1)
+            ChiliTopAppBarDividerColor = colorResource(id = R.color.black_4),
+            ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
+            ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1)
         )
 
         @Composable
@@ -192,10 +192,10 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
             ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
-            ChiliToolbarDividerColor = colorResource(id = R.color.gray_8),
-            ChiliToolbarIconsTint = colorResource(id = R.color.black_1),
-            ChiliToolbarBackground = colorResource(id = R.color.white_1),
-            ChiliStartIconToolbarBackground = colorResource(R.color.white_1)
+            ChiliTopAppBarDividerColor = colorResource(id = R.color.gray_8),
+            ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
+            ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1)
         )
     }
 }
