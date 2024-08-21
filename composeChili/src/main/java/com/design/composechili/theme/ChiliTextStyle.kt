@@ -3,7 +3,6 @@ package com.design.composechili.theme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.unit.TextUnit
@@ -17,9 +16,13 @@ internal object ChiliTextStyle {
         font: Font = Font(R.font.roboto_regular),
         fontWeight: FontWeight = FontWeight.Normal
     ): TextStyle {
-        return TextStyle(fontSize = textSize, color = color, fontFamily = font.toFontFamily(), fontWeight = fontWeight)
+        return TextStyle(
+            fontSize = textSize,
+            color = color,
+            fontFamily = font.toFontFamily(),
+            fontWeight = fontWeight
+        )
     }
-
 
 
 }

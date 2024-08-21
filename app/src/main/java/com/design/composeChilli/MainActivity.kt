@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composeChilli.ui.theme.NurComposeChiliTheme
 import com.design.composechili.R
 import com.design.composechili.components.BaseSnackBar
 import com.design.composechili.components.cell.BaseCell
@@ -167,118 +166,118 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-        val scope = rememberCoroutineScope()
-        val snackbarHostState = remember {
-            SnackbarHostState()
-        }
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
 
-        ChiliTheme {
-            Scaffold(
-                bottomBar = {
-                    NavBarWithFab(
-                        items = listOf(
-                            ChiliNavItems(
-                                selectedIcon = R.drawable.ic_home_filled,
-                                unselectedIcon = R.drawable.ic_home,
-                                text = "Главная"
-                            ),
-                            ChiliNavItems(
-                                selectedIcon = R.drawable.ic_payment_filled,
-                                unselectedIcon = R.drawable.ic_payment,
-                                text = "Платежи"
-                            ),
-                            ChiliNavItems(
-                                selectedIcon = R.drawable.ic_scaner_48,
-                                unselectedIcon = R.drawable.ic_scaner_48,
-                                isFab = true
-                            ),
-                            ChiliNavItems(
-                                selectedIcon = R.drawable.ic_history_filled,
-                                unselectedIcon = R.drawable.ic_history,
-                                text = "История"
-                            ),
-                            ChiliNavItems(
-                                selectedIcon = R.drawable.ic_menu_filled,
-                                unselectedIcon = R.drawable.ic_menu,
-                                text = "Ещё"
-                            ),
+    ChiliTheme {
+        Scaffold(
+            bottomBar = {
+                NavBarWithFab(
+                    items = listOf(
+                        ChiliNavItems(
+                            selectedIcon = R.drawable.ic_home_filled,
+                            unselectedIcon = R.drawable.ic_home,
+                            text = "Главная"
                         ),
-                        navigate = { }
-                    )
-                },
-                snackbarHost = {
-                    SnackbarHost(
-                        hostState = snackbarHostState,
-                        modifier = Modifier,
-                        snackbar = {
-                            BaseSnackBar(
-                                text = it.visuals.message,
-                                actionText = it.visuals.actionLabel.orEmpty(),
-                                startIcon = R.drawable.ic_cat,
-                                actionListener = {
-                                    it.dismiss()
-                                })
-                        })
-                }
-            ) { contentPadding ->
-                Box(
+                        ChiliNavItems(
+                            selectedIcon = R.drawable.ic_payment_filled,
+                            unselectedIcon = R.drawable.ic_payment,
+                            text = "Платежи"
+                        ),
+                        ChiliNavItems(
+                            selectedIcon = R.drawable.ic_scaner_48,
+                            unselectedIcon = R.drawable.ic_scaner_48,
+                            isFab = true
+                        ),
+                        ChiliNavItems(
+                            selectedIcon = R.drawable.ic_history_filled,
+                            unselectedIcon = R.drawable.ic_history,
+                            text = "История"
+                        ),
+                        ChiliNavItems(
+                            selectedIcon = R.drawable.ic_menu_filled,
+                            unselectedIcon = R.drawable.ic_menu,
+                            text = "Ещё"
+                        ),
+                    ),
+                    navigate = { }
+                )
+            },
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier,
+                    snackbar = {
+                        BaseSnackBar(
+                            text = it.visuals.message,
+                            actionText = it.visuals.actionLabel.orEmpty(),
+                            startIcon = R.drawable.ic_cat,
+                            actionListener = {
+                                it.dismiss()
+                            })
+                    })
+            }
+        ) { contentPadding ->
+            Box(
+                modifier = Modifier
+                    .background(Color.Black)
+                    .padding(contentPadding)
+                    .fillMaxSize()
+            ) {
+                Column(
                     modifier = Modifier
-                        .background(Color.Black)
-                        .padding(contentPadding)
                         .fillMaxSize()
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Spacer(modifier = Modifier.size(54.dp))
-                        Row() {
-                            Spacer(modifier = Modifier.size(24.dp))
-                            BaseCell(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable {
-                                        scope.launch {
-                                            snackbarHostState.showSnackbar(
-                                                message = "testMessage",
-                                                actionLabel = "Action",
-                                                duration = SnackbarDuration.Short
-                                            )
-                                        }
-                                    },
-                                title = "TestTitle",
-                                subtitle = "TestSubtitle",
-                                isChevronVisible = true,
-                                isDividerVisible = true,
-                                baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Top)
-                            )
-                            Spacer(modifier = Modifier.size(24.dp))
-                        }
-                        Row() {
-                            Spacer(modifier = Modifier.size(24.dp))
-                            BaseCell(
-                                modifier = Modifier.weight(1f),
-                                title = "SecondTestTitle",
-                                isChevronVisible = true,
-                                isDividerVisible = true,
-                                baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Middle)
-                            )
-                            Spacer(modifier = Modifier.size(24.dp))
-                        }
-                        Row() {
-                            Spacer(modifier = Modifier.size(24.dp))
-                            BaseCell(
-                                modifier = Modifier.weight(1f),
-                                title = "ThirdTestTitle",
-                                subtitle = "ThirdTestSubtitle",
-                                isChevronVisible = true,
-                                isDividerVisible = true,
-                                baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Bottom)
-                            )
-                            Spacer(modifier = Modifier.size(24.dp))
-                        }
+                    Spacer(modifier = Modifier.size(54.dp))
+                    Row() {
+                        Spacer(modifier = Modifier.size(24.dp))
+                        BaseCell(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    scope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            message = "testMessage",
+                                            actionLabel = "Action",
+                                            duration = SnackbarDuration.Short
+                                        )
+                                    }
+                                },
+                            title = "TestTitle",
+                            subtitle = "TestSubtitle",
+                            isChevronVisible = true,
+                            isDividerVisible = true,
+                            baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Top)
+                        )
+                        Spacer(modifier = Modifier.size(24.dp))
+                    }
+                    Row() {
+                        Spacer(modifier = Modifier.size(24.dp))
+                        BaseCell(
+                            modifier = Modifier.weight(1f),
+                            title = "SecondTestTitle",
+                            isChevronVisible = true,
+                            isDividerVisible = true,
+                            baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Middle)
+                        )
+                        Spacer(modifier = Modifier.size(24.dp))
+                    }
+                    Row() {
+                        Spacer(modifier = Modifier.size(24.dp))
+                        BaseCell(
+                            modifier = Modifier.weight(1f),
+                            title = "ThirdTestTitle",
+                            subtitle = "ThirdTestSubtitle",
+                            isChevronVisible = true,
+                            isDividerVisible = true,
+                            baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Bottom)
+                        )
+                        Spacer(modifier = Modifier.size(24.dp))
                     }
                 }
             }
         }
+    }
 }
