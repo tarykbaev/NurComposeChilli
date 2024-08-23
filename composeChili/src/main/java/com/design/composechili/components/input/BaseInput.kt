@@ -1,4 +1,4 @@
-package com.design.composechili.components
+package com.design.composechili.components.input
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
