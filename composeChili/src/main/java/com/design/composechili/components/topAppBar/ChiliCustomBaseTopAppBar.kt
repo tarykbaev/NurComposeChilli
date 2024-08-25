@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -64,25 +66,28 @@ fun ChiliCustomBaseTopAppBar(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(ChiliTheme.Attribute.ChiliTopAppBarHeightSize)
-                    .background(containerColor)
+                    .background(containerColor),
+                contentAlignment = Alignment.CenterStart
             ) {
                 var navigationIconWidth by remember { mutableStateOf(0) }
-
                 navigationIcon?.let { icon ->
                     IconButton(
                         modifier = Modifier
-                            .padding(dimensionResource(R.dimen.padding_4dp))
+                            .wrapContentSize()
+                            .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
                             .onGloballyPositioned { coordinates ->
                                 navigationIconWidth = coordinates.size.width
                             },
                         onClick = onNavigationClick ?: {}
                     ) {
                         Image(
-                            modifier = Modifier.size(
-                                navigationIconSize ?: dimensionResource(R.dimen.view_24dp)
-                            ),
+                            modifier = Modifier
+                                .size(
+                                    navigationIconSize ?: dimensionResource(R.dimen.view_24dp)
+                                )
+                                .background(Color.Red),
                             painter = painterResource(icon),
-                            contentDescription = "back",
+                            contentDescription = "back"
                         )
                     }
                 }
@@ -94,6 +99,7 @@ fun ChiliCustomBaseTopAppBar(
                     additionalText?.let {
                         Text(
                             modifier = Modifier
+                                .wrapContentSize()
                                 .padding(end = dimensionResource(R.dimen.padding_16dp)),
                             text = additionalText,
                             style = additionalTextStyle
@@ -103,13 +109,16 @@ fun ChiliCustomBaseTopAppBar(
                     endIcon?.let { icon ->
                         IconButton(
                             modifier = Modifier
-                                .padding(dimensionResource(R.dimen.padding_4dp)),
+                                .wrapContentSize()
+                                .padding(horizontal = 4.dp),
                             onClick = onEndIconClick ?: {}
                         ) {
                             Image(
-                                modifier = Modifier.size(
-                                    endIconSize ?: dimensionResource(R.dimen.view_24dp)
-                                ),
+                                modifier = Modifier
+                                    .size(
+                                        endIconSize ?: dimensionResource(R.dimen.view_24dp)
+                                    )
+                                    .padding(0.dp),
                                 painter = painterResource(icon),
                                 contentDescription = "endIcon"
                             )
