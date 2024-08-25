@@ -84,8 +84,7 @@ fun ChiliCustomBaseTopAppBar(
                             modifier = Modifier
                                 .size(
                                     navigationIconSize ?: dimensionResource(R.dimen.view_24dp)
-                                )
-                                .background(Color.Red),
+                                ),
                             painter = painterResource(icon),
                             contentDescription = "back"
                         )
@@ -140,6 +139,7 @@ fun ChiliCustomBaseTopAppBar(
                                 else -> dimensionResource(R.dimen.padding_16dp)
                             }
                         )
+                        .wrapContentSize()
                 ) {
                     Text(
                         modifier = Modifier,
