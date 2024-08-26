@@ -5,13 +5,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -24,7 +24,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -45,29 +44,22 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun MaskedTextField(
     modifier: Modifier = Modifier,
-    titleTextStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
-        ChiliTheme.Colors.ChiliPrimaryTextColor,
-        ChiliTheme.Attribute.ChiliBoldTextFont
-    ),
-    hintTextColor: Color = colorResource(id = R.color.gray_2),
-    representation: Char = 'X',
-    mask: String = "*",
-    maskSymbols: List<Char> = listOf('-', ' ', '/'),
-    allowedInputSymbols: String = "*",
-    initialText: String = "",
+    maskInputParams: MaskedTextFieldParams = MaskedTextFieldParams.Default,
+    initialText: String,
+    mask: String = initialText,
     fieldContainerColor: Color = colorResource(id = R.color.gray_5),
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    rootContainerPadding: PaddingValues = PaddingValues(horizontal = 16.dp)
 ) {
     var text by remember { mutableStateOf(initialText) }
-    var selectionPosition by remember { mutableIntStateOf(mask.indexOf(representation)) }
+    var selectionPosition by remember { mutableIntStateOf(mask.indexOf(maskInputParams.representation)) }
     var isEditing by remember { mutableStateOf(false) }
     var endIconVisibility by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
             .wrapContentHeight()
-            .padding(horizontal = 16.dp)
+            .padding(rootContainerPadding)
     ) {
         Row(
             modifier = modifier
@@ -81,24 +73,28 @@ fun MaskedTextField(
                     .weight(1f)
                     .padding(vertical = 16.dp),
                 value = TextFieldValue(text, TextRange(selectionPosition)),
-                visualTransformation = InputMaskVisualTransformation(hintTextColor),
+                visualTransformation = InputMaskVisualTransformation(maskInputParams.hintTextColor),
                 onValueChange = { newText ->
                     if (!isEditing) {
                         isEditing = true
                         val inputText = StringBuilder(newText.text)
                         val clearedText =
-                            clearMaskSymbols(inputText.toString(), maskSymbols, representation)
-                                .clearForbiddenSymbols(allowedInputSymbols)
+                            clearMaskSymbols(
+                                inputText.toString(),
+                                maskInputParams.maskSymbols,
+                                maskInputParams.representation
+                            )
+                                .clearForbiddenSymbols(maskInputParams.allowedInputSymbols)
                         val maskedText =
-                            mergeStrings(clearedText, mask, representation, selectionPosition) {
+                            mergeStrings(clearedText, mask, maskInputParams.representation, selectionPosition) {
                                 selectionPosition++
                             }
 
-                        val isMaskAdding = checkIsMaskAdding(text, maskedText, representation)
+                        val isMaskAdding = checkIsMaskAdding(text, maskedText, maskInputParams.representation)
 
                         // Определение позиции для маски
                         val lastMaskSym =
-                            maskedText.indexOfFirst { it == representation }.takeIf { it != -1 }
+                            maskedText.indexOfFirst { it == maskInputParams.representation }.takeIf { it != -1 }
                                 ?: maskedText.length
 
 
@@ -117,7 +113,7 @@ fun MaskedTextField(
                         isEditing = false
                     }
                 },
-                textStyle = titleTextStyle.copy(textAlign = TextAlign.Center),
+                textStyle = maskInputParams.titleTextStyle.copy(textAlign = TextAlign.Center),
                 cursorBrush = SolidColor(colorResource(id = R.color.magenta_1)),
             )
             endIconVisibility = text != mask
@@ -228,5 +224,33 @@ class InputMaskVisualTransformation(private val hintTextColor: Color) : VisualTr
             }
         }
     }
+}
+
+data class MaskedTextFieldParams(
+    val titleTextStyle: TextStyle,
+    val hintTextColor: Color,
+    val representation: Char,
+    val maskSymbols: List<Char>,
+    val allowedInputSymbols: String,
+    val fieldContainerColor: Color,
+) {
+    companion object {
+        val Default
+            @Composable
+            get() = MaskedTextFieldParams(
+                titleTextStyle = ChiliTextStyle.get(
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                    ChiliTheme.Colors.ChiliPrimaryTextColor,
+                    ChiliTheme.Attribute.ChiliBoldTextFont
+                ),
+                hintTextColor = colorResource(id = R.color.gray_2),
+                representation = 'X',
+                maskSymbols = listOf('-', ' ', '/'),
+                allowedInputSymbols = "*",
+                fieldContainerColor = colorResource(id = R.color.gray_5)
+            )
+    }
+
+
 }
 
