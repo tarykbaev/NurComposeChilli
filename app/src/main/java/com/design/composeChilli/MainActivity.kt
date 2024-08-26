@@ -41,6 +41,7 @@ import com.design.composechili.components.cell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.navBar.NavBarWithFab
 import com.design.composechili.components.navBar.model.ChiliNavItems
+import com.design.composechili.components.slider.ChiliSlider
 import com.design.composechili.theme.ChiliTheme
 import java.time.LocalDateTime
 
@@ -52,6 +53,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            val scope = rememberCoroutineScope()
+            val snackbarHostState = remember {
+                SnackbarHostState()
+            }
+            var stiffnessValue by remember { mutableFloatStateOf(0f) }
+            var animationValue by remember { mutableFloatStateOf(0f) }
+
             ChiliTheme {
                 var alertDialogState by rememberSaveable { mutableStateOf(true) }
                 var banner by rememberSaveable { mutableStateOf(String()) }
@@ -66,6 +74,44 @@ class MainActivity : ComponentActivity() {
                 if (alertDialogState) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         ChiliDatePickerDialog(
+                Scaffold(
+                    bottomBar = {
+                        NavBarWithFab(
+                            animationSize = animationValue,
+                            stiffness = stiffnessValue,
+                            items = listOf(
+                                ChiliNavItems(
+                                    selectedIcon = R.drawable.ic_home_filled,
+                                    unselectedIcon = R.drawable.ic_home,
+                                    text = "Главная"
+                                ),
+                                ChiliNavItems(
+                                    selectedIcon = R.drawable.ic_payment_filled,
+                                    unselectedIcon = R.drawable.ic_payment,
+                                    text = "Платежи"
+                                ),
+                                ChiliNavItems(
+                                    selectedIcon = R.drawable.ic_scaner_48,
+                                    unselectedIcon = R.drawable.ic_scaner_48,
+                                    isFab = true
+                                ),
+                                ChiliNavItems(
+                                    selectedIcon = R.drawable.ic_history_filled,
+                                    unselectedIcon = R.drawable.ic_history,
+                                    text = "История"
+                                ),
+                                ChiliNavItems(
+                                    selectedIcon = R.drawable.ic_menu_filled,
+                                    unselectedIcon = R.drawable.ic_menu,
+                                    text = "Ещё"
+                                ),
+                            ),
+                            navigate = { }
+                        )
+                    },
+                    snackbarHost = {
+                        SnackbarHost(
+                            hostState = snackbarHostState,
                             modifier = Modifier,
                             onDismissRequest = {},
                             startDateTitle = "Начальная Дата",
@@ -99,6 +145,47 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(text = name, modifier = modifier)
+                            Row() {
+                                Spacer(modifier = Modifier.size(24.dp))
+                                BaseCell(
+                                    modifier = Modifier.weight(1f),
+                                    title = "SecondTestTitle",
+                                    isChevronVisible = true,
+                                    isDividerVisible = true,
+                                    baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Middle)
+                                )
+                                Spacer(modifier = Modifier.size(24.dp))
+                            }
+                            Row() {
+                                Spacer(modifier = Modifier.size(24.dp))
+                                BaseCell(
+                                    modifier = Modifier.weight(1f),
+                                    title = "ThirdTestTitle",
+                                    subtitle = "ThirdTestSubtitle",
+                                    isChevronVisible = true,
+                                    isDividerVisible = true,
+                                    baseCellParams = BaseCellParams.Default.copy(cornerMode = CellCornerMode.Bottom)
+                                )
+                                Spacer(modifier = Modifier.size(24.dp))
+                            }
+                            Column(
+                                Modifier
+                                    .padding(16.dp)
+                                    .background(Color.White)
+                            ) {
+                                ChiliSlider(description = "Animation size") { animationValue = it }
+                                ChiliSlider(
+                                    description = "Stiffness value",
+                                    stepsSize = 9,
+                                    range = 0f..1000f
+                                ) { stiffnessValue = it }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
