@@ -18,8 +18,11 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +34,7 @@ import com.design.composechili.components.cell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.navBar.NavBarWithFab
 import com.design.composechili.components.navBar.model.ChiliNavItems
+import com.design.composechili.components.slider.ChiliSlider
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -44,11 +48,15 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember {
                 SnackbarHostState()
             }
+            var stiffnessValue by remember { mutableFloatStateOf(0f) }
+            var animationValue by remember { mutableFloatStateOf(0f) }
 
             ChiliTheme {
                 Scaffold(
                     bottomBar = {
                         NavBarWithFab(
+                            animationSize = animationValue,
+                            stiffness = stiffnessValue,
                             items = listOf(
                                 ChiliNavItems(
                                     selectedIcon = R.drawable.ic_home_filled,
@@ -150,17 +158,24 @@ class MainActivity : ComponentActivity() {
                                 )
                                 Spacer(modifier = Modifier.size(24.dp))
                             }
+                            Column(
+                                Modifier
+                                    .padding(16.dp)
+                                    .background(Color.White)
+                            ) {
+                                ChiliSlider(description = "Animation size") { animationValue = it }
+                                ChiliSlider(
+                                    description = "Stiffness value",
+                                    stepsSize = 9,
+                                    range = 0f..1000f
+                                ) { stiffnessValue = it }
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-
 }
 
 @Preview(showBackground = true)
@@ -276,6 +291,12 @@ fun GreetingPreview() {
                         )
                         Spacer(modifier = Modifier.size(24.dp))
                     }
+                    ChiliSlider(description = "Animation size") {}
+                    ChiliSlider(
+                        description = "Stiffness value",
+                        stepsSize = 9,
+                        range = 0f..1000f
+                    ) {}
                 }
             }
         }

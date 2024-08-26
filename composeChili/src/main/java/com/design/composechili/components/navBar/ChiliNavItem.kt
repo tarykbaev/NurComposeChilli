@@ -37,6 +37,8 @@ fun ChiliNavItem(
     @DrawableRes selectedIcon: Int,
     @DrawableRes unselectedIcon: Int,
     isSelected: Boolean = false,
+    animationSize: Float =1.4f,
+    stiffness:Float = Spring.StiffnessLow,
     onClick: () -> Unit = {}
 ) {
 
@@ -47,9 +49,9 @@ fun ChiliNavItem(
     val isPressed by interactionSource.collectIsPressedAsState()
 
     val sizeScale by animateFloatAsState(
-        targetValue = if (isPressed) 1.2f else 1f,
+        targetValue = if (isPressed) animationSize else 1f,
         label = "Button Animation",
-        animationSpec = spring(dampingRatio = 1f, stiffness = Spring.StiffnessLow)
+        animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = stiffness)
     )
 
     Column(

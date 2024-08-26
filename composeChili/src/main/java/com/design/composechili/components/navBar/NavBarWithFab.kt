@@ -1,5 +1,6 @@
 package com.design.composechili.components.navBar
 
+import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +33,9 @@ import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 @Composable
 fun NavBarWithFab(
     items: List<ChiliNavItems>,
-    navigate: (String) -> Unit
+    navigate: (String) -> Unit,
+    animationSize: Float = 1.4f,
+    stiffness: Float = Spring.StiffnessLow,
 ) {
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     Row(
@@ -54,13 +57,19 @@ fun NavBarWithFab(
     ) {
         items.forEachIndexed { index, chiliNavItems ->
             if (chiliNavItems.isFab) {
-                ChiliNavFabItem(icon = chiliNavItems.selectedIcon) { navigate(chiliNavItems.text) }
+                ChiliNavFabItem(
+                    icon = chiliNavItems.selectedIcon,
+                    animationSize = animationSize,
+                    stiffness = stiffness
+                ) { navigate(chiliNavItems.text) }
             } else {
                 ChiliNavItem(
                     text = chiliNavItems.text,
                     selectedIcon = chiliNavItems.selectedIcon,
                     unselectedIcon = chiliNavItems.unselectedIcon,
                     isSelected = selectedItem == index,
+                    animationSize = animationSize,
+                    stiffness = stiffness,
                     onClick = {
                         selectedItem = index
                         navigate(chiliNavItems.text)
