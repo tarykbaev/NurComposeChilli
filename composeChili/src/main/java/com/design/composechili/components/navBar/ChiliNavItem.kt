@@ -26,9 +26,9 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.design.composechili.theme.ChiliColors
 import com.design.composechili.theme.ChiliTextDimensions
 import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 @Composable
@@ -37,14 +37,14 @@ fun ChiliNavItem(
     @DrawableRes selectedIcon: Int,
     @DrawableRes unselectedIcon: Int,
     isSelected: Boolean = false,
-    animationSize: Float =1.4f,
-    stiffness:Float = Spring.StiffnessLow,
+    animationSize: Float = 1.4f,
+    stiffness: Float = Spring.StiffnessLow,
     onClick: () -> Unit = {}
 ) {
 
     val icon = if (isSelected) selectedIcon else unselectedIcon
     val textColor =
-        if (isSelected) ChiliColors.defaultLightColors().chiliLinkTextColor else ChiliColors.defaultLightColors().chiliValueTextColor
+        if (isSelected) ChiliTheme.Colors.chiliLinkTextColor else ChiliTheme.Colors.chiliValueTextColor
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
@@ -54,43 +54,45 @@ fun ChiliNavItem(
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = stiffness)
     )
 
-    Column(
-        modifier = Modifier
-            .offset(y = (-15).dp)
-            .graphicsLayer(
-                scaleX = sizeScale,
-                scaleY = sizeScale
-            )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-        Image(
+    ChiliTheme {
+        Column(
             modifier = Modifier
-                .background(
-                    color = ChiliColors.defaultLightColors().chiliSurfaceBackground,
-                    shape = RoundedCornerShape(
-                        ChiliRadiusDimensions.fromResources().radius12Dp,
-                    )
+                .offset(y = (-15).dp)
+                .graphicsLayer(
+                    scaleX = sizeScale,
+                    scaleY = sizeScale
                 )
-                .padding(10.dp),
-            painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
-            contentDescription = null,
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClick
+                ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         )
-        Text(
-            modifier = Modifier.padding(top = 4.dp),
-            text = text,
-            style = ChiliTextStyle.get(
-                textSize = ChiliTextDimensions.fromResources().TextSizeH10,
-                color = ChiliColors.defaultLightColors().chiliSegmentedPickerTabTextColor,
-                fontWeight = FontWeight.Bold
-            ),
-            color = textColor
-        )
+        {
+            Image(
+                modifier = Modifier
+                    .background(
+                        color = ChiliTheme.Colors.chiliSurfaceBackground,
+                        shape = RoundedCornerShape(
+                            ChiliRadiusDimensions.fromResources().radius12Dp,
+                        )
+                    )
+                    .padding(10.dp),
+                painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
+                contentDescription = null,
+            )
+            Text(
+                modifier = Modifier.padding(top = 4.dp),
+                text = text,
+                style = ChiliTextStyle.get(
+                    textSize = ChiliTextDimensions.fromResources().TextSizeH10,
+                    color = ChiliTheme.Colors.chiliSegmentedPickerTabTextColor,
+                    fontWeight = FontWeight.Bold
+                ),
+                color = textColor
+            )
+        }
     }
 }

@@ -34,7 +34,7 @@ import com.design.composechili.components.cell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.navBar.NavBarWithFab
 import com.design.composechili.components.navBar.model.ChiliNavItems
-import com.design.composechili.components.slider.ChiliSlider
+import com.design.composechili.components.slider.ChiliSliderCustom
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -163,8 +163,8 @@ class MainActivity : ComponentActivity() {
                                     .padding(16.dp)
                                     .background(Color.White)
                             ) {
-                                ChiliSlider(description = "Animation size $animationValue") { animationValue = it }
-                                ChiliSlider(
+                                ChiliSliderCustom(description = "Animation size $animationValue") { animationValue = it }
+                                ChiliSliderCustom(
                                     description = "Stiffness value $stiffnessValue",
                                     stepsSize = 9,
                                     range = 0f..1000f
@@ -291,8 +291,8 @@ fun GreetingPreview() {
                         )
                         Spacer(modifier = Modifier.size(24.dp))
                     }
-                    ChiliSlider(description = "Animation size") {}
-                    ChiliSlider(
+                    ChiliSliderCustom(description = "Animation size") {}
+                    ChiliSliderCustom(
                         description = "Stiffness value",
                         stepsSize = 9,
                         range = 0f..1000f
