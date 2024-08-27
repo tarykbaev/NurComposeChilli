@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 @Composable
@@ -47,33 +48,35 @@ fun ChiliNavFabItem(
         )
     )
 
-    Column(
-        modifier = Modifier
-            .offset(y = (-27).dp)
-            .graphicsLayer(
-                scaleX = sizeScale,
-                scaleY = sizeScale
-            )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-        Image(
+    ChiliTheme {
+        Column(
             modifier = Modifier
-                .size(54.dp)
-                .background(
-                    color = Color.Transparent,
-                    shape = RoundedCornerShape(
-                        ChiliRadiusDimensions.fromResources().radius12Dp,
-                    )
+                .offset(y = (-27).dp)
+                .graphicsLayer(
+                    scaleX = sizeScale,
+                    scaleY = sizeScale
+                )
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClick
                 ),
-            painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
-            contentDescription = null
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         )
+        {
+            Image(
+                modifier = Modifier
+                    .size(54.dp)
+                    .background(
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(
+                            ChiliRadiusDimensions.fromResources().radius12Dp,
+                        )
+                    ),
+                painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
+                contentDescription = null
+            )
+        }
     }
 }

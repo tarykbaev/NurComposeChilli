@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.navBar.model.ChiliNavItems
-import com.design.composechili.theme.ChiliColors
+import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 
@@ -38,43 +38,45 @@ fun NavBarWithFab(
     stiffness: Float = Spring.StiffnessLow,
 ) {
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .background(
-                color = ChiliColors.defaultLightColors().chiliScreenBackground,
-                shape = RoundedCornerShape(
-                    ChiliRadiusDimensions.fromResources().radius24Dp,
-                    ChiliRadiusDimensions.fromResources().radius24Dp,
-                    ChiliRadiusDimensions.fromResources().radius0Dp,
-                    ChiliRadiusDimensions.fromResources().radius0Dp,
+    ChiliTheme {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .background(
+                    color = ChiliTheme.Colors.chiliScreenBackground,
+                    shape = RoundedCornerShape(
+                        ChiliRadiusDimensions.fromResources().radius24Dp,
+                        ChiliRadiusDimensions.fromResources().radius24Dp,
+                        ChiliRadiusDimensions.fromResources().radius0Dp,
+                        ChiliRadiusDimensions.fromResources().radius0Dp,
+                    )
                 )
-            )
-            .fillMaxWidth()
-            .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-            .selectableGroup(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        items.forEachIndexed { index, chiliNavItems ->
-            if (chiliNavItems.isFab) {
-                ChiliNavFabItem(
-                    icon = chiliNavItems.selectedIcon,
-                    animationSize = animationSize,
-                    stiffness = stiffness
-                ) { navigate(chiliNavItems.text) }
-            } else {
-                ChiliNavItem(
-                    text = chiliNavItems.text,
-                    selectedIcon = chiliNavItems.selectedIcon,
-                    unselectedIcon = chiliNavItems.unselectedIcon,
-                    isSelected = selectedItem == index,
-                    animationSize = animationSize,
-                    stiffness = stiffness,
-                    onClick = {
-                        selectedItem = index
-                        navigate(chiliNavItems.text)
-                    }
-                )
+                .fillMaxWidth()
+                .windowInsetsPadding(NavigationBarDefaults.windowInsets)
+                .selectableGroup(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            items.forEachIndexed { index, chiliNavItems ->
+                if (chiliNavItems.isFab) {
+                    ChiliNavFabItem(
+                        icon = chiliNavItems.selectedIcon,
+                        animationSize = animationSize,
+                        stiffness = stiffness
+                    ) { navigate(chiliNavItems.text) }
+                } else {
+                    ChiliNavItem(
+                        text = chiliNavItems.text,
+                        selectedIcon = chiliNavItems.selectedIcon,
+                        unselectedIcon = chiliNavItems.unselectedIcon,
+                        isSelected = selectedItem == index,
+                        animationSize = animationSize,
+                        stiffness = stiffness,
+                        onClick = {
+                            selectedItem = index
+                            navigate(chiliNavItems.text)
+                        }
+                    )
+                }
             }
         }
     }

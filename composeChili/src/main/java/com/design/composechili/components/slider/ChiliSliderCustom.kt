@@ -27,13 +27,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composechili.theme.ChiliColors
+import com.design.composechili.theme.ChiliTheme
 import java.util.Locale
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChiliSlider(
+fun ChiliSliderCustom(
     description: String = String(),
     stepsSize: Int = 0,
     range: ClosedFloatingPointRange<Float> = 0f..4f,
@@ -58,54 +58,56 @@ fun ChiliSlider(
         animationSpec = tween(300)
     )
 
-    Column(modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)) {
-        Text(
-            text = text,
-            color = ChiliColors.defaultLightColors().chiliValueTextColor
-        )
-        Slider(
-            value = sliderValueState,
-            onValueChange = {
-                sliderValueState = it
-                onValueChanged((sliderValueState.roundToInt().toFloat()))
-            },
+    ChiliTheme {
+        Column(modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)) {
+            Text(
+                text = text,
+                color = ChiliTheme.Colors.chiliValueTextColor
+            )
+            Slider(
+                value = sliderValueState,
+                onValueChange = {
+                    sliderValueState = it
+                    onValueChanged((sliderValueState.roundToInt().toFloat()))
+                },
 
-            interactionSource = interactionSource,
-            steps = stepsSize,
-            onValueChangeFinished = {},
-            valueRange = range,
-            thumb = {
-                Spacer(
-                    Modifier
-                        .graphicsLayer {
-                            scaleX = sizeScale
-                            scaleY = sizeScale
-                        }
-                        .size(10.dp)
-                        .offset(x = 4.dp, y = 5.dp)
-                        .indication(
-                            interactionSource = interactionSource,
-                            indication = rememberRipple(bounded = false, radius = 15.dp)
-                        )
-                        .background(
-                            ChiliColors.defaultLightColors().chiliLinkTextColor,
-                            RoundedCornerShape(20.dp)
-                        )
-                )
-            },
-            track = { sliderState ->
-                SliderDefaults.Track(
-                    sliderState = sliderState,
-                    colors = SliderDefaults.colors(
-                        activeTrackColor = ChiliColors.defaultLightColors().chiliLinkTextColor,
-                        inactiveTickColor = ChiliColors.defaultLightColors().chiliValueTextColor,
-                        disabledInactiveTickColor = Color.Black,
-                        activeTickColor = Color.Black,
-                        disabledActiveTickColor = Color.Black
+                interactionSource = interactionSource,
+                steps = stepsSize,
+                onValueChangeFinished = {},
+                valueRange = range,
+                thumb = {
+                    Spacer(
+                        Modifier
+                            .graphicsLayer {
+                                scaleX = sizeScale
+                                scaleY = sizeScale
+                            }
+                            .size(10.dp)
+                            .offset(x = 4.dp, y = 5.dp)
+                            .indication(
+                                interactionSource = interactionSource,
+                                indication = rememberRipple(bounded = false, radius = 15.dp)
+                            )
+                            .background(
+                                ChiliTheme.Colors.chiliLinkTextColor,
+                                RoundedCornerShape(20.dp)
+                            )
                     )
-                )
-            },
-        )
+                },
+                track = { sliderState ->
+                    SliderDefaults.Track(
+                        sliderState = sliderState,
+                        colors = SliderDefaults.colors(
+                            activeTrackColor = ChiliTheme.Colors.chiliLinkTextColor,
+                            inactiveTickColor = ChiliTheme.Colors.chiliValueTextColor,
+                            disabledInactiveTickColor = Color.Black,
+                            activeTickColor = Color.Black,
+                            disabledActiveTickColor = Color.Black
+                        )
+                    )
+                },
+            )
+        }
     }
 }
 
@@ -113,7 +115,7 @@ fun ChiliSlider(
 @Composable
 fun ChiliSlider_Preview() {
     Column {
-        ChiliSlider(stepsSize = 9)
-        ChiliSlider()
+        ChiliSliderCustom(stepsSize = 9)
+        ChiliSliderCustom()
     }
 }
