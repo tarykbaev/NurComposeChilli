@@ -1,6 +1,6 @@
 package com.design.composechili.components.slider
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.indication
@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,10 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliColors
 import java.util.Locale
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,9 +52,9 @@ fun ChiliSlider(
         }"
     }
     val onPress by interactionSource.collectIsDraggedAsState()
-    val thumbSize by animateDpAsState(
-        targetValue = if (onPress) 24.dp else 20.dp,
-        label = "Thumb Animation",
+    val sizeScale by animateFloatAsState(
+        targetValue = if (onPress) 1.2f else 1f,
+        label = "Button Animation",
         animationSpec = tween(300)
     )
 
@@ -62,7 +65,34 @@ fun ChiliSlider(
         )
         Slider(
             value = sliderValueState,
-            onValueChange = { sliderValueState = it },
+            onValueChange = {
+                sliderValueState = it
+                onValueChanged((sliderValueState.roundToInt().toFloat()))
+            },
+
+            interactionSource = interactionSource,
+            steps = stepsSize,
+            onValueChangeFinished = {},
+            valueRange = range,
+            thumb = {
+                Spacer(
+                    Modifier
+                        .graphicsLayer {
+                            scaleX = sizeScale
+                            scaleY = sizeScale
+                        }
+                        .size(10.dp)
+                        .offset(x = 4.dp, y = 5.dp)
+                        .indication(
+                            interactionSource = interactionSource,
+                            indication = rememberRipple(bounded = false, radius = 15.dp)
+                        )
+                        .background(
+                            ChiliColors.defaultLightColors().chiliLinkTextColor,
+                            RoundedCornerShape(20.dp)
+                        )
+                )
+            },
             track = { sliderState ->
                 SliderDefaults.Track(
                     sliderState = sliderState,
@@ -75,25 +105,6 @@ fun ChiliSlider(
                     )
                 )
             },
-            interactionSource = interactionSource,
-            steps = stepsSize,
-            onValueChangeFinished = { onValueChanged(sliderValueState) },
-            valueRange = range,
-            thumb = {
-                Spacer(
-                    Modifier
-                        .size(thumbSize)
-                        .padding(4.dp)
-                        .indication(
-                            interactionSource = interactionSource,
-                            indication = rememberRipple(bounded = false, radius = 15.dp)
-                        )
-                        .background(
-                            ChiliColors.defaultLightColors().chiliLinkTextColor,
-                            RoundedCornerShape(20.dp)
-                        )
-                )
-            }
         )
     }
 }

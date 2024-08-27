@@ -173,9 +173,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                                     .padding(16.dp)
                                     .background(Color.White)
                             ) {
-                                ChiliSlider(description = "Animation size") { animationValue = it }
+                                ChiliSlider(description = "Animation size $animationValue") { animationValue = it }
                                 ChiliSlider(
-                                    description = "Stiffness value",
+                                    description = "Stiffness value $stiffnessValue",
                                     stepsSize = 9,
                                     range = 0f..1000f
                                 ) { stiffnessValue = it }
