@@ -2,8 +2,6 @@ package com.design.composechili.components.slider
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,29 +12,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
-fun ChiliSliderM2() {
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
+fun ChiliSliderM2(
+    description: String = "Slider value",
+    stepsSize: Int = 0,
+    range: ClosedFloatingPointRange<Float> = 0f..4f,
+    onValueChanged: (Float) -> Unit = {}
+) {
+    var sliderPosition by remember { mutableFloatStateOf(0.0f) }
     ChiliTheme {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Text(
-                text = "Slider value ${sliderPosition.roundToInt()}",
+                text = "$description ${
+                    String.format(
+                        Locale.ROOT,
+                        "%.1f",
+                        sliderPosition
+                    )
+                }",
                 color = ChiliTheme.Colors.chiliValueTextColor
             )
-            Slider(
+            SliderM2(
                 value = sliderPosition,
-                valueRange = 0f..100f,
-                onValueChange = { sliderPosition = it },
-                colors = SliderDefaults.colors(
+                valueRange = range,
+                onValueChange = {
+                    sliderPosition = it
+                    onValueChanged(it.roundToInt().toFloat())
+                },
+                colors = SliderDefaultsM2.colors(
                     thumbColor = ChiliTheme.Colors.chiliLinkTextColor,
                     disabledThumbColor = ChiliTheme.Colors.chiliLinkTextColor,
                     activeTrackColor = ChiliTheme.Colors.chiliLinkTextColor,
                     inactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
                     disabledInactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
-                    inactiveTickColor = ChiliTheme.Colors.chiliLinkTextColor
-                )
+                    inactiveTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                    activeTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor
+                ),
+                steps = stepsSize,
             )
         }
     }
@@ -45,5 +60,8 @@ fun ChiliSliderM2() {
 @Preview(showBackground = true)
 @Composable
 fun ChiliSliderM2_Preview() {
-    ChiliSliderM2()
+    Column {
+        ChiliSliderM2(stepsSize = 40, range = 0f..20f)
+        ChiliSliderM2(range = 0f..4f)
+    }
 }

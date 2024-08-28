@@ -25,14 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.navBar.model.ChiliNavItems
+import com.design.composechili.components.navBar.model.ChiliNavWithFabItems
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 
 @Composable
 fun NavBarWithFab(
-    items: List<ChiliNavItems>,
+    items: List<ChiliNavWithFabItems>,
     navigate: (String) -> Unit,
     animationSize: Float = 1.4f,
     stiffness: Float = Spring.StiffnessLow,
@@ -89,27 +89,27 @@ fun NavBar_Preview() {
         bottomBar = {
             NavBarWithFab(
                 items = listOf(
-                    ChiliNavItems(
+                    ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_home_filled,
                         unselectedIcon = R.drawable.ic_home,
                         text = "Главная"
                     ),
-                    ChiliNavItems(
+                    ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_payment_filled,
                         unselectedIcon = R.drawable.ic_payment,
                         text = "Платежи"
                     ),
-                    ChiliNavItems(
+                    ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_scaner_48,
                         unselectedIcon = R.drawable.ic_scaner_48,
                         isFab = true
                     ),
-                    ChiliNavItems(
+                    ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_history_filled,
                         unselectedIcon = R.drawable.ic_history,
                         text = "История"
                     ),
-                    ChiliNavItems(
+                    ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_menu_filled,
                         unselectedIcon = R.drawable.ic_menu,
                         text = "Ещё"

@@ -39,7 +39,8 @@ fun ChiliNavItem(
     isSelected: Boolean = false,
     animationSize: Float = 1.4f,
     stiffness: Float = Spring.StiffnessLow,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    noAnimation: Boolean = false
 ) {
 
     val icon = if (isSelected) selectedIcon else unselectedIcon
@@ -54,14 +55,26 @@ fun ChiliNavItem(
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = stiffness)
     )
 
+    val imageModifier = if (!noAnimation) {
+        Modifier
+            .background(
+                color = ChiliTheme.Colors.chiliSurfaceBackground,
+                shape = RoundedCornerShape(ChiliRadiusDimensions.fromResources().radius12Dp)
+            )
+            .padding(10.dp)
+    } else {
+        Modifier
+    }
+
     ChiliTheme {
         Column(
             modifier = Modifier
-                .offset(y = (-15).dp)
-                .graphicsLayer(
-                    scaleX = sizeScale,
+                .then(if (!noAnimation) Modifier.graphicsLayer {
+                    scaleX = sizeScale
                     scaleY = sizeScale
-                )
+                } else Modifier)
+                .padding(vertical = if (noAnimation) 10.dp else 0.dp)
+                .offset(y = if (!noAnimation) (-15).dp else 0.dp)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -72,14 +85,7 @@ fun ChiliNavItem(
         )
         {
             Image(
-                modifier = Modifier
-                    .background(
-                        color = ChiliTheme.Colors.chiliSurfaceBackground,
-                        shape = RoundedCornerShape(
-                            ChiliRadiusDimensions.fromResources().radius12Dp,
-                        )
-                    )
-                    .padding(10.dp),
+                modifier = imageModifier,
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
                 contentDescription = null,
             )
