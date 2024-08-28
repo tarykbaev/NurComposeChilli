@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,9 +33,13 @@ import com.design.composechili.components.BaseSnackBar
 import com.design.composechili.components.cell.BaseCell
 import com.design.composechili.components.cell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
+import com.design.composechili.components.navBar.ChiliNavBar
 import com.design.composechili.components.navBar.NavBarWithFab
 import com.design.composechili.components.navBar.model.ChiliNavItems
+import com.design.composechili.components.navBar.model.ChiliNavWithFabItems
 import com.design.composechili.components.slider.ChiliSliderCustom
+import com.design.composechili.components.slider.ChiliSliderM2
+import com.design.composechili.components.switch_chili.SwitchChili
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -58,27 +63,27 @@ class MainActivity : ComponentActivity() {
                             animationSize = animationValue,
                             stiffness = stiffnessValue,
                             items = listOf(
-                                ChiliNavItems(
+                                ChiliNavWithFabItems(
                                     selectedIcon = R.drawable.ic_home_filled,
                                     unselectedIcon = R.drawable.ic_home,
                                     text = "Главная"
                                 ),
-                                ChiliNavItems(
+                                ChiliNavWithFabItems(
                                     selectedIcon = R.drawable.ic_payment_filled,
                                     unselectedIcon = R.drawable.ic_payment,
                                     text = "Платежи"
                                 ),
-                                ChiliNavItems(
+                                ChiliNavWithFabItems(
                                     selectedIcon = R.drawable.ic_scaner_48,
                                     unselectedIcon = R.drawable.ic_scaner_48,
                                     isFab = true
                                 ),
-                                ChiliNavItems(
+                                ChiliNavWithFabItems(
                                     selectedIcon = R.drawable.ic_history_filled,
                                     unselectedIcon = R.drawable.ic_history,
                                     text = "История"
                                 ),
-                                ChiliNavItems(
+                                ChiliNavWithFabItems(
                                     selectedIcon = R.drawable.ic_menu_filled,
                                     unselectedIcon = R.drawable.ic_menu,
                                     text = "Ещё"
@@ -108,10 +113,39 @@ class MainActivity : ComponentActivity() {
                             .padding(contentPadding)
                             .fillMaxSize()
                     ) {
-                        Column(
+                        Row(
                             modifier = Modifier
-                                .fillMaxSize()
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 20.dp)
                         ) {
+                            ChiliNavBar(
+                                items = listOf(
+                                    ChiliNavItems(
+                                        selectedIcon = R.drawable.ic_home_filled,
+                                        unselectedIcon = R.drawable.ic_home,
+                                        text = "Главная"
+                                    ),
+                                    ChiliNavItems(
+                                        selectedIcon = R.drawable.ic_payment_filled,
+                                        unselectedIcon = R.drawable.ic_payment,
+                                        text = "Платежи"
+                                    ),
+                                    ChiliNavItems(
+                                        selectedIcon = R.drawable.ic_history_filled,
+                                        unselectedIcon = R.drawable.ic_history,
+                                        text = "История"
+                                    ),
+                                    ChiliNavItems(
+                                        selectedIcon = R.drawable.ic_menu_filled,
+                                        unselectedIcon = R.drawable.ic_menu,
+                                        text = "Ещё"
+                                    ),
+                                ),
+                            ) {
+
+                            }
+                        }
+                        Column(modifier = Modifier.fillMaxSize()) {
                             Spacer(modifier = Modifier.size(54.dp))
                             Row() {
                                 Spacer(modifier = Modifier.size(24.dp))
@@ -163,12 +197,16 @@ class MainActivity : ComponentActivity() {
                                     .padding(16.dp)
                                     .background(Color.White)
                             ) {
-                                ChiliSliderCustom(description = "Animation size $animationValue") { animationValue = it }
+                                ChiliSliderCustom(description = "Animation size $animationValue") {
+                                    animationValue = it
+                                }
                                 ChiliSliderCustom(
                                     description = "Stiffness value $stiffnessValue",
                                     stepsSize = 9,
                                     range = 0f..1000f
                                 ) { stiffnessValue = it }
+                                ChiliSliderM2()
+                                SwitchChili()
                             }
                         }
                     }
@@ -191,27 +229,27 @@ fun GreetingPreview() {
             bottomBar = {
                 NavBarWithFab(
                     items = listOf(
-                        ChiliNavItems(
+                        ChiliNavWithFabItems(
                             selectedIcon = R.drawable.ic_home_filled,
                             unselectedIcon = R.drawable.ic_home,
                             text = "Главная"
                         ),
-                        ChiliNavItems(
+                        ChiliNavWithFabItems(
                             selectedIcon = R.drawable.ic_payment_filled,
                             unselectedIcon = R.drawable.ic_payment,
                             text = "Платежи"
                         ),
-                        ChiliNavItems(
+                        ChiliNavWithFabItems(
                             selectedIcon = R.drawable.ic_scaner_48,
                             unselectedIcon = R.drawable.ic_scaner_48,
                             isFab = true
                         ),
-                        ChiliNavItems(
+                        ChiliNavWithFabItems(
                             selectedIcon = R.drawable.ic_history_filled,
                             unselectedIcon = R.drawable.ic_history,
                             text = "История"
                         ),
-                        ChiliNavItems(
+                        ChiliNavWithFabItems(
                             selectedIcon = R.drawable.ic_menu_filled,
                             unselectedIcon = R.drawable.ic_menu,
                             text = "Ещё"
@@ -241,10 +279,40 @@ fun GreetingPreview() {
                     .padding(contentPadding)
                     .fillMaxSize()
             ) {
-                Column(
+                Row(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 20.dp)
                 ) {
+                    ChiliNavBar(
+                        items = listOf(
+                            ChiliNavItems(
+                                selectedIcon = R.drawable.ic_home_filled,
+                                unselectedIcon = R.drawable.ic_home,
+                                text = "Главная"
+                            ),
+                            ChiliNavItems(
+                                selectedIcon = R.drawable.ic_payment_filled,
+                                unselectedIcon = R.drawable.ic_payment,
+                                text = "Платежи"
+                            ),
+                            ChiliNavItems(
+                                selectedIcon = R.drawable.ic_history_filled,
+                                unselectedIcon = R.drawable.ic_history,
+                                text = "История"
+                            ),
+                            ChiliNavItems(
+                                selectedIcon = R.drawable.ic_menu_filled,
+                                unselectedIcon = R.drawable.ic_menu,
+                                text = "Ещё"
+                            ),
+                        ),
+                    ) {
+
+                    }
+                }
+
+                Column(modifier = Modifier.fillMaxSize()) {
                     Spacer(modifier = Modifier.size(54.dp))
                     Row() {
                         Spacer(modifier = Modifier.size(24.dp))
@@ -291,12 +359,20 @@ fun GreetingPreview() {
                         )
                         Spacer(modifier = Modifier.size(24.dp))
                     }
-                    ChiliSliderCustom(description = "Animation size") {}
-                    ChiliSliderCustom(
-                        description = "Stiffness value",
-                        stepsSize = 9,
-                        range = 0f..1000f
-                    ) {}
+                    Column(
+                        Modifier
+                            .padding(16.dp)
+                            .background(Color.White)
+                    ) {
+                        ChiliSliderCustom(description = "Animation size") {}
+                        ChiliSliderCustom(
+                            description = "Stiffness value",
+                            stepsSize = 9,
+                            range = 0f..1000f
+                        ) {}
+                        ChiliSliderM2()
+                        SwitchChili()
+                    }
                 }
             }
         }
