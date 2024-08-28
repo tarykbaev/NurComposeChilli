@@ -10,7 +10,7 @@ import com.design.composechili.R
 public data class ChiliColors(
     val ChiliPrimaryTextColor:Color,
     val chiliSecondaryTextColor:Color,
-    val chiliMarkedTextColor:Color,
+    val ChiliMarkedTextColor:Color,
     val chiliErrorTextColor:Color,
     val chiliValueTextColor:Color,
     val chiliLinkTextColor:Color,
@@ -82,6 +82,8 @@ public data class ChiliColors(
     val ChiliCellViewBackground:Color,
     val ChilicellSquircleIconBackground:Color,
 
+    val ChiliTooltipBackground:Color
+
 
 
     ){
@@ -91,7 +93,7 @@ public data class ChiliColors(
         fun defaultDarkColors() : ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.white_1),
             chiliSecondaryTextColor = colorResource(id = R.color.gray_3),
-            chiliMarkedTextColor = colorResource(id = R.color.white_1),
+            ChiliMarkedTextColor = colorResource(id = R.color.white_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
@@ -134,14 +136,15 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorPressed = colorResource(id = R.color.blue_1),
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
-            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3)
+            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliTooltipBackground = colorResource(id = R.color.black_3)
         )
 
         @Composable
         fun defaultLightColors() : ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.black_1),
             chiliSecondaryTextColor = colorResource(id = R.color.black_4),
-            chiliMarkedTextColor = colorResource(id = R.color.black_1),
+            ChiliMarkedTextColor = colorResource(id = R.color.black_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
@@ -184,7 +187,8 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorPressed = colorResource(id = R.color.blue_1),
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
-            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3)
+            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliTooltipBackground = colorResource(id = R.color.black_3)
         )
     }
 
