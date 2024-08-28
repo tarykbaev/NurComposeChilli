@@ -1,4 +1,4 @@
-package com.design.composechili.components.buttons
+package com.design.composechili.components.buttons.loaderButton
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -17,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.theme.ChiliTheme
 
 @Composable

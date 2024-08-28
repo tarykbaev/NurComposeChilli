@@ -1,4 +1,4 @@
-package com.design.composechili.components.input
+package com.design.composechili.components.input.maskedTextField
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -25,21 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
-import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun MaskedTextField(
@@ -73,7 +63,7 @@ fun MaskedTextField(
                     .weight(1f)
                     .padding(vertical = 16.dp),
                 value = TextFieldValue(text, TextRange(selectionPosition)),
-                visualTransformation = InputMaskVisualTransformation(maskInputParams.hintTextColor),
+                visualTransformation = MaskTextFieldVisualTransformation(maskInputParams.hintTextColor),
                 onValueChange = { newText ->
                     if (!isEditing) {
                         isEditing = true
@@ -194,63 +184,3 @@ fun mergeStrings(
     }
     return maskedText.toString()
 }
-
-
-class InputMaskVisualTransformation(private val hintTextColor: Color) : VisualTransformation {
-
-    override fun filter(text: AnnotatedString): TransformedText {
-        return TransformedText(
-            text = buildAnnotatedStringWithUrlHighlighting(text.text, hintTextColor),
-            offsetMapping = OffsetMapping.Identity
-        )
-    }
-
-    private fun buildAnnotatedStringWithUrlHighlighting(
-        text: String,
-        color: Color = Color.Gray
-    ): AnnotatedString {
-        return buildAnnotatedString {
-            append(text)
-            text.toList().forEachIndexed { index, char ->
-                if (char.toString() == "X") {
-                    addStyle(
-                        style = SpanStyle(
-                            color = color,
-                            textDecoration = TextDecoration.None
-                        ),
-                        start = index, end = index + 1
-                    )
-                }
-            }
-        }
-    }
-}
-
-data class MaskedTextFieldParams(
-    val titleTextStyle: TextStyle,
-    val hintTextColor: Color,
-    val representation: Char,
-    val maskSymbols: List<Char>,
-    val allowedInputSymbols: String,
-    val fieldContainerColor: Color,
-) {
-    companion object {
-        val Default
-            @Composable
-            get() = MaskedTextFieldParams(
-                titleTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor,
-                    ChiliTheme.Attribute.ChiliBoldTextFont
-                ),
-                hintTextColor = colorResource(id = R.color.gray_2),
-                representation = 'X',
-                maskSymbols = listOf('-', ' ', '/'),
-                allowedInputSymbols = "*",
-                fieldContainerColor = colorResource(id = R.color.gray_5)
-            )
-    }
-
-
-}
-

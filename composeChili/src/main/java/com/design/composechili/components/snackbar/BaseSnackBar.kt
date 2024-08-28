@@ -1,6 +1,5 @@
-package com.design.composechili.components
+package com.design.composechili.components.snackbar
 
-import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

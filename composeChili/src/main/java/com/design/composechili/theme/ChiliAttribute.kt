@@ -55,6 +55,9 @@ data class ChiliAttribute(
     // Cell
     val ChiliCellCornerRadius:Dp,
 
+    // Tooltip
+    val ChiliToolipCornerRadius:Dp
+
     ) {
     companion object {
         @Composable
@@ -83,7 +86,8 @@ data class ChiliAttribute(
             ChiliSnackbarContentPaddingVertical = dimensionResource(id = R.dimen.padding_10dp),
             ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
             ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp),
-            ChiliComponentButtonTextFont = Font(R.font.roboto_regular)
+            ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
+            ChiliToolipCornerRadius = dimensionResource(id = R.dimen.radius_12dp)
         )
     }
 }

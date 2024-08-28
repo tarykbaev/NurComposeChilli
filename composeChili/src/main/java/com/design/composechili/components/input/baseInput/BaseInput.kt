@@ -1,4 +1,4 @@
-package com.design.composechili.components.input
+package com.design.composechili.components.input.baseInput
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
@@ -109,37 +109,4 @@ fun BaseInput(
             }
         }
     }
-}
-
-data class BaseInputParams(
-    val textStyle: TextStyle,
-    val errorTextColor: Color,
-    val cursorColor: Color,
-    val fieldBackground: Color,
-    val selectionBackgroundColor: Color,
-    val hintColor: Color,
-    val keyboardType: KeyboardType = KeyboardType.Text,
-    val autoCorrectionEnable: Boolean = true,
-    val imeAction: ImeAction = ImeAction.None,
-) {
-
-    companion object {
-        val Default
-            @Composable
-            get() = BaseInputParams(
-                textStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor
-                ),
-                errorTextColor = ChiliTheme.Colors.chiliErrorTextColor,
-                cursorColor = colorResource(id = R.color.magenta_1),
-                fieldBackground = colorResource(id = R.color.gray_5),
-                selectionBackgroundColor = colorResource(id = R.color.magenta_3),
-                hintColor = colorResource(id = R.color.gray_1),
-                keyboardType = KeyboardType.Text,
-                autoCorrectionEnable = true,
-                imeAction = ImeAction.None
-            )
-    }
-
 }

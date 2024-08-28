@@ -1,35 +1,20 @@
-package com.design.composechili.components.input
+package com.design.composechili.components.tooltip
 
 import android.view.View
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -40,94 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
-import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
-import com.design.composechili.theme.ChiliTheme
 import kotlin.math.roundToInt
 
-/**
- * tooltipContent - Content to display in tooltip.
- */
 @Composable
-fun TooltipPopup(
-    modifier: Modifier = Modifier,
-    requesterView: @Composable (Modifier) -> Unit,
-    title: String = String(),
-    titleTextStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
-        ChiliTheme.Colors.ChiliMarkedTextColor,
-        ChiliTheme.Attribute.ChiliBoldTextFont
-    ),
-    subtitleTextStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
-        ChiliTheme.Colors.ChiliMarkedTextColor
-    ),
-    subtitle: String = String(),
-) {
-    ChiliTheme {
-        var isShowTooltip by remember { mutableStateOf(false) }
-        var position by remember { mutableStateOf(TooltipPopupPosition()) }
-
-        val view = LocalView.current.rootView
-
-        if (isShowTooltip) {
-            TooltipPopup(
-                backgroundColor = ChiliTheme.Colors.ChiliTooltipBackground,
-                onDismissRequest = {
-                    isShowTooltip = isShowTooltip.not()
-                },
-                position = position,
-            ) {
-                Row(modifier = modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp)) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        if (title.isNotBlank()) {
-                            Text(
-                                modifier = Modifier.padding(end = 4.dp),
-                                text = title,
-                                color = Color.White,
-                                style = titleTextStyle
-                            )
-                            Text(
-                                modifier = Modifier.padding(top = 4.dp, end = 4.dp),
-                                text = subtitle,
-                                color = Color.White,
-                                style = subtitleTextStyle
-                            )
-                        }
-                    }
-                    Image(
-                        modifier = Modifier
-                            .padding(horizontal = 4.dp)
-                            .align(Alignment.CenterVertically)
-                            .clickable {
-                                isShowTooltip = isShowTooltip.not()
-                            },
-                        painter = painterResource(id = R.drawable.chili_ic_clear_24),
-                        contentDescription = String()
-                    )
-                }
-            }
-        }
-        requesterView(
-            modifier
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }) {
-                    isShowTooltip = isShowTooltip.not()
-                }
-                .onGloballyPositioned { coordinates ->
-                    position = calculateTooltipPopupPosition(view, coordinates)
-                }
-        )
-    }
-}
-
-@Composable
-fun TooltipPopup(
+fun ChiliTooltipPopup(
     position: TooltipPopupPosition,
-    backgroundShape: Shape = MaterialTheme.shapes.medium,
-    backgroundColor: Color = Color.DarkGray,
-    arrowHeight: Dp = 4.dp,
+    backgroundShape: Shape,
+    backgroundColor: Color,
+    arrowHeight: Dp,
     horizontalPadding: Dp = 16.dp,
     onDismissRequest: (() -> Unit)? = null,
     content: @Composable () -> Unit
@@ -139,7 +44,7 @@ fun TooltipPopup(
         horizontalPadding.toPx()
     }
 
-    var arrowPositionX by remember { mutableStateOf(position.centerPositionX) }
+    var arrowPositionX by remember { mutableFloatStateOf(position.centerPositionX) }
 
     with(LocalDensity.current) {
         val arrowPaddingPx = arrowHeight.toPx().roundToInt() * 3
@@ -148,7 +53,7 @@ fun TooltipPopup(
             TooltipAlignment.BottomCenter -> {
                 alignment = Alignment.BottomCenter
                 offset = offset.copy(
-                    y = position.offset.y + arrowPaddingPx
+                    y = position.offset.y + arrowPaddingPx * 3
                 )
             }
         }
@@ -180,6 +85,7 @@ fun TooltipPopup(
             alignment = position.alignment,
             arrowHeight = arrowHeight,
             arrowPositionX = arrowPositionX,
+            pathColor = backgroundColor
         ) {
             content()
         }
@@ -284,60 +190,6 @@ internal class TooltipAlignmentOffsetPositionProvider(
     }
 }
 
-@Composable
-fun BubbleLayout(
-    modifier: Modifier = Modifier,
-    alignment: TooltipAlignment = TooltipAlignment.BottomCenter,
-    arrowHeight: Dp,
-    arrowPositionX: Float,
-    content: @Composable () -> Unit
-) {
-
-    val arrowHeightPx = with(LocalDensity.current) {
-        arrowHeight.toPx()
-    }
-
-    Box(
-        modifier = modifier
-            .drawBehind {
-                if (arrowPositionX <= 0f) return@drawBehind
-
-                val isTopCenter = alignment == TooltipAlignment.BottomCenter
-
-                val path = Path()
-
-                if (isTopCenter) {
-                    val position = Offset(arrowPositionX, 0f)
-                    path.apply {
-                        moveTo(x = position.x, y = position.y)
-                        lineTo(x = position.x - arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y - arrowHeightPx)
-                        lineTo(x = position.x + arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y)
-                    }
-                } else {
-                    val arrowY = drawContext.size.height
-                    val position = Offset(arrowPositionX, arrowY)
-                    path.apply {
-                        moveTo(x = position.x, y = position.y)
-                        lineTo(x = position.x + arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y + arrowHeightPx)
-                        lineTo(x = position.x - arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y)
-                    }
-                }
-
-                drawPath(
-                    path = path,
-                    color = Color.DarkGray,
-                )
-                path.close()
-            }
-    ) {
-        content()
-    }
-}
-
 data class TooltipPopupPosition(
     val offset: IntOffset = IntOffset(0, 0),
     val alignment: TooltipAlignment = TooltipAlignment.BottomCenter,
@@ -365,7 +217,7 @@ fun calculateTooltipPopupPosition(
 
     return if (heightAbove < heightBelow) {
         val offset = IntOffset(
-            y = coordinates.size.height,
+            y = coordinates.size.height / 2,
             x = offsetX.toInt()
         )
         TooltipPopupPosition(
@@ -383,8 +235,4 @@ fun calculateTooltipPopupPosition(
             centerPositionX = centerPositionX,
         )
     }
-}
-
-enum class TooltipAlignment {
-    BottomCenter,
 }

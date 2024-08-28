@@ -1,10 +1,11 @@
-package com.design.composechili.components.input
+package com.design.composechili.components.input.inputFieldWithDescAndAction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +25,7 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun InputFieldWithDescAndAction(
     modifier: Modifier = Modifier,
+    descriptionModifier: Modifier = Modifier,
     description: String = String(),
     descriptionTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
@@ -33,12 +35,16 @@ fun InputFieldWithDescAndAction(
     onActionClick: (() -> Unit)? = null,
     inputField: @Composable (Modifier) -> Unit,
 ) {
-    Column(modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
+            .wrapContentHeight()
+    ) {
         inputField(Modifier.fillMaxWidth())
         Row() {
             if (description.isNotBlank()) {
                 Text(
-                    modifier = Modifier
+                    modifier = descriptionModifier
                         .weight(1f)
                         .padding(vertical = 12.dp)
                         .align(Alignment.CenterVertically),
