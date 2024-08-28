@@ -90,6 +90,12 @@ public data class ChiliColors(
     val ChiliTopAppBarBackground: Color,
     val ChiliStartIconTopAppBarBackground: Color
 ) {
+    // Code Input View
+    val ChiliCodeInputViewMessageColor: Color,
+    val ChiliCodeInputViewActionTextActiveColor: Color,
+    val ChiliCodeInputViewActionTextInActiveColor: Color
+
+    ){
 
     companion object {
         @Composable
@@ -145,6 +151,11 @@ public data class ChiliColors(
             ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
             ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1)
+            ChiliTooltipBackground = colorResource(id = R.color.black_3)
+            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
+            ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
+            ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
         )
 
         @Composable
@@ -200,6 +211,11 @@ public data class ChiliColors(
             ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
             ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1)
+            ChiliTooltipBackground = colorResource(id = R.color.black_3)
+            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
+            ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
+            ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
         )
     }
 }
