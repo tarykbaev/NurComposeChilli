@@ -28,6 +28,7 @@ data class ChiliAttribute(
     val ChiliBoldTextFont: Font,
     val ChiliItalicTextFont: Font,
     val Chili700TextFont: Font,
+    val ChiliComponentButtonTextFont: Font,
 
     // Ripple
     val ChiliRippleForegroundCornerRadius: Dp,
@@ -53,6 +54,9 @@ data class ChiliAttribute(
 
     // Cell
     val ChiliCellCornerRadius:Dp,
+
+    // Tooltip
+    val ChiliToolipCornerRadius:Dp
 
     ) {
     companion object {
@@ -81,7 +85,9 @@ data class ChiliAttribute(
             ChiliSnackbarIconHeight = dimensionResource(id = R.dimen.view_32dp),
             ChiliSnackbarContentPaddingVertical = dimensionResource(id = R.dimen.padding_10dp),
             ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
-            ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp)
+            ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp),
+            ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
+            ChiliToolipCornerRadius = dimensionResource(id = R.dimen.radius_12dp)
         )
     }
 }

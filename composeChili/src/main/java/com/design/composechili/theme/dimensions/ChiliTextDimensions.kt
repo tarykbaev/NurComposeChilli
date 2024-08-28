@@ -18,7 +18,8 @@ data class ChiliTextDimensions(
     val TextSizeH7: TextUnit,
     val TextSizeH8: TextUnit,
     val TextSizeH9: TextUnit,
-    val TextSizeH10: TextUnit
+    val TextSizeH10: TextUnit,
+    val ChiliComponentButtonTextSize:TextUnit
 ) {
     companion object {
         @Composable
@@ -32,7 +33,8 @@ data class ChiliTextDimensions(
             TextSizeH7 = dimensionResource(id = R.dimen.text_16sp).asSp(),
             TextSizeH8 = dimensionResource(id = R.dimen.text_14sp).asSp(),
             TextSizeH9 = dimensionResource(id = R.dimen.text_12sp).asSp(),
-            TextSizeH10 = dimensionResource(id = R.dimen.text_10sp).asSp()
+            TextSizeH10 = dimensionResource(id = R.dimen.text_10sp).asSp(),
+            ChiliComponentButtonTextSize = dimensionResource(id = R.dimen.text_16sp).asSp()
         )
     }
 }
