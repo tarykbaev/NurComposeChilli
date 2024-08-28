@@ -1,16 +1,16 @@
 package com.design.composechili.components.bottom_sheet
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.buttons.BaseButton
-import com.design.composechili.components.buttons.ChiliButtonStyle
-import com.design.composechili.theme.ChiliAttribute
+import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
@@ -33,22 +33,24 @@ fun ActionBottomSheet(
     buttons: List<ActionBottomSheetButton>,
     content: @Composable () -> Unit
 ) {
-    BaseBottomSheet(
-        sheetState = sheetState,
-        bottomSheetContent = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                buttons.forEach { button ->
-                    ActionButton(button, sheetState)
+    ChiliTheme {
+        BaseBottomSheet(
+            sheetState = sheetState,
+            bottomSheetContent = {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(buttons) { item ->
+                        ActionButton(item, sheetState)
+                    }
                 }
             }
+        ) {
+            content()
         }
-    ) {
-        content()
     }
 }
 
@@ -60,24 +62,26 @@ fun ActionButton(
 ) {
     val scope = rememberCoroutineScope()
 
-    val buttonTextColor = when (button.type) {
-        ActionBottomSheetButtonType.SIMPLE -> ChiliTheme.Colors.chiliSecondaryTextColor
-        ActionBottomSheetButtonType.ACCENT -> ChiliTheme.Colors.ChiliComponentButtonTextColorActive
-    }
+    ChiliTheme {
+        val buttonTextColor = when (button.type) {
+            ActionBottomSheetButtonType.SIMPLE -> ChiliTheme.Colors.chiliSecondaryTextColor
+            ActionBottomSheetButtonType.ACCENT -> ChiliTheme.Colors.ChiliComponentButtonTextColorActive
+        }
 
-    BaseButton(
-        onClick = {
-            button.onClick?.invoke()
-            if (button.hideBottomSheetOnClick) scope.launch {
-                sheetState.bottomSheetState.hide()
-            }
-        },
-        title = button.title ?: "",
-        buttonStyle = ChiliButtonStyle.Secondary,
-        titleStyle = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = buttonTextColor,
-            font = ChiliAttribute.getDefault().ChiliBoldTextFont
-        ),
-    )
+        BaseButton(
+            onClick = {
+                button.onClick?.invoke()
+                if (button.hideBottomSheetOnClick) scope.launch {
+                    sheetState.bottomSheetState.hide()
+                }
+            },
+            title = button.title ?: String(),
+            buttonStyle = ChiliButtonStyle.Secondary,
+            titleStyle = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = buttonTextColor,
+                font = ChiliTheme.Attribute.ChiliBoldTextFont
+            ),
+        )
+    }
 }
