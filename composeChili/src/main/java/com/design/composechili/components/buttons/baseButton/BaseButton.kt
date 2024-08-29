@@ -33,8 +33,8 @@ fun BaseButton(
     onClick: () -> Unit,
     title: String,
     titleStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        ChiliTheme.Colors.ChiliPrimaryTextColor
+        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+        ChiliTheme.Colors.ChiliPrimaryButtonTextColorActive,
     ),
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
