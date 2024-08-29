@@ -24,6 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.tooltip.ChiliTooltip
+import com.design.composechili.components.BaseSnackBar
+import com.design.composechili.components.cell.BaseCell
+import com.design.composechili.components.cell.BaseCellParams
+import com.design.composechili.components.cell.model.CellCornerMode
+import com.design.composechili.components.input.code.CodeInputItemState
+import com.design.composechili.components.input.code.CodeInputView
+import com.design.composechili.components.input.code.OnCodeChangeListener
 import com.design.composechili.theme.ChiliTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +43,11 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember {
                 SnackbarHostState()
             }
+            var codeText by remember { mutableStateOf("") }
+            var actionText by remember { mutableStateOf("Отправить заново") }
+            var codeMessage: String? by remember { mutableStateOf(null) }
+            var codeState by remember { mutableStateOf(CodeInputItemState.INACTIVE) }
+            var isActionTextEnabled by remember { mutableStateOf(true) }
 
             var maskedValueState by remember {
                 mutableStateOf(String())

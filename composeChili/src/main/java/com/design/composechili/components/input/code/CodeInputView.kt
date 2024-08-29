@@ -42,7 +42,7 @@ fun CodeInputView(
     isActionTextEnabled: Boolean = true,
     state: CodeInputItemState = CodeInputItemState.INACTIVE,
     onActionTextClicked: () -> Unit = {},
-    otpCompleteListener: OnCodeChangeListener? = null
+    codeCompleteListener: OnCodeChangeListener
 ) {
 
     val focusRequester = remember { FocusRequester() }
@@ -66,9 +66,9 @@ fun CodeInputView(
                 value = TextFieldValue(code, TextRange(code.length)),
                 onValueChange = { newText ->
                     if (newText.text.length <= codeLength && newText.text.all { it.isDigit() }) {
-                        otpCompleteListener?.onCodeChange(newText.text)
+                        codeCompleteListener.onCodeChange(newText.text)
                         if (newText.text.length == codeLength) {
-                            otpCompleteListener?.onCodeComplete(newText.text)
+                            codeCompleteListener.onCodeComplete(newText.text)
                         }
                     }
                 },
@@ -154,7 +154,15 @@ fun CodeInputViewPreview() {
     ChiliTheme {
         CodeInputView(
             code = "",
-            state = CodeInputItemState.ERROR
+            state = CodeInputItemState.ERROR,
+            codeCompleteListener = object : OnCodeChangeListener {
+                override fun onCodeChange(text: String?) {
+
+                }
+                override fun onCodeComplete(otp: String) {
+
+                }
+            }
         )
     }
 }
