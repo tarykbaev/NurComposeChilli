@@ -2,6 +2,7 @@ package com.design.composechili.components.input.code
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,15 +10,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -29,7 +36,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -40,10 +46,10 @@ fun CodeInputView(
     codeLength: CodeLength = CodeLength.SIX,
     message: String? = null,
     actionText: String? = null,
-    code: String,
+    clearCode: Boolean = false,
     isActionTextEnabled: Boolean = true,
     state: CodeInputItemState = CodeInputItemState.INACTIVE,
-    onActionTextClicked: () -> Unit = {},
+    onActionTextClick: () -> Unit = {},
     codeCompleteListener: OnCodeChangeListener
 ) {
 
@@ -51,11 +57,13 @@ fun CodeInputView(
     val actionTextColor =
         if (isActionTextEnabled) ChiliTheme.Colors.ChiliCodeInputViewActionTextActiveColor
         else ChiliTheme.Colors.ChiliCodeInputViewActionTextInActiveColor
-    val itemWidth = when(codeLength) {
+    val itemWidth = when (codeLength) {
         CodeLength.FOUR -> dimensionResource(id = R.dimen.view_64dp)
         CodeLength.SIX -> dimensionResource(id = R.dimen.view_44dp)
         CodeLength.EIGHT -> dimensionResource(id = R.dimen.view_40dp)
     }
+    var code by remember { mutableStateOf("") }
+    if (clearCode) { code = "" }
 
     Column(
         modifier = modifier
@@ -73,6 +81,7 @@ fun CodeInputView(
                 value = TextFieldValue(code, TextRange(code.length)),
                 onValueChange = { newText ->
                     if (newText.text.length <= codeLength.length && newText.text.all { it.isDigit() }) {
+                        code = newText.text
                         codeCompleteListener.onCodeChange(newText.text)
                         if (newText.text.length == codeLength.length) {
                             codeCompleteListener.onCodeComplete(newText.text)
@@ -120,8 +129,7 @@ fun CodeInputView(
             if (message != null) {
                 Text(
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(start = dimensionResource(id = R.dimen.padding_16dp)),
+                        .weight(3f),
                     style = ChiliTextStyle.get(
                         textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
                         color = ChiliTheme.Colors.ChiliCodeInputViewMessageColor
@@ -133,16 +141,21 @@ fun CodeInputView(
                 Text(
                     modifier = Modifier
                         .weight(1f)
+                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
                         .padding(
-                            end = dimensionResource(id = R.dimen.padding_12dp),
                             start = dimensionResource(id = R.dimen.padding_2dp)
                         )
-                        .clickable(enabled = isActionTextEnabled, onClick = onActionTextClicked),
+                        .clickable(
+                            indication = rememberRipple(),
+                            interactionSource = remember { MutableInteractionSource() },
+                            enabled = isActionTextEnabled,
+                            onClick = onActionTextClick
+                        ),
                     text = actionText,
                     textAlign = TextAlign.End,
                     style = ChiliTextStyle.get(
-                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                        color = actionTextColor
+                        color = actionTextColor,
+                        font = ChiliTheme.Attribute.ChiliComponentButtonTextFont,
                     ),
                 )
             }
@@ -165,12 +178,14 @@ enum class CodeLength(val length: Int) {
 fun CodeInputViewPreview() {
     ChiliTheme {
         CodeInputView(
-            code = "",
             state = CodeInputItemState.ERROR,
+            actionText = "Action",
+            message = "Message",
             codeCompleteListener = object : OnCodeChangeListener {
                 override fun onCodeChange(text: String?) {
 
                 }
+
                 override fun onCodeComplete(otp: String) {
 
                 }

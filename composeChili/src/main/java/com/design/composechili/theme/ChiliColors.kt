@@ -95,7 +95,8 @@ public data class ChiliColors(
     val ChiliCodeInputViewActionTextActiveColor: Color,
     val ChiliCodeInputViewActionTextInActiveColor: Color,
     val ChiliCodeInputItemBorderColor: Color,
-    val ChiliCodeInputItemBackgroundColor: Color
+    val ChiliCodeInputItemBackgroundColor: Color,
+    val ChiliCodeInputItemErrorBackgroundColor: Color
 
     ){
 
@@ -158,8 +159,9 @@ public data class ChiliColors(
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
-            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
-            ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1)
+            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_4),
+            ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2)
         )
 
         @Composable
@@ -220,8 +222,9 @@ public data class ChiliColors(
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
-            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_3),
-            ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1)
+            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
+            ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3)
         )
     }
 }

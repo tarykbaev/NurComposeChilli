@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,8 +25,8 @@ fun CodeInputItemView(
     val backgroundColor = when (state) {
         CodeInputItemState.INACTIVE -> ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor
         CodeInputItemState.ACTIVE -> ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor
-        CodeInputItemState.ERROR -> colorResource(id = R.color.red_3)
-        CodeInputItemState.ACTIVE_ERROR -> colorResource(id = R.color.red_3)
+        CodeInputItemState.ERROR -> ChiliTheme.Colors.ChiliCodeInputItemErrorBackgroundColor
+        CodeInputItemState.ACTIVE_ERROR -> ChiliTheme.Colors.ChiliCodeInputItemErrorBackgroundColor
     }
 
     val borderColor = when (state) {
