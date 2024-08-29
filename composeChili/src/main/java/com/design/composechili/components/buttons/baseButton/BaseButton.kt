@@ -34,7 +34,7 @@ fun BaseButton(
     title: String,
     titleStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        ChiliTheme.Colors.chiliPrimaryTextColor
+        ChiliTheme.Colors.ChiliPrimaryTextColor
     ),
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,

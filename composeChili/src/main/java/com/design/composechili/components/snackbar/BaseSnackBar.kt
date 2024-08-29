@@ -112,7 +112,7 @@ data class BaseSnackBarParams(
                 actionTextColor = ChiliTheme.Colors.ChiliComponentButtonTextColorActive,
                 textStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliPrimaryTextColor,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 )
             )
     }

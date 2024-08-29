@@ -138,7 +138,7 @@ data class BaseCellParams(
             @Composable get() = BaseCellParams(
                 titleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    color = ChiliTheme.Colors.chiliPrimaryTextColor,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.chiliSecondaryTextColor,

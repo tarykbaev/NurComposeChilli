@@ -40,7 +40,7 @@ fun ChiliCustomBaseTopAppBar(
     title: String,
     titleStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-        ChiliTheme.Colors.chiliPrimaryTextColor,
+        ChiliTheme.Colors.ChiliPrimaryTextColor,
         ChiliTheme.Attribute.ChiliBoldTextFont
     ),
     isDividerVisible: Boolean = true,
@@ -50,9 +50,9 @@ fun ChiliCustomBaseTopAppBar(
         ChiliTheme.Colors.chiliSecondaryTextColor
     ),
     @DrawableRes navigationIcon: Int? = null,
-    navigationIconSize: Dp? = null,
+    navigationIconSize: Dp = dimensionResource(R.dimen.view_24dp),
     @DrawableRes endIcon: Int? = null,
-    endIconSize: Dp? = null,
+    endIconSize: Dp = dimensionResource(R.dimen.view_24dp),
     containerColor: Color = ChiliTheme.Colors.ChiliTopAppBarBackground,
     dividerColor: Color = ChiliTheme.Colors.ChiliTopAppBarDividerColor,
     dividerThickness: Dp = ChiliTheme.Attribute.ChiliTopAppBarThicknessSize,
@@ -71,20 +71,14 @@ fun ChiliCustomBaseTopAppBar(
             ) {
                 var navigationIconWidth by remember { mutableStateOf(0) }
                 navigationIcon?.let { icon ->
-                    IconButton(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
-                            .onGloballyPositioned { coordinates ->
-                                navigationIconWidth = coordinates.size.width
-                            },
-                        onClick = onNavigationClick ?: {}
-                    ) {
+                    IconButton(modifier = Modifier
+                        .wrapContentSize()
+                        .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
+                        .onGloballyPositioned { coordinates ->
+                            navigationIconWidth = coordinates.size.width
+                        }, onClick = { onNavigationClick?.invoke() }) {
                         Image(
-                            modifier = Modifier
-                                .size(
-                                    navigationIconSize ?: dimensionResource(R.dimen.view_24dp)
-                                ),
+                            modifier = Modifier.size(navigationIconSize),
                             painter = painterResource(icon),
                             contentDescription = "back"
                         )
@@ -106,17 +100,13 @@ fun ChiliCustomBaseTopAppBar(
                     }
 
                     endIcon?.let { icon ->
-                        IconButton(
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(horizontal = 4.dp),
-                            onClick = onEndIconClick ?: {}
-                        ) {
+                        IconButton(modifier = Modifier
+                            .wrapContentSize()
+                            .padding(horizontal = 4.dp),
+                            onClick = { onEndIconClick?.invoke() }) {
                             Image(
                                 modifier = Modifier
-                                    .size(
-                                        endIconSize ?: dimensionResource(R.dimen.view_24dp)
-                                    )
+                                    .size(endIconSize)
                                     .padding(0.dp),
                                 painter = painterResource(icon),
                                 contentDescription = "endIcon"
@@ -152,8 +142,7 @@ fun ChiliCustomBaseTopAppBar(
             when {
                 isDividerVisible -> {
                     HorizontalDivider(
-                        color = dividerColor,
-                        thickness = dividerThickness
+                        color = dividerColor, thickness = dividerThickness
                     )
                 }
             }
