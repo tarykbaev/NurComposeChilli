@@ -106,8 +106,7 @@ fun ChiliCustomBaseTopAppBar(
                             onClick = { onEndIconClick?.invoke() }) {
                             Image(
                                 modifier = Modifier
-                                    .size(endIconSize)
-                                    .padding(0.dp),
+                                    .size(endIconSize),
                                 painter = painterResource(icon),
                                 contentDescription = "endIcon"
                             )
