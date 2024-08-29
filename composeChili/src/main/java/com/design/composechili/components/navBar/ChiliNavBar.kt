@@ -4,11 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -25,26 +28,35 @@ import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 @Composable
 fun ChiliNavBar(
+    modifier: Modifier = Modifier,
     items: List<ChiliNavItems>,
-    navigate: (String) -> Unit,
+    previewInsets: Boolean = false, // add UI bar insets if needed
+    navigate: (String) -> Unit
 ) {
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+
     ChiliTheme {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .padding(8.dp)
                 .background(
                     color = ChiliTheme.Colors.chiliScreenBackground,
                     shape = RoundedCornerShape(ChiliRadiusDimensions.fromResources().radius24Dp)
                 )
                 .fillMaxWidth()
-//                .windowInsetsPadding(NavigationBarDefaults.windowInsets)
+                .windowInsetsPadding(
+                    if (previewInsets) WindowInsets(
+                        0,
+                        0,
+                        0,
+                        0
+                    ) else NavigationBarDefaults.windowInsets
+                )
                 .selectableGroup(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             items.forEachIndexed { index, chiliNavItems ->
-                ChiliNavItem(
-                    noAnimation = true,
+                ChiliNavSimpleItem(
                     text = chiliNavItems.text,
                     selectedIcon = chiliNavItems.selectedIcon,
                     unselectedIcon = chiliNavItems.unselectedIcon,

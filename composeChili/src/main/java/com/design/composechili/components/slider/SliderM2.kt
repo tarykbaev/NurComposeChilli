@@ -20,6 +20,8 @@ package com.design.composechili.components.slider
 import androidx.annotation.IntRange
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.MutatorMutex
@@ -40,6 +42,7 @@ import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -77,6 +80,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -746,6 +750,12 @@ private fun BoxScope.SliderThumb(
                 }
             }
         }
+        val onDragState by interactionSource.collectIsDraggedAsState()
+        val sizeScale by animateFloatAsState(
+            targetValue = if (onDragState) 1.2f else 1f,
+            label = "Thumb Animation",
+            animationSpec = tween(300)
+        )
 
         val elevation = if (interactions.isNotEmpty()) {
             ThumbPressedElevation
@@ -755,6 +765,7 @@ private fun BoxScope.SliderThumb(
         Spacer(
             modifier
                 .size(thumbSize, thumbSize)
+                .scale(sizeScale)
                 .indication(
                     interactionSource = interactionSource,
                     indication = rememberRipple(bounded = false, radius = ThumbRippleRadius)
@@ -1232,7 +1243,7 @@ private val DefaultSliderConstraints =
         .widthIn(min = SliderMinWidth)
         .heightIn(max = SliderHeight)
 
-private val SliderToTickAnimation = TweenSpec<Float>(durationMillis = 100)
+private val SliderToTickAnimation = TweenSpec<Float>(durationMillis = 0)
 
 private class SliderDraggableState(
     val onDelta: (Float) -> Unit
