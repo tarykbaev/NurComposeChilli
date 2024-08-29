@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,7 +52,12 @@ class MainActivity : ComponentActivity() {
                                 description = "Test description",
                                 actionTitle = "Test Action"
                             ) {
-                                TextField(modifier = Modifier.fillMaxWidth().wrapContentHeight(), value = "Test Message", onValueChange = {})
+                                TextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentHeight(),
+                                    value = "Test Message",
+                                    onValueChange = {})
                             }
                         },
                     )
@@ -62,7 +66,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 
 @Composable
