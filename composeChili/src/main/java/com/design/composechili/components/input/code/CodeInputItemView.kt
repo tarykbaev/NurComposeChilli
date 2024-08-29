@@ -24,14 +24,14 @@ fun CodeInputItemView(
     text: String = ""
 ) {
     val backgroundColor = when (state) {
-        CodeInputItemState.INACTIVE -> colorResource(id = R.color.gray_5)
-        CodeInputItemState.ACTIVE -> colorResource(id = R.color.gray_5)
+        CodeInputItemState.INACTIVE -> ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor
+        CodeInputItemState.ACTIVE -> ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor
         CodeInputItemState.ERROR -> colorResource(id = R.color.red_3)
         CodeInputItemState.ACTIVE_ERROR -> colorResource(id = R.color.red_3)
     }
 
     val borderColor = when (state) {
-        CodeInputItemState.ACTIVE, CodeInputItemState.ACTIVE_ERROR -> colorResource(id = R.color.magenta_1)
+        CodeInputItemState.ACTIVE, CodeInputItemState.ACTIVE_ERROR -> ChiliTheme.Colors.ChiliCodeInputItemBorderColor
         CodeInputItemState.INACTIVE, CodeInputItemState.ERROR -> Color.Transparent
     }
 

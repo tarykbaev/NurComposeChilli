@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -35,7 +37,7 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun CodeInputView(
     modifier: Modifier = Modifier,
-    codeLength: Int = 6,
+    codeLength: CodeLength = CodeLength.SIX,
     message: String? = null,
     actionText: String? = null,
     code: String,
@@ -49,6 +51,11 @@ fun CodeInputView(
     val actionTextColor =
         if (isActionTextEnabled) ChiliTheme.Colors.ChiliCodeInputViewActionTextActiveColor
         else ChiliTheme.Colors.ChiliCodeInputViewActionTextInActiveColor
+    val itemWidth = when(codeLength) {
+        CodeLength.FOUR -> dimensionResource(id = R.dimen.view_64dp)
+        CodeLength.SIX -> dimensionResource(id = R.dimen.view_44dp)
+        CodeLength.EIGHT -> dimensionResource(id = R.dimen.view_40dp)
+    }
 
     Column(
         modifier = modifier
@@ -65,9 +72,9 @@ fun CodeInputView(
                     .focusRequester(focusRequester),
                 value = TextFieldValue(code, TextRange(code.length)),
                 onValueChange = { newText ->
-                    if (newText.text.length <= codeLength && newText.text.all { it.isDigit() }) {
+                    if (newText.text.length <= codeLength.length && newText.text.all { it.isDigit() }) {
                         codeCompleteListener.onCodeChange(newText.text)
-                        if (newText.text.length == codeLength) {
+                        if (newText.text.length == codeLength.length) {
                             codeCompleteListener.onCodeComplete(newText.text)
                         }
                     }
@@ -87,14 +94,15 @@ fun CodeInputView(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                repeat(codeLength) { index ->
+                repeat(codeLength.length) { index ->
                     CodeInputItemView(
+                        modifier = Modifier.width(itemWidth),
                         state = when {
                             state == CodeInputItemState.ERROR && index == 0 -> CodeInputItemState.ACTIVE_ERROR
                             state == CodeInputItemState.ERROR -> CodeInputItemState.ERROR
                             code.isEmpty() && index == 0 -> CodeInputItemState.ACTIVE
                             code.isEmpty() -> CodeInputItemState.INACTIVE
-                            code.length == codeLength && index == code.lastIndex -> CodeInputItemState.ACTIVE
+                            code.length == codeLength.length && index == code.lastIndex -> CodeInputItemState.ACTIVE
                             code.length == index -> CodeInputItemState.ACTIVE
                             else -> CodeInputItemState.INACTIVE
                         },
@@ -146,6 +154,10 @@ fun CodeInputView(
 interface OnCodeChangeListener {
     fun onCodeComplete(otp: String)
     fun onCodeChange(text: String?)
+}
+
+enum class CodeLength(val length: Int) {
+    FOUR(4), SIX(6), EIGHT(8)
 }
 
 @Preview
