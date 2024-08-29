@@ -28,6 +28,7 @@ data class ChiliAttribute(
     val ChiliBoldTextFont: Font,
     val ChiliItalicTextFont: Font,
     val Chili700TextFont: Font,
+    val ChiliComponentButtonTextFont: Font,
 
     // Ripple
     val ChiliRippleForegroundCornerRadius: Dp,
@@ -41,24 +42,26 @@ data class ChiliAttribute(
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
     val ChiliSnackbarElevation: Dp,
-    val ChiliSnackbarMarginStart:Dp,
-    val ChiliSnackbarMarginEnd:Dp,
-    val ChiliSnackbarMarginTop:Dp,
-    val ChiliSnackbarMarginBottom:Dp,
-    val ChiliSnackbarContentPaddingHorizontal:Dp,
-    val ChiliSnackbarContentPaddingVertical:Dp,
-    val ChiliSnackbarIconWidth:Dp,
-    val ChiliSnackbarIconHeight:Dp,
-    val ChiliSnackbarTextMarginStart:Dp,
+    val ChiliSnackbarMarginStart: Dp,
+    val ChiliSnackbarMarginEnd: Dp,
+    val ChiliSnackbarMarginTop: Dp,
+    val ChiliSnackbarMarginBottom: Dp,
+    val ChiliSnackbarContentPaddingHorizontal: Dp,
+    val ChiliSnackbarContentPaddingVertical: Dp,
+    val ChiliSnackbarIconWidth: Dp,
+    val ChiliSnackbarIconHeight: Dp,
+    val ChiliSnackbarTextMarginStart: Dp,
 
     // Cell
-    val ChiliCellCornerRadius:Dp,
+    val ChiliCellCornerRadius: Dp,
+
+    // Tooltip
+    val ChiliToolipCornerRadius: Dp,
 
     // TopAppBar
     val ChiliTopAppBarThicknessSize: Dp,
     val ChiliTopAppBarHeightSize: Dp
-
-    ) {
+) {
     companion object {
         @Composable
         fun getDefault() = ChiliAttribute(
@@ -86,6 +89,8 @@ data class ChiliAttribute(
             ChiliSnackbarContentPaddingVertical = dimensionResource(id = R.dimen.padding_10dp),
             ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
             ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp),
+            ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
+            ChiliToolipCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
             ChiliTopAppBarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
             ChiliTopAppBarHeightSize = dimensionResource(id = R.dimen.view_56dp)
         )

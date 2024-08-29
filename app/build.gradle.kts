@@ -52,6 +52,9 @@ android {
 dependencies {
     implementation(projects.composeChili)
 
+    implementation("io.github.skeptick.inputmask:core:0.0.2")
+    implementation("io.github.skeptick.inputmask:compose:0.0.2")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

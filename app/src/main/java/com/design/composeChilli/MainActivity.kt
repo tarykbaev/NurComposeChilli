@@ -3,97 +3,71 @@ package com.design.composeChilli
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
-import com.design.composechili.R
-import com.design.composechili.components.topAppBar.ChiliCustomBaseTopAppBar
+import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
+import com.design.composechili.components.tooltip.ChiliTooltip
 import com.design.composechili.theme.ChiliTheme
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
-            ChiliTheme {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    ChiliCustomBaseTopAppBar(
-                        title = "Transparent TopAppBar",
-                        containerColor = Color.Transparent,
-                        navigationIcon = R.drawable.chili_ic_nav_back,
-                        endIcon = R.drawable.ic_cat,
-                        isCenteredTitle = true
-                    )
+            val scope = rememberCoroutineScope()
+            val snackbarHostState = remember {
+                SnackbarHostState()
+            }
 
-                    ChiliCustomBaseTopAppBar(
-                        title = "Default TopAppBar"
+            var maskedValueState by remember {
+                mutableStateOf(String())
+            }
+
+            ChiliTheme {
+                Column {
+                    Spacer(modifier = Modifier.height(80.dp))
+                    ChiliTooltip(
+                        title = "Услуга Где Дети",
+                        subtitle = "Услуга Где Дети Описание ",
+                        requesterView = { clickListenerModifier ->
+                            InputFieldWithDescAndAction(
+                                descriptionModifier = clickListenerModifier,
+                                description = "Test description",
+                                actionTitle = "Test Action"
+                            ) {
+                                TextField(modifier = Modifier.fillMaxWidth().wrapContentHeight(), value = "Test Message", onValueChange = {})
+                            }
+                        },
                     )
-//
-//                    Spacer(modifier = Modifier.size(16.dp))
-//                    ChiliCustomBaseTopAppBar(
-//                        title = "Custom navigation icon TopAppBar",
-//                        navigationIcon = R.drawable.ic_cat
-//                    )
-//
-//                    Spacer(modifier = Modifier.size(16.dp))
-//                    ChiliCustomBaseTopAppBar(
-//                        title = "Additional Text",
-//                        additionalText = "5 из 10"
-//                    )
-//
-//                    Spacer(modifier = Modifier.size(16.dp))
-//                    ChiliCustomBaseTopAppBar(
-//                        title = "End Icon",
-//                        endIcon = R.drawable.ic_cat
-//                    )
-//
-//                    Spacer(modifier = Modifier.size(16.dp))
-//                    ChiliCustomBaseTopAppBar(
-//                        title = "+996 704 055 063",
-//                        endIcon = R.drawable.ic_cat,
-//                        isCenteredTitle = true,
-//                        endIconSize = 52.dp
-//                    )
-//
-//                    Spacer(modifier = Modifier.size(16.dp))
-//                    ChiliCustomBaseTopAppBar(
-//                        title = "Menu TopAppBar",
-//                        navigationIcon = R.drawable.chili_ic_nav_back
-//                    )
                 }
             }
         }
     }
 }
 
-fun get(
-    textSize: TextUnit = TextUnit.Unspecified,
-    color: Color = Color.Unspecified,
-    font: Font = Font(R.font.roboto_regular)
-): TextStyle {
-    return TextStyle(fontSize = textSize, color = color, fontFamily = font.toFontFamily())
-}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-        fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        color = ChiliTheme.Colors.chiliErrorTextColor
-    )
+
 }
 
 @Preview(showBackground = true)
