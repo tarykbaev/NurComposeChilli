@@ -31,15 +31,17 @@ import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
 @Composable
 fun ChiliNavFabItem(
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int = R.drawable.ic_scaner_48,
     animationSize: Float = 1.4f,
     stiffness: Float = Spring.StiffnessLow,
-    onClick: () -> Unit = {},
+    animate: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
-    val sizeScale by animateFloatAsState(
+    val animatedSizeScale by animateFloatAsState(
         targetValue = if (isPressed) animationSize else 1f,
         label = "Button Animation",
         animationSpec = spring(
@@ -47,10 +49,11 @@ fun ChiliNavFabItem(
             stiffness = stiffness
         )
     )
+    val sizeScale = if (animate) animatedSizeScale else 1f
 
     ChiliTheme {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .offset(y = (-27).dp)
                 .graphicsLayer(
                     scaleX = sizeScale,

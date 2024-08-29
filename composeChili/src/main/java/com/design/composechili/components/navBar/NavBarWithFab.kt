@@ -36,6 +36,7 @@ fun NavBarWithFab(
     navigate: (String) -> Unit,
     animationSize: Float = 1.4f,
     stiffness: Float = Spring.StiffnessLow,
+    animate: Boolean = false
 ) {
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     ChiliTheme {
@@ -59,9 +60,10 @@ fun NavBarWithFab(
             items.forEachIndexed { index, chiliNavItems ->
                 if (chiliNavItems.isFab) {
                     ChiliNavFabItem(
+                        animate = animate,
                         icon = chiliNavItems.selectedIcon,
                         animationSize = animationSize,
-                        stiffness = stiffness
+                        stiffness = stiffness,
                     ) { navigate(chiliNavItems.text) }
                 } else {
                     ChiliNavItem(
@@ -71,6 +73,7 @@ fun NavBarWithFab(
                         isSelected = selectedItem == index,
                         animationSize = animationSize,
                         stiffness = stiffness,
+                        animate = animate,
                         onClick = {
                             selectedItem = index
                             navigate(chiliNavItems.text)

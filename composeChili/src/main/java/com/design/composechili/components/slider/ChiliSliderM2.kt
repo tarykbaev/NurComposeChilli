@@ -16,13 +16,14 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
-fun ChiliSliderM2(
+fun ChiliSliderMaterial2(
+    initialValue: Float = 0.0f,
     description: String = "Slider value",
     stepsSize: Int = 0,
     range: ClosedFloatingPointRange<Float> = 0f..4f,
     onValueChanged: (Float) -> Unit = {}
 ) {
-    var sliderPosition by remember { mutableFloatStateOf(0.0f) }
+    var sliderPosition by remember { mutableFloatStateOf(initialValue) }
     ChiliTheme {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Text(
@@ -61,7 +62,7 @@ fun ChiliSliderM2(
 @Composable
 fun ChiliSliderM2_Preview() {
     Column {
-        ChiliSliderM2(stepsSize = 40, range = 0f..20f)
-        ChiliSliderM2(range = 0f..4f)
+        ChiliSliderMaterial2(stepsSize = 40, range = 0f..20f)
+        ChiliSliderMaterial2(range = 0f..4f)
     }
 }

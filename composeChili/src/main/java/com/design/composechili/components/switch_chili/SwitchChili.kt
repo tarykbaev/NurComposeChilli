@@ -1,5 +1,6 @@
 package com.design.composechili.components.switch_chili
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,23 +19,31 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
-fun SwitchChili() {
+fun SwitchChili(
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
+    description: String = "Switch animation on items",
+    onValueChange: (Boolean) -> Unit,
+) {
     ChiliTheme {
         var checkedState by remember { mutableStateOf(false) }
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(paddingValues),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 modifier = Modifier.weight(1f),
-                text = "Switch animation on items",
+                text = description,
                 color = ChiliTheme.Colors.chiliValueTextColor
             )
             Switch(
                 checked = checkedState,
-                onCheckedChange = { checkedState = it },
+                onCheckedChange = {
+                    checkedState = it
+                    onValueChange(it)
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = ChiliTheme.Colors.chiliLinkTextColor
                 )
@@ -46,5 +55,5 @@ fun SwitchChili() {
 @Preview(showBackground = true)
 @Composable
 fun Switch_Preview() {
-    SwitchChili()
+    SwitchChili(onValueChange = {})
 }

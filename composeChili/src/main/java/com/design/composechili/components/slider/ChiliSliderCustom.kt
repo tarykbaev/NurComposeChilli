@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
@@ -34,13 +35,14 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChiliSliderCustom(
+    initialValue: Float = 0f,
     description: String = String(),
     stepsSize: Int = 0,
     range: ClosedFloatingPointRange<Float> = 0f..4f,
     onValueChanged: (Float) -> Unit = {},
 ) {
 
-    var sliderValueState by remember { mutableFloatStateOf(0.0f) }
+    var sliderValueState by remember { mutableFloatStateOf(initialValue) }
     val interactionSource = remember { MutableInteractionSource() }
     val text = description.ifBlank {
         "Spring animation float value ${
@@ -95,16 +97,18 @@ fun ChiliSliderCustom(
                     )
                 },
                 track = { sliderState ->
-                    SliderDefaults.Track(
-                        sliderState = sliderState,
-                        colors = SliderDefaults.colors(
-                            activeTrackColor = ChiliTheme.Colors.chiliLinkTextColor,
-                            inactiveTickColor = ChiliTheme.Colors.chiliValueTextColor,
-                            disabledInactiveTickColor = Color.Black,
-                            activeTickColor = Color.Black,
-                            disabledActiveTickColor = Color.Black
+                    Box {
+                        SliderDefaults.Track(
+                            sliderState = sliderState,
+                            colors = SliderDefaults.colors(
+                                activeTrackColor = ChiliTheme.Colors.chiliLinkTextColor,
+                                inactiveTickColor = ChiliTheme.Colors.chiliValueTextColor,
+                                disabledInactiveTickColor = Color.Black,
+                                activeTickColor = Color.Black,
+                                disabledActiveTickColor = Color.Black
+                            )
                         )
-                    )
+                    }
                 },
             )
         }
