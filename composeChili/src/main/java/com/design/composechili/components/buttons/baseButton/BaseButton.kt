@@ -3,6 +3,7 @@ package com.design.composechili.components.buttons.baseButton
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,22 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+
+/**
+ * @param [onClick] callback will invoke when user will click button
+ * @param [title] button main title value
+ * @param [titleStyle] button main title style
+ * @param [buttonStyle] button visual style
+ * @param [isEnabled] is button enabled state
+ * @param [buttonPadding] root button container padding
+ * @param [contentPaddingTop] title content padding top
+ * @param [contentPaddingBottom] title content padding bottom
+ * @param [contentPaddingEnd] title content padding end
+ * @param [contentPaddingStart] title content padding start
+ * @param [startIcon] accept [DrawableRes] value. And setting on the start of button content
+ * @param [endIcon] accept [DrawableRes] value. And setting on the end of button content
+ * @sample ChiliButtonStyle.Primary
+ */
 
 @Composable
 fun BaseButton(

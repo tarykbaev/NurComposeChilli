@@ -33,8 +33,15 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 
-/*
-  TODO(Add shimmer effect)
+/**
+ * TODO (add shimmer effect)
+ * @param [title] accept [String] and showing on the start in cell
+ * @param [subtitle] accept [String] and showing on the start and below [title] in cell
+ * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
+ * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
+ * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
+ * @param [baseCellParams] cell visual transformation params and paddings
+ * @sample BaseCellParams.Default
  */
 
 @Composable
@@ -121,41 +128,4 @@ fun BaseCell(
             }
         }
     }
-}
-
-
-data class BaseCellParams(
-    val titleTextStyle: TextStyle,
-    val subTitleTextStyle: TextStyle,
-    val titlePadding: ChiliPadding,
-    val subtitlePadding: ChiliPadding,
-    val cornerMode: CellCornerMode,
-    val startIconPadding: ChiliPadding,
-    val chevronIconTint: Color
-) {
-    companion object {
-        val Default
-            @Composable get() = BaseCellParams(
-                titleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                ), subTitleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
-                ), titlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    top = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_4dp)
-                ), subtitlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_12dp)
-                ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
-                    vertical = dimensionResource(id = R.dimen.padding_8dp),
-                    horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), chevronIconTint = ChiliTheme.Colors.chiliChevronColor
-            )
-    }
-
 }
