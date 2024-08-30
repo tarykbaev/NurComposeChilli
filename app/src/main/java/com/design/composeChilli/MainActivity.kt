@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,37 +49,38 @@ class MainActivity : ComponentActivity() {
             var maskedValueState by remember {
                 mutableStateOf(String())
             }
+            val sheetState = rememberBottomSheetScaffoldState()
+            val buttons = listOf(
+                ActionBottomSheetButton("First", ActionBottomSheetButtonType.SIMPLE) {},
+                ActionBottomSheetButton(
+                    "Second",
+                    ActionBottomSheetButtonType.SIMPLE,
+                    false
+                ),
+                ActionBottomSheetButton("Cancel", ActionBottomSheetButtonType.ACCENT)
+            )
 
             ChiliTheme {
-                Column {
-                    Spacer(modifier = Modifier.height(80.dp))
-                    ChiliTooltip(
-                        title = "Услуга Где Дети",
-                        subtitle = "Услуга Где Дети Описание ",
-                        requesterView = { clickListenerModifier ->
-                            InputFieldWithDescAndAction(
-                                descriptionModifier = clickListenerModifier,
-                                description = "Test description",
-                                actionTitle = "Test Action"
-                            ) {
-                                TextField(modifier = Modifier.fillMaxWidth().wrapContentHeight(), value = "Test Message", onValueChange = {})
-                            }
-                        },
-                    )
-
-                    val sheetState = rememberBottomSheetScaffoldState(
-                        bottomSheetState = rememberStandardBottomSheetState(
-                            initialValue = SheetValue.Hidden,
-                            skipHiddenState = false
+                ActionBottomSheet(sheetState = sheetState, buttons = buttons) {
+                    Column {
+                        Spacer(modifier = Modifier.height(80.dp))
+                        ChiliTooltip(
+                            title = "Услуга Где Дети",
+                            subtitle = "Услуга Где Дети Описание ",
+                            requesterView = { clickListenerModifier ->
+                                InputFieldWithDescAndAction(
+                                    descriptionModifier = clickListenerModifier,
+                                    description = "Test description",
+                                    actionTitle = "Test Action"
+                                ) {
+                                    TextField(
+                                        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+                                        value = "Test Message",
+                                        onValueChange = {})
+                                }
+                            },
                         )
-                    )
-                    val buttons = listOf(
-                        ActionBottomSheetButton("First", ActionBottomSheetButtonType.SIMPLE) {},
-                        ActionBottomSheetButton("Second", ActionBottomSheetButtonType.SIMPLE, false),
-                        ActionBottomSheetButton("Cancel", ActionBottomSheetButtonType.ACCENT)
-                    )
 
-                    ActionBottomSheet(sheetState = sheetState, buttons = buttons) {
                         BaseCell(
                             modifier = Modifier
                                 .padding(16.dp)
