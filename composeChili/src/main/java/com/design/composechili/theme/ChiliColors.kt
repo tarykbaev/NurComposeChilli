@@ -82,7 +82,14 @@ public data class ChiliColors(
     val ChiliCellViewBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
-    val ChiliTooltipBackground: Color,
+    // ToggleCellView
+    val ChiliToggleCellViewTrackColor: Color,
+    val ChiliToggleCellViewThumbNormalColor: Color,
+    val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
+    val ChiliToggleCellViewTextOnOffCheckedDisabledColor: Color,
+
+    val ChiliTooltipBackground:Color,
+
 
     // TopAppBar
     val ChiliTopAppBarDividerColor: Color,
@@ -154,6 +161,10 @@ public data class ChiliColors(
             ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
             ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1),
+            ChiliToggleCellViewTrackColor = colorResource(id = R.color.black_4),
+            ChiliToggleCellViewThumbNormalColor = colorResource(id = R.color.black_5),
+            ChiliToggleCellViewTextOnOffCheckedEnabledColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedDisabledColor = colorResource(id = R.color.black_1),
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
@@ -215,6 +226,10 @@ public data class ChiliColors(
             ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
             ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1),
+            ChiliToggleCellViewTrackColor = colorResource(id = R.color.gray_2),
+            ChiliToggleCellViewThumbNormalColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedEnabledColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedDisabledColor = colorResource(id = R.color.black_1),
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
