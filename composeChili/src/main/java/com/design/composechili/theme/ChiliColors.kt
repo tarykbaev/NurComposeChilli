@@ -8,89 +8,92 @@ import com.design.composechili.R
 
 @Immutable
 public data class ChiliColors(
-    val ChiliPrimaryTextColor:Color,
-    val chiliSecondaryTextColor:Color,
-    val ChiliMarkedTextColor:Color,
-    val chiliErrorTextColor:Color,
-    val chiliValueTextColor:Color,
-    val chiliLinkTextColor:Color,
+    val ChiliPrimaryTextColor: Color,
+    val chiliSecondaryTextColor: Color,
+    val ChiliMarkedTextColor: Color,
+    val chiliErrorTextColor: Color,
+    val chiliValueTextColor: Color,
+    val chiliLinkTextColor: Color,
 
     // Screen Background
-    val chiliScreenBackground:Color,
-    val ChiliSurfaceBackground:Color,
+    val chiliScreenBackground: Color,
+    val chiliSurfaceBackground: Color,
 
     // Ripple
-    val chiliRippleForegroundColor:Color,
+    val chiliRippleForegroundColor: Color,
 
     // Divider
-    val ChiliDividerColor:Color,
+    val ChiliDividerColor: Color,
 
     // Chevron
-    val chiliChevronColor:Color,
+    val chiliChevronColor: Color,
 
     // Snackbar
-    val ChiliSnackbarBackground:Color,
-    val ChiliSnackbarTextColor:Color,
+    val ChiliSnackbarBackground: Color,
+    val ChiliSnackbarTextColor: Color,
 
     // Segmented Picker
-    val chiliSegmentedPickerBackgroundColor:Color,
-    val chiliSegmentedPickerTabIndicatorColor:Color,
-    val chiliSegmentedPickerTabTextColor:Color,
+    val chiliSegmentedPickerBackgroundColor: Color,
+    val chiliSegmentedPickerTabIndicatorColor: Color,
+    val chiliSegmentedPickerTabTextColor: Color,
 
     // CheckBox
-    val chiliCheckBoxCheckedColor:Color,
-    val chiliCheckedBoxUncheckedColor:Color,
-    val chiliCheckBoxDisabledColor:Color,
+    val chiliCheckBoxCheckedColor: Color,
+    val chiliCheckedBoxUncheckedColor: Color,
+    val chiliCheckBoxDisabledColor: Color,
 
     // Primary Button
-    val ChiliPrimaryButtonBackgroundActive:Color,
-    val ChiliPrimaryButtonBackgroundDisabled:Color,
-    val ChiliPrimaryButtonTextColorActive:Color,
-    val ChiliPrimaryButtonTextColorPressed:Color,
-    val ChiliPrimaryButtonTextColorDisabled:Color,
+    val ChiliPrimaryButtonBackgroundActive: Color,
+    val ChiliPrimaryButtonBackgroundDisabled: Color,
+    val ChiliPrimaryButtonTextColorActive: Color,
+    val ChiliPrimaryButtonTextColorPressed: Color,
+    val ChiliPrimaryButtonTextColorDisabled: Color,
 
-    val ChiliPrimaryButtonRippleColor:Color,
-    val ChiliPrimaryButtonBorderColor:Color,
+    val ChiliPrimaryButtonRippleColor: Color,
+    val ChiliPrimaryButtonBorderColor: Color,
 
     // Secondary Button
-    val ChiliSecondaryButtonBackgroundActive:Color,
-    val ChiliSecondaryButtonBackgroundDisabled:Color,
-    val ChiliSecondaryButtonTextColorActive:Color,
-    val ChiliSecondaryButtonTextColorPressed:Color,
-    val ChiliSecondaryButtonTextColorDisabled:Color,
+    val ChiliSecondaryButtonBackgroundActive: Color,
+    val ChiliSecondaryButtonBackgroundDisabled: Color,
+    val ChiliSecondaryButtonTextColorActive: Color,
+    val ChiliSecondaryButtonTextColorPressed: Color,
+    val ChiliSecondaryButtonTextColorDisabled: Color,
 
     // Additional Button
-    val ChiliAdditionalButtonBackgroundActive:Color,
-    val ChiliAdditionalButtonBackgroundDisabled:Color,
-    val ChiliAdditionalButtonTextColorActive:Color,
-    val ChiliAdditionalButtonTextColorPressed:Color,
-    val ChiliAdditionalButtonTextColorDisabled:Color,
-    val ChiliAdditionalButtonBorderColor:Color,
+    val ChiliAdditionalButtonBackgroundActive: Color,
+    val ChiliAdditionalButtonBackgroundDisabled: Color,
+    val ChiliAdditionalButtonTextColorActive: Color,
+    val ChiliAdditionalButtonTextColorPressed: Color,
+    val ChiliAdditionalButtonTextColorDisabled: Color,
+    val ChiliAdditionalButtonBorderColor: Color,
 
     // Component Button Attributes
-    val ChiliComponentButtonBackgroundActive:Color,
-    val ChiliComponentButtonBackgroundDisabled:Color,
-    val ChiliComponentButtonTextColorActive:Color,
-    val ChiliComponentButtonTextColorPressed:Color,
-    val ChiliComponentButtonTextColorDisabled:Color,
+    val ChiliComponentButtonBackgroundActive: Color,
+    val ChiliComponentButtonBackgroundDisabled: Color,
+    val ChiliComponentButtonTextColorActive: Color,
+    val ChiliComponentButtonTextColorPressed: Color,
+    val ChiliComponentButtonTextColorDisabled: Color,
 
     // Accent Button Attributes
-    val ChiliAccentButtonBackgroundActive:Color,
-    val ChiliAccentButtonBackgroundDisabled:Color,
+    val ChiliAccentButtonBackgroundActive: Color,
+    val ChiliAccentButtonBackgroundDisabled: Color,
 
     // Cell View
-    val ChiliCellViewBackground:Color,
-    val ChilicellSquircleIconBackground:Color,
+    val ChiliCellViewBackground: Color,
+    val ChilicellSquircleIconBackground: Color,
 
-    val ChiliTooltipBackground:Color
+    val ChiliTooltipBackground: Color,
 
+    // TopAppBar
+    val ChiliTopAppBarDividerColor: Color,
+    val ChiliTopAppBarIconsTint: Color,
+    val ChiliTopAppBarBackground: Color,
+    val ChiliStartIconTopAppBarBackground: Color
+) {
 
-
-    ){
-
-    companion object{
+    companion object {
         @Composable
-        fun defaultDarkColors() : ChiliColors = ChiliColors(
+        fun defaultDarkColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.white_1),
             chiliSecondaryTextColor = colorResource(id = R.color.gray_3),
             ChiliMarkedTextColor = colorResource(id = R.color.white_1),
@@ -98,14 +101,14 @@ public data class ChiliColors(
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.black_2),
-            ChiliSurfaceBackground = colorResource(id = R.color.black_1),
+            chiliSurfaceBackground = colorResource(id = R.color.black_1),
             chiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
             ChiliDividerColor = colorResource(id = R.color.black_4),
             chiliChevronColor = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
             ChiliSnackbarBackground = colorResource(id = R.color.black_3),
             chiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
-            chiliSegmentedPickerTabIndicatorColor = colorResource(id =R.color.black_3),
+            chiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.gray_3),
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
@@ -137,11 +140,15 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
             ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
-            ChiliTooltipBackground = colorResource(id = R.color.black_3)
+            ChiliTooltipBackground = colorResource(id = R.color.black_3),
+            ChiliTopAppBarDividerColor = colorResource(id = R.color.black_4),
+            ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
+            ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1)
         )
 
         @Composable
-        fun defaultLightColors() : ChiliColors = ChiliColors(
+        fun defaultLightColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.black_1),
             chiliSecondaryTextColor = colorResource(id = R.color.black_4),
             ChiliMarkedTextColor = colorResource(id = R.color.black_1),
@@ -149,7 +156,7 @@ public data class ChiliColors(
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.gray_4),
-            ChiliSurfaceBackground = colorResource(id = R.color.white_1),
+            chiliSurfaceBackground = colorResource(id = R.color.white_1),
             chiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
             chiliChevronColor = colorResource(id = R.color.gray_2),
@@ -188,9 +195,11 @@ public data class ChiliColors(
             ChiliComponentButtonTextColorDisabled = colorResource(id = R.color.blue_1_alpha_50),
             ChiliAccentButtonBackgroundActive = colorResource(id = R.color.magenta_1),
             ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
-            ChiliTooltipBackground = colorResource(id = R.color.black_3)
+            ChiliTooltipBackground = colorResource(id = R.color.black_3),
+            ChiliTopAppBarDividerColor = colorResource(id = R.color.gray_8),
+            ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
+            ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1)
         )
     }
-
 }
-
