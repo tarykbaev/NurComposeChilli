@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,9 +26,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTextStyle
@@ -43,7 +40,7 @@ fun ToggleCellView(
     subtitle: String = String(),
     isDividerVisible: Boolean = false,
     isSwitchVisible: Boolean = true,
-    isChecked: Boolean = false,
+    isChecked: Boolean,
     isSwitchEnabled: Boolean = true,
     switchTextOn: String? = null,
     switchTextOff: String? = null,
@@ -75,7 +72,7 @@ fun ToggleCellView(
                 }
                 Column(
                     Modifier
-                        .weight(2f)
+                        .weight(1f)
                         .wrapContentHeight()
                         .padding(end = dimensionResource(id = R.dimen.padding_16dp))
                 ) {
@@ -108,55 +105,58 @@ fun ToggleCellView(
                         )
                     }
                 }
-                val switchTextOnOff = if (isChecked) switchTextOn else switchTextOff
-                val switchTextOnOffColor = when {
-                    !isChecked -> ChiliTheme.Colors.ChiliPrimaryTextColor
-                    isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedEnabledColor
-                    !isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedDisabledColor
-                    else -> ChiliTheme.Colors.ChiliPrimaryTextColor
-                }
-                Text(
-                    modifier = Modifier
-                        .padding(end = dimensionResource(id = R.dimen.padding_2dp)),
-                    text = "OnOff",
-                    textAlign = TextAlign.End,
-                    style = ChiliTextStyle.get(
-                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                        color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                    ),
-                    overflow = TextOverflow.Ellipsis
-                )
-                Switch(
-                    modifier = Modifier.padding(toggleCellParams.switchPadding.toPaddingValues()),
-                    checked = isChecked,
-                    enabled = isSwitchEnabled,
-                    onCheckedChange = onCheckedChangeListener,
-                    colors = SwitchDefaults.colors(
-                        checkedBorderColor = Color.Transparent,
-                        uncheckedBorderColor = Color.Transparent,
-                        disabledUncheckedBorderColor = Color.Transparent,
-                        disabledCheckedBorderColor = Color.Transparent,
-                        uncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                        checkedTrackColor = colorResource(id = R.color.magenta_1_alpha_40),
-                        disabledCheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                        disabledUncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                        checkedThumbColor = colorResource(id = R.color.magenta_1),
-                        uncheckedThumbColor = ChiliTheme.Colors.ChiliToggleCellViewThumbNormalColor
-                    ),
-                    thumbContent = {
-                        if (switchTextOnOff != null) {
-                            Text(
-                                text = switchTextOnOff,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = ChiliTextStyle.get(
-                                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                                    color = switchTextOnOffColor
-                                )
-                            )
-                        }
+                if (isSwitchVisible) {
+                    val switchTextOnOff = if (isChecked) switchTextOn else switchTextOff
+                    val switchTextOnOffColor = when {
+                        !isChecked -> ChiliTheme.Colors.ChiliPrimaryTextColor
+                        isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedEnabledColor
+                        !isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedDisabledColor
+                        else -> ChiliTheme.Colors.ChiliPrimaryTextColor
                     }
-                )
+                    if (switchText != null) {
+                        Text(
+                            modifier = Modifier
+                                .padding(end = dimensionResource(id = R.dimen.padding_2dp)),
+                            text = switchText,
+                            textAlign = TextAlign.End,
+                            style = ChiliTextStyle.get(
+                                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+                            )
+                        )
+                    }
+                    Switch(
+                        modifier = Modifier.padding(toggleCellParams.switchPadding.toPaddingValues()),
+                        checked = isChecked,
+                        enabled = isSwitchEnabled,
+                        onCheckedChange = onCheckedChangeListener,
+                        colors = SwitchDefaults.colors(
+                            checkedBorderColor = Color.Transparent,
+                            uncheckedBorderColor = Color.Transparent,
+                            disabledUncheckedBorderColor = Color.Transparent,
+                            disabledCheckedBorderColor = Color.Transparent,
+                            uncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                            checkedTrackColor = colorResource(id = R.color.magenta_1_alpha_40),
+                            disabledCheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                            disabledUncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                            checkedThumbColor = colorResource(id = R.color.magenta_1),
+                            uncheckedThumbColor = ChiliTheme.Colors.ChiliToggleCellViewThumbNormalColor
+                        ),
+                        thumbContent = {
+                            if (switchTextOnOff != null) {
+                                Text(
+                                    text = switchTextOnOff,
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
+                                    style = ChiliTextStyle.get(
+                                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                                        color = switchTextOnOffColor
+                                    )
+                                )
+                            }
+                        }
+                    )
+                }
             }
             if (isDividerVisible) {
                 HorizontalDivider(
