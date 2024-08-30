@@ -88,15 +88,15 @@ public data class ChiliColors(
     val ChiliTopAppBarDividerColor: Color,
     val ChiliTopAppBarIconsTint: Color,
     val ChiliTopAppBarBackground: Color,
-    val ChiliStartIconTopAppBarBackground: Color
-) {
+    val ChiliStartIconTopAppBarBackground: Color,
+
     // Code Input View
     val ChiliCodeInputViewMessageColor: Color,
     val ChiliCodeInputViewActionTextActiveColor: Color,
     val ChiliCodeInputViewActionTextInActiveColor: Color,
     val ChiliCodeInputItemBorderColor: Color,
     val ChiliCodeInputItemBackgroundColor: Color,
-    val ChiliCodeInputItemErrorBackgroundColor: Color
+    val ChiliCodeInputItemErrorBackgroundColor: Color,
 
     ){
 
@@ -153,9 +153,7 @@ public data class ChiliColors(
             ChiliTopAppBarDividerColor = colorResource(id = R.color.black_4),
             ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
-            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1)
-            ChiliTooltipBackground = colorResource(id = R.color.black_3)
-            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1),
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
@@ -216,9 +214,7 @@ public data class ChiliColors(
             ChiliTopAppBarDividerColor = colorResource(id = R.color.gray_8),
             ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
-            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1)
-            ChiliTooltipBackground = colorResource(id = R.color.black_3)
-            ChiliAccentButtonBackgroundDisabled = colorResource(id = R.color.magenta_3),
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1),
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
