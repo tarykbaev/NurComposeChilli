@@ -1,10 +1,12 @@
 package com.design.composechili.components.cell
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,7 +26,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.cell.model.CellCornerMode
@@ -31,8 +33,15 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 
-/*
-  TODO(Add shimmer effect)
+/**
+ * TODO (add shimmer effect)
+ * @param [title] accept [String] and showing on the start in cell
+ * @param [subtitle] accept [String] and showing on the start and below [title] in cell
+ * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
+ * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
+ * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
+ * @param [baseCellParams] cell visual transformation params and paddings
+ * @sample BaseCellParams.Default
  */
 
 @Composable
@@ -82,11 +91,9 @@ fun BaseCell(
                         text = title,
                         modifier = Modifier
                             .wrapContentSize()
-                            .padding(
-                                baseCellParams.titlePadding
-                                    .copy(bottom = cellBottomPadding)
-                                    .toPaddingValues()
-                            ),
+                            .padding(baseCellParams.titlePadding
+                                .copy(bottom = cellBottomPadding)
+                                .toPaddingValues()),
                         style = baseCellParams.titleTextStyle,
                     )
 
@@ -119,68 +126,6 @@ fun BaseCell(
                     thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
                 )
             }
-        }
-    }
-}
-
-
-data class BaseCellParams(
-    val titleTextStyle: TextStyle,
-    val subTitleTextStyle: TextStyle,
-    val titlePadding: ChiliPadding,
-    val subtitlePadding: ChiliPadding,
-    val cornerMode: CellCornerMode,
-    val startIconPadding: ChiliPadding,
-    val chevronIconTint: Color
-) {
-    companion object {
-        val Default
-            @Composable get() = BaseCellParams(
-                titleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                ), subTitleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
-                ), titlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    top = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_4dp)
-                ), subtitlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_12dp)
-                ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
-                    vertical = dimensionResource(id = R.dimen.padding_8dp),
-                    horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), chevronIconTint = ChiliTheme.Colors.chiliChevronColor
-            )
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BaseCell_Preview() {
-    ChiliTheme {
-        Column {
-            BaseCell(
-                title = "Hello im a base cell",
-                subtitle = "Im a subtitle",
-                isChevronVisible = true,
-                isDividerVisible = true
-            )
-            BaseCell(
-                title = "Hello im a base cell",
-                isChevronVisible = true,
-                isDividerVisible = true
-            )
-            BaseCell(
-                title = "Hello im a base cell",
-                isChevronVisible = false,
-                isDividerVisible = false
-            )
         }
     }
 }

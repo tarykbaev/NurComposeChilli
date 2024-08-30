@@ -42,23 +42,26 @@ data class ChiliAttribute(
     // Snackbar
     val ChiliSnackbarBackgroundCornerRadius: Dp,
     val ChiliSnackbarElevation: Dp,
-    val ChiliSnackbarMarginStart:Dp,
-    val ChiliSnackbarMarginEnd:Dp,
-    val ChiliSnackbarMarginTop:Dp,
-    val ChiliSnackbarMarginBottom:Dp,
-    val ChiliSnackbarContentPaddingHorizontal:Dp,
-    val ChiliSnackbarContentPaddingVertical:Dp,
-    val ChiliSnackbarIconWidth:Dp,
-    val ChiliSnackbarIconHeight:Dp,
-    val ChiliSnackbarTextMarginStart:Dp,
+    val ChiliSnackbarMarginStart: Dp,
+    val ChiliSnackbarMarginEnd: Dp,
+    val ChiliSnackbarMarginTop: Dp,
+    val ChiliSnackbarMarginBottom: Dp,
+    val ChiliSnackbarContentPaddingHorizontal: Dp,
+    val ChiliSnackbarContentPaddingVertical: Dp,
+    val ChiliSnackbarIconWidth: Dp,
+    val ChiliSnackbarIconHeight: Dp,
+    val ChiliSnackbarTextMarginStart: Dp,
 
     // Cell
-    val ChiliCellCornerRadius:Dp,
+    val ChiliCellCornerRadius: Dp,
 
     // Tooltip
-    val ChiliToolipCornerRadius:Dp
+    val ChiliToolipCornerRadius: Dp,
 
-    ) {
+    // TopAppBar
+    val ChiliTopAppBarThicknessSize: Dp,
+    val ChiliTopAppBarHeightSize: Dp
+) {
     companion object {
         @Composable
         fun getDefault() = ChiliAttribute(
@@ -71,8 +74,8 @@ data class ChiliAttribute(
             ChiliBoldTextFont = Font(R.font.roboto_medium),
             ChiliItalicTextFont = Font(R.font.roboto_italic),
             Chili700TextFont = Font(R.font.roboto_700),
-            ChiliRippleForegroundCornerRadius = dimensionResource(R.dimen.radius_4dp),
-            ChiliDividerHeightSize = dimensionResource(R.dimen.view_1dp),
+            ChiliRippleForegroundCornerRadius = dimensionResource(id = R.dimen.radius_4dp),
+            ChiliDividerHeightSize = dimensionResource(id = R.dimen.view_1dp),
             ChiliChevronDrawable = painterResource(R.drawable.chili_ic_chevron),
             ChiliSnackbarBackgroundCornerRadius = dimensionResource(R.dimen.radius_12dp),
             ChiliSnackbarElevation = dimensionResource(R.dimen.elevation_4dp),
@@ -87,7 +90,9 @@ data class ChiliAttribute(
             ChiliSnackbarContentPaddingHorizontal = dimensionResource(id = R.dimen.padding_8dp),
             ChiliSnackbarTextMarginStart = dimensionResource(id = R.dimen.padding_8dp),
             ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
-            ChiliToolipCornerRadius = dimensionResource(id = R.dimen.radius_12dp)
+            ChiliToolipCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
+            ChiliTopAppBarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
+            ChiliTopAppBarHeightSize = dimensionResource(id = R.dimen.view_56dp)
         )
     }
 }
