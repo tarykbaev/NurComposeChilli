@@ -12,15 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +26,7 @@ import com.design.composechili.components.bottom_sheet.ActionBottomSheetButtonTy
 import com.design.composechili.components.cell.BaseCell
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.tooltip.ChiliTooltip
+import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -42,23 +38,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val scope = rememberCoroutineScope()
-            val snackbarHostState = remember {
-                SnackbarHostState()
-            }
-
-            var maskedValueState by remember {
-                mutableStateOf(String())
-            }
-            val sheetState = rememberBottomSheetScaffoldState()
+            val sheetState = getBottomSheetState()
             val buttons = listOf(
                 ActionBottomSheetButton("First", ActionBottomSheetButtonType.SIMPLE) {},
-                ActionBottomSheetButton(
-                    "Second",
-                    ActionBottomSheetButtonType.SIMPLE,
-                    false
-                ),
-                ActionBottomSheetButton("Cancel", ActionBottomSheetButtonType.ACCENT)
+                ActionBottomSheetButton("Second", ActionBottomSheetButtonType.SIMPLE) {
+                    scope.launch { sheetState.bottomSheetState.hide() }
+                },
+                ActionBottomSheetButton("Cancel", ActionBottomSheetButtonType.ACCENT) {
+                    scope.launch { sheetState.bottomSheetState.hide() }
+                },
             )
+
 
             ChiliTheme {
                 ActionBottomSheet(sheetState = sheetState, buttons = buttons) {
@@ -74,7 +64,9 @@ class MainActivity : ComponentActivity() {
                                     actionTitle = "Test Action"
                                 ) {
                                     TextField(
-                                        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .wrapContentHeight(),
                                         value = "Test Message",
                                         onValueChange = {})
                                 }
@@ -100,7 +92,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
+    Text(text = name, modifier = modifier)
 }
 
 @Preview(showBackground = true)

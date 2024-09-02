@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.extensions.collapse
 import com.design.composechili.extensions.isExpanded
 import com.design.composechili.extensions.isExpanding
 import com.design.composechili.theme.ChiliTheme
@@ -68,7 +67,7 @@ fun BaseBottomSheet(
                                 .align(Alignment.End)
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                                 .clickable {
-                                    scope.launch { sheetState.collapse() }
+                                    scope.launch { sheetState.bottomSheetState.hide() }
                                 },
                             painter = painterResource(id = R.drawable.chili_ic_clear_24),
                             contentDescription = "Base Bottom Sheet close icon"
@@ -79,9 +78,7 @@ fun BaseBottomSheet(
                 }
 
                 BackHandler(enabled = collapseOnBackPressed && sheetState.isExpanded()) {
-                    scope.launch {
-                        sheetState.collapse()
-                    }
+                    scope.launch { sheetState.bottomSheetState.hide() }
                 }
             },
             scaffoldState = sheetState,

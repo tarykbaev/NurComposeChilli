@@ -33,7 +33,7 @@ fun ActionBottomSheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(buttons) { item ->
-                        ActionButton(item, sheetState)
+                        ActionButton(item)
                     }
                 }
             }
