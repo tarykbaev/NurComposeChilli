@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +37,7 @@ import com.design.composechili.values.ChiliPadding
 @Composable
 fun ToggleCellView(
     modifier: Modifier = Modifier,
-    title: String = "Test",
+    title: String,
     subtitle: String = String(),
     isDividerVisible: Boolean = false,
     isSwitchVisible: Boolean = true,
@@ -119,10 +120,7 @@ fun ToggleCellView(
                                 .padding(end = dimensionResource(id = R.dimen.padding_2dp)),
                             text = switchText,
                             textAlign = TextAlign.End,
-                            style = ChiliTextStyle.get(
-                                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                            )
+                            style = toggleCellParams.switchTextStyle
                         )
                     }
                     Switch(
@@ -130,26 +128,14 @@ fun ToggleCellView(
                         checked = isChecked,
                         enabled = isSwitchEnabled,
                         onCheckedChange = onCheckedChangeListener,
-                        colors = SwitchDefaults.colors(
-                            checkedBorderColor = Color.Transparent,
-                            uncheckedBorderColor = Color.Transparent,
-                            disabledUncheckedBorderColor = Color.Transparent,
-                            disabledCheckedBorderColor = Color.Transparent,
-                            uncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                            checkedTrackColor = colorResource(id = R.color.magenta_1_alpha_40),
-                            disabledCheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                            disabledUncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                            checkedThumbColor = colorResource(id = R.color.magenta_1),
-                            uncheckedThumbColor = ChiliTheme.Colors.ChiliToggleCellViewThumbNormalColor
-                        ),
+                        colors = toggleCellParams.toggleColors,
                         thumbContent = {
                             if (switchTextOnOff != null) {
                                 Text(
                                     text = switchTextOnOff,
                                     textAlign = TextAlign.Center,
                                     maxLines = 1,
-                                    style = ChiliTextStyle.get(
-                                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                                    style = toggleCellParams.switchOnOffTextStyle.copy(
                                         color = switchTextOnOffColor
                                     )
                                 )
@@ -173,11 +159,14 @@ fun ToggleCellView(
 data class ToggleCellParams(
     val titleTextStyle: TextStyle,
     val subTitleTextStyle: TextStyle,
+    val switchTextStyle: TextStyle,
+    val switchOnOffTextStyle: TextStyle,
     val titlePadding: ChiliPadding,
     val subtitlePadding: ChiliPadding,
     val cornerMode: CellCornerMode,
     val startIconPadding: ChiliPadding,
     val switchPadding: ChiliPadding,
+    val toggleColors: SwitchColors
 ) {
     companion object {
         val Default
@@ -188,6 +177,12 @@ data class ToggleCellParams(
                 ), subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                ), switchTextStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
+                ), switchOnOffTextStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
                 ), titlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp),
@@ -202,6 +197,17 @@ data class ToggleCellParams(
                     horizontal = dimensionResource(id = R.dimen.padding_12dp)
                 ), switchPadding = ChiliPadding(
                     end = dimensionResource(id = R.dimen.padding_12dp)
+                ), toggleColors = SwitchDefaults.colors(
+                    checkedBorderColor = Color.Transparent,
+                    uncheckedBorderColor = Color.Transparent,
+                    disabledUncheckedBorderColor = Color.Transparent,
+                    disabledCheckedBorderColor = Color.Transparent,
+                    uncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                    checkedTrackColor = colorResource(id = R.color.magenta_1_alpha_40),
+                    disabledCheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                    disabledUncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
+                    checkedThumbColor = colorResource(id = R.color.magenta_1),
+                    uncheckedThumbColor = ChiliTheme.Colors.ChiliToggleCellViewThumbNormalColor
                 )
             )
     }
@@ -213,6 +219,7 @@ data class ToggleCellParams(
 fun ToggleCellViewPreviewLight() {
     ChiliTheme {
         ToggleCellView(
+            title = "Title",
             isChecked = false,
             isSwitchEnabled = true,
             subtitle = "Subtitle"
@@ -225,6 +232,7 @@ fun ToggleCellViewPreviewLight() {
 fun ToggleCellViewPreview() {
     ChiliTheme {
         ToggleCellView(
+            title = "Title",
             isChecked = false,
             isSwitchEnabled = true,
             subtitle = "Subtitle"
