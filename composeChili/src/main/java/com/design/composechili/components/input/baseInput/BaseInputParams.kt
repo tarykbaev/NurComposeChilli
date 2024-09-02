@@ -1,6 +1,7 @@
 package com.design.composechili.components.input.baseInput
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
@@ -10,6 +11,7 @@ import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
+@Immutable
 data class BaseInputParams(
     val textStyle: TextStyle,
     val errorTextColor: Color,

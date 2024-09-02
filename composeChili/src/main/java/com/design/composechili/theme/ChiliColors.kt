@@ -17,7 +17,7 @@ public data class ChiliColors(
 
     // Screen Background
     val chiliScreenBackground: Color,
-    val chiliSurfaceBackground: Color,
+    val ChiliSurfaceBackground: Color,
 
     // Ripple
     val chiliRippleForegroundColor: Color,
@@ -101,7 +101,7 @@ public data class ChiliColors(
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.black_2),
-            chiliSurfaceBackground = colorResource(id = R.color.black_1),
+            ChiliSurfaceBackground = colorResource(id = R.color.black_1),
             chiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
             ChiliDividerColor = colorResource(id = R.color.black_4),
             chiliChevronColor = colorResource(id = R.color.white_1),
@@ -156,7 +156,7 @@ public data class ChiliColors(
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.gray_4),
-            chiliSurfaceBackground = colorResource(id = R.color.white_1),
+            ChiliSurfaceBackground = colorResource(id = R.color.white_1),
             chiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
             chiliChevronColor = colorResource(id = R.color.gray_2),
