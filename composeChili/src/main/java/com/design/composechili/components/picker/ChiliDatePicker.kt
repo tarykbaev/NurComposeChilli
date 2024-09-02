@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -135,4 +136,36 @@ fun ChiliDatePicker(
         }
     }
 
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun ChiliDatePickerPreview(){
+    ChiliTheme{
+        ChiliDatePicker(
+            modifier = Modifier,
+            onDismissRequest = {},
+            startDateTitle = "Начальная Дата",
+            endDateTitle = "Конечная Дата",
+            submitBtnTitle = "Готово",
+            datePickedParams = ChiliDatePickerParams(
+                firstDate = DatePickerTimeParams(
+                    startDateTime = LocalDateTime.now(),
+                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
+                    yearsRange = IntRange(2020, 2025)
+                ),
+                secondDate = DatePickerTimeParams(
+                    startDateTime = LocalDateTime.now(),
+                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
+                    yearsRange = IntRange(2020,2025)
+                )
+            ),
+            onSubmitBtn = { startDate, endDate ->
+
+            }
+        )
+    }
 }
