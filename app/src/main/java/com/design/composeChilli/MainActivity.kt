@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import com.design.composeChilli.ui.theme.NurComposeChiliTheme
 import com.design.composechili.components.picker.ChiliDatePicker
 import com.design.composechili.components.picker.ChiliDatePickerParams
 import com.design.composechili.components.picker.DatePickerTimeParams
+import com.design.composechili.components.picker.chiliTimePickerDialog.ChiliTimePickerDialog
 import com.design.composechili.theme.ChiliTheme
 import java.time.LocalDateTime
 
@@ -41,31 +43,15 @@ class MainActivity : ComponentActivity() {
                 Column {
                     Spacer(modifier = Modifier.height(80.dp))
                     if (isDialogVisible) {
-                        ChiliDatePicker(
+                        ChiliTimePickerDialog(
                             modifier = Modifier,
                             onDismissRequest = {
                                 isDialogVisible = false
                             },
-                            startDateTitle = "Начальная Дата",
-                            endDateTitle = "Конечная Дата",
-                            submitBtnTitle = "Готово",
-                            datePickedParams = ChiliDatePickerParams(
-                                firstDate = DatePickerTimeParams(
-                                    startDateTime = LocalDateTime.now(),
-                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
-                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
-                                    yearsRange = IntRange(2020, 2025)
-                                ),
-                                secondDate = DatePickerTimeParams(
-                                    startDateTime = LocalDateTime.now(),
-                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
-                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
-                                    yearsRange = IntRange(2020,2025)
-                                )
-                            ),
-                            onSubmitBtn = { startDate, endDate ->
-
-                            }
+                            title = "Выберите время",
+                            startDateTime = LocalDateTime.now(),
+                            minDateTime = LocalDateTime.of(2020, 1, 1, 0,0),
+                            maxDateTime = LocalDateTime.of(2025, 1, 1, 23,0),
                         )
                     }
                 }

@@ -24,6 +24,7 @@ import com.design.composechili.theme.ChiliTheme
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.Locale
 
 
@@ -272,6 +273,11 @@ sealed class ChiliSnappedDateTime(val snappedLocalDateTime: LocalDateTime, val s
     data class Year (val localDateTime: LocalDateTime, val index: Int): ChiliSnappedDateTime(localDateTime, index)
     data class Hour (val localDateTime: LocalDateTime, val index: Int): ChiliSnappedDateTime(localDateTime, index)
     data class Minute (val localDateTime: LocalDateTime, val index: Int): ChiliSnappedDateTime(localDateTime, index)
+}
+
+internal sealed class ChiliSnappedTime(val snappedLocalTime: LocalTime, val snappedIndex: Int) {
+    data class Hour (val localTime: LocalTime, val index: Int): ChiliSnappedTime(localTime, index)
+    data class Minute (val localTime: LocalTime, val index: Int): ChiliSnappedTime(localTime, index)
 }
 
 internal sealed class ChiliSnappedDate(val snappedLocalDate: LocalDate, val snappedIndex: Int) {
