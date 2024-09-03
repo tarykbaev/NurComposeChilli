@@ -82,14 +82,30 @@ public data class ChiliColors(
     val ChiliCellViewBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
-    val ChiliTooltipBackground: Color,
+    // ToggleCellView
+    val ChiliToggleCellViewTrackColor: Color,
+    val ChiliToggleCellViewThumbNormalColor: Color,
+    val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
+    val ChiliToggleCellViewTextOnOffCheckedDisabledColor: Color,
+
+    val ChiliTooltipBackground:Color,
+
 
     // TopAppBar
     val ChiliTopAppBarDividerColor: Color,
     val ChiliTopAppBarIconsTint: Color,
     val ChiliTopAppBarBackground: Color,
-    val ChiliStartIconTopAppBarBackground: Color
-) {
+    val ChiliStartIconTopAppBarBackground: Color,
+
+    // Code Input View
+    val ChiliCodeInputViewMessageColor: Color,
+    val ChiliCodeInputViewActionTextActiveColor: Color,
+    val ChiliCodeInputViewActionTextInActiveColor: Color,
+    val ChiliCodeInputItemBorderColor: Color,
+    val ChiliCodeInputItemBackgroundColor: Color,
+    val ChiliCodeInputItemErrorBackgroundColor: Color,
+
+    ){
 
     companion object {
         @Composable
@@ -144,7 +160,17 @@ public data class ChiliColors(
             ChiliTopAppBarDividerColor = colorResource(id = R.color.black_4),
             ChiliTopAppBarIconsTint = colorResource(id = R.color.white_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.black_3),
-            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1)
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.black_1),
+            ChiliToggleCellViewTrackColor = colorResource(id = R.color.black_4),
+            ChiliToggleCellViewThumbNormalColor = colorResource(id = R.color.black_5),
+            ChiliToggleCellViewTextOnOffCheckedEnabledColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedDisabledColor = colorResource(id = R.color.black_1),
+            ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
+            ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
+            ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
+            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_4),
+            ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2)
         )
 
         @Composable
@@ -199,7 +225,17 @@ public data class ChiliColors(
             ChiliTopAppBarDividerColor = colorResource(id = R.color.gray_8),
             ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
-            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1)
+            ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1),
+            ChiliToggleCellViewTrackColor = colorResource(id = R.color.gray_2),
+            ChiliToggleCellViewThumbNormalColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedEnabledColor = colorResource(id = R.color.white_1),
+            ChiliToggleCellViewTextOnOffCheckedDisabledColor = colorResource(id = R.color.black_1),
+            ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
+            ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
+            ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
+            ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
+            ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3)
         )
     }
 }
