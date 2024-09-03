@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -127,22 +128,88 @@ class MainActivity : ComponentActivity() {
                         chevronEnabled = false,
                     )
 
-                    HighlightContainer(
-                        highlightState = HighlightState.WITH_LINE_ONLY,
-                        highlighterColorStart = Color.Green
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(12.dp))
+                        HighlightContainer(
+                            highlightState = HighlightState.WITHOUT_HIGHLIGHT,
+                            highlighterColorStart = Color.Green
                         ) {
-                            Image(
-                                modifier = Modifier.fillMaxSize(),
-                                painter = painterResource(R.drawable.test_image),
-                                contentScale = ContentScale.Crop,
-                                contentDescription = "TestImage"
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(4.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                            ) {
+                                Image(
+                                    modifier = Modifier.fillMaxSize(),
+                                    painter = painterResource(R.drawable.test_image),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = "TestImage"
+                                )
+                            }
+                        }
+
+                        HighlightContainer(
+                            highlightState = HighlightState.WITH_LINE_ONLY,
+                            highlighterColorStart = Color.Red,
+                            highlighterColorEnd = Color.Blue
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(4.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                            ) {
+                                Image(
+                                    modifier = Modifier.fillMaxSize(),
+                                    painter = painterResource(R.drawable.test_image),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = "TestImage"
+                                )
+                            }
+                        }
+
+                        HighlightContainer(
+                            highlightState = HighlightState.WITH_CIRCLE_AND_ICON,
+                            highlighterColorStart = Color.Blue,
+                            highlighterColorEnd = Color.Red,
+                            highlighterIcon = getDrawable(R.drawable.lighting)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(4.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                            ) {
+                                Image(
+                                    modifier = Modifier.fillMaxSize(),
+                                    painter = painterResource(R.drawable.test_image),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = "TestImage"
+                                )
+                            }
+                        }
+
+                        HighlightContainer(
+                            highlightState = HighlightState.WITH_LINE_ONLY,
+                            highlighterColorStart = Color.Blue,
+                            highlighterColorEnd = Color.Red,
+                            cornerRadius = 50.dp
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(4.dp)
+                                    .clip(RoundedCornerShape(50.dp))
+                            ) {
+                                Image(
+                                    modifier = Modifier.fillMaxSize(),
+                                    painter = painterResource(R.drawable.test_image),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = "TestImage"
+                                )
+                            }
                         }
                     }
                 }
