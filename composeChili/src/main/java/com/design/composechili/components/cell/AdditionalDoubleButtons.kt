@@ -39,10 +39,10 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun AdditionalDoubleButtons(
     modifier: Modifier = Modifier,
-    title: String = "Заголовок",
+    title: String = String(),
     @DrawableRes icon: Int = R.drawable.ic_squircle_phone,
-    negativeTitle: String = "ОТМЕНИТЬ",
-    positiveTitle: String = "ОПЛАТИТЬ",
+    negativeTitle: String = String(),
+    positiveTitle: String = String(),
     onTitleClick: () -> Unit = {},
     onPositiveButtonClick: () -> Unit = {},
     onNegativeButtonClick: () -> Unit = {},
@@ -135,6 +135,10 @@ fun AdditionalDoubleButtons(
 @Composable
 fun AdditionalButtons_Preview() {
     ChiliTheme {
-        AdditionalDoubleButtons()
+        AdditionalDoubleButtons(
+            title = "Заголовок",
+            positiveTitle = "ОПЛАТИТЬ",
+            negativeTitle = "ОТМЕНИТЬ"
+        )
     }
 }
