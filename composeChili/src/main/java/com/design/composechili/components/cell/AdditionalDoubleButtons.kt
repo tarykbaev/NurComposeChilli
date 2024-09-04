@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,11 +15,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,31 @@ import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+
+/**
+ * A composable function that displays a header with an optional icon and title, followed by two buttons
+ * positioned at the bottom of the cell. The buttons can be customized with different titles and click actions.
+ *
+ * @param modifier Modifier to be applied to the composable.
+ * @param title The main title text displayed in the header section of the cell.
+ * @param icon Drawable resource ID for the icon displayed in the header section. Defaults to a phone icon.
+ * @param negativeTitle Title text for the left (negative) button.
+ * @param positiveTitle Title text for the right (positive) button.
+ * @param onTitleClick Callback invoked when the user clicks on the header part of the cell.
+ * @param onPositiveButtonClick Callback invoked when the user clicks on the right (positive) button.
+ * @param onNegativeButtonClick Callback invoked when the user clicks on the left (negative) button.
+ *
+ * Example usage:
+ * @sample AdditionalDoubleButtons(
+ *     title = "Example Title",
+ *     icon = R.drawable.ic_example_icon,
+ *     negativeTitle = "Cancel",
+ *     positiveTitle = "Confirm",
+ *     onTitleClick = { /* Handle title click */ },
+ *     onPositiveButtonClick = { /* Handle positive button click */ },
+ *     onNegativeButtonClick = { /* Handle negative button click */ }
+ * )
+ */
 
 @Composable
 fun AdditionalDoubleButtons(
@@ -57,7 +85,10 @@ fun AdditionalDoubleButtons(
     ) {
         Row(
             modifier = Modifier
-                .clickable { onTitleClick() }
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = rememberRipple(), onClick = onTitleClick
+                )
                 .background(Color.Transparent)
                 .padding(vertical = 16.dp)
                 .padding(horizontal = 8.dp),

@@ -28,6 +28,36 @@ import com.design.composechili.components.cell.model.AdditionalTextCellViewItems
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * A composable function that displays a text cell with optional subtitles, descriptions, and an icon.
+ * The cell can be customized with different corner shapes, and it supports the inclusion of a chevron icon.
+ *
+ * @param modifier Modifier to be applied to the composable.
+ * @param title Main title text, appears at the top left within the cell.
+ * @param description Description text, appears at the top right within the cell.
+ * @param subTitle Optional subtitle text, appears below the title on the left side of the cell. Defaults to null.
+ * @param subDescription Optional sub-description text, appears below the description on the right side of the cell. Defaults to null.
+ * @param chevronEnabled Boolean flag indicating whether to show a chevron icon on the far right of the cell. Defaults to false.
+ * @param icon Optional drawable resource ID for an icon, appears centered on the left side of the cell before the title. Defaults to null.
+ * @param shape Specifies the shape of the cell's corners. The corners can be fully rounded, partially rounded, or not rounded at all.
+ * It uses the [CellCornerMode] enum to define the shape, which can be:
+ * - [CellCornerMode.Single]: All corners rounded (e.g., for a standalone cell).
+ * - [CellCornerMode.Top]: Only the top corners are rounded (e.g., for the top cell in a list).
+ * - [CellCornerMode.Bottom]: Only the bottom corners are rounded (e.g., for the bottom cell in a list).
+ * - [CellCornerMode.Middle]: No corners are rounded (e.g., for a cell in the middle of a list).
+ *
+ * Example usage:
+ * @sample AdditionalTextCellView(
+ *     title = "Main Title",
+ *     description = "Description Text",
+ *     subTitle = "Subtitle Text",
+ *     subDescription = "Sub-Description Text",
+ *     chevronEnabled = true,
+ *     icon = R.drawable.ic_example_icon,
+ *     shape = CellCornerMode.Single
+ * )
+ */
+
 @Composable
 fun AdditionalTextCellView(
     modifier: Modifier = Modifier,
