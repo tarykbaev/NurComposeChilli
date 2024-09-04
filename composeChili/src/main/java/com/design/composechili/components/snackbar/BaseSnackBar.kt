@@ -15,21 +15,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * @param [title] main information title
+ * @param [actionText] action button title
+ * @param [isLoading]  u can set visibility state of progress in snackBar
+ * @param [startIcon] accept [DrawableRes] set [Image] on the start in snackBar
+ * @param [actionListener] will invoke when user will click [actionText]
+ * @param [dismissAction] will invoke when snackBar will dismiss
+ * @param [baseSnackBarParams] snackBar visual transformation params
+ * @sample BaseSnackBarParams.Default
+ */
 
 @Composable
 fun BaseSnackBar(
-    text: String,
+    title: String,
     modifier: Modifier = Modifier,
     actionText: String = String(),
     isLoading: Boolean = false,
@@ -86,35 +92,11 @@ fun BaseSnackBar(
                             .weight(1f)
                             .align(Alignment.CenterVertically)
                             .padding(start = 12.dp),
-                        text = text,
+                        text = title,
                         color = baseSnackBarParams.textColor
                     )
                 }
             },
         )
     }
-}
-
-data class BaseSnackBarParams(
-    val containerColor: Color,
-    val cornersSize: Dp,
-    val textColor: Color,
-    val actionTextColor: Color,
-    val textStyle: TextStyle,
-) {
-    companion object {
-        val Default
-            @Composable
-            get() = BaseSnackBarParams(
-                containerColor = ChiliTheme.Colors.ChiliSnackbarBackground,
-                cornersSize = ChiliTheme.Attribute.ChiliSnackbarBackgroundCornerRadius,
-                textColor = ChiliTheme.Colors.ChiliSnackbarTextColor,
-                actionTextColor = ChiliTheme.Colors.ChiliComponentButtonTextColorActive,
-                textStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                )
-            )
-    }
-
 }

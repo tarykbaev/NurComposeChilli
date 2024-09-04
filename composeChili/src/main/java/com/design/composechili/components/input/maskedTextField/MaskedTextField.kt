@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,6 +31,32 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+
+
+/**
+ *  Text Field for fill filling with mask. U can set own representation char, ignore values
+ *  * @sample +996 XXX XXX XXX -> +996 708 708 888
+ *  * @sample XXXXXX -> 123456
+ *  @author stashmamatov
+ *  @param [maskInputParams] Field visual transformation params and mask representation value
+ *  @sample MaskedTextFieldParams(
+ *                 titleTextStyle = ChiliTextStyle.get(
+ *                     ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+ *                     ChiliTheme.Colors.ChiliPrimaryTextColor,
+ *                     ChiliTheme.Attribute.ChiliBoldTextFont
+ *                 ),
+ *                 hintTextColor = colorResource(id = R.color.gray_2),
+ *                 representation = 'X',
+ *                 maskSymbols = listOf('-', ' ', '/'),
+ *                 allowedInputSymbols = "*",
+ *                 fieldContainerColor = colorResource(id = R.color.gray_5)
+ *             )
+ *  @param [initialText] Initial text, can add mask representation
+ *  @param [mask] Mask Value @sample +996 XXX XXX XXX -> +996 707 707 707
+ *  @param [fieldContainerColor] MaskedTextField root container color
+ *  @param [onValueChange] callback which will invoke when mask text will parse (+996 708 XXX XXX)
+ *  @param [rootContainerPadding] padding for root container, def value 16dp
+ */
 
 @Composable
 fun MaskedTextField(
