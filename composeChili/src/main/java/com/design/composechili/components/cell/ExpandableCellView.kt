@@ -49,6 +49,7 @@ fun ExpandableCellView(
     title: String,
     description: String = String(),
     isInitiallyExpanded: Boolean = false,
+    animationDuration: Int = 500,
     expandableCellParams: ExpandableCellParams = ExpandableCellParams.Default,
 ) {
 
@@ -68,7 +69,7 @@ fun ExpandableCellView(
                     .wrapContentHeight()
                     .animateContentSize(
                         animationSpec = tween(
-                            durationMillis = 150,
+                            durationMillis = animationDuration,
                             easing = LinearOutSlowInEasing
                         )
                     )
