@@ -1,6 +1,7 @@
 package com.design.composechili.components.cell
 
 import android.content.res.Configuration
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -42,6 +43,14 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 
+/**
+ * @param [title] accepts [String] and shown on the start of the cell
+ * @param [description] accepts [String] and shown at the bottom of the cell below divider
+ * @param [isInitiallyExpanded] sets if initially cell expanded/collapsed
+ * @param [animationDuration] sets cell collapse/expand animation duration
+ * @param [expandableCellParams] cells visual transformation params and paddings
+ * @sample ExpandableCellParams.Default
+ */
 
 @Composable
 fun ExpandableCellView(
