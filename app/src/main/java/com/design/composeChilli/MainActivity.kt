@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
@@ -77,6 +78,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .padding(16.dp)
                                 .clickable {
+
                                     scope.launch { sheetState.bottomSheetState.expand() }
                                 },
                             title = "Open BottomSheet"

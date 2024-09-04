@@ -14,6 +14,9 @@ fun BottomSheetScaffoldState.isExpanding() : Boolean = bottomSheetState.targetVa
 fun BottomSheetScaffoldState.isExpanded() : Boolean = bottomSheetState.currentValue == SheetValue.Expanded
 
 @OptIn(ExperimentalMaterial3Api::class)
+fun BottomSheetScaffoldState.isNotHidden() : Boolean = bottomSheetState.currentValue != SheetValue.Hidden
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun getBottomSheetState() = rememberBottomSheetScaffoldState(
     bottomSheetState = rememberModalBottomSheetState()
