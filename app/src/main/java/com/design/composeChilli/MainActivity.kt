@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
 import com.design.composechili.R
+import com.design.composechili.components.cell.AdditionalDoubleButtons
 import com.design.composechili.components.cell.AdditionalTextCellView
 import com.design.composechili.components.cell.AdditionalTextCellViewList
 import com.design.composechili.components.cell.model.AdditionalTextCellViewItems
