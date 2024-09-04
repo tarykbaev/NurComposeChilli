@@ -35,6 +35,16 @@ import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+/**
+ * @param [onTitleClick] callback will invoke when user will click cell upper header part
+ * @param [onPositiveButtonClick] callback will invoke when user will click right positive button
+ * @param [onNegativeButtonClick] callback will invoke when user will click left negative button
+ * @param [title] button main title value
+ * @param [titleStyle] button main title style
+ * @param [buttonStyle] button visual style
+ * @param [isEnabled] is button enabled state
+ * @sample ChiliButtonStyle.Primary
+ */
 
 @Composable
 fun AdditionalDoubleButtons(
