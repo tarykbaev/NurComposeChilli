@@ -34,6 +34,23 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 
+/**
+ * Cell view component containing [Switch] at the end of the cell
+ * @param [title] accepts [String] and shown at the start of the cell
+ * @param [subtitle] accepts [String] and shown at the start of the cell and below [title]
+ * @param [isDividerVisible] sets visibility to divider which will be shown at the bottom of the cell
+ * @param [isSwitchVisible] sets visibility to [Switch] at the end of the cell
+ * @param [isChecked] sets if [Switch] is checked on/off
+ * @param [isSwitchEnabled] sets if [Switch] is enabled/disabled
+ * @param [switchTextOn] sets [String] value to the thumb on [Switch] when it is checked
+ * @param [switchTextOff] sets [String] value to the thumb on [Switch] when it is not checked
+ * @param [switchText] accepts [String] and shown at the start of [Switch]
+ * @param [startIcon] accepts [DrawableRes] and sets [Image] to the start of cell
+ * @param [onCheckedChangeListener] called when [Switch] checked value changes
+ * @param [toggleCellParams] cell's visual transformation params and paddings
+ * @sample ToggleCellParams.Default
+ */
+
 @Composable
 fun ToggleCellView(
     modifier: Modifier = Modifier,
