@@ -29,6 +29,17 @@ enum class HighlightState {
     WITHOUT_HIGHLIGHT
 }
 
+/**
+ * @param [borderWidth] Sets the width of the border around the container.
+ * @param [cornerRadius] Sets the radius of the container's rounded corners.
+ * @param [highlighterColorStart] The starting color of the gradient applied to the highlight.
+ * @param [highlighterColorEnd] The ending color of the gradient applied to the highlight; if null,
+ * [highlighterColorStart] will be used.
+ * @param [highlighterIcon] Accepts a [Drawable] icon to be displayed within the circle highlight.
+ * @param [highlightState] Defines the style of the highlight: [HighlightState.WITH_CIRCLE_AND_ICON],
+ * [HighlightState.WITH_LINE_ONLY], or [HighlightState.WITHOUT_HIGHLIGHT].
+ * @param [content] A composable content block displayed inside the HighlightContainer.
+ */
 @Composable
 fun HighlightContainer(
     modifier: Modifier = Modifier,

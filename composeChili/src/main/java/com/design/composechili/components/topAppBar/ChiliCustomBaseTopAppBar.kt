@@ -34,6 +34,23 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.pxToDp
 
+/**
+ * @param [title] accepts [String] and displays as the title in the AppBar.
+ * @param [titleStyle] sets the style of the title text.
+ * @param [isDividerVisible] allows setting the visibility state of the divider below the AppBar.
+ * @param [additionalText] accepts [String] and displays next to the right icon in the AppBar.
+ * @param [additionalTextStyle] sets the style of the additional text.
+ * @param [navigationIcon] accepts [DrawableRes] and displays a navigation icon on the left side of the AppBar.
+ * @param [navigationIconSize] sets the size of the navigation icon.
+ * @param [endIcon] accepts [DrawableRes] and displays an icon on the right side of the AppBar.
+ * @param [endIconSize] sets the size of the right-side icon.
+ * @param [containerColor] sets the background color of the AppBar.
+ * @param [dividerColor] sets the color of the divider line below the AppBar.
+ * @param [dividerThickness] sets the thickness of the divider line.
+ * @param [isCenteredTitle] allows setting the alignment of the title: centered or left-aligned.
+ * @param [onNavigationClick] sets the handler for clicks on the navigation icon.
+ * @param [onEndIconClick] sets the handler for clicks on the right-side icon.
+ */
 @Composable
 fun ChiliCustomBaseTopAppBar(
     modifier: Modifier = Modifier,
