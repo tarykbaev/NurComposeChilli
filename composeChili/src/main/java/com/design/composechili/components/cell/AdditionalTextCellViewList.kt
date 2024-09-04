@@ -12,6 +12,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.components.cell.model.AdditionalTextCellViewItems
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * Displays a list of `AdditionalTextCellView` items in a vertically scrollable column.
+ * The list items are styled with appropriate rounded corners depending on their position
+ * (top, middle, bottom) within the list.
+ *
+ * @param modifier A `Modifier` to apply to this layout. Defaults to `Modifier`.
+ * @param itemsList A list of `AdditionalTextCellViewItems` representing the data to be displayed
+ * in the list. Each item contains the text and description to be displayed in an `AdditionalTextCellView`.
+ *
+ * The first item in the list has rounded top corners, the last item has rounded bottom corners,
+ * and all other items have no rounded corners. A divider is placed between each item, except after
+ * the last item.
+ *
+ * Example usage:
+ * ```
+ * val items = listOf(
+ *     AdditionalTextCellViewItems("Title 1", "Description 1"),
+ *     AdditionalTextCellViewItems("Title 2", "Description 2"),
+ *     AdditionalTextCellViewItems("Title 3", "Description 3")
+ * )
+ *
+ * AdditionalTextCellViewList(
+ *     itemsList = items
+ * )
+ * ```
+ */
+
 @Composable
 fun AdditionalTextCellViewList(
     modifier: Modifier = Modifier,
@@ -19,40 +46,24 @@ fun AdditionalTextCellViewList(
 ) {
     LazyColumn(modifier = modifier.background(Color.Transparent)) {
         itemsIndexed(itemsList) { index, item ->
-            when {
-                (index == itemsList.indexOf(item)) -> {
-                    AdditionalTextCellView(
-                        title = item.text,
-                        description = item.description,
-                        shape = AdditionalTextCellViewParams.roundedShapeTop,
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth(),
-                        color = ChiliTheme.Colors.ChiliDividerColor,
-                        thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
-                    )
-                }
+            val shape = when (index) {
+                0 -> AdditionalTextCellViewParams.roundedShapeTop
+                itemsList.size - 1 -> AdditionalTextCellViewParams.roundedShapeBottom
+                else -> AdditionalTextCellViewParams.roundedShapeCenter
+            }
 
-                (index == itemsList.lastIndexOf(item)) -> {
-                    AdditionalTextCellView(
-                        title = item.text,
-                        description = item.description,
-                        shape = AdditionalTextCellViewParams.roundedShapeBottom
-                    )
-                }
+            AdditionalTextCellView(
+                title = item.text,
+                description = item.description,
+                shape = shape
+            )
 
-                else -> {
-                    AdditionalTextCellView(
-                        title = item.text,
-                        description = item.description,
-                        shape = AdditionalTextCellViewParams.roundedShapeCenter
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth(),
-                        color = ChiliTheme.Colors.ChiliDividerColor,
-                        thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
-                    )
-                }
+            if (index != itemsList.size - 1) {
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = ChiliTheme.Colors.ChiliDividerColor,
+                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+                )
             }
         }
     }
