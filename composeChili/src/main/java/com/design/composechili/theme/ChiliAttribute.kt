@@ -71,6 +71,9 @@ data class ChiliAttribute(
     val ChiliBottomSheetBottomCornerRadius:Dp,
     val ChiliBottomSheetContainerHorizontalMargin:Dp,
     val ChiliBottomSheetContainerBottomMargin:Dp,
+
+    // In App Push
+    val ChiliInAppPushCornerRadius:Dp
 ) {
     companion object {
         @Composable
@@ -108,7 +111,8 @@ data class ChiliAttribute(
             ChiliBottomSheetTopCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
             ChiliBottomSheetBottomCornerRadius = dimensionResource(id = R.dimen.radius_0dp),
             ChiliBottomSheetContainerBottomMargin = dimensionResource(id = R.dimen.padding_0dp),
-            ChiliBottomSheetContainerHorizontalMargin = dimensionResource(id = R.dimen.padding_0dp)
+            ChiliBottomSheetContainerHorizontalMargin = dimensionResource(id = R.dimen.padding_0dp),
+            ChiliInAppPushCornerRadius = dimensionResource(id = R.dimen.radius_24dp)
         )
     }
 }

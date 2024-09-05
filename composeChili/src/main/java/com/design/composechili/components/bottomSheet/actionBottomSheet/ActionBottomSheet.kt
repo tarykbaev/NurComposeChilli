@@ -67,11 +67,11 @@ fun ActionBottomSheetPreview() {
         val sheetState = getBottomSheetState()
 
         val buttons = listOf(
-            ActionBottomSheetParams("First", ChiliTheme.Colors.chiliSecondaryTextColor),
-            ActionBottomSheetParams("Second", ChiliTheme.Colors.chiliSecondaryTextColor),
+            ActionBottomSheetParams("First", ChiliTheme.Colors.ChiliActionBottomSheetButtonTextColor),
+            ActionBottomSheetParams("Second", ChiliTheme.Colors.ChiliActionBottomSheetButtonTextColor),
             ActionBottomSheetParams(
                 "Cancel",
-                ChiliTheme.Colors.ChiliComponentButtonTextColorActive,
+                ChiliTheme.Colors.ChiliActionBottomSheetAccentButtonTextColor,
                 onClick = {
                     scope.launch { sheetState.bottomSheetState.hide() }
                 }),

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
+import com.design.composechili.components.bottomSheet.BaseInAppPush
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheet
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
 import com.design.composechili.components.cell.BaseCell
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 )
 
 
-                ActionBottomSheet(sheetState = sheetState, buttons = buttons) {
+                BaseInAppPush(bottomSheetState = sheetState, ) {
                     Column {
                         Spacer(modifier = Modifier.height(80.dp))
                         BaseCell(

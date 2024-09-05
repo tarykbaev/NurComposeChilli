@@ -113,6 +113,13 @@ public data class ChiliColors(
     // Card Cell View
     val ChiliCardErrorTextColor: Color
 
+    // Action Bottom Sheet
+    val ChiliActionBottomSheetButtonTextColor:Color,
+    val ChiliActionBottomSheetAccentButtonTextColor:Color,
+
+    // In App Push
+    val ChiliInAppPushBackgroundColor:Color
+
     ){
 
     companion object {
@@ -182,7 +189,10 @@ public data class ChiliColors(
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
             ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
-            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2)
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2),
+            ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
+            ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3)
         )
 
         @Composable
@@ -251,7 +261,10 @@ public data class ChiliColors(
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
             ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
-            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4)
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
+            ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
+            ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1)
         )
     }
 }
