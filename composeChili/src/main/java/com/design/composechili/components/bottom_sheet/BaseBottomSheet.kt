@@ -1,8 +1,10 @@
 package com.design.composechili.components.bottom_sheet
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,19 +21,23 @@ import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.extensions.isExpanded
 import com.design.composechili.extensions.isExpanding
-import com.design.composechili.extensions.isNotHidden
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -40,25 +46,22 @@ import kotlinx.coroutines.launch
 fun BaseBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: BottomSheetScaffoldState,
-    isHidden: Boolean = true,
+    peekHeight: Dp = BottomSheetDefaults.SheetPeekHeight,
     hasCloseIcon: Boolean = false,
     collapseOnBackPressed: Boolean = true,
     baseBottomSheetParams: BaseBottomSheetParams = BaseBottomSheetParams.Default,
-    dragAreaColor: Color? = null,
-
     isBackgroundDimmingEnabled: Boolean = true,
+    bottomSheetSwipeEnabled: Boolean = true,
+    isDragHandleContentEnabled: Boolean = false,
+    dragHandle: @Composable () -> Unit = { BottomSheetDefaults.DragHandle() },
     bottomSheetContent: @Composable () -> Unit,
-    screenContent: @Composable () -> Unit
+    screenContent: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
     ChiliTheme {
-        val alpha = animateFloatAsState(
-            targetValue = if (sheetState.isExpanding()) 0.5f else 0f,
-            animationSpec = tween(durationMillis = 500),
-            label = "dimming animation"
-        )
 
+        var backgroundBoxVisibility by rememberSaveable { mutableStateOf(false) }
 
         BottomSheetScaffold(
             sheetContent = {
@@ -66,7 +69,7 @@ fun BaseBottomSheet(
                     modifier = modifier
                         .fillMaxWidth()
                         .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
-                        .padding()
+                        .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
                 ) {
 
                     if (hasCloseIcon) {
@@ -97,19 +100,27 @@ fun BaseBottomSheet(
                 bottomEnd = baseBottomSheetParams.bottomCornerRadius,
                 bottomStart = baseBottomSheetParams.bottomCornerRadius
             ),
-            sheetContainerColor = dragAreaColor ?: ChiliTheme.Colors.chiliScreenBackground,
+            sheetSwipeEnabled = bottomSheetSwipeEnabled,
+            sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
             sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,
-            sheetDragHandle = { if (dragAreaColor != null) BottomSheetDefaults.DragHandle() },
-            sheetPeekHeight = if (isHidden) 0.dp else BottomSheetDefaults.SheetPeekHeight,
-
-            ) {
+            sheetDragHandle = if (isDragHandleContentEnabled) {
+                dragHandle
+            } else null,
+            sheetPeekHeight = peekHeight,
+        ) {
             screenContent()
 
-            if (sheetState.isExpanding()) {
+            backgroundBoxVisibility = sheetState.isExpanding()
+
+            AnimatedVisibility(
+                visible = backgroundBoxVisibility,
+                enter = fadeIn(animationSpec = tween(500)),
+                exit = fadeOut(animationSpec = tween(500))
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(baseBottomSheetParams.backgroundColor.copy(alpha = alpha.value))
+                        .background(baseBottomSheetParams.backgroundColor.copy(alpha = 0.5f))
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }) {
@@ -122,22 +133,26 @@ fun BaseBottomSheet(
 
 @Stable
 data class BaseBottomSheetParams(
-    val bottomSheetContentBackgroundColor:Color,
+    val bottomSheetContentBackgroundColor: Color,
     val topCornerRadius: Dp,
     val bottomCornerRadius: Dp,
-    val backgroundColor:Color,
-){
+    val bottomSheetBottomPadding: Dp,
+    val backgroundColor: Color,
+    val bottomSheetShadowElevation: Dp
+) {
 
-    companion object{
+    companion object {
 
         val Default
-        @Composable
-        get() = BaseBottomSheetParams(
-            bottomSheetContentBackgroundColor = ChiliTheme.Colors.ChiliBottomSheetBackgroundColor,
-            topCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius,
-            bottomCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetBottomCornerRadius,
-            backgroundColor = Color.Black
-        )
+            @Composable
+            get() = BaseBottomSheetParams(
+                bottomSheetContentBackgroundColor = ChiliTheme.Colors.ChiliBottomSheetBackgroundColor,
+                topCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius,
+                bottomCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetBottomCornerRadius,
+                backgroundColor = Color.Black,
+                bottomSheetBottomPadding = ChiliTheme.Attribute.ChiliBottomSheetContainerBottomMargin,
+                bottomSheetShadowElevation = dimensionResource(id = R.dimen.elevation_8dp)
+            )
     }
 
 }

@@ -11,15 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
 
-enum class ActionBottomSheetButtonType {
-    SIMPLE, ACCENT
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionBottomSheet(
     sheetState: BottomSheetScaffoldState,
-    buttons: List<ActionBottomSheetButton>,
+    buttons: List<ActionBottomSheetParams>,
     content: @Composable () -> Unit
 ) {
     ChiliTheme {
@@ -33,12 +29,15 @@ fun ActionBottomSheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(buttons) { item ->
-                        ActionButton(item)
+                        ActionBottomSheetButton(item)
                     }
                 }
-            }
-        ) {
-            content()
-        }
+            },
+            screenContent = { content() }
+        )
     }
+}
+
+enum class ActionBottomSheetButtonType {
+    SIMPLE, ACCENT
 }

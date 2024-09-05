@@ -24,6 +24,7 @@ import com.design.composeChilli.ui.theme.NurComposeChiliTheme
 import com.design.composechili.components.bottom_sheet.ActionBottomSheet
 import com.design.composechili.components.bottom_sheet.ActionBottomSheetButton
 import com.design.composechili.components.bottom_sheet.ActionBottomSheetButtonType
+import com.design.composechili.components.bottom_sheet.ActionBottomSheetParams
 import com.design.composechili.components.cell.BaseCell
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.tooltip.ChiliTooltip
@@ -37,43 +38,25 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
         setContent {
-            val scope = rememberCoroutineScope()
-            val sheetState = getBottomSheetState()
-            val buttons = listOf(
-                ActionBottomSheetButton("First", ActionBottomSheetButtonType.SIMPLE) {},
-                ActionBottomSheetButton("Second", ActionBottomSheetButtonType.SIMPLE) {
-                    scope.launch { sheetState.bottomSheetState.hide() }
-                },
-                ActionBottomSheetButton("Cancel", ActionBottomSheetButtonType.ACCENT) {
-                    scope.launch { sheetState.bottomSheetState.hide() }
-                },
-            )
+            ChiliTheme{
+                val scope = rememberCoroutineScope()
+                val sheetState = getBottomSheetState()
+
+                val buttons = listOf(
+                    ActionBottomSheetParams("First", ChiliTheme.Colors.chiliSecondaryTextColor),
+                    ActionBottomSheetParams("Second", ChiliTheme.Colors.chiliSecondaryTextColor),
+                    ActionBottomSheetParams("Cancel", ChiliTheme.Colors.ChiliComponentButtonTextColorActive, onClick = {
+                        scope.launch { sheetState.bottomSheetState.hide() }
+                    }),
+                )
 
 
-            ChiliTheme {
                 ActionBottomSheet(sheetState = sheetState, buttons = buttons) {
                     Column {
                         Spacer(modifier = Modifier.height(80.dp))
-                        ChiliTooltip(
-                            title = "Услуга Где Дети",
-                            subtitle = "Услуга Где Дети Описание ",
-                            requesterView = { clickListenerModifier ->
-                                InputFieldWithDescAndAction(
-                                    descriptionModifier = clickListenerModifier,
-                                    description = "Test description",
-                                    actionTitle = "Test Action"
-                                ) {
-                                    TextField(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .wrapContentHeight(),
-                                        value = "Test Message",
-                                        onValueChange = {})
-                                }
-                            },
-                        )
-
                         BaseCell(
                             modifier = Modifier
                                 .padding(16.dp)
@@ -85,6 +68,8 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
+
+
             }
         }
     }
