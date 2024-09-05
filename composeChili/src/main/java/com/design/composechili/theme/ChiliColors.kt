@@ -248,7 +248,7 @@ public data class ChiliColors(
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
-            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3)
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
             ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4)
