@@ -1,5 +1,8 @@
 package com.design.composechili.components.tooltip
 
+import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -21,6 +24,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.allViews
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
@@ -36,6 +40,7 @@ fun ChiliTooltip(
     subtitle: String = String(),
     @DrawableRes endIcon: Int = R.drawable.chili_ic_clear_24
 ) {
+
     ChiliTheme {
         var isShowTooltip by remember { mutableStateOf(false) }
         var position by remember { mutableStateOf(TooltipPopupPosition()) }
@@ -43,6 +48,7 @@ fun ChiliTooltip(
         val view = LocalView.current.rootView
 
         if (isShowTooltip) {
+            Log.e("TAG", "ChiliTooltip: ${LocalView.current.rootView}", )
             ChiliTooltipPopup(
                 backgroundColor = ChiliTheme.Colors.ChiliTooltipBackground,
                 backgroundShape = RoundedCornerShape(params.tooltipCornerSize),
