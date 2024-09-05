@@ -105,6 +105,11 @@ public data class ChiliColors(
     val ChiliCodeInputItemBackgroundColor: Color,
     val ChiliCodeInputItemErrorBackgroundColor: Color,
 
+    // Bottom Sheet
+    val ChiliBottomSheetBackgroundColor:Color,
+    val ChiliBottomSheetTopDrawableColor:Color,
+    val ChiliBottomSheetGrayBackgroundColor:Color,
+
     ){
 
     companion object {
@@ -170,7 +175,10 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_4),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
-            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2)
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
+            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2)
         )
 
         @Composable
@@ -235,7 +243,10 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
-            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3)
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
+            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4)
         )
     }
 }
