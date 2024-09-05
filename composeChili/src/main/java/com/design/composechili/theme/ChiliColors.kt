@@ -110,6 +110,9 @@ public data class ChiliColors(
     val ChiliBottomSheetTopDrawableColor:Color,
     val ChiliBottomSheetGrayBackgroundColor:Color,
 
+    // Card Cell View
+    val ChiliCardErrorTextColor: Color
+
     ){
 
     companion object {
@@ -175,6 +178,7 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_4),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
+            ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
             ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
@@ -243,6 +247,7 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
+            ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
             ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
