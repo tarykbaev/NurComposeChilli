@@ -40,6 +40,18 @@ import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * Input View component to enter code, OTP
+ * @param [codeLength] sets the length of code, accepts enum [CodeLength]
+ * @param [message] accepts [String] displays message and warnings below input view
+ * @param [actionText] accepts [String] sets text to clickable [Text] at the end of component, below input view
+ * @param [clearCode] clears code entered if value true
+ * @param [isActionTextEnabled] sets actionText enabled/disabled
+ * @param [state] sets component state, accepts [CodeInputItemState]
+ * @param [onActionTextClick] called when actionText is clicked
+ * @param [codeCompleteListener] interface called when code value changes, accepts [OnCodeChangeListener]
+ */
+
 @Composable
 fun CodeInputView(
     modifier: Modifier = Modifier,
