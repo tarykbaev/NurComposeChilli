@@ -9,7 +9,7 @@ import com.design.composechili.R
 @Immutable
 public data class ChiliColors(
     val ChiliPrimaryTextColor: Color,
-    val chiliSecondaryTextColor: Color,
+    val ChiliSecondaryTextColor: Color,
     val ChiliMarkedTextColor: Color,
     val chiliErrorTextColor: Color,
     val chiliValueTextColor: Color,
@@ -111,7 +111,7 @@ public data class ChiliColors(
     val ChiliBottomSheetGrayBackgroundColor:Color,
 
     // Card Cell View
-    val ChiliCardErrorTextColor: Color
+    val ChiliCardErrorTextColor: Color,
 
     // Action Bottom Sheet
     val ChiliActionBottomSheetButtonTextColor:Color,
@@ -126,7 +126,7 @@ public data class ChiliColors(
         @Composable
         fun defaultDarkColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.white_1),
-            chiliSecondaryTextColor = colorResource(id = R.color.gray_3),
+            ChiliSecondaryTextColor = colorResource(id = R.color.gray_3),
             ChiliMarkedTextColor = colorResource(id = R.color.white_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),
@@ -198,7 +198,7 @@ public data class ChiliColors(
         @Composable
         fun defaultLightColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.black_1),
-            chiliSecondaryTextColor = colorResource(id = R.color.black_4),
+            ChiliSecondaryTextColor = colorResource(id = R.color.black_4),
             ChiliMarkedTextColor = colorResource(id = R.color.black_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),

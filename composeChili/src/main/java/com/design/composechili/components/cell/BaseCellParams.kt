@@ -27,7 +27,7 @@ data class BaseCellParams(
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 ), titlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp),

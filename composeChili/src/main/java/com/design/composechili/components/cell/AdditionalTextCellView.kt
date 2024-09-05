@@ -74,7 +74,7 @@ fun AdditionalTextCellView(
         modifier
             .sizeIn(minHeight = 48.dp)
             .background(
-                color = ChiliTheme.Colors.chiliSurfaceBackground,
+                color = ChiliTheme.Colors.ChiliSurfaceBackground,
                 shape = shape.toRoundedShape()
             ),
         verticalArrangement = Arrangement.Center,

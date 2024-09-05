@@ -158,7 +158,7 @@ fun CardCellView(
                         val textColor = when {
                             isBlocked -> ChiliTheme.Colors.ChiliCardErrorTextColor
                             isUniqueStated -> ChiliTheme.Colors.ChiliCardErrorTextColor
-                            else -> ChiliTheme.Colors.chiliSecondaryTextColor
+                            else -> ChiliTheme.Colors.ChiliSecondaryTextColor
                         }
 
                         Text(
@@ -175,7 +175,7 @@ fun CardCellView(
                 if (value != null) {
                     val textColor = when {
                         isUniqueStated -> ChiliTheme.Colors.ChiliCardErrorTextColor
-                        else -> ChiliTheme.Colors.chiliSecondaryTextColor
+                        else -> ChiliTheme.Colors.ChiliSecondaryTextColor
                     }
 
                     Text(
@@ -232,7 +232,7 @@ data class CardCellParams(
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), subtitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 ), valueTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor

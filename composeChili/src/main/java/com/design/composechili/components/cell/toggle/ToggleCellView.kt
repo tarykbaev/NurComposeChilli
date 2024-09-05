@@ -193,7 +193,7 @@ data class ToggleCellParams(
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 ), switchTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor

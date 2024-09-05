@@ -49,10 +49,7 @@ fun BaseButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     title: String,
-    titleStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-        ChiliTheme.Colors.ChiliPrimaryButtonTextColorActive,
-    ),
+    titleStyle: TextStyle? = null,
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
@@ -93,11 +90,16 @@ fun BaseButton(
                     contentDescription = "Button start icon"
                 )
             }
+            val buttonTextStyle = titleStyle ?: ChiliTextStyle.get(
+                    buttonStyle.buttonTextSize,
+                    buttonStyle.textActiveColor,
+                    buttonStyle.textFont
+                )
             Text(
                 modifier = Modifier,
                 text = title,
                 textAlign = TextAlign.Center,
-                style = titleStyle
+                style =buttonTextStyle
             )
             if (endIcon != null) {
                 Image(

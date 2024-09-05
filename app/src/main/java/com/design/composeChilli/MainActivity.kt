@@ -4,24 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
-import com.design.composechili.components.bottomSheet.BaseInAppPush
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheet
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
-import com.design.composechili.components.cell.BaseCell
-import com.design.composechili.extensions.getBottomSheetState
+import com.design.composechili.components.inAppPush.BaseInAppPush
+import com.design.composechili.components.inAppPush.InfoInAppPush
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -32,42 +27,35 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
         setContent {
-            ChiliTheme{
+            ChiliTheme {
+                var alertDialogState by rememberSaveable { mutableStateOf(true) }
+                var banner by rememberSaveable { mutableStateOf(String()) }
                 val scope = rememberCoroutineScope()
-                val sheetState = getBottomSheetState()
 
-                val buttons = listOf(
-                    ActionBottomSheetParams("First", ChiliTheme.Colors.chiliSecondaryTextColor),
-                    ActionBottomSheetParams("Second", ChiliTheme.Colors.chiliSecondaryTextColor),
-                    ActionBottomSheetParams("Cancel", ChiliTheme.Colors.ChiliComponentButtonTextColorActive, onClick = {
-                        scope.launch { sheetState.bottomSheetState.hide() }
-                    }),
-                )
-
-
-                BaseInAppPush(bottomSheetState = sheetState, ) {
-                    Column {
-                        Spacer(modifier = Modifier.height(80.dp))
-                        BaseCell(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .clickable {
-
-                                    scope.launch { sheetState.bottomSheetState.expand() }
-                                },
-                            title = "Open BottomSheet"
-                        )
-                    }
+                if (alertDialogState) {
+                    InfoInAppPush(
+                        title = "Test Title",
+                        description = "\"Описание описания, которое описывает описанное описание описанного описания,\\n\" +\n" +
+                                "                        \"максимум из 190 символов, но если ничего \\n\\n\" +\n" +
+                                "                        \"не помещается, не проблема, потому что у нас всегда есть спецсимвол такой как троеточиеef evremiv ervmeive ervnervn ervnervne enruvneuv eunrvuernv eurnvueirv eurnvuev eurnvuev ervneurv\"",
+                        buttonText = "Детали",
+                        banner = banner,
+                        onDismissRequest = {
+                            alertDialogState = !alertDialogState
+                        },
+                        onClickListener = {
+                            scope.launch {
+                                banner = "https://mir-s3-cdn-cf.behance.net/project_modules/1400/73d91461797801.5a7a3b14e7f04.png"
+                            }
+                        }
+                    )
                 }
-
 
             }
         }
     }
 }
-
 
 
 @Composable

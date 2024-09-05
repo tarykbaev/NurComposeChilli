@@ -1,7 +1,6 @@
 package com.design.composechili.components.cell
 
 import android.content.res.Configuration
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -172,7 +171,7 @@ data class ExpandableCellParams(
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), descriptionTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 ), titlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp),

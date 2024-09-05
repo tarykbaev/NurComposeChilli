@@ -64,7 +64,7 @@ fun ChiliCustomBaseTopAppBar(
     additionalText: String? = null,
     additionalTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        ChiliTheme.Colors.chiliSecondaryTextColor
+        ChiliTheme.Colors.ChiliSecondaryTextColor
     ),
     @DrawableRes navigationIcon: Int? = null,
     navigationIconSize: Dp = dimensionResource(R.dimen.view_24dp),
