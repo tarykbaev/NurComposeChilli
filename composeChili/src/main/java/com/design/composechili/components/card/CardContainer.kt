@@ -43,7 +43,7 @@ import com.design.composechili.theme.ChiliTheme
  *
  * @param [modifier] Modifier to be applied to the card container.
  * @param [title] The title text displayed on the card.
- * @param [endIcon] Drawable resource ID for the icon displayed at the end of the card.
+ * @param [endIcon] Nullable drawable resource ID for the icon displayed at the end of the card if not null.
  * @param [saveExpandedState] If true, the expanded state is saved across recompositions,
  * meaning the card will remember its expanded/collapsed state.
  * @param [cardContainerDefaults] Contains the default properties for the card, such as shape, colors, and text style.
@@ -56,7 +56,7 @@ import com.design.composechili.theme.ChiliTheme
 fun CardContainer(
     modifier: Modifier = Modifier,
     title: String,
-    @DrawableRes endIcon: Int,
+    @DrawableRes endIcon: Int? = null,
     saveExpandedState: Boolean,
     cardContainerDefaults: CardContainerDefaults,
     expandableContent: @Composable () -> Unit,
@@ -109,6 +109,7 @@ fun CardContainer(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
+                if (endIcon != null)
                 Image(
                     modifier = Modifier.size(dimensionResource(id = R.dimen.view_32dp)),
                     imageVector = ImageVector.vectorResource(id = endIcon),
