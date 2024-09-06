@@ -1,9 +1,11 @@
 package com.design.composechili.components.input.baseInput
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,6 +24,7 @@ data class BaseInputParams(
     val keyboardType: KeyboardType = KeyboardType.Text,
     val autoCorrectionEnable: Boolean = true,
     val imeAction: ImeAction = ImeAction.None,
+    val textFieldPadding:PaddingValues
 ) {
 
     companion object {
@@ -39,7 +42,8 @@ data class BaseInputParams(
                 hintColor = colorResource(id = R.color.gray_1),
                 keyboardType = KeyboardType.Text,
                 autoCorrectionEnable = true,
-                imeAction = ImeAction.None
+                imeAction = ImeAction.None,
+                textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_12dp))
             )
     }
 

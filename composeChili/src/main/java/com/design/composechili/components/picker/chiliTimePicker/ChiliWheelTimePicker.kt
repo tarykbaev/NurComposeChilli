@@ -1,10 +1,10 @@
-package com.design.composechili.components.picker.chiliWheelDatePicker
+package com.design.composechili.components.picker.chiliTimePicker
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,23 +16,54 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.design.composechili.components.picker.chiliDatePicker.ChiliSnappedTime
+import com.design.composechili.components.picker.chiliWheelPicker.ChiliWheelTextPicker
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
+
+/**
+ * A custom composable function that displays a wheel-style time picker, allowing the user to scroll
+ * and select a time interactively.
+ *
+ * @suppress required [Build.VERSION_CODES.O] This function requires API level 26 (Oreo) or above due to its
+ * use of [LocalTime].
+ *
+ * @param modifier A [Modifier] to specify layout behavior or decorations for this composable.
+ * Can be used to customize size, padding, etc. Defaults to [Modifier] with no changes.
+ *
+ * @param startTime A [LocalTime] representing the initial time selected when the time picker is first displayed.
+ * Defaults to the current system time via [LocalTime.now()].
+ *
+ * @param size A [DpSize] defining the width and height of the time picker. Defaults to a size of
+ * 140.dp in width and 150.dp in height.
+ *
+ * @param rowCount An integer specifying the number of visible rows in the wheel picker. This controls how
+ * many time options are visible to the user at once. Defaults to 3 rows.
+ *
+ * @param textStyle A [TextStyle] defining the appearance of the text inside the time picker, such as font size,
+ * color, and font family. Must be provided by the caller for consistent styling.
+ *
+ * @param onSnappedTime A callback function that is triggered when the wheel picker "snaps" to a selected time.
+ * The function provides two parameters:
+ *  - [ChiliSnappedTime]: The snapped (selected) time.
+ *  - [TimeFormat]: The time format (12-hour or 24-hour) currently in use.
+ * The callback function returns an [Int?], allowing the caller to perform some action with the snapped time
+ * and potentially return an integer result. Defaults to a no-op that returns `null`.
+ */
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun ChiliWheelTimePicker(
     modifier: Modifier = Modifier,
     startTime: LocalTime = LocalTime.now(),
-    minTime: LocalTime = LocalTime.MIN,
-    maxTime: LocalTime = LocalTime.MAX,
-    size: DpSize = DpSize(128.dp, 128.dp),
+    size: DpSize = DpSize(140.dp, 150.dp),
     rowCount: Int = 3,
     textStyle: TextStyle,
     onSnappedTime: (snappedTime: ChiliSnappedTime, timeFormat: TimeFormat) -> Int? = { _, _ -> null },
 ) {
 
     val timeFormat: TimeFormat = TimeFormat.HOUR_24
+
     var snappedTime by remember { mutableStateOf(startTime.truncatedTo(ChronoUnit.MINUTES)) }
 
     val hours = (0..23).map {
@@ -40,13 +71,6 @@ internal fun ChiliWheelTimePicker(
             text = it.toString().padStart(2, '0'),
             value = it,
             index = it
-        )
-    }
-    val amPmHours = (1..12).map {
-        AmPmHour(
-            text = it.toString(),
-            value = it,
-            index = it - 1
         )
     }
 
@@ -67,20 +91,16 @@ internal fun ChiliWheelTimePicker(
                     height = size.height
                 ),
                 texts = hours.map { it.text },
-                rowCount = rowCount,
+                rowCount = 3,
                 style = textStyle,
-                startIndex = hours.find { it.value == startTime.hour }?.index ?: 0,
+                startIndex = hours.find { it.value == startTime.hour }?.index ?: 3,
                 onScrollFinished = { snappedIndex ->
-
                     val newHour = hours.find { it.index == snappedIndex }?.value
 
                     newHour?.let {
-
                         val newTime = snappedTime.withHour(newHour)
 
-                        if (!newTime.isBefore(minTime) && !newTime.isAfter(maxTime)) {
-                            snappedTime = newTime
-                        }
+                        snappedTime = newTime
 
                         val newIndex = hours.find { it.value == snappedTime.hour }?.index
 
@@ -118,9 +138,7 @@ internal fun ChiliWheelTimePicker(
                         newHour?.let {
                             val newTime = snappedTime.withMinute(newMinute).withHour(newHour)
 
-                            if (!newTime.isBefore(minTime) && !newTime.isAfter(maxTime)) {
-                                snappedTime = newTime
-                            }
+                            snappedTime = newTime
 
                             val newIndex = minutes.find { it.value == snappedTime.minute }?.index
 
@@ -142,15 +160,8 @@ internal fun ChiliWheelTimePicker(
         }
         Box(
             modifier = Modifier
-                .size(
-                    width = size.width,
-                    height = size.height / 3
-                )
-                .align(
-                    alignment = if (timeFormat == TimeFormat.HOUR_24) {
-                        Alignment.Center
-                    } else Alignment.CenterStart
-                ),
+                .wrapContentSize()
+                .align(Alignment.Center),
             contentAlignment = Alignment.Center
         ) {
             Text(

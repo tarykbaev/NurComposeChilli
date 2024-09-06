@@ -1,12 +1,10 @@
-package com.design.composechili.components.picker.chiliWheelDatePicker
+package com.design.composechili.components.picker.chiliDatePicker
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.commandiron.wheel_picker_compose.core.SelectorProperties
-import com.commandiron.wheel_picker_compose.core.WheelPickerDefaults
+import com.design.composechili.components.picker.chiliWheelPicker.ChiliWheelTextPicker
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import java.text.DateFormatSymbols
@@ -27,6 +24,44 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.Locale
 
+/**
+ * A composable function that displays a wheel-style date picker, allowing users to scroll through
+ * and select a date within a specified range.
+ *
+ * @param modifier A [Modifier] to configure the layout or decoration of this composable. Can be used to adjust
+ * size, padding, or other layout behavior. Defaults to [Modifier] with no modifications.
+ *
+ * @param startDate A [LocalDate] representing the initial date displayed in the picker.
+ * Defaults to the current system date via [LocalDate.now()].
+ *
+ * @param minDate A [LocalDate] representing the minimum selectable date. Defaults to [LocalDate.MIN],
+ * which is the earliest possible date.
+ *
+ * @param maxDate A [LocalDate] representing the maximum selectable date. Defaults to [LocalDate.MAX],
+ * which is the latest possible date.
+ *
+ * @param yearsRange An optional [IntRange] that specifies the range of years available for selection.
+ * Defaults to a range from 1922 to 2122. If `null`, no year range restriction is applied.
+ *
+ * @param size A [DpSize] specifying the width and height of the date picker. Defaults to 256.dp in width
+ * and 128.dp in height.
+ *
+ * @param rowCount An integer representing the number of visible rows in the picker, controlling how many
+ * date items are visible at one time. Defaults to 3 rows.
+ *
+ * @param textStyle A [TextStyle] defining the appearance of the text inside the picker, such as font size,
+ * color, and font family. The default style uses:
+ *  - Text size from [ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7].
+ *  - Primary text color from [ChiliTheme.Colors.ChiliPrimaryTextColor].
+ *  - Regular font from [ChiliTheme.Attribute.ChiliBoldTextFont].
+ *
+ * @param localeValue A [String] representing the locale for formatting the date picker (e.g., "ru" for Russian).
+ * This must be provided by the caller to ensure proper localization.
+ *
+ * @param onSnappedDate A callback function that is triggered when the date picker snaps to a selected date.
+ * It provides a [ChiliSnappedDate] object representing the snapped date and returns an optional [Int?].
+ * Defaults to a no-op that returns `null`.
+ */
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -80,7 +115,6 @@ internal fun ChiliWheelDatePicker(
                 texts = dayOfMonths.map { it.text },
                 rowCount = rowCount,
                 style = textStyle,
-                chiliSelectorProperties = ChiliWheelPickerSelectorProperties.Default,
                 startIndex = dayOfMonths.find { it.value== startDate.dayOfMonth }?.index ?: 0,
                 onScrollFinished = { snappedIndex ->
 
@@ -118,7 +152,6 @@ internal fun ChiliWheelDatePicker(
                 texts = months.map { it.text },
                 rowCount = rowCount,
                 style = textStyle,
-                chiliSelectorProperties = ChiliWheelPickerSelectorProperties.Default,
                 startIndex = months.find { it.value== startDate.monthValue }?.index ?: 0,
                 onScrollFinished = { snappedIndex ->
 
@@ -161,7 +194,6 @@ internal fun ChiliWheelDatePicker(
                     texts = years.map { it.text },
                     rowCount = rowCount,
                     style = textStyle,
-                    chiliSelectorProperties = ChiliWheelPickerSelectorProperties.Default,
                     startIndex = years.find { it.value == startDate.year }?.index ?:0,
                     onScrollFinished = { snappedIndex ->
 

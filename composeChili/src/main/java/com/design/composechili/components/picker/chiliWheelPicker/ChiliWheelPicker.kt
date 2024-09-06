@@ -1,15 +1,13 @@
-package com.design.composechili.components.picker.chiliWheelDatePicker
+package com.design.composechili.components.picker.chiliWheelPicker
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -26,6 +24,33 @@ import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import kotlin.math.absoluteValue
 
+/**
+ * A customizable and reusable composable function that displays a wheel picker with a scrollable list
+ * of items, allowing the user to select an item by scrolling and snapping.
+ *
+ * @param modifier A [Modifier] to configure the layout or decoration of this composable. Can be used
+ * to adjust size, padding, or other layout behavior. Defaults to [Modifier] with no modifications. Applying to root @Composable function, in this case is [Box]
+ *
+ * @param startIndex An integer representing the initial index of the selected item when the picker is
+ * first displayed. Defaults to `0`, which corresponds to the first item in the list.
+ *
+ * @param count An integer representing the total number of items in the wheel picker. This controls how
+ * many items the picker will scroll through.
+ *
+ * @param rowCount An integer that determines the number of visible rows in the wheel picker, controlling
+ * how many items are visible at one time. Must be provided by the caller.
+ *
+ * @param wheeSize A [DpSize] specifying the width and height of the wheel picker. Defaults to
+ * 128.dp in both width and height.
+ *
+ * @param onScrollFinished A callback function that is triggered when the user finishes scrolling and an item
+ * is snapped into place. It provides the snapped index of the selected item and returns an optional [Int?].
+ * Defaults to a no-op that returns `null`.
+ *
+ * @param content A composable lambda that takes an [index: Int] as a parameter, allowing the caller to define
+ * the content (e.g., UI) for each item in the wheel picker. This enables flexible customization of the items.
+ */
+
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 internal fun ChiliWheelPicker(
@@ -34,7 +59,6 @@ internal fun ChiliWheelPicker(
     count: Int,
     rowCount: Int,
     wheeSize: DpSize = DpSize(128.dp, 128.dp),
-    chiliWheelPickerSelectorProperties: ChiliWheelPickerSelectorProperties = ChiliWheelPickerSelectorProperties.Default,
     onScrollFinished: (snappedIndex: Int) -> Int? = { null },
     content: @Composable LazyItemScope.(index: Int) -> Unit,
 ) {

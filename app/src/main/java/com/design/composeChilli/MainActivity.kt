@@ -1,24 +1,31 @@
 package com.design.composeChilli
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
-import com.design.composechili.components.inAppPush.BaseInAppPush
-import com.design.composechili.components.inAppPush.InfoInAppPush
+import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
+import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
+import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
+import com.design.composechili.components.picker.chiliTimePicker.ChiliTimePickerDialog
 import com.design.composechili.theme.ChiliTheme
-import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() {
 
@@ -31,25 +38,39 @@ class MainActivity : ComponentActivity() {
             ChiliTheme {
                 var alertDialogState by rememberSaveable { mutableStateOf(true) }
                 var banner by rememberSaveable { mutableStateOf(String()) }
-                val scope = rememberCoroutineScope()
+
+                Column {
+                    Spacer(modifier = Modifier.size(80.dp))
+                    BaseButton(onClick = {
+                        alertDialogState = !alertDialogState
+                    }, title = "Show dialog")
+                }
 
                 if (alertDialogState) {
-                    InfoInAppPush(
-                        title = "Test Title",
-                        description = "\"Описание описания, которое описывает описанное описание описанного описания,\\n\" +\n" +
-                                "                        \"максимум из 190 символов, но если ничего \\n\\n\" +\n" +
-                                "                        \"не помещается, не проблема, потому что у нас всегда есть спецсимвол такой как троеточиеef evremiv ervmeive ervnervn ervnervne enruvneuv eunrvuernv eurnvueirv eurnvuev eurnvuev ervneurv\"",
-                        buttonText = "Детали",
-                        banner = banner,
-                        onDismissRequest = {
-                            alertDialogState = !alertDialogState
-                        },
-                        onClickListener = {
-                            scope.launch {
-                                banner = "https://mir-s3-cdn-cf.behance.net/project_modules/1400/73d91461797801.5a7a3b14e7f04.png"
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        ChiliDatePickerDialog(
+                            modifier = Modifier,
+                            onDismissRequest = {},
+                            startDateTitle = "Начальная Дата",
+                            endDateTitle = "Конечная Дата",
+                            submitBtnTitle = "Готово",
+                            datePickedParams = ChiliDatePickerParams(
+                                firstDate = DatePickerTimeParams(
+                                    startDateTime = LocalDateTime.now(),
+                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
+                                ),
+                                secondDate = DatePickerTimeParams(
+                                    startDateTime = LocalDateTime.now(),
+                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
+                                )
+                            ),
+                            onSubmitBtn = { startDate, endDate ->
+
                             }
-                        }
-                    )
+                        )
+                    }
                 }
 
             }

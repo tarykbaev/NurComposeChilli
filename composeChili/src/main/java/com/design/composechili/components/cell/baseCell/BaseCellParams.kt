@@ -1,4 +1,4 @@
-package com.design.composechili.components.cell
+package com.design.composechili.components.cell.baseCell
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

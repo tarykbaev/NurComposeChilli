@@ -1,4 +1,4 @@
-package com.design.composechili.components.cell
+package com.design.composechili.components.cell.additionalText
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,9 +47,9 @@ fun AdditionalTextCellViewList(
     LazyColumn(modifier = modifier.background(Color.Transparent)) {
         itemsIndexed(itemsList) { index, item ->
             val shape = when (index) {
-                0 -> AdditionalTextCellViewParams.roundedShapeTop
-                itemsList.size - 1 -> AdditionalTextCellViewParams.roundedShapeBottom
-                else -> AdditionalTextCellViewParams.roundedShapeCenter
+                0 -> AdditionalTextCellParams.roundedShapeTop
+                itemsList.size - 1 -> AdditionalTextCellParams.roundedShapeBottom
+                else -> AdditionalTextCellParams.roundedShapeCenter
             }
 
             AdditionalTextCellView(

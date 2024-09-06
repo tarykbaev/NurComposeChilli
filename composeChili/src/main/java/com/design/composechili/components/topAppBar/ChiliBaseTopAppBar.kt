@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -35,44 +36,51 @@ import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.pxToDp
 
 /**
- * @param [title] accepts [String] and displays as the title in the AppBar.
- * @param [titleStyle] sets the style of the title text.
- * @param [isDividerVisible] allows setting the visibility state of the divider below the AppBar.
- * @param [additionalText] accepts [String] and displays next to the right icon in the AppBar.
- * @param [additionalTextStyle] sets the style of the additional text.
- * @param [navigationIcon] accepts [DrawableRes] and displays a navigation icon on the left side of the AppBar.
- * @param [navigationIconSize] sets the size of the navigation icon.
- * @param [endIcon] accepts [DrawableRes] and displays an icon on the right side of the AppBar.
- * @param [endIconSize] sets the size of the right-side icon.
- * @param [containerColor] sets the background color of the AppBar.
- * @param [dividerColor] sets the color of the divider line below the AppBar.
- * @param [dividerThickness] sets the thickness of the divider line.
- * @param [isCenteredTitle] allows setting the alignment of the title: centered or left-aligned.
- * @param [onNavigationClick] sets the handler for clicks on the navigation icon.
- * @param [onEndIconClick] sets the handler for clicks on the right-side icon.
+ * A composable function that creates a customizable top app bar, featuring a title, optional navigation and end icons,
+ * additional text, and a configurable divider. Supports various configurations including title alignment and
+ * click actions for the icons.
+ *
+ * @param modifier A [Modifier] to configure the layout or decoration of this composable. Can be used to adjust size,
+ * padding, or other layout behavior. Defaults to [Modifier] with no modifications.
+ *
+ * @param title A [String] representing the main title displayed on the app bar. This parameter is required and
+ * must be provided by the caller.
+ *
+ * @param params An instance of [ChiliBaseTopAppBarParams] to configure additional parameters for the app bar
+ * (e.g., colors, iconSize). Defaults to [ChiliBaseTopAppBarParams.Default].
+ *
+ * @param isDividerVisible A [Boolean] indicating whether a divider line should be displayed below the app bar.
+ * Defaults to `true`.
+ *
+ * @param additionalText An optional [String] for displaying additional text below the main title. If `null`,
+ * no additional text will be shown.
+ *
+ * @param navigationIcon An optional drawable resource ID for the navigation icon (e.g., a back button) on the left side
+ * of the app bar. If `null`, no navigation icon will be displayed.
+ *
+ * @param endIcon An optional drawable resource ID for the end icon (e.g., a settings or more options button) on the right
+ * side of the app bar. If `null`, no end icon will be displayed.
+ *
+ * @param isCenteredTitle A [Boolean] indicating whether the title should be centered within the app bar.
+ * Defaults to `false`, meaning the title will be aligned to the start of the app bar.
+ *
+ * @param onNavigationClick An optional lambda function that is invoked when the navigation icon is clicked. If `null`,
+ * no click action will be assigned to the navigation icon.
+ *
+ * @param onEndIconClick An optional lambda function that is invoked when the end icon is clicked. If `null`,
+ * no click action will be assigned to the end icon.
+ *
+ * @sample [ChiliBaseTopAppBarParams.Default]
  */
 @Composable
-fun ChiliCustomBaseTopAppBar(
+fun ChiliBaseTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
-    titleStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-        ChiliTheme.Colors.ChiliPrimaryTextColor,
-        ChiliTheme.Attribute.ChiliBoldTextFont
-    ),
+    params: ChiliBaseTopAppBarParams = ChiliBaseTopAppBarParams.Default,
     isDividerVisible: Boolean = true,
     additionalText: String? = null,
-    additionalTextStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        ChiliTheme.Colors.ChiliSecondaryTextColor
-    ),
     @DrawableRes navigationIcon: Int? = null,
-    navigationIconSize: Dp = dimensionResource(R.dimen.view_24dp),
     @DrawableRes endIcon: Int? = null,
-    endIconSize: Dp = dimensionResource(R.dimen.view_24dp),
-    containerColor: Color = ChiliTheme.Colors.ChiliTopAppBarBackground,
-    dividerColor: Color = ChiliTheme.Colors.ChiliTopAppBarDividerColor,
-    dividerThickness: Dp = ChiliTheme.Attribute.ChiliTopAppBarThicknessSize,
     isCenteredTitle: Boolean = false,
     onNavigationClick: (() -> Unit)? = null,
     onEndIconClick: (() -> Unit)? = null
@@ -83,8 +91,7 @@ fun ChiliCustomBaseTopAppBar(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(ChiliTheme.Attribute.ChiliTopAppBarHeightSize)
-                    .background(containerColor),
-                contentAlignment = Alignment.CenterStart
+                    .background(params.containerColor), contentAlignment = Alignment.CenterStart
             ) {
                 var navigationIconWidth by remember { mutableStateOf(0) }
                 navigationIcon?.let { icon ->
@@ -95,7 +102,7 @@ fun ChiliCustomBaseTopAppBar(
                             navigationIconWidth = coordinates.size.width
                         }, onClick = { onNavigationClick?.invoke() }) {
                         Image(
-                            modifier = Modifier.size(navigationIconSize),
+                            modifier = Modifier.size(params.navigationIconSize),
                             painter = painterResource(icon),
                             contentDescription = "back"
                         )
@@ -112,7 +119,7 @@ fun ChiliCustomBaseTopAppBar(
                                 .wrapContentSize()
                                 .padding(end = dimensionResource(R.dimen.padding_16dp)),
                             text = additionalText,
-                            style = additionalTextStyle
+                            style = params.additionalTextStyle
                         )
                     }
 
@@ -122,8 +129,7 @@ fun ChiliCustomBaseTopAppBar(
                             .padding(horizontal = 4.dp),
                             onClick = { onEndIconClick?.invoke() }) {
                             Image(
-                                modifier = Modifier
-                                    .size(endIconSize),
+                                modifier = Modifier.size(params.endIconSize),
                                 painter = painterResource(icon),
                                 contentDescription = "endIcon"
                             )
@@ -150,7 +156,7 @@ fun ChiliCustomBaseTopAppBar(
                     Text(
                         modifier = Modifier,
                         text = title,
-                        style = titleStyle,
+                        style = params.titleTextStyle,
                     )
                 }
             }
@@ -158,10 +164,18 @@ fun ChiliCustomBaseTopAppBar(
             when {
                 isDividerVisible -> {
                     HorizontalDivider(
-                        color = dividerColor, thickness = dividerThickness
+                        color = params.dividerColor, thickness = params.dividerThickness
                     )
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ChiliCustomBaseTopAppBarPreview() {
+    ChiliTheme {
+        ChiliBaseTopAppBar(title = "CustomBaseTopAppBar title", isCenteredTitle = true, navigationIcon = R.drawable.chili_ic_nav_back)
     }
 }

@@ -1,4 +1,4 @@
-package com.design.composechili.components.picker
+package com.design.composechili.components.picker.chiliDatePicker
 
 import android.os.Build
 import android.view.Gravity
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,16 +28,50 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
-import com.design.composechili.components.picker.chiliWheelDatePicker.ChiliSnappedDateTime
-import com.design.composechili.components.picker.chiliWheelDatePicker.ChiliWheelDateTimePicker
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import java.time.LocalDateTime
 
+/**
+ * A composable function that displays a date picker dialog, allowing the user to select a start date,
+ * an end date, or only start date.
+ *
+ * @param modifier A [Modifier] to configure the layout or decoration of this composable. Can be used
+ * to adjust size, padding, or other layout behavior. Applying to root @Composable function, in this is case root is [Card]
+ *
+ * @param onDismissRequest A lambda function invoked when the user dismisses the dialog. Typically used
+ * to hide the dialog or perform cleanup actions.
+ *
+ * @param startDateTitle A [String] representing the title for the start date picker. Defaults to an empty string.
+ *
+ * @param endDateTitle A [String] representing the title for the end date picker. Defaults to an empty string.
+ *
+ * @param textStyle A [TextStyle] that defines the style of the titles in the dialog (e.g., start and end date
+ * titles). The default uses the [ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7] for text size and
+ * [ChiliTheme.Colors.ChiliPrimaryTextColor] for color.
+ *
+ * @param datePickedParams A [ChiliDatePickerParams] instance that holds parameters related to the date picker,
+ * such as minimum and maximum selectable dates. Must be provided by the caller to configure the date selection.
+ *
+ * @param calendarLocale A [String] representing the locale used to format the calendar. Defaults to an empty
+ * string, meaning it will use the default locale of the device.
+ *
+ * @param submitBtnTitle A [String] that represents the label for the submit button. Defaults to an empty string.
+ *
+ * @param onSubmitBtn A lambda function invoked when the user presses the submit button. The function receives
+ * two parameters: the selected start date and the selected end date as [LocalDateTime] values. If no dates are
+ * selected, `null` is passed.
+ *
+ * @param alertDialogGravity An integer that controls the gravity (positioning) of the dialog on the screen.
+ * Defaults to [Gravity.BOTTOM], which places the dialog at the bottom of the screen.
+ *
+ * @sample [ChiliDatePickerParams]
+ * @see [ChiliWheelDatePicker]
+ */
+
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChiliDatePicker(
+fun ChiliDatePickerDialog(
     modifier: Modifier,
     onDismissRequest: () -> Unit,
     startDateTitle: String = String(),
@@ -46,6 +79,7 @@ fun ChiliDatePicker(
     textStyle: TextStyle = ChiliTextStyle.get(
         textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
         color = ChiliTheme.Colors.ChiliPrimaryTextColor
+
     ),
     datePickedParams: ChiliDatePickerParams,
     calendarLocale: String = String(),
@@ -87,7 +121,6 @@ fun ChiliDatePicker(
                             .align(Alignment.CenterHorizontally)
                             .padding(start = 16.dp, end = 16.dp, top = 8.dp),
                         startDateTime = firstDate.startDateTime,
-                        yearsRange = firstDate.yearsRange,
                         minDateTime = firstDate.minDateTime,
                         maxDateTime = firstDate.maxDateTime,
                         localeValue = currentLocale
@@ -110,7 +143,6 @@ fun ChiliDatePicker(
                                 .align(Alignment.CenterHorizontally)
                                 .padding(start = 16.dp, end = 16.dp, top = 8.dp),
                             startDateTime = secondDate.startDateTime,
-                            yearsRange = secondDate.yearsRange,
                             minDateTime = secondDate.minDateTime,
                             maxDateTime = secondDate.maxDateTime,
                             localeValue = currentLocale
@@ -143,7 +175,7 @@ fun ChiliDatePicker(
 @Composable
 fun ChiliDatePickerPreview(){
     ChiliTheme{
-        ChiliDatePicker(
+        ChiliDatePickerDialog(
             modifier = Modifier,
             onDismissRequest = {},
             startDateTitle = "Начальная Дата",
@@ -153,14 +185,12 @@ fun ChiliDatePickerPreview(){
                 firstDate = DatePickerTimeParams(
                     startDateTime = LocalDateTime.now(),
                     minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
-                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
-                    yearsRange = IntRange(2020, 2025)
+                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
                 ),
                 secondDate = DatePickerTimeParams(
                     startDateTime = LocalDateTime.now(),
                     minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
-                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
-                    yearsRange = IntRange(2020,2025)
+                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
                 )
             ),
             onSubmitBtn = { startDate, endDate ->

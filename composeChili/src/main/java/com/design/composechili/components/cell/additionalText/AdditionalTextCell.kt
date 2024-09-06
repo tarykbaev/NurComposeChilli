@@ -1,4 +1,4 @@
-package com.design.composechili.components.cell
+package com.design.composechili.components.cell.additionalText
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -104,7 +104,7 @@ fun AdditionalTextCellView(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Left,
-                    style = AdditionalTextCellViewParams.AdditionalText.titleTextAppearance
+                    style = AdditionalTextCellParams.AdditionalText.titleTextAppearance
                 )
                 if (subTitle != null)
                     Text(
@@ -113,7 +113,7 @@ fun AdditionalTextCellView(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Left,
-                        style = AdditionalTextCellViewParams.AdditionalText.titleTextAppearance
+                        style = AdditionalTextCellParams.AdditionalText.titleTextAppearance
                     )
             }
             Column(
@@ -126,7 +126,7 @@ fun AdditionalTextCellView(
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Right,
-                    style = AdditionalTextCellViewParams.AdditionalText.additionalTextAppearance
+                    style = AdditionalTextCellParams.AdditionalText.additionalTextAppearance
                 )
                 if (subDescription != null)
                     Text(
@@ -135,7 +135,7 @@ fun AdditionalTextCellView(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Right,
-                        style = AdditionalTextCellViewParams.AdditionalText.additionalSubTextAppearance
+                        style = AdditionalTextCellParams.AdditionalText.additionalSubTextAppearance
                     )
             }
             if (chevronEnabled)
