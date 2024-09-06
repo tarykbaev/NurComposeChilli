@@ -111,7 +111,7 @@ public data class ChiliColors(
     val ChiliBottomSheetGrayBackgroundColor:Color,
 
     // Card Cell View
-    val ChiliCardErrorTextColor: Color
+    val ChiliCardErrorTextColor: Color,
 
     // Action Bottom Sheet
     val ChiliActionBottomSheetButtonTextColor:Color,
