@@ -53,7 +53,7 @@ import com.design.composechili.theme.ChiliTheme
  */
 
 @Composable
-fun CodeInputView(
+fun CodeInput(
     modifier: Modifier = Modifier,
     codeLength: CodeLength = CodeLength.SIX,
     message: String? = null,
@@ -116,7 +116,7 @@ fun CodeInputView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 repeat(codeLength.length) { index ->
-                    CodeInputItemView(
+                    CodeInputItem(
                         modifier = Modifier.width(itemWidth),
                         state = when {
                             state == CodeInputItemState.ERROR && index == 0 -> CodeInputItemState.ACTIVE_ERROR
@@ -189,7 +189,7 @@ enum class CodeLength(val length: Int) {
 @Composable
 fun CodeInputViewPreview() {
     ChiliTheme {
-        CodeInputView(
+        CodeInput(
             state = CodeInputItemState.ERROR,
             actionText = "Action",
             message = "Message",

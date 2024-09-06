@@ -19,12 +19,12 @@ data class ChiliBackground(
         public fun defaultBackground(darkTheme: Boolean): ChiliBackground {
             return if (darkTheme) {
                 ChiliBackground(
-                    color = ChiliColors.defaultDarkColors().chiliSurfaceBackground,
+                    color = ChiliColors.defaultDarkColors().ChiliSurfaceBackground,
                     tonalElevation = 0.dp,
                 )
             } else {
                 ChiliBackground(
-                    color = ChiliColors.defaultLightColors().chiliSurfaceBackground,
+                    color = ChiliColors.defaultLightColors().ChiliSurfaceBackground,
                     tonalElevation = 0.dp,
                 )
             }

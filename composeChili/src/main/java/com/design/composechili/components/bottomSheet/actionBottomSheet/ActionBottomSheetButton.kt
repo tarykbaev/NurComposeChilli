@@ -33,7 +33,6 @@ fun ActionBottomSheetButton(
             onClick = { actionBottomSheetParams.onClick?.invoke() },
             title = actionBottomSheetParams.title,
             buttonStyle = ChiliButtonStyle.Secondary,
-            titleStyle = titleStyle.copy(actionBottomSheetParams.buttonTextColor),
         )
     }
 }
