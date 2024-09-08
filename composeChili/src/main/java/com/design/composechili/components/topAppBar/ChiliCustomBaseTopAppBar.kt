@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -163,5 +164,24 @@ fun ChiliCustomBaseTopAppBar(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun ChiliCustomBaseTopAppBarPreview() {
+    ChiliTheme {
+        ChiliCustomBaseTopAppBar(
+            title = "TopAppBar",
+            isCenteredTitle = true,
+            navigationIcon = R.drawable.chili_ic_nav_back,
+            endIcon = R.drawable.ic_cat,
+            onNavigationClick = {
+                
+            },
+            onEndIconClick = {
+
+            }
+        )
     }
 }

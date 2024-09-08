@@ -13,6 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.tooling.preview.Preview
+import com.design.composechili.theme.ChiliTheme
 
 /**
  * @param [isChecked] indicates the current state of the checkbox.
@@ -48,6 +50,16 @@ fun ChiliCheckbox(
                 uncheckedColor = checkboxParams.uncheckedColor,
                 disabledCheckedColor = checkboxParams.disabledColor
             )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ChiliCheckboxPreview() {
+    ChiliTheme {
+        ChiliCheckbox(
+            isChecked = true
         )
     }
 }
