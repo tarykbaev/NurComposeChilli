@@ -11,6 +11,7 @@ activityCompose = "1.9.1"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
 material = "1.12.0"
+material2 = "1.6.8"
 kotlinCompilerExtension = "1.5.1"
 snapper = "0.3.0"
 
@@ -31,7 +32,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material2" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 snapper = { module = "dev.chrisbanes.snapper:snapper", version.ref = "snapper" }
 
 [plugins]

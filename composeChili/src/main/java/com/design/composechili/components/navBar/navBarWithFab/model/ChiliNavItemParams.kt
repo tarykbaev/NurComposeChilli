@@ -30,7 +30,7 @@ data class ChiliNavItemParams(
                     textSize = ChiliTextDimensions.fromResources().TextSizeH10,
                     color = ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor,
                     font = Font(R.font.roboto_medium)
-                ), iconBackgroundColor = ChiliTheme.Colors.chiliSurfaceBackground,
+                ), iconBackgroundColor = ChiliTheme.Colors.ChiliSurfaceBackground,
                 iconBackgroundShape = RoundedCornerShape(ChiliRadiusDimensions.fromResources().radius12Dp),
                 animationScaleSize = 1.2f,
                 animationStiffness = Spring.StiffnessMedium,
