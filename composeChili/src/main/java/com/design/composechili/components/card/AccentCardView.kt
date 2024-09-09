@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -34,7 +35,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [description] The descriptive text displayed below the title.
  * @param [startIcon] Optional drawable resource ID for the icon displayed at the start of the card.
  * @param [endIcon] Optional drawable resource ID for the icon displayed at the end of the card.
- * @param [cardColors] The colors used for the card, provided by the [AccentCardViewDefaults].
+ * @param [cardParams] The colors used for the card, provided by the [AccentCardViewParams].
  * @param [onClick] Callback triggered when the card is clicked.
  *
  * @sample AccentCardView_Preview
@@ -42,18 +43,20 @@ import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun AccentCardView(
+    modifier: Modifier = Modifier,
     title: String,
     description: String,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
-    cardColors: AccentCardViewDefaults,
+    cardParams: AccentCardViewParams,
     onClick: () -> Unit
 ) {
     Card(
-        colors = cardColors.colors,
-        onClick = { onClick() }) {
+        colors = cardParams.colors,
+        onClick = onClick
+    ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
                 .padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
@@ -68,19 +71,13 @@ fun AccentCardView(
                         )
                     Text(
                         text = title,
-                        style = ChiliTextStyle.get(
-                            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                            font = ChiliTheme.Attribute.ChiliBoldTextFont
-                        )
+                        style = cardParams.titleStyle
                     )
                 }
                 Text(
                     modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
                     text = description,
-                    style = ChiliTextStyle.get(
-                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                        font = ChiliTheme.Attribute.ChiliRegularTextFont
-                    )
+                    style = cardParams.descriptionStyle
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -103,7 +100,7 @@ fun AccentCardView_Preview() {
                 title = "Сканнер штрих кодов и QR",
                 description = "Для удобной оплаты\nбез ввода реквизитов",
                 endIcon = R.drawable.pay,
-                cardColors = AccentCardViewDefaults.accentCardViewFucsia,
+                cardParams = AccentCardViewParams.accentCardViewFucsia,
                 startIcon = null
             ) {
 
@@ -113,7 +110,7 @@ fun AccentCardView_Preview() {
                 description = "Для бесконтактных платежей",
                 endIcon = null,
                 startIcon = R.drawable.icon_k,
-                cardColors = AccentCardViewDefaults.accentCardViewBlack,
+                cardParams = AccentCardViewParams.accentCardViewBlack,
             ) {
 
             }
@@ -122,7 +119,7 @@ fun AccentCardView_Preview() {
                 description = "Для бесконтактных платежей",
                 endIcon = R.drawable.ic_scaner_48,
                 startIcon = null,
-                cardColors = AccentCardViewDefaults.accentCardViewWhite,
+                cardParams = AccentCardViewParams.accentCardViewWhite,
             ) {
 
             }
@@ -130,29 +127,55 @@ fun AccentCardView_Preview() {
     }
 }
 
-data class AccentCardViewDefaults(
-    val colors: CardColors
+data class AccentCardViewParams(
+    val colors: CardColors,
+    val titleStyle: TextStyle,
+    val descriptionStyle: TextStyle,
 ) {
     companion object {
         val accentCardViewFucsia
-            @Composable get() = AccentCardViewDefaults(
+            @Composable get() = AccentCardViewParams(
                 colors = CardDefaults.cardColors(
                     containerColor = colorResource(id = R.color.folly_1),
                     contentColor = colorResource(id = R.color.white_1)
+                ),
+                titleStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
+                ),
+                descriptionStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
                 )
             )
         val accentCardViewBlack
-            @Composable get() = AccentCardViewDefaults(
+            @Composable get() = AccentCardViewParams(
                 colors = CardDefaults.cardColors(
                     containerColor = colorResource(id = R.color.black_4),
                     contentColor = colorResource(id = R.color.white_1)
+                ),
+                titleStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
+                ),
+                descriptionStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
                 )
             )
         val accentCardViewWhite
-            @Composable get() = AccentCardViewDefaults(
+            @Composable get() = AccentCardViewParams(
                 colors = CardDefaults.cardColors(
                     containerColor = colorResource(id = R.color.white_1),
                     contentColor = colorResource(id = R.color.black_1)
+                ),
+                titleStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
+                ),
+                descriptionStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    font = ChiliTheme.Attribute.ChiliRegularTextFont
                 )
             )
     }

@@ -58,7 +58,7 @@ fun CardContainer(
     title: String,
     @DrawableRes endIcon: Int? = null,
     saveExpandedState: Boolean,
-    cardContainerDefaults: CardContainerDefaults,
+    cardContainerDefaults: CardContainerParams,
     expandableContent: @Composable () -> Unit,
 ) {
 
@@ -130,7 +130,7 @@ fun CardContainer_Preview() {
         CardContainer(
             title = "AccentCardView",
             endIcon = R.drawable.ic_visa_banner_logo,
-            cardContainerDefaults = CardContainerDefaults.Filled,
+            cardContainerDefaults = CardContainerParams.Filled,
             saveExpandedState = false,
             expandableContent = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -138,7 +138,7 @@ fun CardContainer_Preview() {
                         title = "Сканнер штрих кодов и QR",
                         description = "Для удобной оплаты\nбез ввода реквизитов",
                         endIcon = R.drawable.pay,
-                        cardColors = AccentCardViewDefaults.accentCardViewFucsia,
+                        cardParams = AccentCardViewParams.accentCardViewFucsia,
                         startIcon = null
                     ) {
 
@@ -148,7 +148,7 @@ fun CardContainer_Preview() {
                         description = "Для бесконтактных платежей",
                         endIcon = null,
                         startIcon = R.drawable.icon_k,
-                        cardColors = AccentCardViewDefaults.accentCardViewBlack,
+                        cardParams = AccentCardViewParams.accentCardViewBlack,
                     ) {
 
                     }
@@ -157,7 +157,7 @@ fun CardContainer_Preview() {
                         description = "Для бесконтактных платежей",
                         endIcon = R.drawable.ic_scaner_48,
                         startIcon = null,
-                        cardColors = AccentCardViewDefaults.accentCardViewWhite,
+                        cardParams = AccentCardViewParams.accentCardViewWhite,
                     ) {
 
                     }

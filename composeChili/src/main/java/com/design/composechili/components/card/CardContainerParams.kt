@@ -11,14 +11,14 @@ import androidx.compose.ui.text.TextStyle
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
-data class CardContainerDefaults(
+data class CardContainerParams(
     val shape: Shape,
     val colors: CardColors,
     val titleStyle: TextStyle
 ) {
     companion object {
         val Transparent
-            @Composable get() = CardContainerDefaults(
+            @Composable get() = CardContainerParams(
                 shape = RoundedCornerShape(corner = CornerSize(0)),
                 colors = CardDefaults.cardColors().copy(
                     containerColor = Color.Transparent,
@@ -30,10 +30,10 @@ data class CardContainerDefaults(
                 )
             )
         val Filled
-            @Composable get() = CardContainerDefaults(
+            @Composable get() = CardContainerParams(
                 shape = RoundedCornerShape(corner = CornerSize(0)),
                 colors = CardDefaults.cardColors().copy(
-                    containerColor = ChiliTheme.Colors.chiliSurfaceBackground,
+                    containerColor = ChiliTheme.Colors.ChiliSurfaceBackground,
                 ),
                 titleStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
