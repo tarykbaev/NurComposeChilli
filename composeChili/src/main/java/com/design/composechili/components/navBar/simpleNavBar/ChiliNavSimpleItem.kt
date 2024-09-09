@@ -1,47 +1,50 @@
-package com.design.composechili.components.navBar
+package com.design.composechili.components.navBar.simpleNavBar
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextDimensions
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.components.navBar.simpleNavBar.model.ChiliNavSimpleItemParams
 import com.design.composechili.theme.ChiliTheme
+
+/**
+ *
+ * Chili Navigation item to to display inside [ChiliNavBar]
+ *
+ * @param [label] accepts [String] adds text below the icon
+ * @param [icon] accepts [DrawableRes] displays it at the center top of the component
+ * @param [iconTint] accepts [Color] adds tint to the icon if not null
+ * @param [navItemParams] accepts [ChiliNavSimpleItemParams] adds visual transformation to component
+ * @param [onClick] called when component is clicked
+ */
 
 @Composable
 fun ChiliNavSimpleItem(
-    text: String = String(),
-    @DrawableRes selectedIcon: Int,
-    @DrawableRes unselectedIcon: Int,
-    isSelected: Boolean = false,
+    label: String = String(),
+    @DrawableRes icon: Int,
+    iconTint: Color? = null,
+    navItemParams: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
     onClick: () -> Unit = {},
 ) {
-
-    val icon = if (isSelected) selectedIcon else unselectedIcon
-    val textColor =
-        if (isSelected) ChiliTheme.Colors.chiliLinkTextColor else ChiliTheme.Colors.chiliValueTextColor
 
     ChiliTheme {
         Column(
             modifier = Modifier
-                .padding(vertical = 10.dp)
+                .padding(vertical = navItemParams.verticalPadding)
                 .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
                     onClick = onClick
                 ),
             verticalArrangement = Arrangement.Center,
@@ -51,17 +54,13 @@ fun ChiliNavSimpleItem(
             Image(
                 modifier = Modifier,
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
+                colorFilter = if (iconTint != null) ColorFilter.tint(color = iconTint) else null,
                 contentDescription = null,
             )
             Text(
-                modifier = Modifier.padding(top = 4.dp),
-                text = text,
-                style = ChiliTextStyle.get(
-                    textSize = ChiliTextDimensions.fromResources().TextSizeH10,
-                    color = ChiliTheme.Colors.chiliSegmentedPickerTabTextColor,
-                    font = Font(R.font.roboto_medium)
-                ),
-                color = textColor
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_4dp)),
+                text = label,
+                style = navItemParams.labelTextStyle
             )
         }
     }

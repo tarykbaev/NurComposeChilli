@@ -1,6 +1,5 @@
-package com.design.composechili.components.navBar
+package com.design.composechili.components.navBar.navBarWithFab
 
-import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -23,61 +21,73 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.navBar.model.ChiliNavWithFabItems
+import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavWithFabItems
+import com.design.composechili.components.navBar.navBarWithFab.model.NavBarWithFabParams
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
+
+/**
+ *
+ * Chili Navigation bar with FAB that shows [ChiliNavItem]
+ * @param [items] accepts [List] of [ChiliNavWithFabItems] and displays it in a row
+ * @param [isAnimated] accepts [Boolean] adds Bounce animation to [ChiliNavItem] and [ChiliNavFabItem]
+ * @param [navBarWithFabParams] accepts [NavBarWithFabParams] adds visual transformation to component
+ * @param] called when [ChiliNavItem] clicked, returns route as parameter
+ *
+ */
 
 @Composable
 fun NavBarWithFab(
     items: List<ChiliNavWithFabItems>,
-    navigate: (String) -> Unit,
-    animationSize: Float = 1.4f,
-    stiffness: Float = Spring.StiffnessLow,
-    animate: Boolean = false
+    isAnimated: Boolean = false,
+    navBarWithFabParams: NavBarWithFabParams = NavBarWithFabParams.Default,
+    navigate: (String) -> Unit
 ) {
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     ChiliTheme {
         Row(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
                 .background(
-                    color = ChiliTheme.Colors.chiliScreenBackground,
-                    shape = RoundedCornerShape(
-                        ChiliRadiusDimensions.fromResources().radius24Dp,
-                        ChiliRadiusDimensions.fromResources().radius24Dp,
-                        ChiliRadiusDimensions.fromResources().radius0Dp,
-                        ChiliRadiusDimensions.fromResources().radius0Dp,
-                    )
+                    color = navBarWithFabParams.backgroundColor,
+                    shape = navBarWithFabParams.backgroundShape
                 )
                 .fillMaxWidth()
                 .windowInsetsPadding(NavigationBarDefaults.windowInsets)
                 .selectableGroup(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            items.forEachIndexed { index, chiliNavItems ->
-                if (chiliNavItems.isFab) {
+            items.forEachIndexed { index, item ->
+                if (item.isFab) {
                     ChiliNavFabItem(
-                        animate = animate,
-                        icon = chiliNavItems.selectedIcon,
-                        animationSize = animationSize,
-                        stiffness = stiffness,
-                    ) { navigate(chiliNavItems.text) }
+                        isAnimated = isAnimated,
+                        icon = item.icon,
+                        navItemParams = navBarWithFabParams.navFabItemParams
+                    ) { navigate(item.route) }
                 } else {
                     ChiliNavItem(
-                        text = chiliNavItems.text,
-                        selectedIcon = chiliNavItems.selectedIcon,
-                        unselectedIcon = chiliNavItems.unselectedIcon,
-                        isSelected = selectedItem == index,
-                        animationSize = animationSize,
-                        stiffness = stiffness,
-                        animate = animate,
+                        label = item.label,
+                        icon = when {
+                            item.selectedIcon == null -> item.icon
+                            selectedItem == index -> item.selectedIcon
+                            else -> item.icon
+                        },
+                        iconTint = when {
+                            item.selectedIcon != null -> null
+                            selectedItem == index -> navBarWithFabParams.selectedColor
+                            else -> navBarWithFabParams.unselectedColor
+                        },
+                        isAnimated = isAnimated,
                         onClick = {
                             selectedItem = index
-                            navigate(chiliNavItems.text)
-                        }
+                            navigate(item.route)
+                        },
+                        navItemParams = navBarWithFabParams.navItemParams.copy(
+                            labelTextStyle = navBarWithFabParams.navItemParams.labelTextStyle.copy(
+                                color = if (selectedItem == index) navBarWithFabParams.selectedColor
+                                else navBarWithFabParams.unselectedColor
+                            )
+                        )
                     )
                 }
             }
@@ -94,28 +104,33 @@ fun NavBar_Preview() {
                 items = listOf(
                     ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_home_filled,
-                        unselectedIcon = R.drawable.ic_home,
-                        text = "Главная"
+                        icon = R.drawable.ic_home,
+                        label = "Главная",
+                        route = ""
                     ),
                     ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_payment_filled,
-                        unselectedIcon = R.drawable.ic_payment,
-                        text = "Платежи"
+                        icon = R.drawable.ic_payment,
+                        label = "Платежи",
+                        route = ""
                     ),
                     ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_scaner_48,
-                        unselectedIcon = R.drawable.ic_scaner_48,
-                        isFab = true
+                        icon = R.drawable.ic_scaner_48,
+                        isFab = true,
+                        route = ""
                     ),
                     ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_history_filled,
-                        unselectedIcon = R.drawable.ic_history,
-                        text = "История"
+                        icon = R.drawable.ic_history,
+                        label = "История",
+                        route = ""
                     ),
                     ChiliNavWithFabItems(
                         selectedIcon = R.drawable.ic_menu_filled,
-                        unselectedIcon = R.drawable.ic_menu,
-                        text = "Ещё"
+                        icon = R.drawable.ic_menu,
+                        label = "Ещё",
+                        route = ""
                     ),
                 ),
                 navigate = { }
