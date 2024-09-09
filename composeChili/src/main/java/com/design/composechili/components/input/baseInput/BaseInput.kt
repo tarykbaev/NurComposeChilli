@@ -59,7 +59,7 @@ fun BaseInput(
                 modifier = modifier
                     .wrapContentSize()
                     .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_12dp)),
+                    .padding(params.textFieldPadding),
                 value = textFieldValue,
                 onValueChange = onValueChange,
                 textStyle = params.textStyle,

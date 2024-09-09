@@ -64,7 +64,16 @@ data class ChiliAttribute(
 
     // Highlight Container
     val ChiliHighLightContainerBorderWidth: Dp,
-    val ChiliHighLightContainerCornerRadius: Dp
+    val ChiliHighLightContainerCornerRadius: Dp,
+
+    // Chili Bottom Sheet
+    val ChiliBottomSheetTopCornerRadius:Dp,
+    val ChiliBottomSheetBottomCornerRadius:Dp,
+    val ChiliBottomSheetContainerHorizontalMargin:Dp,
+    val ChiliBottomSheetContainerBottomMargin:Dp,
+
+    // In App Push
+    val ChiliInAppPushCornerRadius:Dp
 ) {
     companion object {
         @Composable
@@ -98,7 +107,12 @@ data class ChiliAttribute(
             ChiliTopAppBarThicknessSize = dimensionResource(id = R.dimen.view_1dp),
             ChiliTopAppBarHeightSize = dimensionResource(id = R.dimen.view_56dp),
             ChiliHighLightContainerBorderWidth = dimensionResource(R.dimen.view_2dp),
-            ChiliHighLightContainerCornerRadius = dimensionResource(R.dimen.radius_14dp)
+            ChiliHighLightContainerCornerRadius = dimensionResource(R.dimen.radius_14dp),
+            ChiliBottomSheetTopCornerRadius = dimensionResource(id = R.dimen.radius_12dp),
+            ChiliBottomSheetBottomCornerRadius = dimensionResource(id = R.dimen.radius_0dp),
+            ChiliBottomSheetContainerBottomMargin = dimensionResource(id = R.dimen.padding_0dp),
+            ChiliBottomSheetContainerHorizontalMargin = dimensionResource(id = R.dimen.padding_0dp),
+            ChiliInAppPushCornerRadius = dimensionResource(id = R.dimen.radius_24dp)
         )
     }
 }

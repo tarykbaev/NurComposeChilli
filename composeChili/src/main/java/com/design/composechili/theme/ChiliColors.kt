@@ -9,7 +9,7 @@ import com.design.composechili.R
 @Immutable
 public data class ChiliColors(
     val ChiliPrimaryTextColor: Color,
-    val chiliSecondaryTextColor: Color,
+    val ChiliSecondaryTextColor: Color,
     val ChiliMarkedTextColor: Color,
     val chiliErrorTextColor: Color,
     val chiliValueTextColor: Color,
@@ -17,7 +17,7 @@ public data class ChiliColors(
 
     // Screen Background
     val chiliScreenBackground: Color,
-    val chiliSurfaceBackground: Color,
+    val ChiliSurfaceBackground: Color,
 
     // Ripple
     val chiliRippleForegroundColor: Color,
@@ -105,19 +105,34 @@ public data class ChiliColors(
     val ChiliCodeInputItemBackgroundColor: Color,
     val ChiliCodeInputItemErrorBackgroundColor: Color,
 
+    // Bottom Sheet
+    val ChiliBottomSheetBackgroundColor:Color,
+    val ChiliBottomSheetTopDrawableColor:Color,
+    val ChiliBottomSheetGrayBackgroundColor:Color,
+
+    // Card Cell View
+    val ChiliCardErrorTextColor: Color,
+
+    // Action Bottom Sheet
+    val ChiliActionBottomSheetButtonTextColor:Color,
+    val ChiliActionBottomSheetAccentButtonTextColor:Color,
+
+    // In App Push
+    val ChiliInAppPushBackgroundColor:Color
+
     ){
 
     companion object {
         @Composable
         fun defaultDarkColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.white_1),
-            chiliSecondaryTextColor = colorResource(id = R.color.gray_3),
+            ChiliSecondaryTextColor = colorResource(id = R.color.gray_3),
             ChiliMarkedTextColor = colorResource(id = R.color.white_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.black_2),
-            chiliSurfaceBackground = colorResource(id = R.color.black_1),
+            ChiliSurfaceBackground = colorResource(id = R.color.black_1),
             chiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
             ChiliDividerColor = colorResource(id = R.color.black_4),
             chiliChevronColor = colorResource(id = R.color.white_1),
@@ -170,19 +185,26 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.black_4),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
-            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2)
+            ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
+            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2),
+            ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
+            ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3)
         )
 
         @Composable
         fun defaultLightColors(): ChiliColors = ChiliColors(
             ChiliPrimaryTextColor = colorResource(id = R.color.black_1),
-            chiliSecondaryTextColor = colorResource(id = R.color.black_4),
+            ChiliSecondaryTextColor = colorResource(id = R.color.black_4),
             ChiliMarkedTextColor = colorResource(id = R.color.black_1),
             chiliErrorTextColor = colorResource(id = R.color.red_1),
             chiliValueTextColor = colorResource(id = R.color.gray_1),
             chiliLinkTextColor = colorResource(id = R.color.magenta_1),
             chiliScreenBackground = colorResource(id = R.color.gray_4),
-            chiliSurfaceBackground = colorResource(id = R.color.white_1),
+            ChiliSurfaceBackground = colorResource(id = R.color.white_1),
             chiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
             chiliChevronColor = colorResource(id = R.color.gray_2),
@@ -235,7 +257,14 @@ public data class ChiliColors(
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
             ChiliCodeInputItemBackgroundColor = colorResource(id = R.color.gray_5),
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
-            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3)
+            ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
+            ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
+            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
+            ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
+            ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
+            ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1)
         )
     }
 }

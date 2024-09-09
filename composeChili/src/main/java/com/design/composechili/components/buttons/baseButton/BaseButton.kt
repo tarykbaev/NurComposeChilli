@@ -3,10 +3,15 @@ package com.design.composechili.components.buttons.baseButton
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -21,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -49,10 +56,7 @@ fun BaseButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     title: String,
-    titleStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
-        ChiliTheme.Colors.ChiliPrimaryTextColor
-    ),
+    titleStyle: TextStyle? = null,
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
@@ -93,11 +97,16 @@ fun BaseButton(
                     contentDescription = "Button start icon"
                 )
             }
+            val buttonTextStyle = titleStyle ?: ChiliTextStyle.get(
+                    buttonStyle.buttonTextSize,
+                    buttonStyle.textActiveColor,
+                    buttonStyle.textFont
+                )
             Text(
                 modifier = Modifier,
                 text = title,
                 textAlign = TextAlign.Center,
-                style = titleStyle
+                style =buttonTextStyle
             )
             if (endIcon != null) {
                 Image(
@@ -108,5 +117,23 @@ fun BaseButton(
             }
         }
     }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun BaseButtonPreview(){
+    ChiliTheme{
+        Column (modifier = Modifier.fillMaxHeight().background(ChiliTheme.Colors.ChiliSurfaceBackground)){
+            Spacer(modifier = Modifier.size(24.dp))
+            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Primary", buttonStyle = ChiliButtonStyle.Primary)
+            Spacer(modifier = Modifier.size(24.dp))
+            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Secondary", buttonStyle = ChiliButtonStyle.Secondary)
+            Spacer(modifier = Modifier.size(24.dp))
+            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Additional", buttonStyle = ChiliButtonStyle.Additional)
+        }
+    }
+
+
+
 }
 

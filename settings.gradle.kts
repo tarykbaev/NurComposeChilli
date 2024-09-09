@@ -1,3 +1,5 @@
+import java.net.URI
+
 pluginManagement {
     repositories {
         google {
@@ -16,7 +18,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = URI("https://jitpack.io") }
     }
+
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
