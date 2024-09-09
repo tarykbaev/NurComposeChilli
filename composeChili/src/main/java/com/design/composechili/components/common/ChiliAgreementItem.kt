@@ -2,7 +2,6 @@ package com.design.composechili.components.common
 
 import android.text.Html
 import android.text.style.URLSpan
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,21 +19,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.text.getSpans
 import com.design.composechili.R
 import com.design.composechili.components.checkbox.ChiliCheckbox
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 private const val URL_TAG = "URL"
@@ -46,36 +41,45 @@ enum class DisplayMode {
 }
 
 /**
- * @param [startIcon] accepts a drawable resource ID for the icon displayed when the item is not editable.
- * @param [startIconSize] sets the size of the start icon when the item is not editable.
- * @param [agreementHtmlText] accepts a [String] with HTML content and displays it as styled text.
- * @param [agreementTextStyle] sets the style of the agreement text.
- * @param [linkColor] sets the color of hyperlinks within the agreement text.
- * @param [isChecked] indicates whether the checkbox is checked when the item is editable.
- * @param [onCheckedChange] sets the handler for checkbox state changes when the item is editable.
- * @param [displayMode] sets the display mode of the item.
- * @param [onLinkClick] sets the handler for clicks on hyperlinks within the agreement text.
+ * A composable function that creates an agreement item with customizable display modes, including a checkbox, icon,
+ * or text-only presentation. The agreement text supports HTML formatting and allows clickable links.
+ *
+ * @param modifier A [Modifier] to adjust the layout or decoration of the composable. Defaults to [Modifier] with no modifications.
+ *
+ * @param agreementHtmlText A [String] containing the HTML text of the agreement. Links within the text will be clickable.
+ *
+ * @param isChecked A [Boolean] that indicates the checked state of the agreement item when in CHECKBOX mode.
+ * Defaults to `false`.
+ *
+ * @param onCheckedChange A lambda function that is invoked when the checked state changes in CHECKBOX mode.
+ * The new checked state is passed as a parameter. Defaults to an empty lambda.
+ *
+ * @param displayMode An instance of [DisplayMode] to determine the presentation style of the agreement item.
+ * Options include [DisplayMode.CHECKBOX], [DisplayMode.ICON], and [DisplayMode.TEXT_ONLY]. Defaults to [DisplayMode.CHECKBOX].
+ *
+ * @param chiliAgreementItemParams An instance of [ChiliAgreementItemParams] to configure additional parameters such
+ * as text style, link color, and icon size. Defaults to [ChiliAgreementItemParams.Default].
+ *
+ * @param onLinkClick A lambda function that is invoked when a link within the agreement text is clicked.
+ * The URL of the clicked link is passed as a parameter.
+ *
+ * @sample [ChiliAgreementItemParams.Default]
  */
 @Composable
 fun ChiliAgreementItem(
     modifier: Modifier = Modifier,
-    @DrawableRes startIcon: Int = R.drawable.chili_ic_checkmark,
-    startIconSize: Dp = dimensionResource(R.dimen.view_24dp),
     agreementHtmlText: String,
-    agreementTextStyle: TextStyle = ChiliTextStyle.get(
-        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        ChiliTheme.Colors.ChiliPrimaryTextColor
-    ),
-    linkColor: Color = colorResource(R.color.magenta_1),
     isChecked: Boolean = false,
     onCheckedChange: (Boolean) -> Unit = {},
     displayMode: DisplayMode = DisplayMode.CHECKBOX,
+    chiliAgreementItemParams: ChiliAgreementItemParams = ChiliAgreementItemParams.Default,
     onLinkClick: (String) -> Unit
 ) {
 
-    val annotatedHtmlAgreementText = remember(agreementHtmlText, linkColor) {
-        parseHtmlToAnnotatedString(agreementHtmlText, linkColor)
-    }
+    val annotatedHtmlAgreementText =
+        remember(agreementHtmlText, chiliAgreementItemParams.linkColor) {
+            parseHtmlToAnnotatedString(agreementHtmlText, chiliAgreementItemParams.linkColor)
+        }
 
     ChiliTheme {
         Row(
@@ -95,8 +99,8 @@ fun ChiliAgreementItem(
 
                 DisplayMode.ICON -> {
                     Image(
-                        modifier = Modifier.size(startIconSize),
-                        painter = painterResource(startIcon),
+                        modifier = Modifier.size(chiliAgreementItemParams.startIconSize),
+                        painter = painterResource(chiliAgreementItemParams.startIcon),
                         contentDescription = "agreement_item_icon"
                     )
                 }
@@ -114,7 +118,7 @@ fun ChiliAgreementItem(
 
             ClickableText(
                 modifier = Modifier,
-                style = agreementTextStyle,
+                style = chiliAgreementItemParams.agreementHtmlTextStyle,
                 text = annotatedHtmlAgreementText
             ) { offset ->
                 annotatedHtmlAgreementText.getStringAnnotations(
@@ -127,6 +131,16 @@ fun ChiliAgreementItem(
     }
 }
 
+/**
+ * Parses HTML text to an [AnnotatedString] with clickable links. The text can include inline styles,
+ * and the links are styled with the specified link color.
+ *
+ * @param htmlText A [String] containing the HTML-formatted text.
+ *
+ * @param linkColor A [Color] used for styling the clickable links within the text.
+ *
+ * @return An [AnnotatedString] with the formatted text and clickable link annotations.
+ */
 fun parseHtmlToAnnotatedString(htmlText: String, linkColor: Color): AnnotatedString {
     val spanned = Html.fromHtml(htmlText, Html.FROM_HTML_MODE_COMPACT)
     return buildAnnotatedString {
@@ -167,7 +181,7 @@ fun ChiliAgreementItemPreview() {
                 isChecked = it
             }
         ) {
-            
+
         }
     }
 }
