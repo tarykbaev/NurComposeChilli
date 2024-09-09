@@ -2,7 +2,10 @@ package com.design.composechili.components.containers.highlight
 
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,9 +20,13 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
@@ -146,6 +153,32 @@ private fun DrawScope.drawCircleWithIcon(
                 top + iconSizePx.toInt()
             )
             icon.draw(canvas.nativeCanvas)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun HighlightContainerPreview() {
+    ChiliTheme {
+        HighlightContainer(
+            modifier = Modifier,
+            highlighterColorStart = Color.Red,
+            highlighterColorEnd = Color.Blue,
+            highlightState = HighlightState.WITH_CIRCLE_AND_ICON
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(12.dp))
+            ) {
+                Image(
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(R.drawable.test_image),
+                    contentDescription = "PreviewImage"
+                )
+            }
         }
     }
 }

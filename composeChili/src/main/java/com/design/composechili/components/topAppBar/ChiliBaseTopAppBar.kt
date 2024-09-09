@@ -22,16 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.pxToDp
 
@@ -172,10 +168,21 @@ fun ChiliBaseTopAppBar(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun ChiliCustomBaseTopAppBarPreview() {
+fun ChiliBaseTopAppBarPreview() {
     ChiliTheme {
-        ChiliBaseTopAppBar(title = "CustomBaseTopAppBar title", isCenteredTitle = true, navigationIcon = R.drawable.chili_ic_nav_back)
+        ChiliBaseTopAppBar(
+            title = "TopAppBar",
+            isCenteredTitle = true,
+            navigationIcon = R.drawable.chili_ic_nav_back,
+            endIcon = R.drawable.ic_cat,
+            onNavigationClick = {
+
+            },
+            onEndIconClick = {
+
+            }
+        )
     }
 }
