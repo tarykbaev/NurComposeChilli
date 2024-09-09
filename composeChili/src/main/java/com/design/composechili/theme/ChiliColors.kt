@@ -107,7 +107,7 @@ public data class ChiliColors(
 
     // NavBar
     val ChiliNavBarSelectedItemColor: Color,
-    val ChiliNavBarUnSelectedItemColor: Color
+    val ChiliNavBarUnSelectedItemColor: Color,
     // Bottom Sheet
     val ChiliBottomSheetBackgroundColor:Color,
     val ChiliBottomSheetTopDrawableColor:Color,
@@ -195,8 +195,7 @@ public data class ChiliColors(
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
-            ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3)
-            ChiliTooltipBackground = colorResource(id = R.color.black_3),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1)
         )
@@ -270,8 +269,7 @@ public data class ChiliColors(
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
-            ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1)
-            ChiliTooltipBackground = colorResource(id = R.color.black_3),
+            ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1)
         )

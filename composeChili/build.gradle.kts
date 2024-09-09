@@ -56,7 +56,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.snapper)
-    implementation(libs.material)
+    implementation(libs.androidx.material)
 
     implementation(libs.coil.compose)
 
