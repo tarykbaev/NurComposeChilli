@@ -1,4 +1,4 @@
-package com.design.composechili.components.cell
+package com.design.composechili.components.cell.baseCell
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,7 @@ data class BaseCellParams(
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ), subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
+                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 ), titlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp),

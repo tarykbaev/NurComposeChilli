@@ -14,25 +14,17 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.cell.model.CellCornerMode
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.values.ChiliPadding
 
 /**
  * Cell view component containing [Switch] at the end of the cell
@@ -52,7 +44,7 @@ import com.design.composechili.values.ChiliPadding
  */
 
 @Composable
-fun ToggleCellView(
+fun ToggleCell(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String = String(),
@@ -172,70 +164,11 @@ fun ToggleCellView(
     }
 }
 
-
-data class ToggleCellParams(
-    val titleTextStyle: TextStyle,
-    val subTitleTextStyle: TextStyle,
-    val switchTextStyle: TextStyle,
-    val switchOnOffTextStyle: TextStyle,
-    val titlePadding: ChiliPadding,
-    val subtitlePadding: ChiliPadding,
-    val cornerMode: CellCornerMode,
-    val startIconPadding: ChiliPadding,
-    val switchPadding: ChiliPadding,
-    val toggleColors: SwitchColors
-) {
-    companion object {
-        val Default
-            @Composable get() = ToggleCellParams(
-                titleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                ), subTitleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.chiliSecondaryTextColor,
-                ), switchTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                ), switchOnOffTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                ), titlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    top = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_4dp)
-                ), subtitlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_12dp)
-                ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
-                    vertical = dimensionResource(id = R.dimen.padding_8dp),
-                    horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), switchPadding = ChiliPadding(
-                    end = dimensionResource(id = R.dimen.padding_12dp)
-                ), toggleColors = SwitchDefaults.colors(
-                    checkedBorderColor = Color.Transparent,
-                    uncheckedBorderColor = Color.Transparent,
-                    disabledUncheckedBorderColor = Color.Transparent,
-                    disabledCheckedBorderColor = Color.Transparent,
-                    uncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                    checkedTrackColor = colorResource(id = R.color.magenta_1_alpha_40),
-                    disabledCheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                    disabledUncheckedTrackColor = ChiliTheme.Colors.ChiliToggleCellViewTrackColor,
-                    checkedThumbColor = colorResource(id = R.color.magenta_1),
-                    uncheckedThumbColor = ChiliTheme.Colors.ChiliToggleCellViewThumbNormalColor
-                )
-            )
-    }
-
-}
-
 @Preview
 @Composable
 fun ToggleCellViewPreviewLight() {
     ChiliTheme {
-        ToggleCellView(
+        ToggleCell(
             title = "Title",
             isChecked = false,
             isSwitchEnabled = true,
@@ -248,7 +181,7 @@ fun ToggleCellViewPreviewLight() {
 @Composable
 fun ToggleCellViewPreview() {
     ChiliTheme {
-        ToggleCellView(
+        ToggleCell(
             title = "Title",
             isChecked = false,
             isSwitchEnabled = true,

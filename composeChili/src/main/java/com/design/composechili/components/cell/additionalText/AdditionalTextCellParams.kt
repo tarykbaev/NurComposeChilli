@@ -1,4 +1,4 @@
-package com.design.composechili.components.cell
+package com.design.composechili.components.cell.additionalText
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
@@ -6,7 +6,7 @@ import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
-data class AdditionalTextCellViewParams(
+data class AdditionalTextCellParams(
     val titleTextAppearance: TextStyle,
     val additionalTextAppearance: TextStyle,
     val additionalSubTextAppearance: TextStyle,
@@ -28,7 +28,7 @@ data class AdditionalTextCellViewParams(
 
         val AdditionalText
             @Composable
-            get() = AdditionalTextCellViewParams(
+            get() = AdditionalTextCellParams(
                 titleTextAppearance = ChiliTextStyle.get(
                     ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     ChiliTheme.Colors.ChiliPrimaryTextColor,

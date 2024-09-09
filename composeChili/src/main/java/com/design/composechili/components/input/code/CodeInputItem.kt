@@ -17,7 +17,7 @@ import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
-fun CodeInputItemView(
+fun CodeInputItem(
     modifier: Modifier = Modifier,
     state: CodeInputItemState,
     text: String = ""
@@ -67,6 +67,6 @@ enum class CodeInputItemState {
 @Composable
 fun CodeInputItemViewPreview() {
     ChiliTheme {
-        CodeInputItemView(state = CodeInputItemState.INACTIVE, text = "1")
+        CodeInputItem(state = CodeInputItemState.INACTIVE, text = "1")
     }
 }

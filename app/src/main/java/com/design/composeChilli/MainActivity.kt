@@ -1,29 +1,31 @@
 package com.design.composeChilli
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.ui.theme.NurComposeChiliTheme
-import com.design.composechili.components.bottomSheet.BaseInAppPush
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheet
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
-import com.design.composechili.components.cell.BaseCell
-import com.design.composechili.extensions.getBottomSheetState
+import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
+import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
+import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
+import com.design.composechili.components.picker.chiliTimePicker.ChiliTimePickerDialog
 import com.design.composechili.theme.ChiliTheme
-import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() {
 
@@ -32,42 +34,49 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
         setContent {
-            ChiliTheme{
-                val scope = rememberCoroutineScope()
-                val sheetState = getBottomSheetState()
+            ChiliTheme {
+                var alertDialogState by rememberSaveable { mutableStateOf(true) }
+                var banner by rememberSaveable { mutableStateOf(String()) }
 
-                val buttons = listOf(
-                    ActionBottomSheetParams("First", ChiliTheme.Colors.chiliSecondaryTextColor),
-                    ActionBottomSheetParams("Second", ChiliTheme.Colors.chiliSecondaryTextColor),
-                    ActionBottomSheetParams("Cancel", ChiliTheme.Colors.ChiliComponentButtonTextColorActive, onClick = {
-                        scope.launch { sheetState.bottomSheetState.hide() }
-                    }),
-                )
+                Column {
+                    Spacer(modifier = Modifier.size(80.dp))
+                    BaseButton(onClick = {
+                        alertDialogState = !alertDialogState
+                    }, title = "Show dialog")
+                }
 
+                if (alertDialogState) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        ChiliDatePickerDialog(
+                            modifier = Modifier,
+                            onDismissRequest = {},
+                            startDateTitle = "Начальная Дата",
+                            endDateTitle = "Конечная Дата",
+                            submitBtnTitle = "Готово",
+                            datePickedParams = ChiliDatePickerParams(
+                                firstDate = DatePickerTimeParams(
+                                    startDateTime = LocalDateTime.now(),
+                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
+                                ),
+                                secondDate = DatePickerTimeParams(
+                                    startDateTime = LocalDateTime.now(),
+                                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                                    maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0),
+                                )
+                            ),
+                            onSubmitBtn = { startDate, endDate ->
 
-                BaseInAppPush(bottomSheetState = sheetState, ) {
-                    Column {
-                        Spacer(modifier = Modifier.height(80.dp))
-                        BaseCell(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .clickable {
-
-                                    scope.launch { sheetState.bottomSheetState.expand() }
-                                },
-                            title = "Open BottomSheet"
+                            }
                         )
                     }
                 }
-
 
             }
         }
     }
 }
-
 
 
 @Composable
