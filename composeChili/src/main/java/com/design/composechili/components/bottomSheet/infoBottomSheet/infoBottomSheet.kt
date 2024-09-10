@@ -42,7 +42,7 @@ fun InfoBottomSheet(
     ),
     description: String,
     descriptionStyle: TextStyle = ChiliTextStyle.get(
-        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH3,
+        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH4,
         color = ChiliTheme.Colors.chiliErrorTextColor
     ),
     @DrawableRes icon: Int,
@@ -60,7 +60,7 @@ fun InfoBottomSheet(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp),
+                            .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(painter = painterResource(id = icon), contentDescription = null)
@@ -119,7 +119,7 @@ fun InfoBottomSheet_Preview() {
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = painterResource(id = R.drawable.ic_cat),
+                painter = painterResource(id = R.drawable.ic_bonus_new),
                 contentDescription = null
             )
         }
