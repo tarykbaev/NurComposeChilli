@@ -81,7 +81,7 @@ fun BaseBottomSheet(
             sheetContent = {
                 Column(
                     modifier = modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
                         .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
                 ) {
