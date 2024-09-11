@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -36,15 +37,7 @@ fun InfoBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: BottomSheetScaffoldState,
     title: String,
-    titleStyle: TextStyle = ChiliTextStyle.get(
-        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-        color = ChiliTheme.Colors.ChiliPrimaryTextColor
-    ),
     description: String,
-    descriptionStyle: TextStyle = ChiliTextStyle.get(
-        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH4,
-        color = ChiliTheme.Colors.chiliErrorTextColor
-    ),
     @DrawableRes icon: Int,
     buttons: List<InfoBottomSheetButton>,
     peekHeight: Dp = 0.dp,
@@ -68,13 +61,19 @@ fun InfoBottomSheet(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(text = title.take(120), style = titleStyle)
-                            Text(text = description, style = descriptionStyle)
+                            Text(
+                                text = title.take(InfoBottomSheetsParams.Default.maxChars),
+                                style = InfoBottomSheetsParams.Default.titleStyle
+                            )
+                            Text(
+                                text = description,
+                                style = InfoBottomSheetsParams.Default.descriptionStyle
+                            )
                         }
                     }
                 }
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    repeat(buttons.size) {
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(buttons.size) {
                         BaseButton(
                             onClick = buttons[it].onClick,
                             title = buttons[it].title,
@@ -132,3 +131,26 @@ data class InfoBottomSheetButton(
     val title: String,
     val buttonStyle: ChiliButtonStyle
 )
+
+@Stable
+data class InfoBottomSheetsParams(
+    val titleStyle: TextStyle,
+    val descriptionStyle: TextStyle,
+    val maxChars: Int
+) {
+    companion object {
+        private const val MAX_CHARS = 120
+        val Default
+            @Composable get() = InfoBottomSheetsParams(
+                titleStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
+                ),
+                descriptionStyle = ChiliTextStyle.get(
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH4,
+                    color = ChiliTheme.Colors.chiliErrorTextColor
+                ),
+                maxChars = MAX_CHARS
+            )
+    }
+}
