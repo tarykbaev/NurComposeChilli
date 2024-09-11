@@ -12,8 +12,6 @@ data class NavBarWithFabParams(
     val unselectedColor: Color,
     val backgroundColor: Color,
     val backgroundShape: Shape,
-    val navItemParams: ChiliNavItemParams,
-    val navFabItemParams: ChiliNavFabItemParams
 ) {
     companion object {
         val Default
@@ -26,9 +24,7 @@ data class NavBarWithFabParams(
                     ChiliRadiusDimensions.fromResources().radius24Dp,
                     ChiliRadiusDimensions.fromResources().radius0Dp,
                     ChiliRadiusDimensions.fromResources().radius0Dp,
-                ),
-                navItemParams = ChiliNavItemParams.Default,
-                navFabItemParams = ChiliNavFabItemParams.Default
+                )
             )
     }
 }

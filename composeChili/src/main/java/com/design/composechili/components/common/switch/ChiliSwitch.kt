@@ -1,4 +1,4 @@
-package com.design.composechili.components.switch_chili
+package com.design.composechili.components.common.switch
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
-fun SwitchChili(
+fun ChiliSwitch(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
     description: String = "Switch animation on items",
@@ -55,5 +55,5 @@ fun SwitchChili(
 @Preview(showBackground = true)
 @Composable
 fun Switch_Preview() {
-    SwitchChili(onValueChange = {})
+    ChiliSwitch(onValueChange = {})
 }

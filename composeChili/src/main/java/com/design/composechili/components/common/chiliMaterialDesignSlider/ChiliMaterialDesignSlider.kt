@@ -1,4 +1,4 @@
-package com.design.composechili.components.slider
+package com.design.composechili.components.common.chiliMaterialDesignSlider
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,7 +16,7 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
-fun ChiliSliderMaterial2(
+fun ChiliMaterialDesignSlider(
     initialValue: Float = 0.0f,
     description: String = "Slider value",
     stepsSize: Int = 0,
@@ -36,7 +36,7 @@ fun ChiliSliderMaterial2(
                 }",
                 color = ChiliTheme.Colors.chiliValueTextColor
             )
-            SliderM2(
+            MaterialDesignSlider(
                 value = sliderPosition,
                 valueRange = range,
                 onValueChange = {
@@ -62,7 +62,7 @@ fun ChiliSliderMaterial2(
 @Composable
 fun ChiliSliderM2_Preview() {
     Column {
-        ChiliSliderMaterial2(stepsSize = 40, range = 0f..20f)
-        ChiliSliderMaterial2(range = 0f..4f)
+        ChiliMaterialDesignSlider(stepsSize = 40, range = 0f..20f)
+        ChiliMaterialDesignSlider(range = 0f..4f)
     }
 }

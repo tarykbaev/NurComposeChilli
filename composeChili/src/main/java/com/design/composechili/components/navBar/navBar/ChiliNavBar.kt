@@ -1,4 +1,4 @@
-package com.design.composechili.components.navBar.simpleNavBar
+package com.design.composechili.components.navBar.navBar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,43 +8,70 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.navBar.simpleNavBar.model.ChiliNavBarParams
-import com.design.composechili.components.navBar.simpleNavBar.model.ChiliNavItem
+import com.design.composechili.components.navBar.navBar.model.ChiliNavBarParams
+import com.design.composechili.components.navBar.navBar.model.ChiliNavItem
 import com.design.composechili.theme.ChiliTheme
 
 /**
+ * A customizable navigation bar component that displays a list of navigation items (`ChiliNavItem`).
+ * It supports handling item clicks and adjusting parameters for layout and appearance.
  *
- * Chili Simple Navigation bar to display NavigationItems without FAB
- * @param [items] accepts list of [ChiliNavItem] and shows that items in a row
- * @param [previewInsets] accepts [Boolean] true: Adds [windowInsetsPadding] - 0 false: [NavigationBarDefaults.windowInsets]
- * @param [navBarParams] accepts [ChiliNavBarParams] adds visual transformation to navBar
- * @param [navigate] called when [ChiliNavSimpleItem] clicked, returns route as parameter
+ * @param modifier Modifier to be applied to the navigation bar, allowing for layout customizations such as padding, alignment, and size.
+ * Default is `Modifier`.
  *
+ * @param navBarItems A list of `ChiliNavItem` objects that define the items to display in the navigation bar.
+ * Each item typically contains an icon, a label, and state information (e.g., selected or unselected).
+ *
+ * @param previewInsets A Boolean flag that determines whether to account for insets (e.g., system bars) in the layout.
+ * When `true`, the navigation bar adjusts for these insets (useful for previewing in design tools). Default is `true`.
+ *
+ * @param navBarParams nav bar visual transformation params and paddings. Default is `ChiliNavBarParams.Default`
+ *
+ * @param onNavItemClicked A lambda function that is invoked when a navigation item is clicked.
+ * The clicked `ChiliNavItem` is passed to this lambda, enabling handling of item-specific actions such as navigation or UI updates.
+ *
+ * @see [ChiliNavBarParams.Default]
+ * Example Usage:
+ * ```
+ * val navItems = listOf(
+ *     ChiliNavItem(icon = R.drawable.ic_home, label = "Главная"),
+ *     ChiliNavItem(icon = R.drawable.ic_payment, label = "Платежи"),
+ * )
+ *
+ * ChiliNavBar(
+ *     navBarItems = navItems,
+ *     onNavItemClicked = { navItem ->
+ *         // Handle navigation item click
+ *     }
+ * )
+ * ```
  */
 
 @Composable
 fun ChiliNavBar(
     modifier: Modifier = Modifier,
-    items: List<ChiliNavItem>,
+    navBarItems: List<ChiliNavItem>,
     previewInsets: Boolean = true,
     navBarParams: ChiliNavBarParams = ChiliNavBarParams.Default,
-    navigate: (String) -> Unit
+    onNavItemClicked: (ChiliNavItem) -> Unit
 ) {
-    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+    var selectedItem by remember { mutableStateOf(navBarItems.firstOrNull()) }
 
     ChiliTheme {
-        Row(
+        LazyRow(
             modifier = modifier
                 .background(
                     color = navBarParams.backgroundColor,
@@ -62,28 +89,20 @@ fun ChiliNavBar(
                 .selectableGroup(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            items.forEachIndexed { index, item ->
+            items(navBarItems,
+                key = {
+                    it.id
+                }
+            ) { item ->
                 ChiliNavSimpleItem(
                     label = item.label,
-                    icon = when {
-                        item.selectedIcon == null -> item.icon
-                        selectedItem == index -> item.selectedIcon
-                        else -> item.icon
-                    },
-                    iconTint = when {
-                        item.selectedIcon != null -> null
-                        selectedItem == index -> navBarParams.selectedColor
-                        else -> navBarParams.unselectedColor
-                    },
-                    navItemParams = navBarParams.navItemParams.copy(
-                        labelTextStyle = navBarParams.navItemParams.labelTextStyle.copy(
-                            color = if (selectedItem == index) navBarParams.selectedColor
-                            else navBarParams.unselectedColor
-                        )
-                    ),
-                    onClick = {
-                        selectedItem = index
-                        navigate(item.route)
+                    icon = item.icon,
+                    selectedColorTint = navBarParams.selectedColor,
+                    unselectedColorTint = navBarParams.unselectedColor,
+                    selected = selectedItem == item,
+                    onNavClicked = {
+                        selectedItem = item
+                        onNavItemClicked(item)
                     }
                 )
             }
@@ -93,38 +112,29 @@ fun ChiliNavBar(
 
 @Preview(showBackground = true)
 @Composable
-fun Nav_Preview() {
+fun ChiliNavBarPreview() {
     Box(modifier = Modifier.fillMaxSize()) {
         Row(modifier = Modifier.align(Alignment.BottomCenter)) {
             ChiliNavBar(
-                items = listOf(
+                navBarItems = listOf(
                     ChiliNavItem(
-                        selectedIcon = R.drawable.ic_home_filled,
                         icon = R.drawable.ic_home,
                         label = "Главная",
-                        route = ""
                     ),
                     ChiliNavItem(
-                        selectedIcon = R.drawable.ic_payment_filled,
                         icon = R.drawable.ic_payment,
                         label = "Платежи",
-                        route = ""
                     ),
                     ChiliNavItem(
-                        selectedIcon = R.drawable.ic_history_filled,
                         icon = R.drawable.ic_history,
                         label = "История",
-                        route = ""
                     ),
                     ChiliNavItem(
-                        selectedIcon = R.drawable.ic_menu_filled,
                         icon = R.drawable.ic_menu,
                         label = "Ещё",
-                        route = ""
                     ),
                 ),
             ) {
-
             }
         }
     }

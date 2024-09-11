@@ -1,4 +1,4 @@
-package com.design.composechili.components.navBar.simpleNavBar.model
+package com.design.composechili.components.navBar.navBar.model
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.design.composechili.components.containers.highlight
+package com.design.composechili.components.containers
 
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Canvas

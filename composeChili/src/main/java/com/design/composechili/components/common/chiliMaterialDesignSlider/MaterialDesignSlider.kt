@@ -1,4 +1,4 @@
-package com.design.composechili.components.slider
+package com.design.composechili.components.common.chiliMaterialDesignSlider
 
 /*
  * Copyright 2019 The Android Open Source Project
@@ -162,7 +162,7 @@ import kotlin.math.sign
  * different state. See [SliderDefaults.colors] to customize.
  */
 @Composable
-fun SliderM2(
+fun MaterialDesignSlider(
     value: Float,
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
