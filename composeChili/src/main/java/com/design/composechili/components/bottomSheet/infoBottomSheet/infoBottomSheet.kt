@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -71,11 +72,11 @@ fun InfoBottomSheet(
                     }
                 }
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(buttons.size) {
+                    items(buttons) {
                         BaseButton(
-                            onClick = buttons[it].onClick,
-                            title = buttons[it].title,
-                            buttonStyle = buttons[it].buttonStyle
+                            onClick = it.onClick,
+                            title = it.title,
+                            buttonStyle = it.buttonStyle
                         )
                     }
                 }
