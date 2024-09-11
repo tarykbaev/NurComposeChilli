@@ -19,7 +19,7 @@ data class DetailedInfoBottomSheetParams(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ),
-                iconSize = dimensionResource(id = R.dimen.view_72dp)
+                iconSize = dimensionResource(id = R.dimen.view_125dp)
             )
         val Custom
             @Composable get() = DetailedInfoBottomSheetParams(
@@ -27,7 +27,8 @@ data class DetailedInfoBottomSheetParams(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ),
-                iconSize = dimensionResource(id = R.dimen.view_125dp)
+                iconSize = dimensionResource(id = R.dimen.view_72dp)
+
             )
     }
 }

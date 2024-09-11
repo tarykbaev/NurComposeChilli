@@ -103,14 +103,14 @@ class DetailedInfoBottomSheetParamsProvider :
                         "<a href=\"https://o.kg\">оферты сервиса «О!Деньги»</a>",
                 buttonTitle = "Start",
                 secondaryButtonTitle = "Later",
-                detailedInfoBottomSheetParams = 0
+                detailedInfoBottomSheetParams = 1
             ),
             DetailedInfoBottomSheetPreviewParams(
                 infoText = "Текстовый блок, который содержит много текста и не может уместиться в четыре строки (как в маленьком Bottom-sheet).\n\n" +
                         "Возможно имеет какую-то инструкцию или подробное описание функционал. Плюс тут есть картиночка. \n\n" +
                         "Высота зависит от контента.",
                 buttonTitle = "Понятно",
-                detailedInfoBottomSheetParams = 1,
+                detailedInfoBottomSheetParams = 0,
                 peekHeight = 420.dp
             )
         )

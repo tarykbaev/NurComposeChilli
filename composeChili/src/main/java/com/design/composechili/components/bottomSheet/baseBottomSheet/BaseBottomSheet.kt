@@ -11,9 +11,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
@@ -22,6 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -84,12 +90,13 @@ fun BaseBottomSheet(
                         .fillMaxWidth()
                         .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
                         .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
+                        .windowInsetsPadding(WindowInsets.navigationBars)
                 ) {
                     if (hasCloseIcon) {
                         Image(
                             modifier = Modifier
                                 .align(Alignment.End)
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                                .padding(top = 16.dp, end = 16.dp)
                                 .clickable {
                                     scope.launch { sheetState.bottomSheetState.hide() }
                                 },
@@ -135,7 +142,7 @@ fun BaseBottomSheet(
                         .background(baseBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
                         .clickable(
                             indication = null,
-                            interactionSource = rememberSaveable { MutableInteractionSource() }) {
+                            interactionSource = remember { MutableInteractionSource() }) {
                             scope.launch { sheetState.bottomSheetState.hide() }
                         })
             }
