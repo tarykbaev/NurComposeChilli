@@ -29,6 +29,22 @@ import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
+/**
+ * A composable function that displays a customizable bottom sheet with a title, description, icon, and action buttons.
+ *
+ * @param [modifier] Modifier to be applied to the root composable of the sheet content.
+ * @param [sheetState] State of the bottom sheet, controlling whether it is expanded or collapsed.
+ * @see [BottomSheetScaffoldState]
+ * @param [title] The title text displayed at the top of the bottom sheet.
+ * @param [description] The description text displayed below the title.
+ * @param [icon] Drawable resource ID for the icon displayed next to the title.
+ * @param [buttons] A list of buttons to be displayed as action buttons within the bottom sheet.
+ * @param [peekHeight] The height of the bottom sheet when it is collapsed.
+ * @param [infoBottomSheetsParams] Parameters controlling the visual styles and character limits of the description.
+ * @param [content] Content composable that will be displayed underneath the bottom sheet as the screen content.
+ * @sample [InfoBottomSheet_Preview]
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoBottomSheet(

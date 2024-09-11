@@ -25,6 +25,24 @@ import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * A composable function that displays a detailed bottom sheet with an icon, descriptive text,
+ * and customizable primary and secondary buttons. The bottom sheet can be styled and customized
+ * through the provided parameters.
+ *
+ * @param [sheetState] The state of the bottom sheet, controlling whether it is expanded or collapsed.
+ * @see [BottomSheetScaffoldState]
+ * @param [peekHeight] The height of the bottom sheet when it is collapsed. Defaults to 0.dp.
+ * @param [onPrimaryClick] The action to perform when the primary button is clicked.
+ * @param [onSecondaryClick] The action to perform when the secondary button is clicked (optional).
+ * @param [infoText] The descriptive text to display in the bottom sheet.
+ * @param [buttonTitle] The title for the primary button.
+ * @param [secondaryButtonTitle] Optional title for the secondary button.
+ * @param [detailedInfoBottomSheetParams] Parameters for customizing the appearance, such as icon size and text style.
+ * @param [screenContent] The content to display on the screen, underneath the bottom sheet.
+ * @sample [DetailedInfoBottomSheet_Preview]
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedInfoBottomSheet(
