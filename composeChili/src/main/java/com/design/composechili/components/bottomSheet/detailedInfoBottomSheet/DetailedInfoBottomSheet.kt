@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -36,8 +38,6 @@ fun DetailedInfoBottomSheet(
     detailedInfoBottomSheetParams: DetailedInfoBottomSheetParams,
     screenContent: @Composable () -> Unit
 ) {
-    val iconSize =
-        if (secondaryButtonTitle != null) 72.dp else dimensionResource(id = R.dimen.view_125dp)
     ChiliTheme {
         BaseBottomSheet(
             sheetState = sheetState,
@@ -48,7 +48,7 @@ fun DetailedInfoBottomSheet(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        modifier = Modifier.size(iconSize),
+                        modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
                         painter = painterResource(id = R.drawable.ic_cat),
                         contentDescription = null
                     )
@@ -76,18 +76,50 @@ fun DetailedInfoBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun DetailedInfoBottomSheet_Preview() {
+fun DetailedInfoBottomSheet_Preview(@PreviewParameter(DetailedInfoBottomSheetParamsProvider::class) details: DetailedInfoBottomSheetPreviewParams) {
     val sheetState = getBottomSheetState()
     ChiliTheme {
         DetailedInfoBottomSheet(
             sheetState = sheetState,
             onPrimaryClick = {},
-            infoText = "Я согласен с условиями <a href=\"https://o\n.kg\">пользовательского соглашения</a> и \nусловиями\n<a href=\"https://o.kg\">оферты сервиса «О!Деньги»</a>",
-            buttonTitle = "Start",
-            secondaryButtonTitle = "Later",
-            peekHeight = 350.dp,
-            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.Default
+            infoText = details.infoText,
+            buttonTitle = details.buttonTitle,
+            secondaryButtonTitle = details.secondaryButtonTitle,
+            peekHeight = details.peekHeight,
+            detailedInfoBottomSheetParams = if (details.detailedInfoBottomSheetParams == 0) DetailedInfoBottomSheetParams.Default else DetailedInfoBottomSheetParams.Custom
         )
         { }
     }
 }
+
+class DetailedInfoBottomSheetParamsProvider :
+    PreviewParameterProvider<DetailedInfoBottomSheetPreviewParams> {
+    override val values: Sequence<DetailedInfoBottomSheetPreviewParams>
+        get() = sequenceOf(
+            DetailedInfoBottomSheetPreviewParams(
+                infoText = "Я согласен с условиями <a href=\"https://o\n" +
+                        ".kg\">пользовательского соглашения</a> и \n" +
+                        "условиями\n" +
+                        "<a href=\"https://o.kg\">оферты сервиса «О!Деньги»</a>",
+                buttonTitle = "Start",
+                secondaryButtonTitle = "Later",
+                detailedInfoBottomSheetParams = 0
+            ),
+            DetailedInfoBottomSheetPreviewParams(
+                infoText = "Текстовый блок, который содержит много текста и не может уместиться в четыре строки (как в маленьком Bottom-sheet).\n\n" +
+                        "Возможно имеет какую-то инструкцию или подробное описание функционал. Плюс тут есть картиночка. \n\n" +
+                        "Высота зависит от контента.",
+                buttonTitle = "Понятно",
+                detailedInfoBottomSheetParams = 1,
+                peekHeight = 420.dp
+            )
+        )
+}
+
+data class DetailedInfoBottomSheetPreviewParams(
+    val infoText: String,
+    val buttonTitle: String,
+    val secondaryButtonTitle: String? = null,
+    val detailedInfoBottomSheetParams: Int,
+    val peekHeight: Dp = 360.dp
+)
