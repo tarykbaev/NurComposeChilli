@@ -14,7 +14,11 @@ internal object ChiliTextStyle {
         color: Color = Color.Unspecified,
         font: Font = Font(R.font.roboto_regular),
     ): TextStyle {
-        return TextStyle(fontSize = textSize, color = color, fontFamily = font.toFontFamily())
+        return TextStyle(
+            fontSize = textSize,
+            color = color,
+            fontFamily = font.toFontFamily(),
+        )
     }
 
 
