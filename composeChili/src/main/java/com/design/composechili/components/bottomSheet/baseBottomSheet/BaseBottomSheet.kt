@@ -8,7 +8,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -117,6 +116,7 @@ fun BaseBottomSheet(
                 bottomEnd = baseBottomSheetParams.bottomCornerRadius,
                 bottomStart = baseBottomSheetParams.bottomCornerRadius
             ),
+            sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
             sheetSwipeEnabled = bottomSheetSwipeEnabled,
             sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
             sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,
@@ -138,9 +138,7 @@ fun BaseBottomSheet(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(baseBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) {
+                        .clickable {
                             scope.launch { sheetState.bottomSheetState.hide() }
                         })
             }
