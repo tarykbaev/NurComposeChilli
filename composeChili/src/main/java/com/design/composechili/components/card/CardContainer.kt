@@ -46,7 +46,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [endIcon] Nullable drawable resource ID for the icon displayed at the end of the card if not null.
  * @param [saveExpandedState] If true, the expanded state is saved across recompositions,
  * meaning the card will remember its expanded/collapsed state.
- * @param [cardContainerDefaults] Contains the default properties for the card, such as shape, colors, and text style.
+ * @param [cardContainerParams] Contains the default properties for the card, such as shape, colors, and text style.
  * @param [expandableContent] The composable content that will be shown when the card is expanded.
  *
  * @sample CardContainer_Preview
@@ -58,7 +58,7 @@ fun CardContainer(
     title: String,
     @DrawableRes endIcon: Int? = null,
     saveExpandedState: Boolean,
-    cardContainerDefaults: CardContainerParams,
+    cardContainerParams: CardContainerParams,
     expandableContent: @Composable () -> Unit,
 ) {
 
@@ -77,8 +77,8 @@ fun CardContainer(
                     easing = LinearOutSlowInEasing
                 )
             ),
-        shape = cardContainerDefaults.shape,
-        colors = cardContainerDefaults.colors,
+        shape = cardContainerParams.shape,
+        colors = cardContainerParams.colors,
         onClick = {
             if (saveExpandedState)
                 expandedSaveableState = !expandedSaveableState
@@ -96,7 +96,7 @@ fun CardContainer(
                     text = title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = cardContainerDefaults.titleStyle
+                    style = cardContainerParams.titleStyle
                 )
                 IconButton(
                     modifier = Modifier.rotate(rotationState),
@@ -110,11 +110,11 @@ fun CardContainer(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 if (endIcon != null)
-                Image(
-                    modifier = Modifier.size(dimensionResource(id = R.dimen.view_32dp)),
-                    imageVector = ImageVector.vectorResource(id = endIcon),
-                    contentDescription = null
-                )
+                    Image(
+                        modifier = Modifier.size(dimensionResource(id = R.dimen.view_32dp)),
+                        imageVector = ImageVector.vectorResource(id = endIcon),
+                        contentDescription = null
+                    )
             }
             if (expandedState) {
                 expandableContent()
@@ -130,34 +130,34 @@ fun CardContainer_Preview() {
         CardContainer(
             title = "AccentCardView",
             endIcon = R.drawable.ic_visa_banner_logo,
-            cardContainerDefaults = CardContainerParams.Filled,
+            cardContainerParams = CardContainerParams.Filled,
             saveExpandedState = false,
             expandableContent = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    AccentCardView(
+                    AccentCard(
                         title = "Сканнер штрих кодов и QR",
                         description = "Для удобной оплаты\nбез ввода реквизитов",
                         endIcon = R.drawable.pay,
-                        cardParams = AccentCardViewParams.accentCardViewFucsia,
+                        cardParams = AccentCardParams.accentCardFucsia,
                         startIcon = null
                     ) {
 
                     }
-                    AccentCardView(
+                    AccentCard(
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
                         endIcon = null,
                         startIcon = R.drawable.icon_k,
-                        cardParams = AccentCardViewParams.accentCardViewBlack,
+                        cardParams = AccentCardParams.accentCardBlack,
                     ) {
 
                     }
-                    AccentCardView(
+                    AccentCard(
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
                         endIcon = R.drawable.ic_scaner_48,
                         startIcon = null,
-                        cardParams = AccentCardViewParams.accentCardViewWhite,
+                        cardParams = AccentCardParams.accentCardWhite,
                     ) {
 
                     }
