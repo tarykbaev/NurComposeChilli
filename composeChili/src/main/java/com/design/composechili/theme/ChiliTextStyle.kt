@@ -12,11 +12,14 @@ internal object ChiliTextStyle {
     fun get(
         textSize: TextUnit = TextUnit.Unspecified,
         color: Color = Color.Unspecified,
-        font: Font = Font(R.font.roboto_regular)
+        font: Font = Font(R.font.roboto_regular),
     ): TextStyle {
-        return TextStyle(fontSize = textSize, color = color, fontFamily = font.toFontFamily())
+        return TextStyle(
+            fontSize = textSize,
+            color = color,
+            fontFamily = font.toFontFamily(),
+        )
     }
-
 
 
 }
