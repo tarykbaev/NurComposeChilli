@@ -14,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -46,6 +44,7 @@ import com.design.composechili.theme.ChiliTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedInfoBottomSheet(
+    modifier: Modifier = Modifier,
     sheetState: BottomSheetScaffoldState,
     peekHeight: Dp = 0.dp,
     onPrimaryClick: () -> Unit = {},
@@ -62,12 +61,12 @@ fun DetailedInfoBottomSheet(
             peekHeight = peekHeight,
             bottomSheetContent = {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
                         modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
-                        painter = painterResource(id = R.drawable.ic_cat),
+                        painter = painterResource(id = detailedInfoBottomSheetParams.icon),
                         contentDescription = null
                     )
                     Text(
@@ -94,50 +93,41 @@ fun DetailedInfoBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun DetailedInfoBottomSheet_Preview(@PreviewParameter(DetailedInfoBottomSheetParamsProvider::class) details: DetailedInfoBottomSheetPreviewParams) {
+fun DetailedInfoBottomSheetCustom_Preview() {
     val sheetState = getBottomSheetState()
     ChiliTheme {
         DetailedInfoBottomSheet(
             sheetState = sheetState,
             onPrimaryClick = {},
-            infoText = details.infoText,
-            buttonTitle = details.buttonTitle,
-            secondaryButtonTitle = details.secondaryButtonTitle,
-            peekHeight = details.peekHeight,
-            detailedInfoBottomSheetParams = if (details.detailedInfoBottomSheetParams == 0) DetailedInfoBottomSheetParams.Default else DetailedInfoBottomSheetParams.Custom
+            infoText = "Я согласен с условиями <a href=\"https://o\n" +
+                    ".kg\">пользовательского соглашения</a> и \n" +
+                    "условиями\n" +
+                    "<a href=\"https://o.kg\">оферты сервиса «О!Деньги»</a>",
+            buttonTitle = "Start",
+            secondaryButtonTitle = "Later",
+            peekHeight = 360.dp,
+            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.Custom
         )
         { }
     }
 }
 
-class DetailedInfoBottomSheetParamsProvider :
-    PreviewParameterProvider<DetailedInfoBottomSheetPreviewParams> {
-    override val values: Sequence<DetailedInfoBottomSheetPreviewParams>
-        get() = sequenceOf(
-            DetailedInfoBottomSheetPreviewParams(
-                infoText = "Я согласен с условиями <a href=\"https://o\n" +
-                        ".kg\">пользовательского соглашения</a> и \n" +
-                        "условиями\n" +
-                        "<a href=\"https://o.kg\">оферты сервиса «О!Деньги»</a>",
-                buttonTitle = "Start",
-                secondaryButtonTitle = "Later",
-                detailedInfoBottomSheetParams = 1
-            ),
-            DetailedInfoBottomSheetPreviewParams(
-                infoText = "Текстовый блок, который содержит много текста и не может уместиться в четыре строки (как в маленьком Bottom-sheet).\n\n" +
-                        "Возможно имеет какую-то инструкцию или подробное описание функционал. Плюс тут есть картиночка. \n\n" +
-                        "Высота зависит от контента.",
-                buttonTitle = "Понятно",
-                detailedInfoBottomSheetParams = 0,
-                peekHeight = 420.dp
-            )
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun DetailedInfoBottomSheet_Preview() {
+    val sheetState = getBottomSheetState()
+    ChiliTheme {
+        DetailedInfoBottomSheet(
+            sheetState = sheetState,
+            onPrimaryClick = {},
+            infoText = "Текстовый блок, который содержит много текста и не может уместиться в четыре строки (как в маленьком Bottom-sheet).\n\n" +
+                    "Возможно имеет какую-то инструкцию или подробное описание функционал. Плюс тут есть картиночка. \n\n" +
+                    "Высота зависит от контента.",
+            buttonTitle = "Понятно",
+            peekHeight = 420.dp,
+            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.Default
         )
+        { }
+    }
 }
-
-data class DetailedInfoBottomSheetPreviewParams(
-    val infoText: String,
-    val buttonTitle: String,
-    val secondaryButtonTitle: String? = null,
-    val detailedInfoBottomSheetParams: Int,
-    val peekHeight: Dp = 360.dp
-)

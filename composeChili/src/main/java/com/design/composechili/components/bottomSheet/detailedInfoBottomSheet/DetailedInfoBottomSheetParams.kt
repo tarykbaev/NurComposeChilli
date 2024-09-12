@@ -1,5 +1,6 @@
 package com.design.composechili.components.bottomSheet.detailedInfoBottomSheet
 
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
@@ -10,7 +11,8 @@ import com.design.composechili.theme.ChiliTheme
 
 data class DetailedInfoBottomSheetParams(
     val textStyle: TextStyle,
-    val iconSize: Dp
+    val iconSize: Dp,
+    @DrawableRes val icon: Int,
 ) {
     companion object {
         val Default
@@ -19,7 +21,8 @@ data class DetailedInfoBottomSheetParams(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ),
-                iconSize = dimensionResource(id = R.dimen.view_125dp)
+                iconSize = dimensionResource(id = R.dimen.view_125dp),
+                icon = R.drawable.ic_cat
             )
         val Custom
             @Composable get() = DetailedInfoBottomSheetParams(
@@ -27,8 +30,8 @@ data class DetailedInfoBottomSheetParams(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                 ),
-                iconSize = dimensionResource(id = R.dimen.view_72dp)
-
+                iconSize = dimensionResource(id = R.dimen.view_72dp),
+                icon = R.drawable.ic_cat
             )
     }
 }
