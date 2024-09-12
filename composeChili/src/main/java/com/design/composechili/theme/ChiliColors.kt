@@ -121,7 +121,10 @@ public data class ChiliColors(
     val ChiliActionBottomSheetAccentButtonTextColor:Color,
 
     // In App Push
-    val ChiliInAppPushBackgroundColor:Color
+    val ChiliInAppPushBackgroundColor:Color,
+
+    // Bottom Sheet Drag Handle line color
+    val ChiliBottomSheetDragHandleColor: Color
 
     ){
 
@@ -196,6 +199,7 @@ public data class ChiliColors(
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3),
+            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.gray_3),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1)
         )
@@ -271,7 +275,8 @@ public data class ChiliColors(
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
-            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1)
+            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
+            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5)
         )
     }
 }
