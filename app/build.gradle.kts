@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.design.composeChilli"
-    compileSdk = Configuration.COMPILE_SDK
+    compileSdk = AppConfiguration.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.design.composeChilli"
-        minSdk = Configuration.MIN_SDK
-        targetSdk = Configuration.TARGET_SDK
+        minSdk = AppConfiguration.MIN_SDK
+        targetSdk = AppConfiguration.TARGET_SDK
         versionCode = 1
-        versionName = Configuration.VERSION_NAME
+        versionName = AppConfiguration.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

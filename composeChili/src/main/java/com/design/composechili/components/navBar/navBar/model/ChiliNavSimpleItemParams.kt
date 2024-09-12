@@ -1,6 +1,7 @@
 package com.design.composechili.components.navBar.navBar.model
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -10,6 +11,7 @@ import com.design.composechili.theme.ChiliTextDimensions
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
+@Stable
 data class ChiliNavSimpleItemParams(
     val labelTextStyle: TextStyle,
     val verticalPadding: Dp,

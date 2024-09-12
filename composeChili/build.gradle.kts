@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.design.composechili"
-    compileSdk = Configuration.COMPILE_SDK
+    compileSdk = AppConfiguration.COMPILE_SDK
 
     defaultConfig {
-        minSdk = Configuration.MIN_SDK
+        minSdk = AppConfiguration.MIN_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

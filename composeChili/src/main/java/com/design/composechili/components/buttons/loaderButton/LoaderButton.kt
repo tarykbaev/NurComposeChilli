@@ -79,7 +79,7 @@ fun LoaderButton(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun LoaderButtonPreview() {
     ChiliTheme {

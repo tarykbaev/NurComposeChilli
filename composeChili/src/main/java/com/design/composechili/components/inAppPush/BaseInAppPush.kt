@@ -4,14 +4,18 @@ import android.view.Gravity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
@@ -20,6 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -27,6 +33,50 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
+
+/**
+ * A base component for displaying an in-app push notification or message. It provides customizable
+ * padding, corner radius, and optional close button functionality.
+ *
+ * @param modifier Modifier to be applied to the in-app push container, allowing layout customizations such as size, alignment, and padding.
+ * Default is `Modifier`.
+ *
+ * @param params [BaseInAppPush] visual transformation params and elevations. Default is `BaseInAppPushParams.Default`
+ *
+ * @param inAppPushPadding Padding to be applied around the entire in-app push component.
+ * This defines the spacing between the content and the boundaries of the push notification.
+ * Default is `PaddingValues(horizontal = 8.dp, vertical = 24.dp)`.
+ *
+ * @param rootContentPadding Padding values applied inside the root content of the in-app push notification,
+ * defining the space around the actual content. Default is `PaddingValues(8.dp)`.
+ *
+ * @param onDismissRequest A lambda function that is invoked when the user requests to dismiss the in-app push.
+ * This can be triggered by the close button or other gestures, enabling dismissal logic such as hiding the notification.
+ *
+ * @param isCloseButtonEnable A Boolean flag that controls whether a close button is displayed on the in-app push.
+ * If `true`, a close button will be visible and clickable. Default is `true`.
+ *
+ * @param closeButtonSize A `Dp` value representing the size of the close button.
+ * Default is `24.dp`.
+ *
+ * @param cornerRadius A `Dp` value representing the corner radius of the in-app push notification.
+ * This defines how rounded the corners of the notification will be. Default is `ChiliTheme.Attribute.ChiliInAppPushCornerRadius`.
+ *
+ * @param content A composable lambda function representing the main content to be displayed inside the in-app push notification.
+ * This allows any custom content, such as text, images, or buttons, to be passed.
+ *
+ * Example Usage:
+ * ```
+ * BaseInAppPush(
+ *     onDismissRequest = { /* Handle dismiss */ },
+ *     content = {
+ *         Text("This is an in-app push message")
+ *     }
+ * )
+ * ```
+ *
+ * @see [BaseInAppPushParams.Default]
+ */
 
 @Composable
 fun BaseInAppPush(
@@ -59,7 +109,9 @@ fun BaseInAppPush(
                 Column(Modifier.padding(rootContentPadding)) {
                     if (isCloseButtonEnable) {
                         IconButton(
-                            modifier = Modifier.align(Alignment.End).size(closeButtonSize),
+                            modifier = Modifier
+                                .align(Alignment.End)
+                                .size(closeButtonSize),
                             onClick = onDismissRequest
                         ) {
                             Image(
@@ -91,5 +143,20 @@ data class BaseInAppPushParams(
                 contentColor = ChiliTheme.Colors.ChiliInAppPushBackgroundColor
             )
     }
+}
 
+@Preview(device = Devices.PIXEL_5, showBackground = true)
+@Composable
+fun BaseInAppPushPreview(){
+    ChiliTheme{
+        Column(Modifier.fillMaxSize()) {
+            BaseInAppPush(
+                isCloseButtonEnable = true,
+                onDismissRequest = { /* Handle dismiss */ },
+                content = {
+                    Text(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), text = "This is an in-app push message")
+                }
+            )
+        }
+    }
 }

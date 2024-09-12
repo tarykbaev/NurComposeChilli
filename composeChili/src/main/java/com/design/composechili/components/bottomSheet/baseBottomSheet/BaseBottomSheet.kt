@@ -117,6 +117,7 @@ fun BaseBottomSheet(
                 bottomEnd = baseBottomSheetParams.bottomCornerRadius,
                 bottomStart = baseBottomSheetParams.bottomCornerRadius
             ),
+            sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
             sheetSwipeEnabled = bottomSheetSwipeEnabled,
             sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
             sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,

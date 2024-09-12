@@ -2,11 +2,13 @@ package com.design.composechili.components.navBar.navBarWithFab.model
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 
+@Stable
 data class NavBarWithFabParams(
     val selectedColor: Color,
     val unselectedColor: Color,
