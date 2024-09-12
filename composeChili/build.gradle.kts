@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.snapper)
     implementation(libs.material)
+    implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.coil.compose)
 

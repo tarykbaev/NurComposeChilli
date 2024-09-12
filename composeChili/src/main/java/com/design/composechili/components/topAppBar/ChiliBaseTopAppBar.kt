@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -81,88 +84,87 @@ fun ChiliBaseTopAppBar(
     onNavigationClick: (() -> Unit)? = null,
     onEndIconClick: (() -> Unit)? = null
 ) {
-    ChiliTheme {
-        Column {
-            Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(ChiliTheme.Attribute.ChiliTopAppBarHeightSize)
-                    .background(params.containerColor), contentAlignment = Alignment.CenterStart
-            ) {
-                var navigationIconWidth by remember { mutableStateOf(0) }
-                navigationIcon?.let { icon ->
-                    IconButton(modifier = Modifier
-                        .wrapContentSize()
-                        .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
-                        .onGloballyPositioned { coordinates ->
-                            navigationIconWidth = coordinates.size.width
-                        }, onClick = { onNavigationClick?.invoke() }) {
-                        Image(
-                            modifier = Modifier.size(params.navigationIconSize),
-                            painter = painterResource(icon),
-                            contentDescription = "back"
-                        )
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    additionalText?.let {
-                        Text(
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(end = dimensionResource(R.dimen.padding_16dp)),
-                            text = additionalText,
-                            style = params.additionalTextStyle
-                        )
-                    }
-
-                    endIcon?.let { icon ->
-                        IconButton(modifier = Modifier
-                            .wrapContentSize()
-                            .padding(horizontal = 4.dp),
-                            onClick = { onEndIconClick?.invoke() }) {
-                            Image(
-                                modifier = Modifier.size(params.endIconSize),
-                                painter = painterResource(icon),
-                                contentDescription = "endIcon"
-                            )
-                        }
-                    }
-                }
-
-                Box(
-                    modifier = Modifier
-                        .align(if (isCenteredTitle) Alignment.Center else Alignment.CenterStart)
-                        .offset(
-                            x = when {
-                                isCenteredTitle -> dimensionResource(R.dimen.padding_0dp)
-
-                                !isCenteredTitle && navigationIcon != null -> {
-                                    navigationIconWidth.pxToDp() + dimensionResource(R.dimen.padding_24dp)
-                                }
-
-                                else -> dimensionResource(R.dimen.padding_16dp)
-                            }
-                        )
-                        .wrapContentSize()
-                ) {
-                    Text(
-                        modifier = Modifier,
-                        text = title,
-                        style = params.titleTextStyle,
+    Column {
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(ChiliTheme.Attribute.ChiliTopAppBarHeightSize)
+                .background(params.containerColor), contentAlignment = Alignment.CenterStart
+        ) {
+            var navigationIconWidth by remember { mutableStateOf(0) }
+            navigationIcon?.let { icon ->
+                IconButton(modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
+                    .onGloballyPositioned { coordinates ->
+                        navigationIconWidth = coordinates.size.width
+                    }, onClick = { onNavigationClick?.invoke() }) {
+                    Image(
+                        modifier = Modifier.size(params.navigationIconSize),
+                        painter = painterResource(icon),
+                        contentDescription = "back"
                     )
                 }
             }
 
-            when {
-                isDividerVisible -> {
-                    HorizontalDivider(
-                        color = params.dividerColor, thickness = params.dividerThickness
+            Row(
+                modifier = Modifier.align(Alignment.CenterEnd),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                additionalText?.let {
+                    Text(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(end = dimensionResource(R.dimen.padding_16dp)),
+                        text = additionalText,
+                        style = params.additionalTextStyle
                     )
                 }
+
+                endIcon?.let { icon ->
+                    IconButton(modifier = Modifier
+                        .wrapContentSize()
+                        .padding(horizontal = 4.dp),
+                        onClick = { onEndIconClick?.invoke() }) {
+                        Image(
+                            colorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliPrimaryTextColor),
+                            modifier = Modifier.size(params.endIconSize),
+                            painter = painterResource(icon),
+                            contentDescription = "endIcon"
+                        )
+                    }
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .align(if (isCenteredTitle) Alignment.Center else Alignment.CenterStart)
+                    .offset(
+                        x = when {
+                            isCenteredTitle -> dimensionResource(R.dimen.padding_0dp)
+
+                            !isCenteredTitle && navigationIcon != null -> {
+                                navigationIconWidth.pxToDp() + dimensionResource(R.dimen.padding_24dp)
+                            }
+
+                            else -> dimensionResource(R.dimen.padding_16dp)
+                        }
+                    )
+                    .wrapContentSize()
+            ) {
+                Text(
+                    modifier = Modifier,
+                    text = title,
+                    style = params.titleTextStyle,
+                )
+            }
+        }
+
+        when {
+            isDividerVisible -> {
+                HorizontalDivider(
+                    color = params.dividerColor, thickness = params.dividerThickness
+                )
             }
         }
     }

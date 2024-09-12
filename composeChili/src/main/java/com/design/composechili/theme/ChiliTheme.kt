@@ -8,6 +8,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
  * Local providers for various properties we connect to our components, for styling.
@@ -35,7 +37,7 @@ fun ChiliTheme(
     background: ChiliBackground = ChiliBackground.defaultBackground(darkTheme),
     attribute: ChiliAttribute = ChiliAttribute.getDefault(),
     buttonAttribute: ChiliButtonAttribute = ChiliButtonAttribute.getDefault(),
-    content: @Composable () -> Unit
+    content: @Composable (SystemUiController) -> Unit
 ) {
     CompositionLocalProvider(
         LocalColors provides colors,
@@ -43,7 +45,9 @@ fun ChiliTheme(
         LocalAttribute provides attribute,
         LocalButtonAttribute provides buttonAttribute
     ) {
-        content()
+        val systemUiController = rememberSystemUiController()
+        systemUiController.setSystemBarsColor(colors.ChiliSurfaceBackground)
+        content(systemUiController)
     }
 }
 

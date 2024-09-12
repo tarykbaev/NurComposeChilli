@@ -54,59 +54,57 @@ fun BaseSnackBar(
     dismissAction: (() -> Unit)? = null,
     baseSnackBarParams: BaseSnackBarParams = BaseSnackBarParams.Default
 ) {
-    ChiliTheme {
-        Snackbar(
-            modifier = modifier.padding(
-                horizontal = ChiliTheme.Attribute.ChiliSnackbarContentPaddingHorizontal,
-                vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
-            ),
-            shape = RoundedCornerShape(baseSnackBarParams.cornersSize),
-            containerColor = baseSnackBarParams.containerColor,
-            action = {
-                Text(actionText, color = baseSnackBarParams.actionTextColor, modifier = Modifier
-                    .padding(
-                        horizontal = dimensionResource(id = R.dimen.padding_16dp),
-                        vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
-                    )
-                    .clickable { actionListener?.invoke() })
-            },
-            dismissAction = { dismissAction?.invoke() },
-            content = {
-                Row(
-                    modifier = Modifier.wrapContentHeight(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .width(dimensionResource(id = R.dimen.view_32dp)),
-                            color = baseSnackBarParams.textColor,
-                        )
-                    }
-                    if (startIcon != null) {
-                        Image(
-                            modifier = Modifier
-                                .size(
-                                    width = ChiliTheme.Attribute.ChiliSnackbarIconWidth,
-                                    height = ChiliTheme.Attribute.ChiliSnackbarIconHeight
-                                ),
-                            painter = painterResource(id = startIcon),
-                            contentDescription = "Base SnackBar start icon"
-                        )
-                    }
-
-                    Text(
+    Snackbar(
+        modifier = modifier.padding(
+            horizontal = ChiliTheme.Attribute.ChiliSnackbarContentPaddingHorizontal,
+            vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
+        ),
+        shape = RoundedCornerShape(baseSnackBarParams.cornersSize),
+        containerColor = baseSnackBarParams.containerColor,
+        action = {
+            Text(actionText, color = baseSnackBarParams.actionTextColor, modifier = Modifier
+                .padding(
+                    horizontal = dimensionResource(id = R.dimen.padding_16dp),
+                    vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
+                )
+                .clickable { actionListener?.invoke() })
+        },
+        dismissAction = { dismissAction?.invoke() },
+        content = {
+            Row(
+                modifier = Modifier.wrapContentHeight(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .weight(1f)
-                            .align(Alignment.CenterVertically)
-                            .padding(start = 12.dp),
-                        text = title,
-                        color = baseSnackBarParams.textColor
+                            .width(dimensionResource(id = R.dimen.view_32dp)),
+                        color = baseSnackBarParams.textColor,
                     )
                 }
-            },
-        )
-    }
+                if (startIcon != null) {
+                    Image(
+                        modifier = Modifier
+                            .size(
+                                width = ChiliTheme.Attribute.ChiliSnackbarIconWidth,
+                                height = ChiliTheme.Attribute.ChiliSnackbarIconHeight
+                            ),
+                        painter = painterResource(id = startIcon),
+                        contentDescription = "Base SnackBar start icon"
+                    )
+                }
+
+                Text(
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 12.dp),
+                    text = title,
+                    color = baseSnackBarParams.textColor
+                )
+            }
+        },
+    )
 }
 
 @Preview

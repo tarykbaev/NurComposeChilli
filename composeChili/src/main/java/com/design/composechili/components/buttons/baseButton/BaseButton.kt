@@ -67,72 +67,85 @@ fun BaseButton(
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
 ) {
-    ChiliTheme {
-        Button(
-            modifier = modifier
-                .wrapContentSize()
-                .fillMaxWidth()
-                .padding(buttonPadding),
-            onClick = onClick,
-            shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
-            border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
-            enabled = isEnabled,
-            contentPadding = PaddingValues(
-                start = contentPaddingStart,
-                top = contentPaddingTop,
-                end = contentPaddingEnd,
-                bottom = contentPaddingBottom
-            ),
-            colors = ButtonColors(
-                contentColor = buttonStyle.textActiveColor,
-                containerColor = buttonStyle.backgroundActiveColor,
-                disabledContentColor = buttonStyle.textDisabledColor,
-                disabledContainerColor = buttonStyle.backgroundDisabledColor
+    Button(
+        modifier = modifier
+            .wrapContentSize()
+            .fillMaxWidth()
+            .padding(buttonPadding),
+        onClick = onClick,
+        shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
+        border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
+        enabled = isEnabled,
+        contentPadding = PaddingValues(
+            start = contentPaddingStart,
+            top = contentPaddingTop,
+            end = contentPaddingEnd,
+            bottom = contentPaddingBottom
+        ),
+        colors = ButtonColors(
+            contentColor = buttonStyle.textActiveColor,
+            containerColor = buttonStyle.backgroundActiveColor,
+            disabledContentColor = buttonStyle.textDisabledColor,
+            disabledContainerColor = buttonStyle.backgroundDisabledColor
+        )
+    ) {
+        if (startIcon != null) {
+            Image(
+                modifier = modifier.wrapContentSize(),
+                painter = painterResource(id = startIcon),
+                contentDescription = "Button start icon"
             )
-        ) {
-            if (startIcon != null) {
-                Image(
-                    modifier = modifier.wrapContentSize(),
-                    painter = painterResource(id = startIcon),
-                    contentDescription = "Button start icon"
-                )
-            }
-            val buttonTextStyle = titleStyle ?: ChiliTextStyle.get(
-                    buttonStyle.buttonTextSize,
-                    buttonStyle.textActiveColor,
-                    buttonStyle.textFont
-                )
-            Text(
-                modifier = Modifier,
-                text = title,
-                textAlign = TextAlign.Center,
-                style =buttonTextStyle
+        }
+        val buttonTextStyle = titleStyle ?: ChiliTextStyle.get(
+            buttonStyle.buttonTextSize,
+            buttonStyle.textActiveColor,
+            buttonStyle.textFont
+        )
+        Text(
+            modifier = Modifier,
+            text = title,
+            textAlign = TextAlign.Center,
+            style = buttonTextStyle
+        )
+        if (endIcon != null) {
+            Image(
+                modifier = modifier.wrapContentSize(),
+                painter = painterResource(endIcon),
+                contentDescription = "Button end icon"
             )
-            if (endIcon != null) {
-                Image(
-                    modifier = modifier.wrapContentSize(),
-                    painter = painterResource(endIcon),
-                    contentDescription = "Button end icon"
-                )
-            }
         }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BaseButtonPreview(){
-    ChiliTheme{
-        Column (modifier = Modifier.fillMaxHeight().background(ChiliTheme.Colors.ChiliSurfaceBackground)){
+fun BaseButtonPreview() {
+    ChiliTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .background(ChiliTheme.Colors.ChiliSurfaceBackground)
+        ) {
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Primary", buttonStyle = ChiliButtonStyle.Primary)
+            BaseButton(
+                onClick = { /*TODO*/ },
+                title = "ChiliButtonStyle.Primary",
+                buttonStyle = ChiliButtonStyle.Primary
+            )
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Secondary", buttonStyle = ChiliButtonStyle.Secondary)
+            BaseButton(
+                onClick = { /*TODO*/ },
+                title = "ChiliButtonStyle.Secondary",
+                buttonStyle = ChiliButtonStyle.Secondary
+            )
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(onClick = { /*TODO*/ }, title = "ChiliButtonStyle.Additional", buttonStyle = ChiliButtonStyle.Additional)
+            BaseButton(
+                onClick = { /*TODO*/ },
+                title = "ChiliButtonStyle.Additional",
+                buttonStyle = ChiliButtonStyle.Additional
+            )
         }
     }
-
 
 
 }

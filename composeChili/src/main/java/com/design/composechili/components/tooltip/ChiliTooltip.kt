@@ -41,65 +41,64 @@ fun ChiliTooltip(
     @DrawableRes endIcon: Int = R.drawable.chili_ic_clear_24
 ) {
 
-    ChiliTheme {
-        var isShowTooltip by remember { mutableStateOf(false) }
-        var position by remember { mutableStateOf(TooltipPopupPosition()) }
 
-        val view = LocalView.current.rootView
+    var isShowTooltip by remember { mutableStateOf(false) }
+    var position by remember { mutableStateOf(TooltipPopupPosition()) }
 
-        if (isShowTooltip) {
-            Log.e("TAG", "ChiliTooltip: ${LocalView.current.rootView}", )
-            ChiliTooltipPopup(
-                backgroundColor = ChiliTheme.Colors.ChiliTooltipBackground,
-                backgroundShape = RoundedCornerShape(params.tooltipCornerSize),
-                arrowHeight = params.arrowHeight,
-                onDismissRequest = {
-                    isShowTooltip = isShowTooltip.not()
-                },
-                position = position,
-            ) {
-                Row(modifier = modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp)) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        if (title.isNotBlank()) {
-                            Text(
-                                modifier = Modifier.padding(end = 4.dp),
-                                text = title,
-                                color = Color.White,
-                                style = params.titleTextStyle
-                            )
-                            Text(
-                                modifier = Modifier.padding(top = 4.dp, end = 4.dp),
-                                text = subtitle,
-                                color = Color.White,
-                                style = params.subtitleTextStyle
-                            )
-                        }
+    val view = LocalView.current.rootView
+
+    if (isShowTooltip) {
+        Log.e("TAG", "ChiliTooltip: ${LocalView.current.rootView}")
+        ChiliTooltipPopup(
+            backgroundColor = ChiliTheme.Colors.ChiliTooltipBackground,
+            backgroundShape = RoundedCornerShape(params.tooltipCornerSize),
+            arrowHeight = params.arrowHeight,
+            onDismissRequest = {
+                isShowTooltip = isShowTooltip.not()
+            },
+            position = position,
+        ) {
+            Row(modifier = modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp)) {
+                Column(modifier = Modifier.weight(1f)) {
+                    if (title.isNotBlank()) {
+                        Text(
+                            modifier = Modifier.padding(end = 4.dp),
+                            text = title,
+                            color = Color.White,
+                            style = params.titleTextStyle
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp, end = 4.dp),
+                            text = subtitle,
+                            color = Color.White,
+                            style = params.subtitleTextStyle
+                        )
                     }
-                    Image(
-                        modifier = Modifier
-                            .padding(horizontal = 12.dp)
-                            .align(Alignment.CenterVertically)
-                            .clickable {
-                                isShowTooltip = isShowTooltip.not()
-                            },
-                        painter = painterResource(id = endIcon),
-                        contentDescription = String()
-                    )
                 }
+                Image(
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp)
+                        .align(Alignment.CenterVertically)
+                        .clickable {
+                            isShowTooltip = isShowTooltip.not()
+                        },
+                    painter = painterResource(id = endIcon),
+                    contentDescription = String()
+                )
             }
         }
-        requesterView(
-            modifier
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }) {
-                    isShowTooltip = isShowTooltip.not()
-                }
-                .onGloballyPositioned { coordinates ->
-                    position = calculateTooltipPopupPosition(view, coordinates)
-                }
-        )
     }
+    requesterView(
+        modifier
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }) {
+                isShowTooltip = isShowTooltip.not()
+            }
+            .onGloballyPositioned { coordinates ->
+                position = calculateTooltipPopupPosition(view, coordinates)
+            }
+    )
 }
 
 
