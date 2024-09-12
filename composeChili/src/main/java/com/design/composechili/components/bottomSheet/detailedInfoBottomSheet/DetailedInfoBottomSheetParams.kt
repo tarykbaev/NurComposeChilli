@@ -15,7 +15,7 @@ data class DetailedInfoBottomSheetParams(
     @DrawableRes val icon: Int,
 ) {
     companion object {
-        val Default
+        val BigIconWithSingleButton
             @Composable get() = DetailedInfoBottomSheetParams(
                 textStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
@@ -24,7 +24,7 @@ data class DetailedInfoBottomSheetParams(
                 iconSize = dimensionResource(id = R.dimen.view_125dp),
                 icon = R.drawable.ic_cat
             )
-        val Custom
+        val SmallIconWithTwoButtons
             @Composable get() = DetailedInfoBottomSheetParams(
                 textStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,

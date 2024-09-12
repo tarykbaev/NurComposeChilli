@@ -106,7 +106,7 @@ fun DetailedInfoBottomSheetCustom_Preview() {
             buttonTitle = "Start",
             secondaryButtonTitle = "Later",
             peekHeight = 360.dp,
-            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.Custom
+            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.SmallIconWithTwoButtons
         )
         { }
     }
@@ -126,7 +126,7 @@ fun DetailedInfoBottomSheet_Preview() {
                     "Высота зависит от контента.",
             buttonTitle = "Понятно",
             peekHeight = 420.dp,
-            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.Default
+            detailedInfoBottomSheetParams = DetailedInfoBottomSheetParams.BigIconWithSingleButton
         )
         { }
     }
