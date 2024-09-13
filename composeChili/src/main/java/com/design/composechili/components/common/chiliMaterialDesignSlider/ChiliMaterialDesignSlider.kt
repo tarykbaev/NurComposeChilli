@@ -34,7 +34,7 @@ fun ChiliMaterialDesignSlider(
                         sliderPosition
                     )
                 }",
-                color = ChiliTheme.Colors.chiliValueTextColor
+                color = ChiliTheme.Colors.ChiliValueTextColor
             )
             MaterialDesignSlider(
                 value = sliderPosition,
@@ -44,9 +44,9 @@ fun ChiliMaterialDesignSlider(
                     onValueChanged(it.roundToInt().toFloat())
                 },
                 colors = SliderDefaultsM2.colors(
-                    thumbColor = ChiliTheme.Colors.chiliLinkTextColor,
-                    disabledThumbColor = ChiliTheme.Colors.chiliLinkTextColor,
-                    activeTrackColor = ChiliTheme.Colors.chiliLinkTextColor,
+                    thumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
+                    disabledThumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
+                    activeTrackColor = ChiliTheme.Colors.ChiliLinkTextColor,
                     inactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
                     disabledInactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
                     inactiveTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor,

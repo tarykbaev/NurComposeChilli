@@ -35,7 +35,7 @@ data class BaseInputParams(
                     ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     ChiliTheme.Colors.ChiliPrimaryTextColor
                 ),
-                errorTextColor = ChiliTheme.Colors.chiliErrorTextColor,
+                errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
                 fieldBackground = colorResource(id = R.color.gray_5),
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),

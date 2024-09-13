@@ -36,7 +36,7 @@ fun ChiliSwitch(
             Text(
                 modifier = Modifier.weight(1f),
                 text = description,
-                color = ChiliTheme.Colors.chiliValueTextColor
+                color = ChiliTheme.Colors.ChiliValueTextColor
             )
             Switch(
                 checked = checkedState,
@@ -45,7 +45,7 @@ fun ChiliSwitch(
                     onValueChange(it)
                 },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = ChiliTheme.Colors.chiliLinkTextColor
+                    checkedThumbColor = ChiliTheme.Colors.ChiliLinkTextColor
                 )
             )
         }

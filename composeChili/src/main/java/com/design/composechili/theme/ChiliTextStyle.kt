@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.unit.TextUnit
 import com.design.composechili.R
 
-internal object ChiliTextStyle {
+object ChiliTextStyle {
 
     fun get(
         textSize: TextUnit = TextUnit.Unspecified,

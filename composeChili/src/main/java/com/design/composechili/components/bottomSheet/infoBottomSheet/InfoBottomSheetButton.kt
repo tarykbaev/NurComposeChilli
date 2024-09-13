@@ -30,7 +30,7 @@ data class InfoBottomSheetsParams(
                 ),
                 descriptionStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH4,
-                    color = ChiliTheme.Colors.chiliErrorTextColor
+                    color = ChiliTheme.Colors.ChiliErrorTextColor
                 ),
                 maxChars = MAX_CHARS
             )
