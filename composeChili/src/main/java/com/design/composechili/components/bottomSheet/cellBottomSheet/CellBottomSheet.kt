@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
  * @param [modifier] Will be applied to bottomSheetContent root composable content. In this is case root is [LazyColumn]
  * @param [sheetState] Bottom sheet state, hosting state like expanded or not
  * @see [BottomSheetScaffoldState]
- * @param [buttons] List of BottomSheetCellParams. Which will convert to composable [BottomSheetCell].
+ * @param [cells] List of BottomSheetCellParams. Which will convert to composable [BottomSheetCell].
  * @param [peekHeight] The default peek height used by BottomSheetScaffold.
  * @param [content] Screen content, which should be covered by the [BaseBottomSheet]. Bottom Sheet will show over this content
  * @sample [BottomSheetCell]
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 fun CellBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: BottomSheetScaffoldState,
-    buttons: List<BottomSheetCellParams>,
+    cells: List<BottomSheetCellParams>,
     peekHeight: Dp = 0.dp,
     content: @Composable () -> Unit
 ) {
@@ -56,8 +56,8 @@ fun CellBottomSheet(
                     .fillMaxWidth()
                     .padding(top = 8.dp)
             ) {
-                items(buttons) { item ->
-                    BottomSheetCell(item)
+                items(cells) { item ->
+                    BottomSheetCell(item.title, item.icon, item.onClick)
                 }
             }
         },
@@ -90,7 +90,7 @@ fun CellBottomSheetPreview() {
             BottomSheetCellParams("Пополнение О!Деньги", "https://minio.o.kg/catalog/logos/odengi.png")
         )
 
-        CellBottomSheet(sheetState = sheetState, buttons = buttons, peekHeight = 400.dp) {
+        CellBottomSheet(sheetState = sheetState, cells = buttons, peekHeight = 400.dp) {
 
         }
     }

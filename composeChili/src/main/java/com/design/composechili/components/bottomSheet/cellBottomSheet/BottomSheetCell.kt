@@ -10,18 +10,22 @@ import com.design.composechili.theme.ChiliTheme
 
 /**
  * Used for [CellBottomSheet], displayed on BottomSheet with LazyColumn
- * @param [bottomSheetCellParams] BottomSheetCell's visual transformation params and click listener
+ * @param [icon] accepts [Any] value of image and is displayed at the start of the cell
+ * @param [title] accepts [String] and is displayed after the icon
+ * @param [onClick] callback invokes when user clicks on the cell
  * @see [CellBottomSheet]
  */
 
 @Composable
 fun BottomSheetCell(
-    bottomSheetCellParams: BottomSheetCellParams
+    title: String,
+    icon: Any? = null,
+    onClick: (() -> Unit)? = null
 ) {
     BaseCell(
-        modifier = Modifier.clickable { bottomSheetCellParams.onClick?.invoke() },
-        title = bottomSheetCellParams.title,
-        startIcon = bottomSheetCellParams.icon,
+        modifier = Modifier.clickable { onClick?.invoke() },
+        title = title,
+        startIcon = icon,
         isChevronVisible = true,
         isDividerVisible = true
     )
@@ -32,10 +36,8 @@ fun BottomSheetCell(
 fun BottomSheetCellPreview() {
     ChiliTheme {
         BottomSheetCell(
-            bottomSheetCellParams = BottomSheetCellParams(
-                title = "TestTitle",
-                icon = "https://minio.o.kg/catalog/icons/light/gov_fines.png"
-            )
+            title = "TestTitle",
+            icon = "https://minio.o.kg/catalog/icons/light/gov_fines.png"
         )
     }
 }
