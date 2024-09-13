@@ -37,34 +37,32 @@ fun CellBottomSheet(
     peekHeight: Dp = 0.dp,
     content: @Composable () -> Unit
 ) {
-    ChiliTheme {
-        BaseBottomSheet(
-            sheetState = sheetState,
-            peekHeight = peekHeight,
-            isDragHandleContentEnabled = true,
-            dragHandle = {
-                BottomSheetDragHandle(
-                    modifier = Modifier.padding(top = 8.dp),
-                    width = 40.dp,
-                    height = 5.dp,
-                    color = ChiliTheme.Colors.ChiliThickBottomSheetDragHandleColor
-                )
-                         },
-            hasCloseIcon = true,
-            bottomSheetContent = {
-                LazyColumn(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                ) {
-                    items(buttons) { item ->
-                        BottomSheetCell(item)
-                    }
+    BaseBottomSheet(
+        sheetState = sheetState,
+        peekHeight = peekHeight,
+        isDragHandleContentEnabled = true,
+        dragHandle = {
+            BottomSheetDragHandle(
+                modifier = Modifier.padding(top = 8.dp),
+                width = 40.dp,
+                height = 5.dp,
+                color = ChiliTheme.Colors.ChiliThickBottomSheetDragHandleColor
+            )
+                     },
+        hasCloseIcon = true,
+        bottomSheetContent = {
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            ) {
+                items(buttons) { item ->
+                    BottomSheetCell(item)
                 }
-            },
-            screenContent = { content() }
-        )
-    }
+            }
+        },
+        screenContent = { content() }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

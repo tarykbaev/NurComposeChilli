@@ -18,15 +18,13 @@ import com.design.composechili.theme.ChiliTheme
 fun BottomSheetCell(
     bottomSheetCellParams: BottomSheetCellParams
 ) {
-    ChiliTheme {
-        BaseCell(
-            modifier = Modifier.clickable { bottomSheetCellParams.onClick?.invoke() },
-            title = bottomSheetCellParams.title,
-            startIcon = bottomSheetCellParams.icon,
-            isChevronVisible = true,
-            isDividerVisible = true
-        )
-    }
+    BaseCell(
+        modifier = Modifier.clickable { bottomSheetCellParams.onClick?.invoke() },
+        title = bottomSheetCellParams.title,
+        startIcon = bottomSheetCellParams.icon,
+        isChevronVisible = true,
+        isDividerVisible = true
+    )
 }
 
 @Composable
