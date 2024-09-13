@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
@@ -88,13 +88,13 @@ fun BaseBottomSheet(
                         .fillMaxWidth()
                         .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
                         .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
-                        .windowInsetsPadding(WindowInsets.systemBars)
+                        .windowInsetsPadding(WindowInsets.navigationBars)
                 ) {
                     if (hasCloseIcon) {
                         Image(
                             modifier = Modifier
                                 .align(Alignment.End)
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                                .padding(top = 16.dp, end = 16.dp)
                                 .clickable {
                                     scope.launch { sheetState.bottomSheetState.hide() }
                                 },
