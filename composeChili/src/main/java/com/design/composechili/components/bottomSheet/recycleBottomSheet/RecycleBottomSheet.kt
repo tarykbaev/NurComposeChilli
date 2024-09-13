@@ -38,8 +38,8 @@ fun <T> RecycleBottomSheet(
     title: String,
     subtitle: String,
     listOfItems: List<T>,
-    onItemClick: () -> Unit = {},
-    composableItem: @Composable (LazyItemScope.(T, () -> Unit) -> Unit),
+    onItemClick: (T) -> Unit = {},
+    composableItem: @Composable (LazyItemScope.(T, (T) -> Unit) -> Unit),
     screenContent: @Composable () -> Unit,
 ) {
     ChiliTheme {
@@ -114,11 +114,11 @@ fun RecycleBottomSheet_Preview() {
         subtitle = "Тут можно задать стиль тексту",
         listOfItems = listOfItems,
         onItemClick = {},
-        composableItem = { item: SampleRadioItem, onClick: () -> Unit ->
+        composableItem = { item: SampleRadioItem, onClick: (SampleRadioItem) -> Unit ->
             RadioButtonCell(
                 title = item.title,
                 subtitle = item.subtitle,
-                onItemClick = onClick
+                onItemClick = { onClick(item) }
             )
         }
     ) {}
