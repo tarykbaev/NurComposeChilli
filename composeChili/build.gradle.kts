@@ -44,9 +44,6 @@ android {
 }
 
 dependencies {
-    implementation ("com.github.commandiron:WheelPickerCompose:1.1.11")
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -1,28 +1,60 @@
 package com.design.composeChilli.screen
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.design.composeChilli.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
+import com.design.composechili.components.buttons.loaderButton.LoaderButton
+import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun ButtonsScreen() {
     val scrollState = rememberScrollState()
+    var isButtonLoading by rememberSaveable { mutableStateOf(false) }
 
     Column(
         Modifier
+            .background(ChiliTheme.Colors.ChiliSurfaceBackground)
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
+        LoaderButton(isLoading = isButtonLoading) {
+            BaseButton(
+                onClick = { isButtonLoading = isButtonLoading.not() },
+                title = "Loader Button",
+                buttonStyle = ChiliButtonStyle.Primary
+            )
+        }
+        BaseButton(
+            modifier = Modifier
+                .align(Alignment.End)
+                .wrapContentSize(),
+            onClick = { isButtonLoading = isButtonLoading.not() },
+            title = "stop loader",
+            buttonStyle = ChiliButtonStyle.ComponentButton
+        )
         Spacer(modifier = Modifier.size(16.dp))
         BaseButton(onClick = { }, title = "Primary button", buttonStyle = ChiliButtonStyle.Primary)
         Spacer(modifier = Modifier.size(16.dp))
@@ -58,5 +90,33 @@ fun ButtonsScreen() {
             buttonStyle = ChiliButtonStyle.Additional,
             isEnabled = false,
         )
+        Spacer(modifier = Modifier.size(12.dp))
+        BaseButton(
+            modifier = Modifier
+                .align(Alignment.Start)
+                .wrapContentSize(),
+            onClick = { },
+            buttonPadding = PaddingValues(0.dp),
+            title = "Component button",
+            buttonStyle = ChiliButtonStyle.ComponentButton
+        )
+        BaseButton(
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Start),
+            onClick = { },
+            buttonPadding = PaddingValues(0.dp),
+            isEnabled = false,
+            title = "Component button disabled",
+            buttonStyle = ChiliButtonStyle.ComponentButton
+        )
+        Spacer(modifier = Modifier.size(12.dp))
+        BaseButton(
+            onClick = {},
+            startIcon = com.design.composechili.R.drawable.ic_market,
+            title = "Iconed button",
+            buttonStyle = ChiliButtonStyle.Additional
+        )
+
     }
 }

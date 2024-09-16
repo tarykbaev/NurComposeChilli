@@ -4,10 +4,10 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,19 +19,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.Wallpapers
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -51,37 +46,28 @@ import com.design.composechili.theme.ChiliTheme
  * @sample ChiliButtonStyle.Primary
  */
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BaseButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .wrapContentSize()
+        .fillMaxWidth(),
     onClick: () -> Unit,
     title: String,
     titleStyle: TextStyle? = null,
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
-    contentPaddingTop: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingTop,
-    contentPaddingBottom: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingBottom,
-    contentPaddingStart: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
-    contentPaddingEnd: Dp = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
 ) {
     Button(
-        modifier = modifier
-            .wrapContentSize()
-            .fillMaxWidth()
-            .padding(buttonPadding),
+        modifier = modifier.padding(buttonPadding).defaultMinSize(minHeight = 48.dp),
         onClick = onClick,
         shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
         border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
         enabled = isEnabled,
-        contentPadding = PaddingValues(
-            start = contentPaddingStart,
-            top = contentPaddingTop,
-            end = contentPaddingEnd,
-            bottom = contentPaddingBottom
-        ),
+        contentPadding = buttonStyle.contentPaddingValues,
         colors = ButtonColors(
             contentColor = buttonStyle.textActiveColor,
             containerColor = buttonStyle.backgroundActiveColor,
@@ -89,27 +75,27 @@ fun BaseButton(
             disabledContainerColor = buttonStyle.backgroundDisabledColor
         )
     ) {
-        if (startIcon != null) {
-            Image(
-                modifier = modifier.wrapContentSize(),
-                painter = painterResource(id = startIcon),
-                contentDescription = "Button start icon"
-            )
-        }
         val buttonTextStyle = titleStyle ?: ChiliTextStyle.get(
             buttonStyle.buttonTextSize,
             buttonStyle.textActiveColor,
             buttonStyle.textFont
         )
+        if (startIcon != null) {
+            Image(
+                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(end = 4.dp),
+                painter = painterResource(id = startIcon),
+                contentDescription = "Button start icon"
+            )
+        }
         Text(
-            modifier = Modifier,
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = title,
             textAlign = TextAlign.Center,
             style = buttonTextStyle.copy(color = if (isEnabled) buttonStyle.textActiveColor else buttonStyle.textDisabledColor)
         )
         if (endIcon != null) {
             Image(
-                modifier = modifier.wrapContentSize(),
+                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(start = 4.dp),
                 painter = painterResource(endIcon),
                 contentDescription = "Button end icon"
             )
