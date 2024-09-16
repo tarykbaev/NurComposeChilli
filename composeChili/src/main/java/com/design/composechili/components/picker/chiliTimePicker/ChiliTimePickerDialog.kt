@@ -94,66 +94,64 @@ fun ChiliTimePickerDialog(
     ) {
         val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
         dialogWindowProvider.window.setGravity(alertDialogGravity)
-        ChiliTheme {
-            Card(
-                modifier = modifier
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
+            shape = RoundedCornerShape(16.dp),
+        ) {
+            Column(
+                modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
-                shape = RoundedCornerShape(16.dp),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                ) {
-                    Text(
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
-                        text = title,
-                        style = titleStyle
-                    )
-                    ChiliWheelTimePicker(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        startTime = startDateTime.toLocalTime(),
-                        rowCount = 3,
-                        textStyle = titleStyle,
-                        onSnappedTime = { snappedTime, _ ->
-                            val newDateTime = when (snappedTime) {
-                                is ChiliSnappedTime.Hour -> {
-                                    snappedDateTime.withHour(snappedTime.snappedLocalTime.hour)
-                                }
-
-                                is ChiliSnappedTime.Minute -> {
-                                    snappedDateTime.withMinute(snappedTime.snappedLocalTime.minute)
-                                }
+                Text(
+                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
+                    text = title,
+                    style = titleStyle
+                )
+                ChiliWheelTimePicker(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    startTime = startDateTime.toLocalTime(),
+                    rowCount = 3,
+                    textStyle = titleStyle,
+                    onSnappedTime = { snappedTime, _ ->
+                        val newDateTime = when (snappedTime) {
+                            is ChiliSnappedTime.Hour -> {
+                                snappedDateTime.withHour(snappedTime.snappedLocalTime.hour)
                             }
 
-                            if (!newDateTime.isBefore(minDateTime) && !newDateTime.isAfter(
-                                    maxDateTime
-                                )
-                            ) {
-                                snappedDateTime = newDateTime
-                            }
-
-                            return@ChiliWheelTimePicker when (snappedTime) {
-                                is ChiliSnappedTime.Hour -> {
-                                    snappedDateTime.hour
-                                }
-
-                                is ChiliSnappedTime.Minute -> {
-                                    snappedDateTime.minute
-                                }
+                            is ChiliSnappedTime.Minute -> {
+                                snappedDateTime.withMinute(snappedTime.snappedLocalTime.minute)
                             }
                         }
-                    )
-                    BaseButton(
-                        modifier = Modifier.padding(16.dp),
-                        onClick = { onSubmitBtn.invoke(snappedDateTime) },
-                        title = submitBtnTitle,
-                        buttonStyle = ChiliButtonStyle.Primary
-                    )
-                }
+
+                        if (!newDateTime.isBefore(minDateTime) && !newDateTime.isAfter(
+                                maxDateTime
+                            )
+                        ) {
+                            snappedDateTime = newDateTime
+                        }
+
+                        return@ChiliWheelTimePicker when (snappedTime) {
+                            is ChiliSnappedTime.Hour -> {
+                                snappedDateTime.hour
+                            }
+
+                            is ChiliSnappedTime.Minute -> {
+                                snappedDateTime.minute
+                            }
+                        }
+                    }
+                )
+                BaseButton(
+                    modifier = Modifier.padding(16.dp),
+                    onClick = { onSubmitBtn.invoke(snappedDateTime) },
+                    title = submitBtnTitle,
+                    buttonStyle = ChiliButtonStyle.Primary
+                )
             }
         }
     }
@@ -163,14 +161,15 @@ fun ChiliTimePickerDialog(
 @Preview(showBackground = true)
 @Composable
 fun ChiliTimePickerDialogPreview() {
-    ChiliTheme{
+    ChiliTheme {
         ChiliTimePickerDialog(
             modifier = Modifier,
             onDismissRequest = {
 
             },
             submitBtnTitle = "TimePickerSubmitButtonTitle",
-            title = "TimePickerDialogTitle") {
+            title = "TimePickerDialogTitle"
+        ) {
         }
     }
 }

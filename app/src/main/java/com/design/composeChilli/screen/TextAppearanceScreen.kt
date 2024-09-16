@@ -1,10 +1,9 @@
-package com.design.composeChilli
+package com.design.composeChilli.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
+import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -137,7 +137,7 @@ fun TextAppearanceScreen() {
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                 ChiliTheme.Colors.ChiliPrimaryTextColor,
-                Font(com.design.composechili.R.font.roboto_italic)
+                Font(R.font.roboto_italic)
             )
         ),
         TextAppearanceScreenModel(
@@ -145,7 +145,7 @@ fun TextAppearanceScreen() {
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                 ChiliTheme.Colors.ChiliPrimaryTextColor,
-                Font(com.design.composechili.R.font.roboto_medium)
+                Font(R.font.roboto_medium)
             )
         ),
         TextAppearanceScreenModel(
@@ -153,7 +153,7 @@ fun TextAppearanceScreen() {
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                 ChiliTheme.Colors.ChiliPrimaryTextColor,
-                Font(com.design.composechili.R.font.roboto_700)
+                Font(R.font.roboto_700)
             )
         )
     )

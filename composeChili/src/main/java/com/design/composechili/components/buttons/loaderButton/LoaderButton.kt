@@ -55,26 +55,23 @@ fun LoaderButton(
     strokeWidth: Dp = 4.dp,
     buttonContent: @Composable () -> Unit
 ) {
-    ChiliTheme {
+    Box(
+        modifier = Modifier
+            .wrapContentSize()
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        AnimatedVisibility(visible = isLoading, enter = fadeIn()) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                color = progressColor,
+                strokeWidth = strokeWidth
+            )
+        }
 
-        Box(
-            modifier = Modifier
-                .wrapContentSize()
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            AnimatedVisibility(visible = isLoading, enter = fadeIn()) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    color = progressColor,
-                    strokeWidth = strokeWidth
-                )
-            }
-
-            AnimatedVisibility(visible = !isLoading, exit = fadeOut()) {
-                buttonContent()
-            }
+        AnimatedVisibility(visible = !isLoading, exit = fadeOut()) {
+            buttonContent()
         }
     }
 }

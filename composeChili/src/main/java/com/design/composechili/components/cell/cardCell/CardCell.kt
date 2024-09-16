@@ -60,69 +60,68 @@ fun CardCell(
     cardCellParams: CardCellParams = CardCellParams.Default,
     onClickListener: () -> Unit = {}
 ) {
-    ChiliTheme {
-        Box(
-            Modifier
-                .clip(cardCellParams.cornerMode.toRoundedShape())
-                .background(ChiliTheme.Colors.ChiliCellViewBackground)
-                .clickable(isSurfaceClickable) { onClickListener() }
+    Box(
+        Modifier
+            .clip(cardCellParams.cornerMode.toRoundedShape())
+            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+            .clickable(isSurfaceClickable) { onClickListener() }
+    ) {
+        Row(
+            modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                verticalAlignment = Alignment.CenterVertically
+            val alpha = when (isBlocked) {
+                true -> cardCellParams.overlayAlpha
+                else -> 1f
+            }
+
+            Box(
+                modifier = Modifier
+                    .padding(cardCellParams.iconPadding.toPaddingValues())
+                    .align(Alignment.CenterVertically)
+                    .size(
+                        width = cardCellParams.iconWidth,
+                        height = cardCellParams.iconHeight
+                    )
             ) {
-                val alpha = when (isBlocked) {
-                    true -> cardCellParams.overlayAlpha
-                    else -> 1f
+                if (icon != null) {
+                    Image(
+                        painter = painterResource(id = icon),
+                        contentDescription = "Card Cell Icon"
+                    )
                 }
-
-                Box(
-                    modifier = Modifier
-                        .padding(cardCellParams.iconPadding.toPaddingValues())
-                        .align(Alignment.CenterVertically)
-                        .size(
-                            width = cardCellParams.iconWidth,
-                            height = cardCellParams.iconHeight
-                        )
-                ) {
-                    if (icon != null) {
-                        Image(
-                            painter = painterResource(id = icon),
-                            contentDescription = "Card Cell Icon"
-                        )
-                    }
-                    if (isBlocked) {
-                        Image(
-                            painter = painterResource(id = cardCellParams.overlayRes),
-                            alpha = alpha,
-                            contentDescription = "Card cell icon overlay"
-                        )
-                        Image(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(dimensionResource(id = R.dimen.view_18dp)),
-                            painter = painterResource(id = cardCellParams.overlayIconRes),
-                            contentDescription = "Overlay icon"
-                        )
-                    }
-                }
-                Column(
-                    Modifier
-                        .weight(1f)
-                        .wrapContentHeight()
-                        .padding(end = dimensionResource(id = R.dimen.padding_16dp))
-                ) {
-
-                    val cellBottomPadding = if (subtitle.isBlank()) {
-                        dimensionResource(id = R.dimen.padding_12dp)
-                    } else {
-                        dimensionResource(id = R.dimen.padding_4dp)
-                    }
-
-                    Row(
+                if (isBlocked) {
+                    Image(
+                        painter = painterResource(id = cardCellParams.overlayRes),
+                        alpha = alpha,
+                        contentDescription = "Card cell icon overlay"
+                    )
+                    Image(
                         modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(dimensionResource(id = R.dimen.view_18dp)),
+                        painter = painterResource(id = cardCellParams.overlayIconRes),
+                        contentDescription = "Overlay icon"
+                    )
+                }
+            }
+            Column(
+                Modifier
+                    .weight(1f)
+                    .wrapContentHeight()
+                    .padding(end = dimensionResource(id = R.dimen.padding_16dp))
+            ) {
+
+                val cellBottomPadding = if (subtitle.isBlank()) {
+                    dimensionResource(id = R.dimen.padding_12dp)
+                } else {
+                    dimensionResource(id = R.dimen.padding_4dp)
+                }
+
+                Row(
+                    modifier = Modifier
                         .wrapContentSize()
                         .alpha(alpha)
                         .padding(
@@ -130,70 +129,69 @@ fun CardCell(
                                 .copy(bottom = cellBottomPadding)
                                 .toPaddingValues()
                         )
-                    ) {
-                        Text(
-                            text = title,
-                            maxLines = cardCellParams.titleMaxLines,
-                            style = cardCellParams.titleTextStyle,
-                        )
+                ) {
+                    Text(
+                        text = title,
+                        maxLines = cardCellParams.titleMaxLines,
+                        style = cardCellParams.titleTextStyle,
+                    )
 
-                        if (isMain) {
-                            Image(
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = dimensionResource(id = R.dimen.padding_4dp))
-                                    .size(dimensionResource(id = R.dimen.view_14dp)),
-                                painter = painterResource(id = R.drawable.chili_ic_star),
-                                contentDescription = "Icon for the main cell"
-                            )
-                        }
-                    }
-
-                    if (subtitle.isNotBlank()) {
-                        val textColor = when {
-                            isBlocked -> ChiliTheme.Colors.ChiliCardErrorTextColor
-                            isUniqueStated -> ChiliTheme.Colors.ChiliCardErrorTextColor
-                            else -> ChiliTheme.Colors.ChiliSecondaryTextColor
-                        }
-
-                        Text(
-                            text = subtitle,
+                    if (isMain) {
+                        Image(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .padding(cardCellParams.subtitlePadding.toPaddingValues()),
-                            maxLines = cardCellParams.subtitleMaxLines,
-                            color = textColor,
-                            style = cardCellParams.subtitleTextStyle
+                                .align(Alignment.CenterVertically)
+                                .padding(start = dimensionResource(id = R.dimen.padding_4dp))
+                                .size(dimensionResource(id = R.dimen.view_14dp)),
+                            painter = painterResource(id = R.drawable.chili_ic_star),
+                            contentDescription = "Icon for the main cell"
                         )
                     }
                 }
-                if (value != null) {
+
+                if (subtitle.isNotBlank()) {
                     val textColor = when {
+                        isBlocked -> ChiliTheme.Colors.ChiliCardErrorTextColor
                         isUniqueStated -> ChiliTheme.Colors.ChiliCardErrorTextColor
                         else -> ChiliTheme.Colors.ChiliSecondaryTextColor
                     }
 
                     Text(
+                        text = subtitle,
                         modifier = Modifier
-                            .alpha(alpha)
-                            .padding(cardCellParams.valuePadding.toPaddingValues()),
-                        text = value,
-                        textAlign = TextAlign.End,
+                            .wrapContentSize()
+                            .padding(cardCellParams.subtitlePadding.toPaddingValues()),
+                        maxLines = cardCellParams.subtitleMaxLines,
                         color = textColor,
-                        maxLines = cardCellParams.valueMaxLines,
-                        style = cardCellParams.valueTextStyle
+                        style = cardCellParams.subtitleTextStyle
                     )
+                }
+            }
+            if (value != null) {
+                val textColor = when {
+                    isUniqueStated -> ChiliTheme.Colors.ChiliCardErrorTextColor
+                    else -> ChiliTheme.Colors.ChiliSecondaryTextColor
                 }
 
-                if (cardCellParams.isChevronVisible) {
-                    Icon(
-                        modifier = Modifier
-                            .alpha(alpha)
-                            .padding(end = dimensionResource(R.dimen.padding_12dp)),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.chili_ic_chevron),
-                        contentDescription = "Chevron"
-                    )
-                }
+                Text(
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .padding(cardCellParams.valuePadding.toPaddingValues()),
+                    text = value,
+                    textAlign = TextAlign.End,
+                    color = textColor,
+                    maxLines = cardCellParams.valueMaxLines,
+                    style = cardCellParams.valueTextStyle
+                )
+            }
+
+            if (cardCellParams.isChevronVisible) {
+                Icon(
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .padding(end = dimensionResource(R.dimen.padding_12dp)),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.chili_ic_chevron),
+                    contentDescription = "Chevron"
+                )
             }
         }
     }

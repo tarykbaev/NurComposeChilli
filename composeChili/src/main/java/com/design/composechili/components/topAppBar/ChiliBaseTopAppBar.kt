@@ -127,7 +127,7 @@ fun ChiliBaseTopAppBar(
                         .padding(horizontal = 4.dp),
                         onClick = { onEndIconClick?.invoke() }) {
                         Image(
-                            colorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliPrimaryTextColor),
+                            colorFilter = params.endIconColorFilter,
                             modifier = Modifier.size(params.endIconSize),
                             painter = painterResource(icon),
                             contentDescription = "endIcon"

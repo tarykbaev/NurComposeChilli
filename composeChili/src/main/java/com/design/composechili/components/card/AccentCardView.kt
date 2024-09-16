@@ -42,7 +42,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [cardParams] The colors used for the card, provided by the [AccentCardParams].
  * @param [onClick] Callback triggered when the card is clicked.
  *
- * @sample AccentCard_Preview
+ * @sample AccentCardPreview
  */
 
 @Composable
@@ -100,7 +100,7 @@ fun AccentCard(
 
 @Preview
 @Composable
-fun AccentCard_Preview() {
+fun AccentCardPreview() {
     ChiliTheme {
         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             AccentCard(

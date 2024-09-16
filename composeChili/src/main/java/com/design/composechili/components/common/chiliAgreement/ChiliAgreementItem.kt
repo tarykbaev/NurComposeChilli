@@ -1,4 +1,4 @@
-package com.design.composechili.components.common
+package com.design.composechili.components.common.chiliAgreement
 
 import android.text.Html
 import android.text.style.URLSpan
@@ -81,51 +81,49 @@ fun ChiliAgreementItem(
             parseHtmlToAnnotatedString(agreementHtmlText, chiliAgreementItemParams.linkColor)
         }
 
-    ChiliTheme {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            when (displayMode) {
-                DisplayMode.CHECKBOX -> {
-                    ChiliCheckbox(
-                        modifier = Modifier,
-                        isChecked = isChecked,
-                        onCheckedChange = onCheckedChange
-                    )
-                }
-
-                DisplayMode.ICON -> {
-                    Image(
-                        modifier = Modifier.size(chiliAgreementItemParams.startIconSize),
-                        painter = painterResource(chiliAgreementItemParams.startIcon),
-                        contentDescription = "agreement_item_icon"
-                    )
-                }
-
-                DisplayMode.TEXT_ONLY -> {}
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        when (displayMode) {
+            DisplayMode.CHECKBOX -> {
+                ChiliCheckbox(
+                    modifier = Modifier,
+                    isChecked = isChecked,
+                    onCheckedChange = onCheckedChange
+                )
             }
 
-            Spacer(
-                modifier = Modifier
-                    .width(
-                        if (displayMode == DisplayMode.CHECKBOX) dimensionResource(R.dimen.padding_4dp)
-                        else dimensionResource(R.dimen.padding_16dp)
-                    )
-            )
+            DisplayMode.ICON -> {
+                Image(
+                    modifier = Modifier.size(chiliAgreementItemParams.startIconSize),
+                    painter = painterResource(chiliAgreementItemParams.startIcon),
+                    contentDescription = "agreement_item_icon"
+                )
+            }
 
-            ClickableText(
-                modifier = Modifier,
-                style = chiliAgreementItemParams.agreementHtmlTextStyle,
-                text = annotatedHtmlAgreementText
-            ) { offset ->
-                annotatedHtmlAgreementText.getStringAnnotations(
-                    tag = URL_TAG, start = offset, end = offset
-                ).firstOrNull()?.let { annotation ->
-                    onLinkClick(annotation.item)
-                }
+            DisplayMode.TEXT_ONLY -> {}
+        }
+
+        Spacer(
+            modifier = Modifier
+                .width(
+                    if (displayMode == DisplayMode.CHECKBOX) dimensionResource(R.dimen.padding_4dp)
+                    else dimensionResource(R.dimen.padding_16dp)
+                )
+        )
+
+        ClickableText(
+            modifier = Modifier,
+            style = chiliAgreementItemParams.agreementHtmlTextStyle,
+            text = annotatedHtmlAgreementText
+        ) { offset ->
+            annotatedHtmlAgreementText.getStringAnnotations(
+                tag = URL_TAG, start = offset, end = offset
+            ).firstOrNull()?.let { annotation ->
+                onLinkClick(annotation.item)
             }
         }
     }
@@ -162,7 +160,7 @@ fun parseHtmlToAnnotatedString(htmlText: String, linkColor: Color): AnnotatedStr
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ChiliAgreementItemPreview() {
     ChiliTheme {

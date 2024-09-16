@@ -18,14 +18,14 @@ import com.design.composechili.theme.ChiliTheme
 
 /**
  * @param [isChecked] indicates the current state of the checkbox.
- * @param [checkboxParams] accepts [CheckboxParams] to customize the colors.
+ * @param [chiliCheckboxParams] accepts [ChiliCheckboxParams] to customize the colors.
  * @param [onCheckedChange] sets the handler for checkbox state changes, called whenever the state changes.
  */
 @Composable
 fun ChiliCheckbox(
     modifier: Modifier = Modifier,
     isChecked: Boolean,
-    checkboxParams: CheckboxParams = CheckboxParams.Default,
+    chiliCheckboxParams: ChiliCheckboxParams = ChiliCheckboxParams.Default,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
 
@@ -46,9 +46,9 @@ fun ChiliCheckbox(
             onCheckedChange = onCheckedChange,
             interactionSource = interactionSource,
             colors = CheckboxDefaults.colors(
-                checkedColor = checkboxParams.checkedColor,
-                uncheckedColor = checkboxParams.uncheckedColor,
-                disabledCheckedColor = checkboxParams.disabledColor
+                checkedColor = chiliCheckboxParams.checkedColor,
+                uncheckedColor = chiliCheckboxParams.uncheckedColor,
+                disabledCheckedColor = chiliCheckboxParams.disabledColor
             )
         )
     }

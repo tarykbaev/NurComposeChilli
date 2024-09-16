@@ -55,39 +55,37 @@ fun DetailedInfoBottomSheet(
     detailedInfoBottomSheetParams: DetailedInfoBottomSheetParams,
     screenContent: @Composable () -> Unit
 ) {
-    ChiliTheme {
-        BaseBottomSheet(
-            sheetState = sheetState,
-            peekHeight = peekHeight,
-            bottomSheetContent = {
-                Column(
-                    modifier = modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
-                        painter = painterResource(id = detailedInfoBottomSheetParams.icon),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
-                        text = infoText,
-                        style = detailedInfoBottomSheetParams.textStyle
-                    )
-                }
-                if (secondaryButtonTitle != null)
-                    BaseButton(
-                        modifier = Modifier.padding(8.dp),
-                        onClick = onSecondaryClick,
-                        title = secondaryButtonTitle,
-                        buttonStyle = ChiliButtonStyle.Additional
-                    )
-                BaseButton(onClick = onPrimaryClick, title = buttonTitle)
-            },
-            hasCloseIcon = true,
-            screenContent = screenContent,
-        )
-    }
+    BaseBottomSheet(
+        sheetState = sheetState,
+        peekHeight = peekHeight,
+        bottomSheetContent = {
+            Column(
+                modifier = modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
+                    painter = painterResource(id = detailedInfoBottomSheetParams.icon),
+                    contentDescription = null
+                )
+                Text(
+                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
+                    text = infoText,
+                    style = detailedInfoBottomSheetParams.textStyle
+                )
+            }
+            if (secondaryButtonTitle != null)
+                BaseButton(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = onSecondaryClick,
+                    title = secondaryButtonTitle,
+                    buttonStyle = ChiliButtonStyle.Additional
+                )
+            BaseButton(onClick = onPrimaryClick, title = buttonTitle)
+        },
+        hasCloseIcon = true,
+        screenContent = screenContent,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

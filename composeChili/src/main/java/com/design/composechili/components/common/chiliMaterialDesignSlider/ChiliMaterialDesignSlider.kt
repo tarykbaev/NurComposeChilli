@@ -24,37 +24,35 @@ fun ChiliMaterialDesignSlider(
     onValueChanged: (Float) -> Unit = {}
 ) {
     var sliderPosition by remember { mutableFloatStateOf(initialValue) }
-    ChiliTheme {
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            Text(
-                text = "$description ${
-                    String.format(
-                        Locale.ROOT,
-                        "%.1f",
-                        sliderPosition
-                    )
-                }",
-                color = ChiliTheme.Colors.ChiliValueTextColor
-            )
-            MaterialDesignSlider(
-                value = sliderPosition,
-                valueRange = range,
-                onValueChange = {
-                    sliderPosition = it
-                    onValueChanged(it.roundToInt().toFloat())
-                },
-                colors = SliderDefaultsM2.colors(
-                    thumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
-                    disabledThumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
-                    activeTrackColor = ChiliTheme.Colors.ChiliLinkTextColor,
-                    inactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
-                    disabledInactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
-                    inactiveTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                    activeTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor
-                ),
-                steps = stepsSize,
-            )
-        }
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text(
+            text = "$description ${
+                String.format(
+                    Locale.ROOT,
+                    "%.1f",
+                    sliderPosition
+                )
+            }",
+            color = ChiliTheme.Colors.ChiliValueTextColor
+        )
+        MaterialDesignSlider(
+            value = sliderPosition,
+            valueRange = range,
+            onValueChange = {
+                sliderPosition = it
+                onValueChanged(it.roundToInt().toFloat())
+            },
+            colors = SliderDefaultsM2.colors(
+                thumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
+                disabledThumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
+                activeTrackColor = ChiliTheme.Colors.ChiliLinkTextColor,
+                inactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
+                disabledInactiveTrackColor = ChiliTheme.Colors.chiliCheckBoxDisabledColor,
+                inactiveTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                activeTickColor = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            steps = stepsSize,
+        )
     }
 }
 

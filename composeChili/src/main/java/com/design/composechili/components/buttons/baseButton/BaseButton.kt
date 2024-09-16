@@ -105,7 +105,7 @@ fun BaseButton(
             modifier = Modifier,
             text = title,
             textAlign = TextAlign.Center,
-            style = buttonTextStyle
+            style = buttonTextStyle.copy(color = if (isEnabled) buttonStyle.textActiveColor else buttonStyle.textDisabledColor)
         )
         if (endIcon != null) {
             Image(

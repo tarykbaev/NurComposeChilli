@@ -12,7 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import com.design.composeChilli.screen.ButtonsScreen
+import com.design.composeChilli.screen.TextAppearanceScreen
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
+import com.design.composechili.components.topAppBar.ChiliBaseTopAppBarParams
 import com.design.composechili.theme.ChiliTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,9 +37,10 @@ class MainActivity : ComponentActivity() {
                         title = "NurComposeChili",
                         isDividerVisible = false,
                         endIcon = R.drawable.ic_dark_mode,
+                        params = ChiliBaseTopAppBarParams.Default.copy(endIconColorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliPrimaryTextColor)),
                         onEndIconClick = { isDarkModeEnable = !isDarkModeEnable }
                     )
-                    TextAppearanceScreen()
+                    ButtonsScreen()
                 }
                 /*ComponentSelectorScreen(
                     onTextAppearanceItemClicked = {},

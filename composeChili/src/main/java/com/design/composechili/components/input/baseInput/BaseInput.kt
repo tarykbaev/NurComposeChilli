@@ -40,73 +40,71 @@ fun BaseInput(
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
 ) {
-    ChiliTheme {
-        Row() {
-            if (startIcon != null) {
-                Image(
-                    painter = painterResource(id = startIcon),
-                    contentDescription = "Input field start description icon",
-                    modifier = modifier
-                        .wrapContentSize()
-                        .padding(
-                            start = dimensionResource(id = R.dimen.padding_8dp),
-                            top = dimensionResource(id = R.dimen.padding_8dp),
-                            bottom = dimensionResource(id = R.dimen.padding_8dp)
-                        )
-                )
-            }
-            TextField(
+    Row {
+        if (startIcon != null) {
+            Image(
+                painter = painterResource(id = startIcon),
+                contentDescription = "Input field start description icon",
                 modifier = modifier
                     .wrapContentSize()
-                    .fillMaxWidth()
-                    .padding(params.textFieldPadding),
-                value = textFieldValue,
-                onValueChange = onValueChange,
-                textStyle = params.textStyle,
-                enabled = isEnabled,
-                isError = isError,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
-                shape = CircleShape.copy(CornerSize(8.dp)),
-                colors = TextFieldDefaults.colors().copy(
-                    focusedContainerColor = params.fieldBackground,
-                    unfocusedContainerColor = params.fieldBackground,
-                    disabledContainerColor = params.fieldBackground,
-                    errorTextColor = params.errorTextColor,
-                    errorIndicatorColor = Color.Transparent,
-                    errorCursorColor = params.errorTextColor,
-                    textSelectionColors = TextSelectionColors(
-                        params.cursorColor,
-                        params.selectionBackgroundColor
-                    ),
-                    cursorColor = params.cursorColor,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                ),
-                placeholder = {
-                    Text(
-                        text = hint,
-                        style = params.textStyle,
-                        color = params.hintColor,
-                        modifier = modifier.animateContentSize()
+                    .padding(
+                        start = dimensionResource(id = R.dimen.padding_8dp),
+                        top = dimensionResource(id = R.dimen.padding_8dp),
+                        bottom = dimensionResource(id = R.dimen.padding_8dp)
                     )
-                }
-
             )
-            if (endIcon != null) {
-                Image(
-                    painter = painterResource(id = endIcon),
-                    contentDescription = "Input field end description icon",
-                    modifier = modifier
-                        .wrapContentSize()
-                        .padding(
-                            end = dimensionResource(id = R.dimen.padding_8dp),
-                            top = dimensionResource(id = R.dimen.padding_8dp),
-                            bottom = dimensionResource(id = R.dimen.padding_8dp)
-                        )
+        }
+        TextField(
+            modifier = modifier
+                .wrapContentSize()
+                .fillMaxWidth()
+                .padding(params.textFieldPadding),
+            value = textFieldValue,
+            onValueChange = onValueChange,
+            textStyle = params.textStyle,
+            enabled = isEnabled,
+            isError = isError,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
+            shape = CircleShape.copy(CornerSize(8.dp)),
+            colors = TextFieldDefaults.colors().copy(
+                focusedContainerColor = params.fieldBackground,
+                unfocusedContainerColor = params.fieldBackground,
+                disabledContainerColor = params.fieldBackground,
+                errorTextColor = params.errorTextColor,
+                errorIndicatorColor = Color.Transparent,
+                errorCursorColor = params.errorTextColor,
+                textSelectionColors = TextSelectionColors(
+                    params.cursorColor,
+                    params.selectionBackgroundColor
+                ),
+                cursorColor = params.cursorColor,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+            ),
+            placeholder = {
+                Text(
+                    text = hint,
+                    style = params.textStyle,
+                    color = params.hintColor,
+                    modifier = modifier.animateContentSize()
                 )
             }
+
+        )
+        if (endIcon != null) {
+            Image(
+                painter = painterResource(id = endIcon),
+                contentDescription = "Input field end description icon",
+                modifier = modifier
+                    .wrapContentSize()
+                    .padding(
+                        end = dimensionResource(id = R.dimen.padding_8dp),
+                        top = dimensionResource(id = R.dimen.padding_8dp),
+                        bottom = dimensionResource(id = R.dimen.padding_8dp)
+                    )
+            )
         }
     }
 }

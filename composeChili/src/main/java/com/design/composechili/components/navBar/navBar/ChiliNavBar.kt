@@ -70,42 +70,40 @@ fun ChiliNavBar(
 ) {
     var selectedItem by remember { mutableStateOf(navBarItems.firstOrNull()) }
 
-    ChiliTheme {
-        LazyRow(
-            modifier = modifier
-                .background(
-                    color = navBarParams.backgroundColor,
-                    shape = navBarParams.backgroundShape
-                )
-                .fillMaxWidth()
-                .windowInsetsPadding(
-                    if (previewInsets) WindowInsets(
-                        0,
-                        0,
-                        0,
-                        0
-                    ) else NavigationBarDefaults.windowInsets
-                )
-                .selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            items(navBarItems,
-                key = {
-                    it.id
-                }
-            ) { item ->
-                ChiliNavSimpleItem(
-                    label = item.label,
-                    icon = item.icon,
-                    selectedColorTint = navBarParams.selectedColor,
-                    unselectedColorTint = navBarParams.unselectedColor,
-                    selected = selectedItem == item,
-                    onNavClicked = {
-                        selectedItem = item
-                        onNavItemClicked(item)
-                    }
-                )
+    LazyRow(
+        modifier = modifier
+            .background(
+                color = navBarParams.backgroundColor,
+                shape = navBarParams.backgroundShape
+            )
+            .fillMaxWidth()
+            .windowInsetsPadding(
+                if (previewInsets) WindowInsets(
+                    0,
+                    0,
+                    0,
+                    0
+                ) else NavigationBarDefaults.windowInsets
+            )
+            .selectableGroup(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        items(navBarItems,
+            key = {
+                it.id
             }
+        ) { item ->
+            ChiliNavSimpleItem(
+                label = item.label,
+                icon = item.icon,
+                selectedColorTint = navBarParams.selectedColor,
+                unselectedColorTint = navBarParams.unselectedColor,
+                selected = selectedItem == item,
+                onNavClicked = {
+                    selectedItem = item
+                    onNavItemClicked(item)
+                }
+            )
         }
     }
 }
@@ -113,28 +111,30 @@ fun ChiliNavBar(
 @Preview(showBackground = true)
 @Composable
 fun ChiliNavBarPreview() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Row(modifier = Modifier.align(Alignment.BottomCenter)) {
-            ChiliNavBar(
-                navBarItems = listOf(
-                    ChiliNavItem(
-                        icon = R.drawable.ic_home,
-                        label = "Главная",
+    ChiliTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+                ChiliNavBar(
+                    navBarItems = listOf(
+                        ChiliNavItem(
+                            icon = R.drawable.ic_home,
+                            label = "Главная",
+                        ),
+                        ChiliNavItem(
+                            icon = R.drawable.ic_payment,
+                            label = "Платежи",
+                        ),
+                        ChiliNavItem(
+                            icon = R.drawable.ic_history,
+                            label = "История",
+                        ),
+                        ChiliNavItem(
+                            icon = R.drawable.ic_menu,
+                            label = "Ещё",
+                        ),
                     ),
-                    ChiliNavItem(
-                        icon = R.drawable.ic_payment,
-                        label = "Платежи",
-                    ),
-                    ChiliNavItem(
-                        icon = R.drawable.ic_history,
-                        label = "История",
-                    ),
-                    ChiliNavItem(
-                        icon = R.drawable.ic_menu,
-                        label = "Ещё",
-                    ),
-                ),
-            ) {
+                ) {
+                }
             }
         }
     }

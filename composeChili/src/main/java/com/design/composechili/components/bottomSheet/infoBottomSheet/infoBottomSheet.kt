@@ -58,46 +58,44 @@ fun InfoBottomSheet(
     infoBottomSheetsParams: InfoBottomSheetsParams,
     content: @Composable () -> Unit
 ) {
-    ChiliTheme {
-        BaseBottomSheet(
-            sheetState = sheetState,
-            peekHeight = peekHeight,
-            hasCloseIcon = true,
-            bottomSheetContent = {
-                Column(modifier = modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
+    BaseBottomSheet(
+        sheetState = sheetState,
+        peekHeight = peekHeight,
+        hasCloseIcon = true,
+        bottomSheetContent = {
+            Column(modifier = modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(painter = painterResource(id = icon), contentDescription = null)
+                    Column(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Image(painter = painterResource(id = icon), contentDescription = null)
-                        Column(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Text(
-                                text = title.take(infoBottomSheetsParams.maxChars),
-                                style = infoBottomSheetsParams.titleStyle
-                            )
-                            Text(
-                                text = description,
-                                style = infoBottomSheetsParams.descriptionStyle
-                            )
-                        }
-                    }
-                }
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(buttons) {
-                        BaseButton(
-                            onClick = it.onClick,
-                            title = it.title,
-                            buttonStyle = it.buttonStyle
+                        Text(
+                            text = title.take(infoBottomSheetsParams.maxChars),
+                            style = infoBottomSheetsParams.titleStyle
+                        )
+                        Text(
+                            text = description,
+                            style = infoBottomSheetsParams.descriptionStyle
                         )
                     }
                 }
-            }) { content() }
-    }
+            }
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(buttons) {
+                    BaseButton(
+                        onClick = it.onClick,
+                        title = it.title,
+                        buttonStyle = it.buttonStyle
+                    )
+                }
+            }
+        }) { content() }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

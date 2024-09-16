@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
+import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
@@ -37,44 +38,42 @@ fun ActionBottomSheet(
     peekHeight: Dp = 0.dp,
     content: @Composable () -> Unit
 ) {
-    ChiliTheme {
-        BaseBottomSheet(
-            sheetState = sheetState,
-            peekHeight = peekHeight,
-            bottomSheetContent = {
-                LazyColumn(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(buttons) { item ->
-                        ActionBottomSheetButton(item)
-                    }
+    BaseBottomSheet(
+        sheetState = sheetState,
+        peekHeight = peekHeight,
+        bottomSheetContent = {
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(buttons) { item ->
+                    ActionBottomSheetButton(
+                        item.title,
+                        item.buttonStyle,
+
+                        item.onClick
+                    )
                 }
-            },
-            screenContent = { content() }
-        )
-    }
+            }
+        },
+        screenContent = { content() }
+    )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun ActionBottomSheetPreview() {
     ChiliTheme {
-        val scope = rememberCoroutineScope()
         val sheetState = getBottomSheetState()
 
         val buttons = listOf(
-            ActionBottomSheetParams("First", ChiliTheme.Colors.ChiliActionBottomSheetButtonTextColor),
-            ActionBottomSheetParams("Second", ChiliTheme.Colors.ChiliActionBottomSheetButtonTextColor),
-            ActionBottomSheetParams(
-                "Cancel",
-                ChiliTheme.Colors.ChiliActionBottomSheetAccentButtonTextColor,
-                onClick = {
-                    scope.launch { sheetState.bottomSheetState.hide() }
-                }),
+            ActionBottomSheetParams("First", ChiliButtonStyle.Secondary) { },
+            ActionBottomSheetParams("Second", ChiliButtonStyle.Secondary) { },
+            ActionBottomSheetParams("Cancel", ChiliButtonStyle.Additional) { },
         )
 
         ActionBottomSheet(sheetState = sheetState, buttons = buttons, peekHeight = 200.dp) {

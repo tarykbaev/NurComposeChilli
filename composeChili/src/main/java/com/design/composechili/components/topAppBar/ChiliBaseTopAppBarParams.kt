@@ -2,6 +2,7 @@ package com.design.composechili.components.topAppBar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
@@ -17,6 +18,7 @@ data class ChiliBaseTopAppBarParams(
     val containerColor: Color,
     val dividerColor: Color,
     val dividerThickness: Dp,
+    val endIconColorFilter:ColorFilter?
 ) {
     companion object {
         val Default
@@ -36,6 +38,7 @@ data class ChiliBaseTopAppBarParams(
                 containerColor = ChiliTheme.Colors.ChiliTopAppBarBackground,
                 dividerColor = ChiliTheme.Colors.ChiliTopAppBarDividerColor,
                 dividerThickness = ChiliTheme.Attribute.ChiliTopAppBarThicknessSize,
+                endIconColorFilter = null
             )
     }
 }

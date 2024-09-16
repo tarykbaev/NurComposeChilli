@@ -69,37 +69,36 @@ fun HighlightContainer(
         colors = listOf(highlighterColorStart, highlighterColorEnd ?: highlighterColorStart)
     )
 
-    ChiliTheme {
-        Box(modifier = modifier) {
-            content()
 
-            Canvas(
-                modifier = Modifier
-                    .matchParentSize()
-                    .clip(RoundedCornerShape(cornerRadius))
-            ) {
-                when (highlightState) {
-                    HighlightState.WITH_CIRCLE_AND_ICON -> {
-                        drawLine(borderBrush, borderWidth, cornerRadius)
-                        drawCircleWithIcon(
-                            borderBrush,
-                            highlighterIcon,
-                            iconSizePx,
-                            circleRadiusPx,
-                            circleOffsetPx,
-                            iconPaddingX,
-                            iconPaddingY,
-                            borderWidth,
-                            cornerRadius
-                        )
-                    }
+    Box(modifier = modifier) {
+        content()
 
-                    HighlightState.WITH_LINE_ONLY -> {
-                        drawLine(borderBrush, borderWidth, cornerRadius)
-                    }
-
-                    HighlightState.WITHOUT_HIGHLIGHT -> {}
+        Canvas(
+            modifier = Modifier
+                .matchParentSize()
+                .clip(RoundedCornerShape(cornerRadius))
+        ) {
+            when (highlightState) {
+                HighlightState.WITH_CIRCLE_AND_ICON -> {
+                    drawLine(borderBrush, borderWidth, cornerRadius)
+                    drawCircleWithIcon(
+                        borderBrush,
+                        highlighterIcon,
+                        iconSizePx,
+                        circleRadiusPx,
+                        circleOffsetPx,
+                        iconPaddingX,
+                        iconPaddingY,
+                        borderWidth,
+                        cornerRadius
+                    )
                 }
+
+                HighlightState.WITH_LINE_ONLY -> {
+                    drawLine(borderBrush, borderWidth, cornerRadius)
+                }
+
+                HighlightState.WITHOUT_HIGHLIGHT -> {}
             }
         }
     }

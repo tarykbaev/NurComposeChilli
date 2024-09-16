@@ -77,74 +77,71 @@ fun BaseBottomSheet(
 ) {
     val scope = rememberCoroutineScope()
 
-    ChiliTheme {
+    var backgroundBoxVisibility by rememberSaveable { mutableStateOf(false) }
 
-        var backgroundBoxVisibility by rememberSaveable { mutableStateOf(false) }
-
-        BottomSheetScaffold(
-            sheetContent = {
-                Column(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
-                        .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
-                        .windowInsetsPadding(WindowInsets.navigationBars)
-                ) {
-                    if (hasCloseIcon) {
-                        Image(
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .padding(top = 16.dp, end = 16.dp)
-                                .clickable {
-                                    scope.launch { sheetState.bottomSheetState.hide() }
-                                },
-                            colorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliBottomSheetTopDrawableColor),
-                            painter = painterResource(id = R.drawable.chili_ic_clear_24),
-                            contentDescription = "Base Bottom Sheet close icon"
-                        )
-                    }
-                    bottomSheetContent()
-                }
-
-                BackHandler(enabled = collapseOnBackPressed && sheetState.isExpanded()) {
-                    scope.launch { sheetState.bottomSheetState.hide() }
-                }
-            },
-            scaffoldState = sheetState,
-            sheetShape = RoundedCornerShape(
-                topStart = baseBottomSheetParams.topCornerRadius,
-                topEnd = baseBottomSheetParams.topCornerRadius,
-                bottomEnd = baseBottomSheetParams.bottomCornerRadius,
-                bottomStart = baseBottomSheetParams.bottomCornerRadius
-            ),
-            sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
-            sheetSwipeEnabled = bottomSheetSwipeEnabled,
-            sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
-            sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,
-            sheetDragHandle = if (isDragHandleContentEnabled) {
-                dragHandle
-            } else null,
-            sheetPeekHeight = peekHeight,
-        ) {
-            screenContent()
-
-            backgroundBoxVisibility = sheetState.isExpanding() && isBackgroundDimmingEnabled
-
-            AnimatedVisibility(
-                visible = backgroundBoxVisibility,
-                enter = fadeIn(animationSpec = tween(500)),
-                exit = fadeOut(animationSpec = tween(500))
+    BottomSheetScaffold(
+        sheetContent = {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
+                    .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
+                    .windowInsetsPadding(WindowInsets.navigationBars)
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(baseBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) {
-                            scope.launch { sheetState.bottomSheetState.hide() }
-                        })
+                if (hasCloseIcon) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(top = 16.dp, end = 16.dp)
+                            .clickable {
+                                scope.launch { sheetState.bottomSheetState.hide() }
+                            },
+                        colorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliBottomSheetTopDrawableColor),
+                        painter = painterResource(id = R.drawable.chili_ic_clear_24),
+                        contentDescription = "Base Bottom Sheet close icon"
+                    )
+                }
+                bottomSheetContent()
             }
+
+            BackHandler(enabled = collapseOnBackPressed && sheetState.isExpanded()) {
+                scope.launch { sheetState.bottomSheetState.hide() }
+            }
+        },
+        scaffoldState = sheetState,
+        sheetShape = RoundedCornerShape(
+            topStart = baseBottomSheetParams.topCornerRadius,
+            topEnd = baseBottomSheetParams.topCornerRadius,
+            bottomEnd = baseBottomSheetParams.bottomCornerRadius,
+            bottomStart = baseBottomSheetParams.bottomCornerRadius
+        ),
+        sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
+        sheetSwipeEnabled = bottomSheetSwipeEnabled,
+        sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
+        sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,
+        sheetDragHandle = if (isDragHandleContentEnabled) {
+            dragHandle
+        } else null,
+        sheetPeekHeight = peekHeight,
+    ) {
+        screenContent()
+
+        backgroundBoxVisibility = sheetState.isExpanding() && isBackgroundDimmingEnabled
+
+        AnimatedVisibility(
+            visible = backgroundBoxVisibility,
+            enter = fadeIn(animationSpec = tween(500)),
+            exit = fadeOut(animationSpec = tween(500))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(baseBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }) {
+                        scope.launch { sheetState.bottomSheetState.hide() }
+                    })
         }
     }
 }

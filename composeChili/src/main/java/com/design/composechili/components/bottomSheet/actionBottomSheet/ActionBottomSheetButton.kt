@@ -20,21 +20,15 @@ import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun ActionBottomSheetButton(
-    actionBottomSheetParams: ActionBottomSheetParams
+    title: String,
+    chiliButtonStyle: ChiliButtonStyle,
+    onClick: (() -> Unit)
 ) {
-
-    ChiliTheme {
-        val titleStyle = actionBottomSheetParams.titleStyle ?: ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            font = ChiliTheme.Attribute.ChiliBoldTextFont
-        )
-
-        BaseButton(
-            onClick = { actionBottomSheetParams.onClick?.invoke() },
-            title = actionBottomSheetParams.title,
-            buttonStyle = ChiliButtonStyle.Secondary,
-        )
-    }
+    BaseButton(
+        onClick = { onClick.invoke() },
+        title = title,
+        buttonStyle = ChiliButtonStyle.Secondary,
+    )
 }
 
 @Composable
@@ -42,18 +36,9 @@ fun ActionBottomSheetButton(
 fun ActionBottomSheetButtonPreview() {
     ChiliTheme {
         ActionBottomSheetButton(
-            actionBottomSheetParams = ActionBottomSheetParams(
-                title = "TestTitle",
-                buttonTextColor = ChiliTheme.Colors.ChiliComponentButtonTextColorActive,
-            )
-        )
+            title = "TestTitle",
+            chiliButtonStyle = ChiliButtonStyle.Secondary,
+        ) {
+        }
     }
 }
-
-@Stable
-data class ActionBottomSheetParams(
-    val title: String,
-    val buttonTextColor: Color,
-    val onClick: (() -> Unit)? = null,
-    val titleStyle: TextStyle? = null
-)

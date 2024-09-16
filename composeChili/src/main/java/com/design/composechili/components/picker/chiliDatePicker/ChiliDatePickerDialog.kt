@@ -99,73 +99,70 @@ fun ChiliDatePickerDialog(
     ) {
         val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
         dialogWindowProvider.window.setGravity(alertDialogGravity)
-        ChiliTheme {
-            val currentLocale = calendarLocale.ifBlank { Locale.current.language }
+        val currentLocale = calendarLocale.ifBlank { Locale.current.language }
 
-            Card(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
-                shape = RoundedCornerShape(16.dp),
-            ) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
+            shape = RoundedCornerShape(16.dp),
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                    text = startDateTitle,
+                    style = textStyle
+                )
+                ChiliWheelDateTimePicker(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                    startDateTime = firstDate.startDateTime,
+                    minDateTime = firstDate.minDateTime,
+                    maxDateTime = firstDate.maxDateTime,
+                    localeValue = currentLocale
+                ) { chiliSnappedTime ->
+                    snappedStartDate = chiliSnappedTime
+                    null
+                }
+            }
+            if (secondDate != null) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                        text = startDateTitle,
-                        style = textStyle
-                    )
+                    if (endDateTitle.isNotBlank()) {
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                            text = endDateTitle,
+                            style = textStyle
+                        )
+                    }
                     ChiliWheelDateTimePicker(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                        startDateTime = firstDate.startDateTime,
-                        minDateTime = firstDate.minDateTime,
-                        maxDateTime = firstDate.maxDateTime,
+                        startDateTime = secondDate.startDateTime,
+                        minDateTime = secondDate.minDateTime,
+                        maxDateTime = secondDate.maxDateTime,
                         localeValue = currentLocale
-                    ) { chiliSnappedTime ->
-                        snappedStartDate = chiliSnappedTime
+                    ) { snappedDateTime ->
+                        snappedEndDate = snappedDateTime
                         null
                     }
                 }
-                if (secondDate != null) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        if (endDateTitle.isNotBlank()) {
-                            Text(
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                                text = endDateTitle,
-                                style = textStyle
-                            )
-                        }
-                        ChiliWheelDateTimePicker(
-                            modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
-                                .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                            startDateTime = secondDate.startDateTime,
-                            minDateTime = secondDate.minDateTime,
-                            maxDateTime = secondDate.maxDateTime,
-                            localeValue = currentLocale
-                        ){ snappedDateTime ->
-                            snappedEndDate = snappedDateTime
-                            null
-                        }
-                    }
-                }
-
-                BaseButton(
-                    modifier = Modifier.padding(16.dp),
-                    onClick = {
-                        onSubmitBtn.invoke(
-                            snappedStartDate?.snappedLocalDateTime,
-                            snappedEndDate?.snappedLocalDateTime
-                        )
-                    },
-                    title = submitBtnTitle,
-                    buttonStyle = ChiliButtonStyle.Primary
-                )
             }
 
+            BaseButton(
+                modifier = Modifier.padding(16.dp),
+                onClick = {
+                    onSubmitBtn.invoke(
+                        snappedStartDate?.snappedLocalDateTime,
+                        snappedEndDate?.snappedLocalDateTime
+                    )
+                },
+                title = submitBtnTitle,
+                buttonStyle = ChiliButtonStyle.Primary
+            )
         }
     }
 }
@@ -173,8 +170,8 @@ fun ChiliDatePickerDialog(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun ChiliDatePickerPreview(){
-    ChiliTheme{
+fun ChiliDatePickerPreview() {
+    ChiliTheme {
         ChiliDatePickerDialog(
             modifier = Modifier,
             onDismissRequest = {},
@@ -184,12 +181,12 @@ fun ChiliDatePickerPreview(){
             datePickedParams = ChiliDatePickerParams(
                 firstDate = DatePickerTimeParams(
                     startDateTime = LocalDateTime.now(),
-                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                    minDateTime = LocalDateTime.of(2020, 1, 1, 10, 0),
                     maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
                 ),
                 secondDate = DatePickerTimeParams(
                     startDateTime = LocalDateTime.now(),
-                    minDateTime = LocalDateTime.of(2020, 1, 1, 10,0),
+                    minDateTime = LocalDateTime.of(2020, 1, 1, 10, 0),
                     maxDateTime = LocalDateTime.of(2026, 1, 1, 10, 0)
                 )
             ),

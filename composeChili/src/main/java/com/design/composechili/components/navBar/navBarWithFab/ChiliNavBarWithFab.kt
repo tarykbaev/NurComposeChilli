@@ -76,40 +76,38 @@ fun ChiliNavBarWithFab(
         )
     }
 
-    ChiliTheme {
-        LazyRow(
-            modifier = Modifier
-                .background(
-                    color = params.backgroundColor,
-                    shape = params.backgroundShape
-                )
-                .fillMaxWidth()
-                .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-                .selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            items(navItems) { item ->
-                when (item) {
-                    is ChiliNavWithFab.ChiliNavButton -> {
-                        ChiliNavSimpleItem(
-                            icon = item.icon,
-                            label = item.label,
-                            selected = selectedItem == item,
-                            selectedColorTint = params.selectedColor,
-                            unselectedColorTint = params.unselectedColor
-                        ) {
-                            selectedItem = item
-                            onNavigateItemClicked.invoke(item)
-                        }
+    LazyRow(
+        modifier = Modifier
+            .background(
+                color = params.backgroundColor,
+                shape = params.backgroundShape
+            )
+            .fillMaxWidth()
+            .windowInsetsPadding(NavigationBarDefaults.windowInsets)
+            .selectableGroup(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        items(navItems) { item ->
+            when (item) {
+                is ChiliNavWithFab.ChiliNavButton -> {
+                    ChiliNavSimpleItem(
+                        icon = item.icon,
+                        label = item.label,
+                        selected = selectedItem == item,
+                        selectedColorTint = params.selectedColor,
+                        unselectedColorTint = params.unselectedColor
+                    ) {
+                        selectedItem = item
+                        onNavigateItemClicked.invoke(item)
                     }
+                }
 
-                    is ChiliNavWithFab.ChiliNavFloatActionButton -> {
-                        ChiliNavFabItem(
-                            isAnimateScale = isFabScaleAnimation,
-                            icon = item.icon
-                        ) {
-                            onNavigateItemClicked.invoke(item)
-                        }
+                is ChiliNavWithFab.ChiliNavFloatActionButton -> {
+                    ChiliNavFabItem(
+                        isAnimateScale = isFabScaleAnimation,
+                        icon = item.icon
+                    ) {
+                        onNavigateItemClicked.invoke(item)
                     }
                 }
             }
@@ -120,39 +118,41 @@ fun ChiliNavBarWithFab(
 @Preview(showBackground = true)
 @Composable
 fun ChiliNavBarWithFabPreview() {
-    Scaffold(
-        bottomBar = {
-            ChiliNavBarWithFab(
-                navItems = listOf(
-                    ChiliNavWithFab.ChiliNavButton(icon = R.drawable.ic_home, label = "Главная"),
-                    ChiliNavWithFab.ChiliNavButton(
-                        icon = R.drawable.ic_payment,
-                        label = "Платежи"
+    ChiliTheme{
+        Scaffold(
+            bottomBar = {
+                ChiliNavBarWithFab(
+                    navItems = listOf(
+                        ChiliNavWithFab.ChiliNavButton(icon = R.drawable.ic_home, label = "Главная"),
+                        ChiliNavWithFab.ChiliNavButton(
+                            icon = R.drawable.ic_payment,
+                            label = "Платежи"
+                        ),
+                        ChiliNavWithFab.ChiliNavFloatActionButton(
+                            icon = R.drawable.ic_scaner_48
+                        ),
+                        ChiliNavWithFab.ChiliNavButton(
+                            icon = R.drawable.ic_history,
+                            label = "История"
+                        ),
+                        ChiliNavWithFab.ChiliNavButton(
+                            icon = R.drawable.ic_menu,
+                            label = "Ещё"
+                        ),
                     ),
-                    ChiliNavWithFab.ChiliNavFloatActionButton(
-                        icon = R.drawable.ic_scaner_48
-                    ),
-                    ChiliNavWithFab.ChiliNavButton(
-                        icon = R.drawable.ic_history,
-                        label = "История"
-                    ),
-                    ChiliNavWithFab.ChiliNavButton(
-                        icon = R.drawable.ic_menu,
-                        label = "Ещё"
-                    ),
-                ),
-                onNavigateItemClicked = { }
-            )
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier.background(color = Color.Black)) {
-            Image(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize(),
-                painter = painterResource(id = R.drawable.ic_cat),
-                contentDescription = null
-            )
+                    onNavigateItemClicked = { }
+                )
+            }
+        ) { paddingValues ->
+            Box(modifier = Modifier.background(color = Color.Black)) {
+                Image(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .fillMaxSize(),
+                    painter = painterResource(id = R.drawable.ic_cat),
+                    contentDescription = null
+                )
+            }
         }
     }
 }

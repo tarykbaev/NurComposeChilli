@@ -25,30 +25,28 @@ fun ChiliSwitch(
     description: String = "Switch animation on items",
     onValueChange: (Boolean) -> Unit,
 ) {
-    ChiliTheme {
-        var checkedState by remember { mutableStateOf(false) }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(paddingValues),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = description,
-                color = ChiliTheme.Colors.ChiliValueTextColor
+    var checkedState by remember { mutableStateOf(false) }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(paddingValues),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            modifier = Modifier.weight(1f),
+            text = description,
+            color = ChiliTheme.Colors.ChiliValueTextColor
+        )
+        Switch(
+            checked = checkedState,
+            onCheckedChange = {
+                checkedState = it
+                onValueChange(it)
+            },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = ChiliTheme.Colors.ChiliLinkTextColor
             )
-            Switch(
-                checked = checkedState,
-                onCheckedChange = {
-                    checkedState = it
-                    onValueChange(it)
-                },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = ChiliTheme.Colors.ChiliLinkTextColor
-                )
-            )
-        }
+        )
     }
 }
 

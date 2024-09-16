@@ -111,7 +111,6 @@ fun BaseSnackBar(
 @Composable
 fun BaseSnackBarPreview() {
     ChiliTheme {
-
         val scope = rememberCoroutineScope()
         val snackBarHostState = remember { SnackbarHostState() }
 

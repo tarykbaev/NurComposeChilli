@@ -59,107 +59,105 @@ fun ToggleCell(
     toggleCellParams: ToggleCellParams = ToggleCellParams.Default,
     onCheckedChangeListener: (isChecked: Boolean) -> Unit = {}
 ) {
-    ChiliTheme {
-        Box(
-            modifier
-                .clip(toggleCellParams.cornerMode.toRoundedShape())
-                .background(ChiliTheme.Colors.ChiliCellViewBackground)
+    Box(
+        modifier
+            .clip(toggleCellParams.cornerMode.toRoundedShape())
+            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+    ) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (startIcon != null) {
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .size(dimensionResource(id = R.dimen.view_32dp)),
-                        painter = painterResource(id = startIcon),
-                        contentDescription = "Base cell start icon"
-                    )
-                }
-                Column(
-                    Modifier
-                        .weight(1f)
-                        .wrapContentHeight()
-                        .padding(end = dimensionResource(id = R.dimen.padding_16dp))
-                ) {
-
-                    val cellBottomPadding = if (subtitle.isBlank()) {
-                        dimensionResource(id = R.dimen.padding_12dp)
-                    } else {
-                        dimensionResource(id = R.dimen.padding_4dp)
-                    }
-
-                    Text(
-                        text = title,
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(
-                                toggleCellParams.titlePadding
-                                    .copy(bottom = cellBottomPadding)
-                                    .toPaddingValues()
-                            ),
-                        style = toggleCellParams.titleTextStyle,
-                    )
-
-                    if (subtitle.isNotBlank()) {
-                        Text(
-                            text = subtitle,
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(toggleCellParams.subtitlePadding.toPaddingValues()),
-                            style = toggleCellParams.subTitleTextStyle
-                        )
-                    }
-                }
-                if (isSwitchVisible) {
-                    val switchTextOnOff = if (isChecked) switchTextOn else switchTextOff
-                    val switchTextOnOffColor = when {
-                        !isChecked -> ChiliTheme.Colors.ChiliPrimaryTextColor
-                        isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedEnabledColor
-                        !isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedDisabledColor
-                        else -> ChiliTheme.Colors.ChiliPrimaryTextColor
-                    }
-                    if (switchText != null) {
-                        Text(
-                            modifier = Modifier
-                                .padding(end = dimensionResource(id = R.dimen.padding_2dp)),
-                            text = switchText,
-                            textAlign = TextAlign.End,
-                            style = toggleCellParams.switchTextStyle
-                        )
-                    }
-                    Switch(
-                        modifier = Modifier.padding(toggleCellParams.switchPadding.toPaddingValues()),
-                        checked = isChecked,
-                        enabled = isSwitchEnabled,
-                        onCheckedChange = onCheckedChangeListener,
-                        colors = toggleCellParams.toggleColors,
-                        thumbContent = {
-                            if (switchTextOnOff != null) {
-                                Text(
-                                    text = switchTextOnOff,
-                                    textAlign = TextAlign.Center,
-                                    maxLines = 1,
-                                    style = toggleCellParams.switchOnOffTextStyle.copy(
-                                        color = switchTextOnOffColor
-                                    )
-                                )
-                            }
-                        }
-                    )
-                }
-            }
-            if (isDividerVisible) {
-                HorizontalDivider(
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                    color = ChiliTheme.Colors.ChiliDividerColor,
-                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+            if (startIcon != null) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(dimensionResource(id = R.dimen.view_32dp)),
+                    painter = painterResource(id = startIcon),
+                    contentDescription = "Base cell start icon"
                 )
             }
+            Column(
+                Modifier
+                    .weight(1f)
+                    .wrapContentHeight()
+                    .padding(end = dimensionResource(id = R.dimen.padding_16dp))
+            ) {
+
+                val cellBottomPadding = if (subtitle.isBlank()) {
+                    dimensionResource(id = R.dimen.padding_12dp)
+                } else {
+                    dimensionResource(id = R.dimen.padding_4dp)
+                }
+
+                Text(
+                    text = title,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(
+                            toggleCellParams.titlePadding
+                                .copy(bottom = cellBottomPadding)
+                                .toPaddingValues()
+                        ),
+                    style = toggleCellParams.titleTextStyle,
+                )
+
+                if (subtitle.isNotBlank()) {
+                    Text(
+                        text = subtitle,
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(toggleCellParams.subtitlePadding.toPaddingValues()),
+                        style = toggleCellParams.subTitleTextStyle
+                    )
+                }
+            }
+            if (isSwitchVisible) {
+                val switchTextOnOff = if (isChecked) switchTextOn else switchTextOff
+                val switchTextOnOffColor = when {
+                    !isChecked -> ChiliTheme.Colors.ChiliPrimaryTextColor
+                    isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedEnabledColor
+                    !isSwitchEnabled -> ChiliTheme.Colors.ChiliToggleCellViewTextOnOffCheckedDisabledColor
+                    else -> ChiliTheme.Colors.ChiliPrimaryTextColor
+                }
+                if (switchText != null) {
+                    Text(
+                        modifier = Modifier
+                            .padding(end = dimensionResource(id = R.dimen.padding_2dp)),
+                        text = switchText,
+                        textAlign = TextAlign.End,
+                        style = toggleCellParams.switchTextStyle
+                    )
+                }
+                Switch(
+                    modifier = Modifier.padding(toggleCellParams.switchPadding.toPaddingValues()),
+                    checked = isChecked,
+                    enabled = isSwitchEnabled,
+                    onCheckedChange = onCheckedChangeListener,
+                    colors = toggleCellParams.toggleColors,
+                    thumbContent = {
+                        if (switchTextOnOff != null) {
+                            Text(
+                                text = switchTextOnOff,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                style = toggleCellParams.switchOnOffTextStyle.copy(
+                                    color = switchTextOnOffColor
+                                )
+                            )
+                        }
+                    }
+                )
+            }
+        }
+        if (isDividerVisible) {
+            HorizontalDivider(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                color = ChiliTheme.Colors.ChiliDividerColor,
+                thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+            )
         }
     }
 }

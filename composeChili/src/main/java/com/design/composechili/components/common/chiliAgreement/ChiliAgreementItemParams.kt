@@ -1,4 +1,4 @@
-package com.design.composechili.components.common
+package com.design.composechili.components.common.chiliAgreement
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable

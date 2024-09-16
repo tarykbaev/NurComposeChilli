@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.design.composechili.R
 
-data class CheckboxParams(
+data class ChiliCheckboxParams(
     val checkedColor: Color,
     val uncheckedColor: Color,
     val disabledColor: Color,
@@ -13,7 +13,7 @@ data class CheckboxParams(
 
     companion object {
         val Default
-            @Composable get() = CheckboxParams(
+            @Composable get() = ChiliCheckboxParams(
                 checkedColor = colorResource(R.color.magenta_1),
                 uncheckedColor = colorResource(R.color.gray_3),
                 disabledColor = colorResource(R.color.gray_1_alpha_50),

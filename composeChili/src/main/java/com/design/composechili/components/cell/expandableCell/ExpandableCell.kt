@@ -62,71 +62,69 @@ fun ExpandableCell(
         targetValue = if (isExpanded) -90f else 90f, label = ""
     )
 
-    ChiliTheme {
-        Box(
-            modifier
-                .clip(CellCornerMode.Single.toRoundedShape())
-                .background(ChiliTheme.Colors.ChiliCellViewBackground)
+    Box(
+        modifier
+            .clip(CellCornerMode.Single.toRoundedShape())
+            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+    ) {
+        Column(
+            Modifier
+                .wrapContentHeight()
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = animationDuration,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
         ) {
-            Column(
-                Modifier
-                    .wrapContentHeight()
-                    .animateContentSize(
-                        animationSpec = tween(
-                            durationMillis = animationDuration,
-                            easing = LinearOutSlowInEasing
-                        )
-                    )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = rememberRipple()
+                    ) { isExpanded = !isExpanded },
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
+                Text(
+                    text = title,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = rememberRipple()
-                        ) { isExpanded = !isExpanded },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = title,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(
-                                expandableCellParams.titlePadding
-                                    .toPaddingValues()
-                            ),
-                        textAlign = TextAlign.Start,
-                        style = expandableCellParams.titleTextStyle,
-                    )
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(
-                                end = dimensionResource(id = R.dimen.padding_12dp),
-                                top = dimensionResource(id = R.dimen.padding_12dp),
-                                bottom = dimensionResource(id = R.dimen.padding_12dp)
-                            )
-                            .rotate(rotationState),
-                        painter = painterResource(id = R.drawable.chili_ic_chevron),
-                        contentDescription = "Navigation icon",
-                        colorFilter = ColorFilter.tint(
-                            expandableCellParams.chevronIconTint, BlendMode.SrcIn
+                        .weight(1f)
+                        .padding(
+                            expandableCellParams.titlePadding
+                                .toPaddingValues()
+                        ),
+                    textAlign = TextAlign.Start,
+                    style = expandableCellParams.titleTextStyle,
+                )
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(
+                            end = dimensionResource(id = R.dimen.padding_12dp),
+                            top = dimensionResource(id = R.dimen.padding_12dp),
+                            bottom = dimensionResource(id = R.dimen.padding_12dp)
                         )
+                        .rotate(rotationState),
+                    painter = painterResource(id = R.drawable.chili_ic_chevron),
+                    contentDescription = "Navigation icon",
+                    colorFilter = ColorFilter.tint(
+                        expandableCellParams.chevronIconTint, BlendMode.SrcIn
                     )
-                }
-                if (isExpanded) {
-                    HorizontalDivider(
-                        color = ChiliTheme.Colors.ChiliDividerColor,
-                        thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
-                    )
-                    Text(
-                        text = description,
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(expandableCellParams.descriptionPadding.toPaddingValues()),
-                        style = expandableCellParams.descriptionTextStyle
-                    )
-                }
+                )
+            }
+            if (isExpanded) {
+                HorizontalDivider(
+                    color = ChiliTheme.Colors.ChiliDividerColor,
+                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+                )
+                Text(
+                    text = description,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(expandableCellParams.descriptionPadding.toPaddingValues()),
+                    style = expandableCellParams.descriptionTextStyle
+                )
             }
         }
     }

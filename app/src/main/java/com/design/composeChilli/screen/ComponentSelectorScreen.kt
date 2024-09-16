@@ -1,25 +1,23 @@
-package com.design.composeChilli
+package com.design.composeChilli.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.design.composeChilli.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
-import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.spacerVerticalDefaultPadding
 
 @Composable
 fun ComponentSelectorScreen(
-    onDarkModeClicked: () -> Unit,
     onTextAppearanceItemClicked: () -> Unit,
     onButtonItemClicked: () -> Unit,
     onInputFieldsItemClicked: () -> Unit,

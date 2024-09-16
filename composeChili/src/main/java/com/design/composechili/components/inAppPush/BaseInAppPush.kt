@@ -97,31 +97,29 @@ fun BaseInAppPush(
     ) {
         val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
         dialogWindowProvider.window.setGravity(Gravity.BOTTOM)
-        ChiliTheme {
-            Card(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(inAppPushPadding,),
-                colors = CardDefaults.cardColors(containerColor = params.contentColor),
-                shape = RoundedCornerShape(cornerRadius),
-            ) {
-                Column(Modifier.padding(rootContentPadding)) {
-                    if (isCloseButtonEnable) {
-                        IconButton(
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .size(closeButtonSize),
-                            onClick = onDismissRequest
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.chili_ic_clear_24),
-                                contentDescription = String()
-                            )
-                        }
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(inAppPushPadding,),
+            colors = CardDefaults.cardColors(containerColor = params.contentColor),
+            shape = RoundedCornerShape(cornerRadius),
+        ) {
+            Column(Modifier.padding(rootContentPadding)) {
+                if (isCloseButtonEnable) {
+                    IconButton(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .size(closeButtonSize),
+                        onClick = onDismissRequest
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.chili_ic_clear_24),
+                            contentDescription = String()
+                        )
                     }
-                    content()
                 }
+                content()
             }
         }
     }
