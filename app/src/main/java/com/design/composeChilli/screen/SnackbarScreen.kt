@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -66,7 +67,8 @@ fun SnackbarScreen() {
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
                 BaseButton(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     onClick = {
                         scope.launch {
                             simpleSnackbarHostState.showSnackbar(message = "Hello")
@@ -77,7 +79,8 @@ fun SnackbarScreen() {
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
                 BaseButton(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     onClick = {
                         scope.launch {
                             loadingSnackbarHostState.showSnackbar(
@@ -90,7 +93,8 @@ fun SnackbarScreen() {
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
                 BaseButton(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     onClick = {
                         scope.launch {
                             imageSnackbarHostState.showSnackbar(
@@ -103,7 +107,8 @@ fun SnackbarScreen() {
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
                 BaseButton(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     onClick = {
                         scope.launch {
                             topGravitySnackbarHostState.showSnackbar(
