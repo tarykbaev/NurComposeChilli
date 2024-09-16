@@ -6,6 +6,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.design.composechili.R
 import com.design.composechili.utils.asSp
 
@@ -33,27 +35,40 @@ data class ChiliButtonAttribute(
     val ChiliAdditionalButtonCornerRadius: Dp,
     val ChiliAdditionalButtonTextSize: TextUnit,
     val ChiliAdditionalButtonTextFont: Font,
-    val ChiliAdditionalButtonTextAllCaps: Boolean
+    val ChiliAdditionalButtonTextAllCaps: Boolean,
+
+    // Component
+    val ChiliComponentButtonCornerRadius:Dp,
+    val ChiliComponentButtonTextSize:TextUnit,
+    val ChiliComponentButtonTextFont:Font,
+    val ChiliComponentButtonHorizontalPadding:Dp,
+    val ChiliComponentButtonVerticalPadding:Dp
 ) {
     companion object {
         @Composable
         fun getDefault() = ChiliButtonAttribute(
-            ChiliButtonPaddingTop = dimensionResource(R.dimen.padding_14dp),
-            ChiliButtonPaddingBottom = dimensionResource(R.dimen.padding_14dp),
-            ChiliButtonPaddingStart = dimensionResource(R.dimen.padding_24dp),
-            ChiliButtonPaddingEnd = dimensionResource(R.dimen.padding_24dp),
-            ChiliPrimaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliPrimaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
+            ChiliButtonPaddingTop = 14.dp,
+            ChiliButtonPaddingBottom = 14.dp,
+            ChiliButtonPaddingStart = 24.dp,
+            ChiliButtonPaddingEnd = 24.dp,
+            ChiliPrimaryButtonCornerRadius = 12.dp,
+            ChiliPrimaryButtonTextSize = 14.sp,
             ChiliPrimaryButtonTextFont = Font(R.font.roboto_medium),
             ChiliPrimaryButtonTextAllCaps = false,
-            ChiliSecondaryButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliSecondaryButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
+            ChiliSecondaryButtonCornerRadius = 12.dp,
+            ChiliSecondaryButtonTextSize = 14.sp,
             ChiliSecondaryButtonTextFont = Font(R.font.roboto_medium),
             ChiliSecondaryButtonTextAllCaps = false,
-            ChiliAdditionalButtonCornerRadius = dimensionResource(R.dimen.radius_12dp),
-            ChiliAdditionalButtonTextSize = dimensionResource(R.dimen.text_14sp).asSp(),
+            ChiliAdditionalButtonCornerRadius = 12.dp,
+            ChiliAdditionalButtonTextSize = 14.sp,
             ChiliAdditionalButtonTextFont = Font(R.font.roboto_medium),
-            ChiliAdditionalButtonTextAllCaps = false
+            ChiliAdditionalButtonTextAllCaps = false,
+            ChiliComponentButtonCornerRadius = 4.dp,
+            ChiliComponentButtonTextSize = 14.sp,
+            ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
+            ChiliComponentButtonHorizontalPadding = 4.dp,
+            ChiliComponentButtonVerticalPadding = 0.dp
+
         )
     }
 }

@@ -50,13 +50,14 @@ import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun LoaderButton(
+    modifier: Modifier = Modifier,
     isLoading: Boolean,
     progressColor: Color = colorResource(id = R.color.magenta_1),
     strokeWidth: Dp = 4.dp,
     buttonContent: @Composable () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .wrapContentSize()
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
