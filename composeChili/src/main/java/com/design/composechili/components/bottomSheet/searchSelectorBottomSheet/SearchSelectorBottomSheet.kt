@@ -81,105 +81,104 @@ fun SearchSelectorBottomSheet(
     content: @Composable () -> Unit
 ) {
 
-    fun filterList(filter: String = ""): List<Pair<Type, Any>> {
-        val filteredList = list.filter { it.value.contains(filter, true) }
-        val sortedList = if (isGroupingEnabled) filteredList.groupBy {
-            it.value.firstOrNull()?.uppercase().orEmpty()
-        } else mapOf("" to filteredList)
-        val newList = mutableListOf<Pair<Type, Any>>()
-        sortedList.forEach {
-            if (isHeaderVisible) newList.add(Type.HEADER to it.key)
-            it.value.forEach { item ->
-                newList.add(Type.ITEM to item.copy())
+    fun filterList(filter: String = String()): List<Pair<Type, Any>> {
+        val newList = list
+            .filter { it.value.contains(filter, ignoreCase = true) }
+            .groupBy {
+                if (isGroupingEnabled) it.value.firstOrNull()?.uppercase().orEmpty() else String()
             }
+
+        return newList.flatMap { (header, items) ->
+            val section = mutableListOf<Pair<Type, Any>>()
+            if (isHeaderVisible) section.add(Type.HEADER to header)
+            section.addAll(items.map { Type.ITEM to it.copy() })
+            section
         }
-        return newList
     }
 
     var options by remember { mutableStateOf(filterList()) }
     var textValue by remember { mutableStateOf("") }
 
-    ChiliTheme {
-        BaseBottomSheet(
-            sheetState = sheetState,
-            peekHeight = peekHeight,
-            hasCloseIcon = hasCloseIcon,
-            baseBottomSheetParams = BaseBottomSheetParams.Default.copy(
-                bottomSheetContentBackgroundColor = ChiliTheme.Colors.ChiliBottomSheetGrayBackgroundColor
-            ),
-            bottomSheetContent = {
-                LazyColumn(
-                    modifier = modifier.fillMaxWidth()
-                ) {
-                    item {
-                        Row(
+    BaseBottomSheet(
+        sheetState = sheetState,
+        peekHeight = peekHeight,
+        hasCloseIcon = hasCloseIcon,
+        baseBottomSheetParams = BaseBottomSheetParams.Default.copy(
+            bottomSheetContentBackgroundColor = ChiliTheme.Colors.ChiliBottomSheetGrayBackgroundColor
+        ),
+        bottomSheetContent = {
+            LazyColumn(
+                modifier = modifier.fillMaxWidth()
+            ) {
+                item {
+                    Row(
+                        modifier = Modifier
+                            .padding(dimensionResource(id = R.dimen.padding_16dp))
+                            .background(
+                                color = params.searchInputBackgroundColor,
+                                shape = RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp))
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (searchIcon != null) {
+                            Image(
+                                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
+                                painter = painterResource(id = searchIcon),
+                                contentDescription = "Search"
+                            )
+                        }
+                        BaseInput(
                             modifier = Modifier
-                                .padding(dimensionResource(id = R.dimen.padding_16dp))
-                                .background(
-                                    color = params.searchInputBackgroundColor,
-                                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp))
-                                ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (searchIcon != null) {
-                                Image(
-                                    modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
-                                    painter = painterResource(id = searchIcon),
-                                    contentDescription = "Search"
-                                )
-                            }
-                            BaseInput(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textFieldValue = textValue,
-                                hint = searchHint,
-                                params = BaseInputParams.Default.copy(
-                                    textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_0dp)),
-                                    fieldBackground = Color.Transparent
-                                ),
-                                onValueChange = {
-                                    textValue = it
-                                    options = filterList(it)
-                                },
-                            )
-                        }
-                    }
-                    itemsIndexed(options) { index, option ->
-                        when (option.first) {
-                            Type.ITEM -> SearchSelectorBottomSheetOption(
-                                option = option.second as SearchSelectorOptionItem,
-                                isDividerVisible = when {
-                                    index == options.size - 1 -> false
-                                    options[index + 1].first == Type.HEADER -> false
-                                    else -> true
-                                },
-                                onOptionClick = { opt ->
-                                    list.forEach {
-                                        it.isSelected = if (isSingleSelection) {
-                                            it.id == opt.id
-                                        } else {
-                                            if (it.id == opt.id) !it.isSelected else it.isSelected
-                                        }
-                                    }
-                                    options = filterList(textValue)
-                                    onOptionClick.invoke(opt)
-                                }
-                            )
-                            Type.HEADER -> Text(
-                                modifier = Modifier.padding(
-                                    horizontal = dimensionResource(id = R.dimen.padding_16dp),
-                                    vertical = dimensionResource(id = R.dimen.padding_8dp)
-                                ),
-                                text = option.second as String,
-                                style = params.groupHeaderTextStyle
-                            )
-                        }
+                                .fillMaxWidth(),
+                            textFieldValue = textValue,
+                            hint = searchHint,
+                            params = BaseInputParams.Default.copy(
+                                textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_0dp)),
+                                fieldBackground = Color.Transparent
+                            ),
+                            onValueChange = {
+                                textValue = it
+                                options = filterList(it)
+                            },
+                        )
                     }
                 }
-            },
-            screenContent = { content() }
-        )
-    }
+                itemsIndexed(options) { index, option ->
+                    when (option.first) {
+                        Type.ITEM -> SearchSelectorBottomSheetOption(
+                            option = option.second as SearchSelectorOptionItem,
+                            isDividerVisible = when {
+                                index == options.size - 1 -> false
+                                options[index + 1].first == Type.HEADER -> false
+                                else -> true
+                            },
+                            onOptionClick = { opt ->
+                                list.forEach {
+                                    it.isSelected = if (isSingleSelection) {
+                                        it.id == opt.id
+                                    } else {
+                                        if (it.id == opt.id) !it.isSelected else it.isSelected
+                                    }
+                                }
+                                options = filterList(textValue)
+                                onOptionClick.invoke(opt)
+                            }
+                        )
+
+                        Type.HEADER -> Text(
+                            modifier = Modifier.padding(
+                                horizontal = dimensionResource(id = R.dimen.padding_16dp),
+                                vertical = dimensionResource(id = R.dimen.padding_8dp)
+                            ),
+                            text = option.second as String,
+                            style = params.groupHeaderTextStyle
+                        )
+                    }
+                }
+            }
+        },
+        screenContent = { content() }
+    )
 }
 
 data class SearchSelectorBottomSheetParams(

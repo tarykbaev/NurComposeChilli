@@ -43,51 +43,51 @@ import com.design.composechili.values.ChiliPadding
 
 @Composable
 fun SearchSelectorBottomSheetOption(
+    modifier: Modifier = Modifier,
     option: SearchSelectorOptionItem,
     isDividerVisible: Boolean = true,
     @DrawableRes selectedIcon: Int = R.drawable.chili_ic_checkmark,
     onOptionClick: (option: SearchSelectorOptionItem) -> Unit,
     params: SearchSelectorBottomSheetOptionParams = SearchSelectorBottomSheetOptionParams.Default
 ) {
-    ChiliTheme {
-        Box(
-            modifier = Modifier.background(color = params.backgroundColor)
+
+    Box(
+        modifier = modifier.background(color = params.backgroundColor)
+    ) {
+        Row(
+            modifier = Modifier
+                .clickable { onOptionClick.invoke(option) }
         ) {
-            Row(
+            Text(
                 modifier = Modifier
-                    .clickable { onOptionClick.invoke(option) }
-            ) {
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(
-                            top = params.contentPadding.top,
-                            bottom = params.contentPadding.bottom,
-                            start = params.contentPadding.start
-                        )
-                        .align(Alignment.CenterVertically),
-                    text = option.value,
-                    style = params.valueTextStyle
-                )
-                if (option.isSelected) {
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(end = params.contentPadding.end),
-                        painter = painterResource(id = selectedIcon),
-                        contentDescription = "Selected icon"
+                    .weight(1f)
+                    .padding(
+                        top = params.contentPadding.top,
+                        bottom = params.contentPadding.bottom,
+                        start = params.contentPadding.start
                     )
-                }
-            }
-            if (isDividerVisible) {
-                HorizontalDivider(
+                    .align(Alignment.CenterVertically),
+                text = option.value,
+                style = params.valueTextStyle
+            )
+            if (option.isSelected) {
+                Image(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(start = dimensionResource(id = R.dimen.padding_8dp)),
-                    color = ChiliTheme.Colors.ChiliDividerColor,
-                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+                        .align(Alignment.CenterVertically)
+                        .padding(end = params.contentPadding.end),
+                    painter = painterResource(id = selectedIcon),
+                    contentDescription = "Selected icon"
                 )
             }
+        }
+        if (isDividerVisible) {
+            HorizontalDivider(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(start = dimensionResource(id = R.dimen.padding_8dp)),
+                color = ChiliTheme.Colors.ChiliDividerColor,
+                thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+            )
         }
     }
 }
@@ -124,7 +124,7 @@ data class SearchSelectorBottomSheetOptionParams(
 fun SearchSelectorBottomSheetOptionPreview() {
     ChiliTheme {
         SearchSelectorBottomSheetOption(
-            SearchSelectorOptionItem("1", "Option 1", true),
+            option = SearchSelectorOptionItem("1", "Option 1", true),
             onOptionClick = {}
         )
     }
