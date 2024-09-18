@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
                         ),
                         onEndIconClick = { isDarkModeEnable = !isDarkModeEnable }
                     )
+
                     SnackbarScreen()
                 }
                 /*ComponentSelectorScreen(
