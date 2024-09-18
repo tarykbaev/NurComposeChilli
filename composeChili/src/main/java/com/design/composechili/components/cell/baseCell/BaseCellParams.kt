@@ -17,7 +17,8 @@ data class BaseCellParams(
     val subtitlePadding: ChiliPadding,
     val cornerMode: CellCornerMode,
     val startIconPadding: ChiliPadding,
-    val chevronIconTint: Color
+    val chevronIconTint: Color,
+    val background: Color
 ) {
     companion object {
         val Default
@@ -25,23 +26,29 @@ data class BaseCellParams(
                 titleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                ), subTitleTextStyle = ChiliTextStyle.get(
+                ),
+                subTitleTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliSecondaryTextColor,
-                ), titlePadding = ChiliPadding(
+                ),
+                titlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp),
                     end = dimensionResource(id = R.dimen.padding_4dp),
                     bottom = dimensionResource(id = R.dimen.padding_4dp)
-                ), subtitlePadding = ChiliPadding(
+                ),
+                subtitlePadding = ChiliPadding(
                     start = dimensionResource(id = R.dimen.padding_12dp),
                     end = dimensionResource(id = R.dimen.padding_4dp),
                     bottom = dimensionResource(id = R.dimen.padding_12dp)
-                ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
+                ),
+                cornerMode = CellCornerMode.Single,
+                startIconPadding = ChiliPadding(
                     vertical = dimensionResource(id = R.dimen.padding_8dp),
                     horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), chevronIconTint = ChiliTheme.Colors.chiliChevronColor
+                ),
+                chevronIconTint = ChiliTheme.Colors.chiliChevronColor,
+                background = ChiliTheme.Colors.ChiliCellViewBackground
             )
     }
-
 }
