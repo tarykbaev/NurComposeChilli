@@ -35,12 +35,16 @@ fun BaseInput(
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
 ) {
-    Row (verticalAlignment = Alignment.CenterVertically){
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         if (startIcon != null) {
             Image(
                 painter = painterResource(id = startIcon),
                 contentDescription = "Input field start description icon",
-                modifier = modifier
+                modifier = Modifier
                     .wrapContentSize()
                     .padding(
                         start = dimensionResource(id = R.dimen.padding_8dp),
@@ -50,10 +54,8 @@ fun BaseInput(
             )
         }
         TextField(
-            modifier = modifier
-                .wrapContentSize()
+            modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth()
                 .padding(params.textFieldPadding),
             value = textFieldValue,
             onValueChange = onValueChange,
@@ -93,7 +95,7 @@ fun BaseInput(
             Image(
                 painter = painterResource(id = endIcon),
                 contentDescription = "Input field end description icon",
-                modifier = modifier
+                modifier = Modifier
                     .wrapContentSize()
                     .padding(
                         end = dimensionResource(id = R.dimen.padding_8dp),
