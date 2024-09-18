@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
@@ -49,6 +50,20 @@ fun CategoryCard(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_16dp)),
             text = type.title,
             style = type.style
+        )
+    }
+}
+
+@Preview
+@Composable
+fun CategoryCard_Preview() {
+    ChiliTheme {
+        CategoryCard(
+            type = CategoryCardType.Centered(
+                title = "Something",
+                icon = R.drawable.chili_ic_airpods,
+                style = CategoryCardType.regularTextStyle
+            )
         )
     }
 }
