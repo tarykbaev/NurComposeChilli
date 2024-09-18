@@ -33,7 +33,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
- * @param [startIcon] accept [Any] and set [Image] on the start in cell
+ * @param [startIcon] accepts [Any], but should be a valid object that can be converted into a Coil `AsyncImagePainter`. It's displayed at the start of the cell as [Image]
  * @param [baseCellParams] cell visual transformation params and paddings
  * @sample BaseCellParams.Default
  */
