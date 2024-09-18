@@ -110,7 +110,6 @@ public data class ChiliColors(
     val ChiliNavBarUnSelectedItemColor: Color,
     // Bottom Sheet
     val ChiliBottomSheetBackgroundColor:Color,
-    val ChiliBottomSheetTopDrawableColor:Color,
     val ChiliBottomSheetGrayBackgroundColor:Color,
 
     // Card Cell View
@@ -124,6 +123,7 @@ public data class ChiliColors(
     val ChiliInAppPushBackgroundColor:Color,
 
     // Bottom Sheet Drag Handle line color
+    val ChiliThickBottomSheetDragHandleColor: Color,
     val ChiliBottomSheetDragHandleColor: Color
 
     ){
@@ -193,12 +193,12 @@ public data class ChiliColors(
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
-            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
-            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_3),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3),
+            ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.gray_3),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1)
@@ -269,11 +269,11 @@ public data class ChiliColors(
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
-            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1),
+            ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.gray_1),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5)
