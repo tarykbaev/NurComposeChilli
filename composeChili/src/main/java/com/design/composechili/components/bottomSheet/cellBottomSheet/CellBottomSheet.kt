@@ -51,18 +51,26 @@ fun CellBottomSheet(
                      },
         hasCloseIcon = true,
         bottomSheetContent = {
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            ) {
-                items(cells) { item ->
-                    BottomSheetCell(item.title, item.icon, item.onClick)
-                }
-            }
+            CellBottomSheetContent(modifier, cells)
         },
         screenContent = { content() }
     )
+}
+
+@Composable
+fun CellBottomSheetContent(
+    modifier: Modifier,
+    cells: List<BottomSheetCellParams>
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp)
+    ) {
+        items(cells) { item ->
+            BottomSheetCell(item.title, item.icon, item.onClick)
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

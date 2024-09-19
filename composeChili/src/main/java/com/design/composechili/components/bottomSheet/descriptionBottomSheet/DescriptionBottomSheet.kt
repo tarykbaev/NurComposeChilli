@@ -66,63 +66,86 @@ fun DescriptionBottomSheet(
         isDragHandleContentEnabled = true,
         dragHandle = { BottomSheetDragHandle(Modifier.padding(bottom = 8.dp)) },
         bottomSheetContent = {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_16dp))
-            ) {
-                if (icon != null) {
-                    Image(
-                        modifier = Modifier
-                            .width(params.iconWidth)
-                            .height(params.iconHeight)
-                            .align(Alignment.CenterHorizontally),
-                        painter = painterResource(id = icon),
-                        contentDescription = "Icon"
-                    )
-                }
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(
-                            top = dimensionResource(id = R.dimen.padding_16dp)
-                        ),
-                    style = params.titleTextStyle,
-                    text = title
-                )
-                if (description != null) {
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                top = dimensionResource(id = R.dimen.padding_16dp)
-                            ),
-                        style = params.descriptionTextStyle,
-                        text = description
-                    )
-                }
-                if (secondaryDescription != null) {
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                top = dimensionResource(id = R.dimen.padding_4dp)
-                            ),
-                        style = params.secondaryDescriptionTextStyle,
-                        text = secondaryDescription
-                    )
-                }
-                BaseButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = dimensionResource(id = R.dimen.padding_16dp)),
-                    onClick = onButtonClick,
-                    buttonStyle = ChiliButtonStyle.Secondary,
-                    title = buttonText
-                )
-            }
+            DescriptionBottomSheetContent(
+                modifier,
+                icon,
+                params,
+                title,
+                description,
+                secondaryDescription,
+                onButtonClick,
+                buttonText
+            )
         },
         screenContent = { content() }
     )
+}
+
+@Composable
+fun DescriptionBottomSheetContent(
+    modifier: Modifier,
+    icon: Int?,
+    params: DescriptionBottomSheetParams,
+    title: String,
+    description: String?,
+    secondaryDescription: String?,
+    onButtonClick: () -> Unit,
+    buttonText: String
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(dimensionResource(id = R.dimen.padding_16dp))
+    ) {
+        if (icon != null) {
+            Image(
+                modifier = Modifier
+                    .width(params.iconWidth)
+                    .height(params.iconHeight)
+                    .align(Alignment.CenterHorizontally),
+                painter = painterResource(id = icon),
+                contentDescription = "Icon"
+            )
+        }
+        Text(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(
+                    top = dimensionResource(id = R.dimen.padding_16dp)
+                ),
+            style = params.titleTextStyle,
+            text = title
+        )
+        if (description != null) {
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_16dp)
+                    ),
+                style = params.descriptionTextStyle,
+                text = description
+            )
+        }
+        if (secondaryDescription != null) {
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_4dp)
+                    ),
+                style = params.secondaryDescriptionTextStyle,
+                text = secondaryDescription
+            )
+        }
+        BaseButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(top = dimensionResource(id = R.dimen.padding_16dp)),
+            onClick = onButtonClick,
+            buttonStyle = ChiliButtonStyle.Secondary,
+            title = buttonText
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
