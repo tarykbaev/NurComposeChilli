@@ -15,22 +15,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
-import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun BaseInput(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     textFieldValue: String,
     onValueChange: (String) -> Unit,
     hint: String = String(),
@@ -40,12 +35,15 @@ fun BaseInput(
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null
 ) {
-    Row {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         if (startIcon != null) {
             Image(
                 painter = painterResource(id = startIcon),
                 contentDescription = "Input field start description icon",
-                modifier = modifier
+                modifier = Modifier
                     .wrapContentSize()
                     .padding(
                         start = dimensionResource(id = R.dimen.padding_8dp),
@@ -55,9 +53,8 @@ fun BaseInput(
             )
         }
         TextField(
-            modifier = modifier
-                .wrapContentSize()
-                .fillMaxWidth()
+            modifier = Modifier
+                .weight(1f)
                 .padding(params.textFieldPadding),
             value = textFieldValue,
             onValueChange = onValueChange,
@@ -97,7 +94,7 @@ fun BaseInput(
             Image(
                 painter = painterResource(id = endIcon),
                 contentDescription = "Input field end description icon",
-                modifier = modifier
+                modifier = Modifier
                     .wrapContentSize()
                     .padding(
                         end = dimensionResource(id = R.dimen.padding_8dp),
