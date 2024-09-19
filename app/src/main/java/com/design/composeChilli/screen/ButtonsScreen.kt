@@ -124,9 +124,7 @@ fun ButtonsScreen() {
                 icon = com.design.composechili.R.drawable.ic_favourite,
                 rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
                 disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
-            ) {
-
-            }
+            ) {}
 
             Spacer(modifier = Modifier.size(12.dp))
             QuickActionButton(
@@ -136,9 +134,7 @@ fun ButtonsScreen() {
                 icon = com.design.composechili.R.drawable.ic_favourite,
                 rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
                 disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
-            ) {
-
-            }
+            ) {}
 
             Spacer(modifier = Modifier.size(12.dp))
             QuickActionButton(
@@ -147,7 +143,7 @@ fun ButtonsScreen() {
                 icon = com.design.composechili.R.drawable.ic_favourite,
                 rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
                 disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
-            )
+            ) {}
         }
     }
 }

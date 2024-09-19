@@ -2,9 +2,6 @@ package com.design.composechili.components.buttons.quickActionButton
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -23,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.utils.pressEffect
+import com.design.composechili.utils.rememberPressState
 
 /**
  * A composable function that creates a customizable quick action button with an icon and title.
@@ -50,7 +47,8 @@ import com.design.composechili.theme.ChiliTheme
  */
 @Composable
 fun QuickActionButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .wrapContentSize(),
     title: String,
     @DrawableRes icon: Int? = null,
     @DrawableRes rippleIcon: Int? = null,
@@ -60,45 +58,47 @@ fun QuickActionButton(
     onClick: (() -> Unit)? = null
 ) {
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
+    val isPressed = rememberPressState()
 
     val currentIcon = when {
         !enabled -> disabledIcon ?: icon
-        isPressed -> rippleIcon ?: icon
+        isPressed.value -> rippleIcon ?: icon
         else -> icon
     }
 
-    ChiliTheme {
-        Column(
-            modifier = modifier
-                .wrapContentSize()
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    enabled = enabled,
-                    onClick = { onClick?.invoke() }
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                modifier = Modifier.size(chiliQuickActionButtonParams.iconSize),
-                painter = painterResource(currentIcon ?: R.drawable.transparent_placeholder),
-                contentDescription = "icon"
-            )
-
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_8dp)))
-
-            Text(
-                modifier = Modifier.wrapContentSize(),
-                text = title,
-                style = if (enabled) {
-                    chiliQuickActionButtonParams.titleEnabledTextStyle
+    Column(
+        modifier = modifier
+            .then(
+                if (enabled) {
+                    Modifier.pressEffect(
+                        pointerInputKey = "quickActionButton",
+                        isPressed = isPressed
+                    ) {
+                        onClick?.invoke()
+                    }
                 } else {
-                    chiliQuickActionButtonParams.titleDisabledTextStyle
+                    Modifier
                 }
-            )
-        }
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier.size(chiliQuickActionButtonParams.iconSize),
+            painter = painterResource(currentIcon ?: R.drawable.transparent_placeholder),
+            contentDescription = "icon"
+        )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_8dp)))
+
+        Text(
+            modifier = Modifier.wrapContentSize(),
+            text = title,
+            style = if (enabled) {
+                chiliQuickActionButtonParams.titleEnabledTextStyle
+            } else {
+                chiliQuickActionButtonParams.titleDisabledTextStyle
+            }
+        )
     }
 }
 
