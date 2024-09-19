@@ -1,11 +1,11 @@
 package com.design.composechili.components.cell.baseCell
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,12 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
@@ -33,7 +33,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
- * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
+ * @param [startIcon] accepts [Any], but should be a valid object that can be converted into a Coil `AsyncImagePainter`. It's displayed at the start of the cell as [Image]
  * @param [baseCellParams] cell visual transformation params and paddings
  * @sample BaseCellParams.Default
  */
@@ -45,13 +45,14 @@ fun BaseCell(
     subtitle: String = String(),
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
-    @DrawableRes startIcon: Int? = null,
+    startIcon: Any? = null,
     baseCellParams: BaseCellParams = BaseCellParams.Default,
 ) {
     Box(
         modifier
+            .defaultMinSize(minHeight = 48.dp)
             .clip(baseCellParams.cornerMode.toRoundedShape())
-            .background(Color.White)
+            .background(ChiliTheme.Colors.ChiliCellViewBackground)
     ) {
         Row(
             Modifier
@@ -59,11 +60,13 @@ fun BaseCell(
                 .wrapContentHeight()
         ) {
             if (startIcon != null) {
+                val painter = rememberAsyncImagePainter(model = startIcon)
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
+                        .padding(start = 12.dp)
                         .size(dimensionResource(id = R.dimen.view_32dp)),
-                    painter = painterResource(id = startIcon),
+                    painter = painter,
                     contentDescription = "Base cell start icon"
                 )
             }
@@ -105,7 +108,9 @@ fun BaseCell(
 
             if (isChevronVisible) {
                 Image(
-                    modifier = Modifier.align(Alignment.CenterVertically),
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp),
                     painter = painterResource(id = R.drawable.chili_ic_chevron),
                     contentDescription = "Navigation icon",
                     colorFilter = ColorFilter.tint(
