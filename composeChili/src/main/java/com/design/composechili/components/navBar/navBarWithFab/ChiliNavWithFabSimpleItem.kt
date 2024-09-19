@@ -1,14 +1,20 @@
-package com.design.composechili.components.navBar.navBar
+package com.design.composechili.components.navBar.navBarWithFab
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,13 +27,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.navBar.navBar.model.ChiliNavSimpleItemParams
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
 
 /**
  * A simple navigation item for a navigation bar. It includes an icon and an optional label,
@@ -71,13 +81,14 @@ import com.design.composechili.theme.ChiliTheme
  */
 
 @Composable
-fun ChiliNavSimpleItem(
+fun ChiliNavWithFabSimpleItem(
     modifier: Modifier = Modifier,
     label: String = String(),
     @DrawableRes icon: Int,
     selectedColorTint: Color = ChiliTheme.Colors.ChiliNavBarSelectedItemColor,
     unselectedColorTint: Color = ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor,
     selected: Boolean,
+    verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding20Dp,
     navItemParams: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
     onNavClicked: () -> Unit = {},
 ) {
@@ -88,42 +99,48 @@ fun ChiliNavSimpleItem(
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
 
-        Column(
-            modifier = modifier
-                .padding(vertical = navItemParams.verticalPadding)
-                .clickable(
-                    onClick = onNavClicked
-                ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
+    Column(
+        modifier = modifier
+            .padding(vertical = navItemParams.verticalPadding)
+            .offset(y = (-verticalOffset))
+            .clickable(
+                onClick = onNavClicked
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Card(
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliNavBarItemBackgroundColor),
+            border = BorderStroke(
+                1.dp, ChiliTheme.Colors.ChiliNavBarItemStrokeColor
+            )
+        ) {
             Image(
-                modifier = Modifier,
+                modifier = Modifier.padding(8.dp),
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = icon)),
                 colorFilter = ColorFilter.tint(navItemColor),
                 contentDescription = null,
             )
-            Text(
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_4dp)),
-                text = label,
-                color = navItemColor,
-                style = navItemParams.labelTextStyle
-            )
         }
+        Text(
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_4dp)),
+            text = label,
+            color = navItemColor,
+            style = navItemParams.labelTextStyle
+        )
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ChiliNavSimpleItemPreview() {
     ChiliTheme {
         var isSelected by remember {
             mutableStateOf(false)
         }
-        ChiliNavSimpleItem(
-            modifier = Modifier.padding(24.dp),
-            icon = R.drawable.ic_home,
-            selected = isSelected
+        ChiliNavWithFabSimpleItem(
+            modifier = Modifier.padding(24.dp), icon = R.drawable.ic_home, selected = isSelected
         ) {
             isSelected = !isSelected
         }

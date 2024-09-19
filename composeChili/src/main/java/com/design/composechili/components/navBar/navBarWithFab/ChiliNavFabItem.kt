@@ -82,7 +82,7 @@ fun ChiliNavFabItem(
     iconBackgroundColor: Color = Color.Transparent,
     iconBackgroundShape: Shape = RoundedCornerShape(ChiliRadiusDimensions.fromResources().radius12Dp),
     iconSize: Dp = ChiliViewDimensions.fromResources().view48Dp,
-    verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding24Dp,
+    verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding20Dp,
     onClick: () -> Unit = {}
 ) {
 
@@ -92,33 +92,31 @@ fun ChiliNavFabItem(
         label = String()
     )
 
-    ChiliTheme {
-        Column(
-            modifier = modifier
-                .offset(y = (-verticalOffset))
-                .scale(if (isAnimateScale) scale else 1f)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = {
-                        onClick.invoke()
-                    }
+    Column(
+        modifier = modifier
+            .offset(y = (-verticalOffset))
+            .scale(if (isAnimateScale) scale else 1f)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = {
+                    onClick.invoke()
+                }
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+        Image(
+            modifier = Modifier
+                .size(iconSize)
+                .background(
+                    color = iconBackgroundColor,
+                    shape = iconBackgroundShape
                 ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            painter = painterResource(id = icon),
+            contentDescription = null
         )
-        {
-            Image(
-                modifier = Modifier
-                    .size(iconSize)
-                    .background(
-                        color = iconBackgroundColor,
-                        shape = iconBackgroundShape
-                    ),
-                painter = painterResource(id = icon),
-                contentDescription = null
-            )
-        }
     }
 }
 
