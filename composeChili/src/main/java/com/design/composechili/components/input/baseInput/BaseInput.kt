@@ -25,7 +25,7 @@ import com.design.composechili.R
 
 @Composable
 fun BaseInput(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     textFieldValue: String,
     onValueChange: (String) -> Unit,
     hint: String = String(),
@@ -36,8 +36,7 @@ fun BaseInput(
     @DrawableRes endIcon: Int? = null
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (startIcon != null) {
