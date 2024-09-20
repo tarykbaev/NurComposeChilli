@@ -1,13 +1,15 @@
 package com.design.composeChilli.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -16,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -41,7 +43,6 @@ import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.cell.radioButtonCell.RadioButtonCell
-import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -49,7 +50,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun BottomSheetsScreen() {
     val scope = rememberCoroutineScope()
-    val sheetState = getBottomSheetState()
+    val density = LocalDensity.current
+    val sheetState by remember { mutableStateOf(
+        BottomSheetScaffoldState(
+            bottomSheetState = SheetState(
+                skipPartiallyExpanded = true,
+                density = density
+            ), snackbarHostState = SnackbarHostState()
+        ))
+    }
 
     var sheetType by remember { mutableStateOf<BottomSheetType?>(null) }
     val buttons = listOf(
@@ -218,13 +227,7 @@ fun BottomSheetsScreen() {
 
                 }
 
-                null -> {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(id = R.drawable.ic_cat),
-                        contentDescription = null
-                    )
-                }
+                null -> {}
             }
         }
     ) {

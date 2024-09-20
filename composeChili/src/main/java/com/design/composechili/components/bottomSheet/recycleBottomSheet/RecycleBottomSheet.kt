@@ -81,20 +81,18 @@ fun <T> RecycleBottomSheetContent(
     composableItem: @Composable() (LazyItemScope.(T, (T) -> Unit) -> Unit),
     onItemClick: (T) -> Unit
 ) {
+    Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
+        Text(
+            modifier = Modifier.padding(bottom = 16.dp), text = title,
+            style = recycleBottomSheetParams.titleStyle
+        )
+        Text(
+            text = subtitle,
+            style = recycleBottomSheetParams.subtitleStyle
+        )
+    }
     LazyColumn(modifier = modifier) {
-        item {
-            Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
-                Text(
-                    modifier = Modifier.padding(bottom = 16.dp), text = title,
-                    style = recycleBottomSheetParams.titleStyle
-                )
-                Text(
-                    text = subtitle,
-                    style = recycleBottomSheetParams.subtitleStyle
-                )
-            }
-        }
-        itemsIndexed(listOfItems) { index, itemData ->
+             itemsIndexed(listOfItems) { index, itemData ->
             composableItem(itemData, onItemClick)
             if (index != listOfItems.size - 1) {
                 HorizontalDivider(
