@@ -1,6 +1,5 @@
 package com.design.composechili.components.navBar.navBarWithFab
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -23,12 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,7 +57,7 @@ import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
  * @param selected A Boolean that determines if the navigation item is currently selected.
  * If `true`, the item will use the `selectedColorTint`, otherwise it will use the `unselectedColorTint`.
  *
- * @param navItemParams nav item visual transformation params and paddings. Default is `ChiliNavSimpleItemParams.Default`.
+ * @param params nav item visual transformation params and paddings. Default is `ChiliNavSimpleItemParams.Default`.
  *
  * @param onNavClicked A lambda function invoked when the navigation item is clicked.
  * This is used to handle navigation logic or any associated actions.
@@ -85,23 +81,21 @@ fun ChiliNavWithFabSimpleItem(
     modifier: Modifier = Modifier,
     label: String = String(),
     @DrawableRes icon: Int,
-    selectedColorTint: Color = ChiliTheme.Colors.ChiliNavBarSelectedItemColor,
-    unselectedColorTint: Color = ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor,
     selected: Boolean,
     verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding20Dp,
-    navItemParams: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
+    params: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
     onNavClicked: () -> Unit = {},
 ) {
 
     val navItemColor by animateColorAsState(
-        targetValue = if (selected) selectedColorTint else unselectedColorTint,
+        targetValue = if (selected) params.selectedColorTint else params.unselectedColorTint,
         label = "nav item color for enable state",
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
 
     Column(
         modifier = modifier
-            .padding(vertical = navItemParams.verticalPadding)
+            .padding(vertical = params.verticalPadding)
             .offset(y = (-verticalOffset))
             .clickable(
                 onClick = onNavClicked
@@ -127,7 +121,7 @@ fun ChiliNavWithFabSimpleItem(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_4dp)),
             text = label,
             color = navItemColor,
-            style = navItemParams.labelTextStyle
+            style = params.labelTextStyle
         )
     }
 }

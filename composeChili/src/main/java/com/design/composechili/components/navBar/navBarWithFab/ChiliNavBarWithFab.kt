@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectableGroup
@@ -72,7 +73,6 @@ fun ChiliNavBarWithFab(
     modifier: Modifier = Modifier,
     navItems: List<ChiliNavButtonItem>,
     isScaleAnimationEnabled: Boolean = true,
-    animationScaleValue: Float = 1.3f,
     params: NavBarWithFabParams = NavBarWithFabParams.Default,
     onNavigateItemClicked: (ChiliNavButtonItem) -> Unit
 ) {
@@ -95,13 +95,9 @@ fun ChiliNavBarWithFab(
                 shape = params.backgroundShape
             )
             .fillMaxWidth()
+            .wrapContentHeight()
             .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-            .selectableGroup()
-            .onGloballyPositioned {
-                componentHeight = with(density) {
-                    it.size.height.toDp()
-                }
-            },
+            .selectableGroup(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         items(navItems) { item ->
@@ -111,8 +107,6 @@ fun ChiliNavBarWithFab(
                         icon = item.icon,
                         label = item.label,
                         selected = selectedItem == item,
-                        selectedColorTint = params.selectedColor,
-                        unselectedColorTint = params.unselectedColor
                     ) {
                         selectedItem = item
                         onNavigateItemClicked.invoke(item)

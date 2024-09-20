@@ -110,6 +110,7 @@ public data class ChiliColors(
     val ChiliNavBarUnSelectedItemColor: Color,
     val ChiliNavBarItemBackgroundColor:Color,
     val ChiliNavBarItemStrokeColor:Color,
+    val ChiliNavBarBackgroundColor:Color,
 
     // Bottom Sheet
     val ChiliBottomSheetBackgroundColor:Color,
@@ -207,7 +208,8 @@ public data class ChiliColors(
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.folly_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliNavBarItemBackgroundColor = colorResource(id = R.color.black_4),
-            ChiliNavBarItemStrokeColor = colorResource(id = R.color.black_4)
+            ChiliNavBarItemStrokeColor = colorResource(id = R.color.black_4),
+            ChiliNavBarBackgroundColor = colorResource(id = R.color.black_1)
         )
 
         @Composable
@@ -284,7 +286,8 @@ public data class ChiliColors(
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliNavBarItemBackgroundColor = colorResource(id = R.color.white_1),
-            ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30)
+            ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30),
+            ChiliNavBarBackgroundColor = colorResource(id = R.color.gray_9)
         )
     }
 }
