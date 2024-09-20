@@ -63,39 +63,51 @@ fun InfoBottomSheet(
         peekHeight = peekHeight,
         hasCloseIcon = true,
         bottomSheetContent = {
-            Column(modifier = modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(painter = painterResource(id = icon), contentDescription = null)
-                    Column(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = title.take(infoBottomSheetsParams.maxChars),
-                            style = infoBottomSheetsParams.titleStyle
-                        )
-                        Text(
-                            text = description,
-                            style = infoBottomSheetsParams.descriptionStyle
-                        )
-                    }
-                }
-            }
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(buttons) {
-                    BaseButton(
-                        onClick = it.onClick,
-                        title = it.title,
-                        buttonStyle = it.buttonStyle
-                    )
-                }
-            }
+            InfoBottomSheetContent(modifier, icon, title, infoBottomSheetsParams, description, buttons)
         }) { content() }
+}
+
+@Composable
+fun InfoBottomSheetContent(
+    modifier: Modifier,
+    icon: Int,
+    title: String,
+    infoBottomSheetsParams: InfoBottomSheetsParams,
+    description: String,
+    buttons: List<InfoBottomSheetButton>
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(painter = painterResource(id = icon), contentDescription = null)
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = title.take(infoBottomSheetsParams.maxChars),
+                    style = infoBottomSheetsParams.titleStyle
+                )
+                Text(
+                    text = description,
+                    style = infoBottomSheetsParams.descriptionStyle
+                )
+            }
+        }
+    }
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        items(buttons) {
+            BaseButton(
+                onClick = it.onClick,
+                title = it.title,
+                buttonStyle = it.buttonStyle
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

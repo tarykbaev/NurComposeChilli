@@ -2,6 +2,7 @@ package com.design.composechili.components.bottomSheet.detailedInfoBottomSheet
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -59,33 +60,54 @@ fun DetailedInfoBottomSheet(
         sheetState = sheetState,
         peekHeight = peekHeight,
         bottomSheetContent = {
-            Column(
-                modifier = modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
-                    painter = painterResource(id = detailedInfoBottomSheetParams.icon),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
-                    text = infoText,
-                    style = detailedInfoBottomSheetParams.textStyle
-                )
-            }
-            if (secondaryButtonTitle != null)
-                BaseButton(
-                    modifier = Modifier.padding(8.dp),
-                    onClick = onSecondaryClick,
-                    title = secondaryButtonTitle,
-                    buttonStyle = ChiliButtonStyle.Additional
-                )
-            BaseButton(onClick = onPrimaryClick, title = buttonTitle)
+            DetailedInfoBottomSheetContent(
+                modifier,
+                detailedInfoBottomSheetParams,
+                infoText,
+                secondaryButtonTitle,
+                onSecondaryClick,
+                onPrimaryClick,
+                buttonTitle
+            )
         },
         hasCloseIcon = true,
         screenContent = screenContent,
     )
+}
+
+@Composable
+fun DetailedInfoBottomSheetContent(
+    modifier: Modifier,
+    detailedInfoBottomSheetParams: DetailedInfoBottomSheetParams,
+    infoText: String,
+    secondaryButtonTitle: String? = null,
+    onSecondaryClick: () -> Unit = {},
+    onPrimaryClick: () -> Unit,
+    buttonTitle: String
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier.size(detailedInfoBottomSheetParams.iconSize),
+            painter = painterResource(id = detailedInfoBottomSheetParams.icon),
+            contentDescription = null
+        )
+        Text(
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16dp)),
+            text = infoText,
+            style = detailedInfoBottomSheetParams.textStyle
+        )
+    }
+    if (secondaryButtonTitle != null)
+        BaseButton(
+            buttonPadding = PaddingValues(8.dp),
+            onClick = onSecondaryClick,
+            title = secondaryButtonTitle,
+            buttonStyle = ChiliButtonStyle.Additional
+        )
+    BaseButton(onClick = onPrimaryClick, title = buttonTitle)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

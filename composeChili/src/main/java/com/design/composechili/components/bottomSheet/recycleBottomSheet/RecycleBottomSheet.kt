@@ -57,32 +57,53 @@ fun <T> RecycleBottomSheet(
         sheetState = sheetState,
         peekHeight = peekHeight,
         bottomSheetContent = {
-            LazyColumn(modifier = modifier) {
-                item {
-                    Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
-                        Text(
-                            modifier = Modifier.padding(bottom = 16.dp), text = title,
-                            style = recycleBottomSheetParams.titleStyle
-                        )
-                        Text(
-                            text = subtitle,
-                            style = recycleBottomSheetParams.subtitleStyle
-                        )
-                    }
-                }
-                itemsIndexed(listOfItems) { index, itemData ->
-                    composableItem(itemData, onItemClick)
-                    if (index != listOfItems.size - 1) {
-                        HorizontalDivider(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = ChiliTheme.Colors.ChiliDividerColor,
-                            thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
-                        )
-                    }
-                }
-            }
+            RecycleBottomSheetContent(
+                modifier,
+                title,
+                recycleBottomSheetParams,
+                subtitle,
+                listOfItems,
+                composableItem,
+                onItemClick
+            )
         }) {
         screenContent()
+    }
+}
+
+@Composable
+fun <T> RecycleBottomSheetContent(
+    modifier: Modifier,
+    title: String,
+    recycleBottomSheetParams: RecycleBottomSheetParams,
+    subtitle: String,
+    listOfItems: List<T>,
+    composableItem: @Composable() (LazyItemScope.(T, (T) -> Unit) -> Unit),
+    onItemClick: (T) -> Unit
+) {
+    LazyColumn(modifier = modifier) {
+        item {
+            Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp), text = title,
+                    style = recycleBottomSheetParams.titleStyle
+                )
+                Text(
+                    text = subtitle,
+                    style = recycleBottomSheetParams.subtitleStyle
+                )
+            }
+        }
+        itemsIndexed(listOfItems) { index, itemData ->
+            composableItem(itemData, onItemClick)
+            if (index != listOfItems.size - 1) {
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = ChiliTheme.Colors.ChiliDividerColor,
+                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+                )
+            }
+        }
     }
 }
 
