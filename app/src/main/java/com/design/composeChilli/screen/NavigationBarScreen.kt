@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -16,12 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.design.composeChilli.R
 import com.design.composechili.components.common.chiliMaterialDesignSlider.ChiliMaterialDesignSlider
 import com.design.composechili.components.navBar.navBar.ChiliNavBar
 import com.design.composechili.components.navBar.navBarWithFab.ChiliNavBarWithFab
 import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavButtonItem
 import com.design.composechili.theme.ChiliTheme
+import kotlin.math.roundToInt
 
 @Composable
 fun NavigationBarScreen(modifier: Modifier = Modifier) {
@@ -94,6 +95,10 @@ fun NavigationBarScreen(modifier: Modifier = Modifier) {
             mutableFloatStateOf(1.3f)
         }
 
+        var itemsAnimationDuration by rememberSaveable {
+            mutableIntStateOf(68)
+        }
+
         ChiliMaterialDesignSlider(
             initialValue = itemsAnimationScale,
             stepsSize = 40,
@@ -104,9 +109,20 @@ fun NavigationBarScreen(modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.size(24.dp))
 
+        ChiliMaterialDesignSlider(
+            initialValue = itemsAnimationDuration.toFloat(),
+            description = "Items animation duration:",
+            range = 0f..800f
+        ){ duration ->
+            itemsAnimationDuration = duration.roundToInt()
+        }
+
+        Spacer(modifier = Modifier.size(24.dp))
         ChiliNavBarWithFab(
             modifier = Modifier,
-            navItems = navBarItemsWithFab
+            scale = itemsAnimationScale,
+            navItems = navBarItemsWithFab,
+            scaleAnimationDuration = itemsAnimationDuration
         ) { navItem ->
             Toast.makeText(context, navItem.label, Toast.LENGTH_SHORT).show()
         }

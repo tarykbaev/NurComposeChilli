@@ -7,7 +7,7 @@ import androidx.compose.ui.res.colorResource
 import com.design.composechili.R
 
 @Immutable
-public data class ChiliColors(
+data class ChiliColors(
     val ChiliPrimaryTextColor: Color,
     val ChiliSecondaryTextColor: Color,
     val ChiliMarkedTextColor: Color,
@@ -292,7 +292,6 @@ public data class ChiliColors(
             ChiliNavBarItemBackgroundColor = colorResource(id = R.color.white_1),
             ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30),
             ChiliNavBarBackgroundColor = colorResource(id = R.color.gray_9),
-            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.black_1),
             ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2)
         )

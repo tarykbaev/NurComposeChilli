@@ -2,11 +2,13 @@ package com.design.composechili.components.navBar.navBarWithFab
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -34,46 +37,30 @@ import com.design.composechili.R
 import com.design.composechili.components.navBar.navBar.model.ChiliNavSimpleItemParams
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
+import com.design.composechili.utils.pressEffect
+import com.design.composechili.utils.rememberPressState
 
 /**
- * A simple navigation item for a navigation bar. It includes an icon and an optional label,
- * with customizable or theme-based tints for selected and unselected states.
+ * A composable function that represents a navigation item with a floating action button (FAB).
+ * This item can have an icon, a label, and scale animation effects when selected.
  *
- * @param modifier Modifier to be applied to the navigation item, allowing for layout customizations such as padding, alignment, and size.
- * Default is `Modifier`.
- *
- * @param label A string representing the label to display below or next to the icon.
- * The label is optional and defaults to an empty string.
- *
- * @param icon A drawable resource ID for the icon displayed in the navigation item.
- * The icon should be passed as an integer representing a valid drawable resource (`@DrawableRes`).
- *
- * @param selectedColorTint The color tint applied to the icon and label when the item is selected.
- * The default value is the `ChiliNavBarSelectedItemColor` from the app's theme (`ChiliTheme.Colors.ChiliNavBarSelectedItemColor`).
- *
- * @param unselectedColorTint The color tint applied to the icon and label when the item is not selected.
- * The default value is the `ChiliNavBarUnSelectedItemColor` from the app's theme (`ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor`).
- *
- * @param selected A Boolean that determines if the navigation item is currently selected.
- * If `true`, the item will use the `selectedColorTint`, otherwise it will use the `unselectedColorTint`.
- *
- * @param params nav item visual transformation params and paddings. Default is `ChiliNavSimpleItemParams.Default`.
- *
- * @param onNavClicked A lambda function invoked when the navigation item is clicked.
- * This is used to handle navigation logic or any associated actions.
- * Default is an empty lambda (`{}`).
- *
- * Example Usage:
- * ```
- * ChiliNavSimpleItem(
- *     label = "Home",
- *     icon = R.drawable.ic_home,
- *     selected = true,
- *     onNavClicked = { /* Handle navigation */ }
- * )
- * ```
- *
- * @see [ChiliNavSimpleItemParams.Default]
+ * @param modifier Modifier applied to the root composable. Defaults to `Modifier`.
+ * @param label The text label associated with the navigation item. Defaults to an empty string.
+ * @param icon The resource ID for the drawable icon to display. This is a mandatory parameter.
+ * @param selected A boolean flag that indicates whether the navigation item is currently selected.
+ * @param scaleSize The scaling factor applied to the navigation item when it is selected.
+ *                  Defaults to 1.3f (30% larger when selected).
+ * @param scaleAnimationDuration The duration of the scale animation when the item is selected, in milliseconds.
+ *                               Defaults to `DefaultDurationMillis`.
+ * @param isScaleAnimationEnabled A boolean flag that controls whether the scale animation is enabled.
+ *                                Defaults to `true`.
+ * @param verticalOffset A vertical offset applied to the item to adjust its position.
+ *                       Defaults to `ChiliPaddingDimensions.fromResources().padding20Dp`.
+ * @param params Additional parameters for customizing the appearance and behavior of the item.
+ *               Defaults to `ChiliNavSimpleItemParams.Default`.
+ * @param onNavClicked A lambda function triggered when the navigation item is clicked.
+ *                     Defaults to an empty lambda.
+ * @sample ChiliNavSimpleItemParams.Default
  */
 
 @Composable
@@ -82,6 +69,9 @@ fun ChiliNavWithFabSimpleItem(
     label: String = String(),
     @DrawableRes icon: Int,
     selected: Boolean,
+    scaleSize:Float = 1.3f,
+    scaleAnimationDuration:Int = DefaultDurationMillis,
+    isScaleAnimationEnabled: Boolean = true,
     verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding20Dp,
     params: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
     onNavClicked: () -> Unit = {},
@@ -93,13 +83,22 @@ fun ChiliNavWithFabSimpleItem(
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
 
+    val isPressedState = rememberPressState()
+
+    val scale by animateFloatAsState(
+        targetValue = if (isPressedState.value) scaleSize else 1f,
+        label = String(),
+        animationSpec = tween(scaleAnimationDuration)
+    )
+
     Column(
         modifier = modifier
             .padding(vertical = params.verticalPadding)
             .offset(y = (-verticalOffset))
-            .clickable(
-                onClick = onNavClicked
-            ),
+            .scale(if (isScaleAnimationEnabled) scale else 1f)
+            .pressEffect("ChiliNavSimpleItem$label", isPressedState){
+                onNavClicked()
+            },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

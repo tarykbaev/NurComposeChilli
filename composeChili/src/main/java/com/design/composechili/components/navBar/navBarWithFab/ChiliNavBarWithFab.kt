@@ -1,5 +1,6 @@
 package com.design.composechili.components.navBar.navBarWithFab
 
+import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,14 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.navBar.navBar.ChiliNavSimpleItem
 import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavButtonItem
 import com.design.composechili.components.navBar.navBarWithFab.model.NavBarWithFabParams
 import com.design.composechili.theme.ChiliTheme
@@ -73,6 +69,8 @@ fun ChiliNavBarWithFab(
     modifier: Modifier = Modifier,
     navItems: List<ChiliNavButtonItem>,
     isScaleAnimationEnabled: Boolean = true,
+    scale:Float = 1.3f,
+    scaleAnimationDuration:Int = DefaultDurationMillis,
     params: NavBarWithFabParams = NavBarWithFabParams.Default,
     onNavigateItemClicked: (ChiliNavButtonItem) -> Unit
 ) {
@@ -81,12 +79,6 @@ fun ChiliNavBarWithFab(
             navItems.filterIsInstance<ChiliNavButtonItem.ChiliNavButtonItemButton>().first()
         )
     }
-
-    //initial height set at 0.dp
-    var componentHeight by remember { mutableStateOf(0.dp) }
-
-    // get local density from composable
-    val density = LocalDensity.current
 
     LazyRow(
         modifier = modifier
@@ -105,7 +97,10 @@ fun ChiliNavBarWithFab(
                 is ChiliNavButtonItem.ChiliNavButtonItemButton -> {
                     ChiliNavWithFabSimpleItem(
                         icon = item.icon,
+                        isScaleAnimationEnabled = isScaleAnimationEnabled,
                         label = item.label,
+                        scaleSize = scale,
+                        scaleAnimationDuration = scaleAnimationDuration,
                         selected = selectedItem == item,
                     ) {
                         selectedItem = item
@@ -115,8 +110,10 @@ fun ChiliNavBarWithFab(
 
                 is ChiliNavButtonItem.ChiliNavButtonItemFloatActionButton -> {
                     ChiliNavFabItem(
-                        isAnimateScale = isScaleAnimationEnabled,
-                        icon = item.icon
+                        isScaleAnimationEnabled = isScaleAnimationEnabled,
+                        icon = item.icon,
+                        animationDuration = scaleAnimationDuration,
+                        scaleSize = scale
                     ) {
                         onNavigateItemClicked.invoke(item)
                     }
