@@ -39,7 +39,7 @@ import com.design.composechili.utils.rememberPressState
  * @param enabled A [Boolean] indicating whether the button is enabled or disabled. Defaults to `true`.
  * When `false`, the `disabledIcon` is used, and the button is not clickable.
  *
- * @param chiliQuickActionButtonParams An instance of [ChiliQuickActionButtonParams] to configure additional
+ * @param params An instance of [ChiliQuickActionButtonParams] to configure additional
  * parameters for the button, such as icon size and text style. Defaults to [ChiliQuickActionButtonParams.Default].
  *
  * @param onClick An optional lambda function that is invoked when the button is clicked. If `null`,
@@ -50,11 +50,11 @@ fun QuickActionButton(
     modifier: Modifier = Modifier
         .wrapContentSize(),
     title: String,
-    @DrawableRes icon: Int? = null,
+    @DrawableRes icon: Int = R.drawable.transparent_placeholder,
     @DrawableRes rippleIcon: Int? = null,
     @DrawableRes disabledIcon: Int? = null,
     enabled: Boolean = true,
-    chiliQuickActionButtonParams: ChiliQuickActionButtonParams = ChiliQuickActionButtonParams.Default,
+    params: ChiliQuickActionButtonParams = ChiliQuickActionButtonParams.Default,
     onClick: (() -> Unit)? = null
 ) {
 
@@ -72,7 +72,7 @@ fun QuickActionButton(
                 if (enabled) {
                     Modifier.pressEffect(
                         pointerInputKey = "quickActionButton",
-                        isPressed = isPressed
+                        isPressedState = isPressed
                     ) {
                         onClick?.invoke()
                     }
@@ -83,8 +83,8 @@ fun QuickActionButton(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            modifier = Modifier.size(chiliQuickActionButtonParams.iconSize),
-            painter = painterResource(currentIcon ?: R.drawable.transparent_placeholder),
+            modifier = Modifier.size(params.iconSize),
+            painter = painterResource(currentIcon),
             contentDescription = "icon"
         )
 
@@ -94,9 +94,9 @@ fun QuickActionButton(
             modifier = Modifier.wrapContentSize(),
             text = title,
             style = if (enabled) {
-                chiliQuickActionButtonParams.titleEnabledTextStyle
+                params.titleEnabledTextStyle
             } else {
-                chiliQuickActionButtonParams.titleDisabledTextStyle
+                params.titleDisabledTextStyle
             }
         )
     }

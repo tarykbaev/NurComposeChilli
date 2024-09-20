@@ -28,19 +28,19 @@ fun rememberPressState(): MutableState<Boolean> {
 
 fun Modifier.pressEffect(
     pointerInputKey: Any?,
-    isPressed: MutableState<Boolean>,
+    isPressedState: MutableState<Boolean>,
     onPress: (() -> Unit)? = null,
     onTap: (() -> Unit)? = null
 ): Modifier = then(
     Modifier.pointerInput(pointerInputKey) {
         detectTapGestures(
             onPress = {
-                isPressed.value = true
+                isPressedState.value = true
                 onPress?.invoke()
                 try {
                     tryAwaitRelease()
                 } finally {
-                    isPressed.value = false
+                    isPressedState.value = false
                 }
             },
             onTap = { onTap?.invoke() }
