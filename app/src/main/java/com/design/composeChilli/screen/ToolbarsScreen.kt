@@ -20,7 +20,7 @@ fun ToolbarsScreen(onBackPressed: (() -> Unit)? = null) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(ChiliTheme.Colors.chiliScreenBackground)
+            .background(ChiliTheme.Colors.СhiliScreenBackground)
     ) {
         ChiliBaseTopAppBar(
             title = "Transparent Toolbar",

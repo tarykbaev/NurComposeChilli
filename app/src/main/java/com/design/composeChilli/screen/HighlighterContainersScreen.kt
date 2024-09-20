@@ -40,7 +40,7 @@ fun HighlighterContainersScreen() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(ChiliTheme.Colors.chiliScreenBackground)
+            .background(ChiliTheme.Colors.СhiliScreenBackground)
             .verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(16.dp))

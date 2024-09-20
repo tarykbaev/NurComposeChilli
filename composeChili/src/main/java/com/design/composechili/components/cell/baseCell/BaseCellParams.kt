@@ -40,7 +40,7 @@ data class BaseCellParams(
                 ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
                     vertical = dimensionResource(id = R.dimen.padding_8dp),
                     horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), chevronIconTint = ChiliTheme.Colors.chiliChevronColor
+                ), chevronIconTint = ChiliTheme.Colors.СhiliChevronColor
             )
     }
 

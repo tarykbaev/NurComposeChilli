@@ -16,25 +16,25 @@ data class ChiliColors(
     val ChiliLinkTextColor: Color,
 
     // Screen Background
-    val chiliScreenBackground: Color,
+    val СhiliScreenBackground: Color,
     val ChiliSurfaceBackground: Color,
 
     // Ripple
-    val chiliRippleForegroundColor: Color,
+    val СhiliRippleForegroundColor: Color,
 
     // Divider
     val ChiliDividerColor: Color,
 
     // Chevron
-    val chiliChevronColor: Color,
+    val СhiliChevronColor: Color,
 
     // Snackbar
     val ChiliSnackbarBackground: Color,
     val ChiliSnackbarTextColor: Color,
 
     // Segmented Picker
-    val chiliSegmentedPickerBackgroundColor: Color,
-    val chiliSegmentedPickerTabIndicatorColor: Color,
+    val СhiliSegmentedPickerBackgroundColor: Color,
+    val СhiliSegmentedPickerTabIndicatorColor: Color,
     val chiliSegmentedPickerTabTextColor: Color,
 
     // CheckBox
@@ -144,15 +144,15 @@ data class ChiliColors(
             ChiliErrorTextColor = colorResource(id = R.color.red_1),
             ChiliValueTextColor = colorResource(id = R.color.gray_1),
             ChiliLinkTextColor = colorResource(id = R.color.magenta_1),
-            chiliScreenBackground = colorResource(id = R.color.black_2),
+            СhiliScreenBackground = colorResource(id = R.color.black_2),
             ChiliSurfaceBackground = colorResource(id = R.color.black_1),
-            chiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
+            СhiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
             ChiliDividerColor = colorResource(id = R.color.black_4),
-            chiliChevronColor = colorResource(id = R.color.white_1),
+            СhiliChevronColor = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
             ChiliSnackbarBackground = colorResource(id = R.color.black_3),
-            chiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
-            chiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
+            СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
+            СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.gray_3),
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
@@ -224,15 +224,15 @@ data class ChiliColors(
             ChiliErrorTextColor = colorResource(id = R.color.red_1),
             ChiliValueTextColor = colorResource(id = R.color.gray_1),
             ChiliLinkTextColor = colorResource(id = R.color.magenta_1),
-            chiliScreenBackground = colorResource(id = R.color.gray_4),
+            СhiliScreenBackground = colorResource(id = R.color.gray_4),
             ChiliSurfaceBackground = colorResource(id = R.color.white_1),
-            chiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
+            СhiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
-            chiliChevronColor = colorResource(id = R.color.gray_2),
+            СhiliChevronColor = colorResource(id = R.color.gray_2),
             ChiliSnackbarBackground = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.black_5),
-            chiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
-            chiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
+            СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
+            СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.black_5),
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.black_5),
