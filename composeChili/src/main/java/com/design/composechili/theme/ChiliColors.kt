@@ -88,7 +88,7 @@ public data class ChiliColors(
     val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
     val ChiliToggleCellViewTextOnOffCheckedDisabledColor: Color,
 
-    val ChiliTooltipBackground:Color,
+    val ChiliTooltipBackground: Color,
 
 
     // TopAppBar
@@ -108,25 +108,29 @@ public data class ChiliColors(
     // NavBar
     val ChiliNavBarSelectedItemColor: Color,
     val ChiliNavBarUnSelectedItemColor: Color,
+
     // Bottom Sheet
-    val ChiliBottomSheetBackgroundColor:Color,
-    val ChiliBottomSheetGrayBackgroundColor:Color,
+    val ChiliBottomSheetBackgroundColor: Color,
+    val ChiliBottomSheetGrayBackgroundColor: Color,
 
     // Card Cell View
     val ChiliCardErrorTextColor: Color,
 
     // Action Bottom Sheet
-    val ChiliActionBottomSheetButtonTextColor:Color,
-    val ChiliActionBottomSheetAccentButtonTextColor:Color,
+    val ChiliActionBottomSheetButtonTextColor: Color,
+    val ChiliActionBottomSheetAccentButtonTextColor: Color,
 
     // In App Push
-    val ChiliInAppPushBackgroundColor:Color,
+    val ChiliInAppPushBackgroundColor: Color,
 
     // Bottom Sheet Drag Handle line color
     val ChiliThickBottomSheetDragHandleColor: Color,
-    val ChiliBottomSheetDragHandleColor: Color
+    val ChiliBottomSheetDragHandleColor: Color,
 
-    ){
+    // ChiliQuickActionButton
+    val ChiliQuickActionButtonTitleEnabledColor: Color,
+    val ChiliQuickActionButtonTitleDisabledColor: Color
+) {
 
     companion object {
         @Composable
@@ -201,7 +205,9 @@ public data class ChiliColors(
             ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.gray_3),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.gray_1),
-            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1)
+            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1),
+            ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.white_1),
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1)
         )
 
         @Composable
@@ -276,7 +282,9 @@ public data class ChiliColors(
             ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.gray_1),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
-            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5)
+            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
+            ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.black_1),
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2)
         )
     }
 }

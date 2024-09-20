@@ -1,32 +1,28 @@
 package com.design.composeChilli.screen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.design.composeChilli.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.buttons.loaderButton.LoaderButton
+import com.design.composechili.components.buttons.quickActionButton.QuickActionButton
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
@@ -118,5 +114,36 @@ fun ButtonsScreen() {
             buttonStyle = ChiliButtonStyle.Additional
         )
 
+        Spacer(modifier = Modifier.size(12.dp))
+        Row(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            QuickActionButton(
+                modifier = Modifier,
+                title = "To favorites",
+                icon = com.design.composechili.R.drawable.ic_favourite,
+                rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
+                disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
+            ) {}
+
+            Spacer(modifier = Modifier.size(12.dp))
+            QuickActionButton(
+                modifier = Modifier,
+                title = "To favorites",
+                enabled = false,
+                icon = com.design.composechili.R.drawable.ic_favourite,
+                rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
+                disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
+            ) {}
+
+            Spacer(modifier = Modifier.size(12.dp))
+            QuickActionButton(
+                modifier = Modifier,
+                title = "To favorites",
+                icon = com.design.composechili.R.drawable.ic_favourite,
+                rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
+                disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
+            ) {}
+        }
     }
 }
