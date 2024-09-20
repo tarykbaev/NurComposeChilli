@@ -21,11 +21,11 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun ChiliSwitch(
     modifier: Modifier = Modifier,
+    checkedState: Boolean,
     paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
     description: String = "Switch animation on items",
     onValueChange: (Boolean) -> Unit,
 ) {
-    var checkedState by remember { mutableStateOf(false) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +40,6 @@ fun ChiliSwitch(
         Switch(
             checked = checkedState,
             onCheckedChange = {
-                checkedState = it
                 onValueChange(it)
             },
             colors = SwitchDefaults.colors(
@@ -53,5 +52,12 @@ fun ChiliSwitch(
 @Preview(showBackground = true)
 @Composable
 fun Switch_Preview() {
-    ChiliSwitch(onValueChange = {})
+    ChiliTheme {
+        var checkedState by remember {
+            mutableStateOf(false)
+        }
+        ChiliSwitch(checkedState = checkedState){
+            checkedState = it
+        }
+    }
 }

@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.RadioButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -18,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.common.chiliMaterialDesignSlider.ChiliMaterialDesignSlider
+import com.design.composechili.components.common.switch.ChiliSwitch
 import com.design.composechili.components.navBar.navBar.ChiliNavBar
 import com.design.composechili.components.navBar.navBarWithFab.ChiliNavBarWithFab
 import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavButtonItem
@@ -26,6 +31,18 @@ import kotlin.math.roundToInt
 
 @Composable
 fun NavigationBarScreen(modifier: Modifier = Modifier) {
+
+    var itemsAnimationScale by rememberSaveable {
+        mutableFloatStateOf(1.3f)
+    }
+
+    var itemsAnimationDuration by rememberSaveable {
+        mutableIntStateOf(68)
+    }
+
+    var isScaleAnimationEnabled by rememberSaveable {
+        mutableStateOf(true)
+    }
 
 
     Column(
@@ -91,18 +108,17 @@ fun NavigationBarScreen(modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.size(32.dp))
 
-        var itemsAnimationScale by rememberSaveable {
-            mutableFloatStateOf(1.3f)
-        }
+        ChiliSwitch(
+            modifier = Modifier.wrapContentSize(),
+            checkedState = isScaleAnimationEnabled
+        ) { isScaleAnimationEnabled = isScaleAnimationEnabled.not() }
 
-        var itemsAnimationDuration by rememberSaveable {
-            mutableIntStateOf(68)
-        }
+        Spacer(modifier = Modifier.size(32.dp))
 
         ChiliMaterialDesignSlider(
             initialValue = itemsAnimationScale,
             stepsSize = 40,
-            range = 0f .. 4f,
+            range = 0f..4f,
             description = "Items scale on animation:"
         ) {
             itemsAnimationScale = it
@@ -113,7 +129,7 @@ fun NavigationBarScreen(modifier: Modifier = Modifier) {
             initialValue = itemsAnimationDuration.toFloat(),
             description = "Items animation duration:",
             range = 0f..800f
-        ){ duration ->
+        ) { duration ->
             itemsAnimationDuration = duration.roundToInt()
         }
 
@@ -122,6 +138,7 @@ fun NavigationBarScreen(modifier: Modifier = Modifier) {
             modifier = Modifier,
             scale = itemsAnimationScale,
             navItems = navBarItemsWithFab,
+            isScaleAnimationEnabled = isScaleAnimationEnabled,
             scaleAnimationDuration = itemsAnimationDuration
         ) { navItem ->
             Toast.makeText(context, navItem.label, Toast.LENGTH_SHORT).show()
