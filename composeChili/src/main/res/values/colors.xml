@@ -18,6 +18,8 @@
     <color name="gray_7">#D8D8D8</color>
     <color name="gray_8">#D5D5D5</color>
 
+    <color name="gray_9">#F0F0F0</color>
+
     <!-- White -->
     <color name="white_1">#FFFFFF</color>
 
@@ -88,6 +90,7 @@
     <color name="black_1_alpha_50">#80010101</color>
     <color name="blue_1_alpha_50">#80007AFF</color>
     <color name="magenta_1_alpha_40">#66F0047F</color>
+    <color name="c_ececec_alpha_30">#4DECECEC</color>
     <color name="black_alpha_0_08">#14000000</color>
     <color name="black_alpha_40">#66000000</color>
     <color name="white_alpha_0">#00FFFFFF</color>

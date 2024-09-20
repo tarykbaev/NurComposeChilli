@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
 import java.util.Locale
-import kotlin.math.roundToInt
 
 @Composable
 fun ChiliMaterialDesignSlider(
@@ -40,7 +39,7 @@ fun ChiliMaterialDesignSlider(
             valueRange = range,
             onValueChange = {
                 sliderPosition = it
-                onValueChanged(it.roundToInt().toFloat())
+                onValueChanged(it)
             },
             colors = SliderDefaultsM2.colors(
                 thumbColor = ChiliTheme.Colors.ChiliLinkTextColor,
