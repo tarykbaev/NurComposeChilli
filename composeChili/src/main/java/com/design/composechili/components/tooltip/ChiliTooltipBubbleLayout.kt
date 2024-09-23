@@ -10,11 +10,16 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 
+/**
+ * View that covers the space for tooltip [content] + arrow.
+ * It also draws the arrow itself by the given [arrowPositionX] and [arrowHeight] and paints it in [pathColor]
+ * P.S. our chili tooltip's arrow points upward only
+ */
+
 @Composable
 fun BubbleLayout(
     modifier: Modifier = Modifier,
     pathColor: Color,
-    alignment: TooltipAlignment = TooltipAlignment.BottomCenter,
     arrowHeight: Dp,
     arrowPositionX: Float,
     content: @Composable () -> Unit,
@@ -29,31 +34,15 @@ fun BubbleLayout(
             .drawBehind {
                 if (arrowPositionX <= 0f) return@drawBehind
 
-                val isTopCenter = alignment == TooltipAlignment.BottomCenter
-
                 val path = Path()
-
-                if (isTopCenter) {
-                    val position = Offset(arrowPositionX, 0f)
-                    path.apply {
-                        moveTo(x = position.x, y = position.y)
-                        lineTo(x = position.x - arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y - arrowHeightPx)
-                        lineTo(x = position.x + arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y)
-                    }
-                } else {
-                    val arrowY = drawContext.size.height
-                    val position = Offset(arrowPositionX, arrowY)
-                    path.apply {
-                        moveTo(x = position.x, y = position.y)
-                        lineTo(x = position.x + arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y + arrowHeightPx)
-                        lineTo(x = position.x - arrowHeightPx, y = position.y)
-                        lineTo(x = position.x, y = position.y)
-                    }
+                val position = Offset(arrowPositionX, 0f)
+                path.apply {
+                    moveTo(x = position.x, y = position.y)
+                    lineTo(x = position.x - arrowHeightPx, y = position.y)
+                    lineTo(x = position.x, y = position.y - arrowHeightPx)
+                    lineTo(x = position.x + arrowHeightPx, y = position.y)
+                    lineTo(x = position.x, y = position.y)
                 }
-
                 drawPath(
                     path = path,
                     color = pathColor,
