@@ -48,7 +48,9 @@ fun PickersScreen() {
     var showTimePickerDialog by remember { mutableStateOf(false) }
     var showTextPicker by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(ChiliTheme.Colors.ChiliSurfaceBackground)) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -80,6 +82,7 @@ fun PickersScreen() {
                 startDateTitle = "Начальная Дата",
                 endDateTitle = "Конечная Дата",
                 submitBtnTitle = "Готово",
+                calendarLocale = "ru",
                 datePickedParams = ChiliDatePickerParams(
                     firstDate = DatePickerTimeParams(
                         startDateTime = LocalDateTime.now(),
@@ -103,6 +106,7 @@ fun PickersScreen() {
                 onDismissRequest = {},
                 startDateTitle = "Дата",
                 submitBtnTitle = "Готово",
+                calendarLocale = "ru",
                 datePickedParams = ChiliDatePickerParams(
                     firstDate = DatePickerTimeParams(
                         startDateTime = LocalDateTime.now(),

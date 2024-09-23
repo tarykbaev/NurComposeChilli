@@ -153,7 +153,9 @@ fun ChiliDatePickerDialog(
             }
 
             BaseButton(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 onClick = {
                     onSubmitBtn.invoke(
                         snappedStartDate?.snappedLocalDateTime,
