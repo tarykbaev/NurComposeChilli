@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -20,6 +22,8 @@ import com.design.composechili.components.card.CardContainer
 import com.design.composechili.components.card.CardContainerParams
 import com.design.composechili.components.card.CategoryCard
 import com.design.composechili.components.card.CategoryCardParams
+import com.design.composechili.components.card.PromoBannerCard
+import com.design.composechili.components.card.PromoBannerCardParams
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
@@ -44,6 +48,32 @@ fun CardsScreen() {
                 }
             )
             CardContainer(
+                title = "PromoBannerCard",
+                cardContainerParams = CardContainerParams.Transparent,
+                saveExpandedState = false,
+                expandableContent = {
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        items(1) {
+                            PromoBannerCard(
+                                title = "Виртуальная карта",
+                                subtitle = "Открой бесплатно в приложении!",
+                                startIcon = R.drawable.ic_visa_banner_logo,
+                                rightImage = R.drawable.bg_virtual_cards_3,
+                                promoBannerCardParams = PromoBannerCardParams.Regular
+                            ) {}
+                            Spacer(modifier = Modifier.padding(8.dp))
+                            PromoBannerCard(
+                                title = "Карта ЭЛКАРТ",
+                                subtitle = "Откройте карту в О!Store",
+                                startIcon = R.drawable.ic_elcart_title_logo,
+                                rightImage = R.drawable.bg_virtual_cards_2,
+                                promoBannerCardParams = PromoBannerCardParams.Small
+                            ) {}
+                        }
+                    }
+                }
+            )
+            CardContainer(
                 title = "CategoryCard",
                 cardContainerParams = CardContainerParams.Transparent,
                 saveExpandedState = false,
@@ -54,12 +84,12 @@ fun CardsScreen() {
                             title = "Переводы",
                             icon = R.drawable.ic_payment,
                             categoryCardParams = CategoryCardParams.LeftAligned
-                        ){}
+                        ) {}
                         CategoryCard(
                             title = "Centered",
                             icon = R.drawable.ic_payment,
                             categoryCardParams = CategoryCardParams.Centered
-                        ){}
+                        ) {}
                     }
                 }
             )
@@ -71,15 +101,15 @@ fun CardsScreen() {
                 expandableContent = {
                     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                         CategoryCard(
-                                title = "Кофейня.\nБонусная.",
-                                icon = R.drawable.ic_payment,
-                                categoryCardParams = CategoryCardParams.LeftAligned8Dp
-                        ){}
-                        CategoryCard(
-                                title = "Народный\nБонусная",
-                                icon = R.drawable.ic_payment,
+                            title = "Кофейня.\nБонусная.",
+                            icon = R.drawable.ic_payment,
                             categoryCardParams = CategoryCardParams.LeftAligned8Dp
-                        ){}
+                        ) {}
+                        CategoryCard(
+                            title = "Народный\nБонусная",
+                            icon = R.drawable.ic_payment,
+                            categoryCardParams = CategoryCardParams.LeftAligned8Dp
+                        ) {}
                     }
                 })
 
