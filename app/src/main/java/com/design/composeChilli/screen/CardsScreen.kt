@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,6 +18,8 @@ import com.design.composechili.components.card.AccentCard
 import com.design.composechili.components.card.AccentCardParams
 import com.design.composechili.components.card.CardContainer
 import com.design.composechili.components.card.CardContainerParams
+import com.design.composechili.components.card.CategoryCard
+import com.design.composechili.components.card.CategoryCardParams
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
@@ -40,6 +43,46 @@ fun CardsScreen() {
                     AccentCardList()
                 }
             )
+            CardContainer(
+                title = "CategoryCard",
+                cardContainerParams = CardContainerParams.Transparent,
+                saveExpandedState = false,
+                expandableContent = {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        CategoryCard(
+                            modifier = Modifier.weight(1f),
+                            title = "Переводы",
+                            icon = R.drawable.ic_payment,
+                            categoryCardParams = CategoryCardParams.LeftAligned
+                        ){}
+                        CategoryCard(
+                            title = "Centered",
+                            icon = R.drawable.ic_payment,
+                            categoryCardParams = CategoryCardParams.Centered
+                        ){}
+                    }
+                }
+            )
+            CardContainer(
+                title = "CategoryCard(8 dp icon offset)",
+                endIcon = null,
+                cardContainerParams = CardContainerParams.Transparent,
+                saveExpandedState = false,
+                expandableContent = {
+                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        CategoryCard(
+                                title = "Кофейня.\nБонусная.",
+                                icon = R.drawable.ic_payment,
+                                categoryCardParams = CategoryCardParams.LeftAligned8Dp
+                        ){}
+                        CategoryCard(
+                                title = "Народный\nБонусная",
+                                icon = R.drawable.ic_payment,
+                            categoryCardParams = CategoryCardParams.LeftAligned8Dp
+                        ){}
+                    }
+                })
+
         }
     }
 }
