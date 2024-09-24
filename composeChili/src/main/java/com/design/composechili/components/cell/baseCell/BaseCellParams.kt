@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import com.design.composechili.R
-import com.design.composechili.components.cell.model.CellCornerMode
+import com.design.composechili.components.cell.model.CellIconSize
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
@@ -15,10 +15,11 @@ data class BaseCellParams(
     val subTitleTextStyle: TextStyle,
     val titlePadding: ChiliPadding,
     val subtitlePadding: ChiliPadding,
-    val cornerMode: CellCornerMode,
     val startIconPadding: ChiliPadding,
+    val endIconPadding: ChiliPadding,
     val chevronIconTint: Color,
-    val background: Color
+    val background: Color,
+    val iconSize: CellIconSize
 ) {
     companion object {
         val Default
@@ -42,13 +43,16 @@ data class BaseCellParams(
                     end = dimensionResource(id = R.dimen.padding_4dp),
                     bottom = dimensionResource(id = R.dimen.padding_12dp)
                 ),
-                cornerMode = CellCornerMode.Single,
                 startIconPadding = ChiliPadding(
                     vertical = dimensionResource(id = R.dimen.padding_8dp),
                     horizontal = dimensionResource(id = R.dimen.padding_12dp)
                 ),
+                endIconPadding = ChiliPadding(
+                    end = dimensionResource(R.dimen.padding_8dp)
+                ),
                 chevronIconTint = ChiliTheme.Colors.chiliChevronColor,
-                background = ChiliTheme.Colors.ChiliCellViewBackground
+                background = ChiliTheme.Colors.ChiliCellBackground,
+                iconSize = CellIconSize.SMALL
             )
     }
 }

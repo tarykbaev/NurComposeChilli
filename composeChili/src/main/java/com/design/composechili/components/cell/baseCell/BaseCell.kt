@@ -5,15 +5,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -37,7 +40,9 @@ import com.design.composechili.theme.ChiliTheme
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
  * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
- * @param [baseCellParams] cell visual transformation params and paddings
+ * @param [params] cell visual transformation params and paddings
+ * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample BaseCellParams.Default
  */
 
@@ -49,82 +54,100 @@ fun BaseCell(
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
     @DrawableRes startIcon: Int? = null,
-    baseCellParams: BaseCellParams = BaseCellParams.Default,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    params: BaseCellParams = BaseCellParams.Default,
     onClick: (() -> Unit)? = null,
 ) {
+
+    val interactionSource = remember { MutableInteractionSource() }
+
     Box(
         modifier
-            .clip(baseCellParams.cornerMode.toRoundedShape())
-            .background(baseCellParams.background)
-
+            .clip(cellCornerMode.toRoundedShape())
+            .background(params.background)
             .clickable(
-                onClick = {
-                    onClick?.invoke()
-                },
+                onClick = { onClick?.invoke() },
                 interactionSource = interactionSource,
-                indication = rememberRipple(
-                    bounded = false,
+                indication = ripple(
+                    color = ChiliTheme.Colors.chiliRippleForegroundColor
                 )
             )
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .size(dimensionResource(id = R.dimen.view_32dp)),
+                        .padding(
+                            vertical = params.iconSize.verticalPadding,
+                            horizontal = params.iconSize.horizontalPadding
+                        )
+                        .size(params.iconSize.iconSize),
                     painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )
             }
-            Column(
-                Modifier
+
+            Box(
+                modifier = Modifier
                     .weight(1f)
                     .wrapContentHeight()
-                    .padding(end = 16.dp)
+                    .padding(end = 16.dp),
+                contentAlignment = Alignment.CenterStart
             ) {
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    val adjustedTitlePadding = params.titlePadding.copy(
+                        start = if (startIcon != null) 0.dp else params.titlePadding.start,
+                        bottom = if (subtitle.isBlank()) {
+                            dimensionResource(id = R.dimen.padding_12dp)
+                        } else {
+                            dimensionResource(id = R.dimen.padding_4dp)
+                        }
+                    )
 
-                val cellBottomPadding = if (subtitle.isBlank()) {
-                    dimensionResource(id = R.dimen.padding_12dp)
-                } else {
-                    dimensionResource(id = R.dimen.padding_4dp)
-                }
-
-                Text(
-                    text = title,
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(
-                            baseCellParams.titlePadding
-                                .copy(bottom = cellBottomPadding)
-                                .toPaddingValues()
-                        ),
-                    style = baseCellParams.titleTextStyle,
-                )
-
-                if (subtitle.isNotBlank()) {
                     Text(
-                        text = subtitle,
+                        text = title,
                         modifier = Modifier
                             .wrapContentSize()
-                            .padding(baseCellParams.subtitlePadding.toPaddingValues()),
-                        style = baseCellParams.subTitleTextStyle
+                            .padding(
+                                adjustedTitlePadding.toPaddingValues()
+                            ),
+                        style = params.titleTextStyle,
                     )
+
+                    val subTitlePadding = params.subtitlePadding.copy(
+                        start = if (startIcon != null) 0.dp else params.subtitlePadding.start
+                    )
+
+                    if (subtitle.isNotBlank()) {
+                        Text(
+                            text = subtitle,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(subTitlePadding.toPaddingValues()),
+                            style = params.subTitleTextStyle
+                        )
+                    }
                 }
             }
 
             if (isChevronVisible) {
                 Image(
-                    modifier = Modifier.align(Alignment.CenterVertically),
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = params.endIconPadding.end),
                     painter = painterResource(id = R.drawable.chili_ic_chevron),
                     contentDescription = "Navigation icon",
                     colorFilter = ColorFilter.tint(
-                        baseCellParams.chevronIconTint, BlendMode.SrcIn
+                        params.chevronIconTint, BlendMode.SrcIn
                     )
                 )
             }

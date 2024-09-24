@@ -79,7 +79,7 @@ public data class ChiliColors(
     val ChiliAccentButtonBackgroundDisabled: Color,
 
     // Cell View
-    val ChiliCellViewBackground: Color,
+    val ChiliCellBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
     // ToggleCellView
@@ -168,7 +168,7 @@ public data class ChiliColors(
             ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.white_1),
             ChiliAdditionalButtonTextColorPressed = colorResource(id = R.color.gray_1),
             ChiliAdditionalButtonBorderColor = colorResource(id = R.color.black_5),
-            ChiliCellViewBackground = colorResource(id = R.color.black_3),
+            ChiliCellBackground = colorResource(id = R.color.black_3),
             ChilicellSquircleIconBackground = colorResource(id = R.color.black_2),
             ChiliComponentButtonBackgroundActive = Color.Transparent,
             ChiliComponentButtonBackgroundDisabled = Color.Transparent,
@@ -244,7 +244,7 @@ public data class ChiliColors(
             ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.gray_1_alpha_50),
             ChiliAdditionalButtonBorderColor = colorResource(id = R.color.gray_5),
             ChilicellSquircleIconBackground = colorResource(id = R.color.gray_3),
-            ChiliCellViewBackground = colorResource(id = R.color.white_1),
+            ChiliCellBackground = colorResource(id = R.color.white_1),
             ChiliComponentButtonBackgroundActive = Color.Transparent,
             ChiliComponentButtonBackgroundDisabled = Color.Transparent,
             ChiliComponentButtonTextColorActive = colorResource(id = R.color.blue_1),
