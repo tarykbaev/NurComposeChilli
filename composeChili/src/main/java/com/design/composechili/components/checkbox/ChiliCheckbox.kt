@@ -25,6 +25,7 @@ import com.design.composechili.theme.ChiliTheme
 fun ChiliCheckbox(
     modifier: Modifier = Modifier,
     isChecked: Boolean,
+    enabled: Boolean = true,
     chiliCheckboxParams: ChiliCheckboxParams = ChiliCheckboxParams.Default,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
@@ -45,6 +46,7 @@ fun ChiliCheckbox(
             checked = isChecked,
             onCheckedChange = onCheckedChange,
             interactionSource = interactionSource,
+            enabled = enabled,
             colors = CheckboxDefaults.colors(
                 checkedColor = chiliCheckboxParams.checkedColor,
                 uncheckedColor = chiliCheckboxParams.uncheckedColor,

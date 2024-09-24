@@ -88,7 +88,6 @@ fun ChiliNavSimpleItem(
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
 
-    ChiliTheme {
         Column(
             modifier = modifier
                 .padding(vertical = navItemParams.verticalPadding)
@@ -112,7 +111,6 @@ fun ChiliNavSimpleItem(
                 style = navItemParams.labelTextStyle
             )
         }
-    }
 }
 
 @Preview

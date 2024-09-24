@@ -147,7 +147,9 @@ fun ChiliTimePickerDialog(
                     }
                 )
                 BaseButton(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
                     onClick = { onSubmitBtn.invoke(snappedDateTime) },
                     title = submitBtnTitle,
                     buttonStyle = ChiliButtonStyle.Primary

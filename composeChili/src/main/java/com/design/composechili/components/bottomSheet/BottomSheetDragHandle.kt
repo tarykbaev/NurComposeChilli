@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
-import com.google.android.material.bottomsheet.BottomSheetDragHandleView
 
 @Composable
 fun BottomSheetDragHandle(
@@ -28,7 +27,7 @@ fun BottomSheetDragHandle(
 
     Surface(
         modifier = modifier
-            .padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
+            .padding(top = dimensionResource(id = R.dimen.padding_8dp)),
         color = color,
         shape = shape
     ) {

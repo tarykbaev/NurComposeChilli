@@ -37,7 +37,7 @@ data class BaseInputParams(
                 ),
                 errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
-                fieldBackground = colorResource(id = R.color.gray_5),
+                fieldBackground = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),
                 hintColor = colorResource(id = R.color.gray_1),
                 keyboardType = KeyboardType.Text,

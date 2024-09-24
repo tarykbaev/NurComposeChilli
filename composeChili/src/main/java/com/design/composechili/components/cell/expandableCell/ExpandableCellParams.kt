@@ -35,7 +35,7 @@ data class ExpandableCellParams(
                     end = dimensionResource(id = R.dimen.padding_12dp),
                     bottom = dimensionResource(id = R.dimen.padding_12dp),
                     top = dimensionResource(id = R.dimen.padding_12dp)
-                ), chevronIconTint = ChiliTheme.Colors.chiliChevronColor
+                ), chevronIconTint = ChiliTheme.Colors.СhiliChevronColor
             )
     }
 }

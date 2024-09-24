@@ -31,10 +31,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.extensions.isExpanded
 import com.design.composechili.extensions.isExpanding
@@ -92,11 +90,10 @@ fun BaseBottomSheet(
                     Image(
                         modifier = Modifier
                             .align(Alignment.End)
-                            .padding(top = 16.dp, end = 16.dp)
+                            .padding(baseBottomSheetParams.closeIconPadding)
                             .clickable {
                                 scope.launch { sheetState.bottomSheetState.hide() }
                             },
-                        colorFilter = ColorFilter.tint(ChiliTheme.Colors.ChiliBottomSheetTopDrawableColor),
                         painter = painterResource(id = R.drawable.chili_ic_clear_24),
                         contentDescription = "Base Bottom Sheet close icon"
                     )
@@ -118,7 +115,7 @@ fun BaseBottomSheet(
         sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
         sheetSwipeEnabled = bottomSheetSwipeEnabled,
         sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
-        sheetContentColor = ChiliTheme.Colors.chiliCheckBoxCheckedColor,
+        sheetContentColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
         sheetDragHandle = if (isDragHandleContentEnabled) {
             dragHandle
         } else null,

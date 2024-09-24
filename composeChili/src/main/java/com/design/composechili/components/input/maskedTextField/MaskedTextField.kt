@@ -67,7 +67,7 @@ fun MaskedTextField(
     maskInputParams: MaskedTextFieldParams = MaskedTextFieldParams.Default,
     initialText: String,
     mask: String = initialText,
-    fieldContainerColor: Color = colorResource(id = R.color.gray_5),
+    fieldContainerColor: Color = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
     onValueChange: (String) -> Unit,
     rootContainerPadding: PaddingValues = PaddingValues(horizontal = 16.dp)
 ) {

@@ -7,7 +7,7 @@ import androidx.compose.ui.res.colorResource
 import com.design.composechili.R
 
 @Immutable
-public data class ChiliColors(
+data class ChiliColors(
     val ChiliPrimaryTextColor: Color,
     val ChiliSecondaryTextColor: Color,
     val ChiliMarkedTextColor: Color,
@@ -16,25 +16,25 @@ public data class ChiliColors(
     val ChiliLinkTextColor: Color,
 
     // Screen Background
-    val chiliScreenBackground: Color,
+    val СhiliScreenBackground: Color,
     val ChiliSurfaceBackground: Color,
 
     // Ripple
-    val chiliRippleForegroundColor: Color,
+    val СhiliRippleForegroundColor: Color,
 
     // Divider
     val ChiliDividerColor: Color,
 
     // Chevron
-    val chiliChevronColor: Color,
+    val СhiliChevronColor: Color,
 
     // Snackbar
     val ChiliSnackbarBackground: Color,
     val ChiliSnackbarTextColor: Color,
 
     // Segmented Picker
-    val chiliSegmentedPickerBackgroundColor: Color,
-    val chiliSegmentedPickerTabIndicatorColor: Color,
+    val СhiliSegmentedPickerBackgroundColor: Color,
+    val СhiliSegmentedPickerTabIndicatorColor: Color,
     val chiliSegmentedPickerTabTextColor: Color,
 
     // CheckBox
@@ -88,7 +88,7 @@ public data class ChiliColors(
     val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
     val ChiliToggleCellViewTextOnOffCheckedDisabledColor: Color,
 
-    val ChiliTooltipBackground:Color,
+    val ChiliTooltipBackground: Color,
 
 
     // TopAppBar
@@ -108,25 +108,32 @@ public data class ChiliColors(
     // NavBar
     val ChiliNavBarSelectedItemColor: Color,
     val ChiliNavBarUnSelectedItemColor: Color,
+    val ChiliNavBarItemBackgroundColor: Color,
+    val ChiliNavBarItemStrokeColor: Color,
+    val ChiliNavBarBackgroundColor: Color,
+
     // Bottom Sheet
-    val ChiliBottomSheetBackgroundColor:Color,
-    val ChiliBottomSheetTopDrawableColor:Color,
-    val ChiliBottomSheetGrayBackgroundColor:Color,
+    val ChiliBottomSheetBackgroundColor: Color,
+    val ChiliBottomSheetGrayBackgroundColor: Color,
 
     // Card Cell View
     val ChiliCardErrorTextColor: Color,
 
     // Action Bottom Sheet
-    val ChiliActionBottomSheetButtonTextColor:Color,
-    val ChiliActionBottomSheetAccentButtonTextColor:Color,
+    val ChiliActionBottomSheetButtonTextColor: Color,
+    val ChiliActionBottomSheetAccentButtonTextColor: Color,
 
     // In App Push
-    val ChiliInAppPushBackgroundColor:Color,
+    val ChiliInAppPushBackgroundColor: Color,
 
     // Bottom Sheet Drag Handle line color
-    val ChiliBottomSheetDragHandleColor: Color
+    val ChiliThickBottomSheetDragHandleColor: Color,
+    val ChiliBottomSheetDragHandleColor: Color,
 
-    ){
+    // ChiliQuickActionButton
+    val ChiliQuickActionButtonTitleEnabledColor: Color,
+    val ChiliQuickActionButtonTitleDisabledColor: Color
+) {
 
     companion object {
         @Composable
@@ -137,15 +144,15 @@ public data class ChiliColors(
             ChiliErrorTextColor = colorResource(id = R.color.red_1),
             ChiliValueTextColor = colorResource(id = R.color.gray_1),
             ChiliLinkTextColor = colorResource(id = R.color.magenta_1),
-            chiliScreenBackground = colorResource(id = R.color.black_2),
+            СhiliScreenBackground = colorResource(id = R.color.black_2),
             ChiliSurfaceBackground = colorResource(id = R.color.black_1),
-            chiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
+            СhiliRippleForegroundColor = colorResource(id = R.color.gray_1_alpha_50),
             ChiliDividerColor = colorResource(id = R.color.black_4),
-            chiliChevronColor = colorResource(id = R.color.white_1),
+            СhiliChevronColor = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
             ChiliSnackbarBackground = colorResource(id = R.color.black_3),
-            chiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
-            chiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
+            СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
+            СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.gray_3),
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
@@ -193,15 +200,20 @@ public data class ChiliColors(
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.white_1),
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_2),
-            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_2),
-            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.black_3),
+            ChiliBottomSheetBackgroundColor = colorResource(id = R.color.black_3),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.black_2),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.gray_3),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.black_3),
+            ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.gray_3),
-            ChiliNavBarSelectedItemColor = colorResource(id = R.color.gray_1),
-            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.magenta_1)
+            ChiliNavBarSelectedItemColor = colorResource(id = R.color.folly_1),
+            ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
+            ChiliNavBarItemBackgroundColor = colorResource(id = R.color.black_4),
+            ChiliNavBarItemStrokeColor = colorResource(id = R.color.black_4),
+            ChiliNavBarBackgroundColor = colorResource(id = R.color.black_1),
+            ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.white_1),
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1)
         )
 
         @Composable
@@ -212,15 +224,15 @@ public data class ChiliColors(
             ChiliErrorTextColor = colorResource(id = R.color.red_1),
             ChiliValueTextColor = colorResource(id = R.color.gray_1),
             ChiliLinkTextColor = colorResource(id = R.color.magenta_1),
-            chiliScreenBackground = colorResource(id = R.color.gray_4),
+            СhiliScreenBackground = colorResource(id = R.color.gray_4),
             ChiliSurfaceBackground = colorResource(id = R.color.white_1),
-            chiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
+            СhiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
-            chiliChevronColor = colorResource(id = R.color.gray_2),
+            СhiliChevronColor = colorResource(id = R.color.gray_2),
             ChiliSnackbarBackground = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.black_5),
-            chiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
-            chiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
+            СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
+            СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.black_5),
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.black_5),
@@ -269,14 +281,19 @@ public data class ChiliColors(
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
-            ChiliBottomSheetTopDrawableColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1),
+            ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.gray_1),
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
-            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5)
+            ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
+            ChiliNavBarItemBackgroundColor = colorResource(id = R.color.white_1),
+            ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30),
+            ChiliNavBarBackgroundColor = colorResource(id = R.color.gray_9),
+            ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.black_1),
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2)
         )
     }
 }

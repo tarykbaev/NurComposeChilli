@@ -1,8 +1,5 @@
 package com.design.composechili.components.tooltip
 
-import android.util.Log
-import android.view.View
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,14 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.core.view.allViews
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
 /**
- * tooltipContent - Content to display in tooltip.
+ * Tooltip view, which is displayed under any view, defined in [requesterView].
+ * @param [requesterView] The view on clicking which the tooltip will be displayed.
+ * @param [params] Tooltip visual transformation params.
+ * @param [title] The main title text displayed on the card.
+ * @param [subtitle] The descriptive text displayed below the title.
+ * @param [endIcon] Optional drawable resource ID for the icon displayed at the end of the tooltip.
  */
+
 @Composable
 fun ChiliTooltip(
     modifier: Modifier = Modifier,
@@ -41,14 +44,12 @@ fun ChiliTooltip(
     @DrawableRes endIcon: Int = R.drawable.chili_ic_clear_24
 ) {
 
-
     var isShowTooltip by remember { mutableStateOf(false) }
-    var position by remember { mutableStateOf(TooltipPopupPosition()) }
+    var position by remember { mutableStateOf(IntOffset(0, 0)) }
 
     val view = LocalView.current.rootView
 
     if (isShowTooltip) {
-        Log.e("TAG", "ChiliTooltip: ${LocalView.current.rootView}")
         ChiliTooltipPopup(
             backgroundColor = ChiliTheme.Colors.ChiliTooltipBackground,
             backgroundShape = RoundedCornerShape(params.tooltipCornerSize),
@@ -56,7 +57,7 @@ fun ChiliTooltip(
             onDismissRequest = {
                 isShowTooltip = isShowTooltip.not()
             },
-            position = position,
+            offset = position
         ) {
             Row(modifier = modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp)) {
                 Column(modifier = Modifier.weight(1f)) {
@@ -99,9 +100,4 @@ fun ChiliTooltip(
                 position = calculateTooltipPopupPosition(view, coordinates)
             }
     )
-}
-
-
-enum class TooltipAlignment {
-    BottomCenter,
 }

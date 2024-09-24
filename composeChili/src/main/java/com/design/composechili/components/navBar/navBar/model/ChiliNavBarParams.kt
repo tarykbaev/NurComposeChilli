@@ -19,7 +19,7 @@ data class ChiliNavBarParams(
     companion object {
         val Default
             @Composable get() = ChiliNavBarParams(
-                backgroundColor = ChiliTheme.Colors.chiliScreenBackground,
+                backgroundColor = ChiliTheme.Colors.ChiliNavBarBackgroundColor,
                 backgroundShape = RoundedCornerShape(ChiliRadiusDimensions.fromResources().radius24Dp),
                 selectedColor = ChiliTheme.Colors.ChiliNavBarSelectedItemColor,
                 unselectedColor = ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor,

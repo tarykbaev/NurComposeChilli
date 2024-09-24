@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomSheetScaffoldState
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.bottomSheet.BottomSheetDragHandle
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetButton
 import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
@@ -66,7 +64,7 @@ fun DescriptionBottomSheet(
         peekHeight = peekHeight,
         hasCloseIcon = hasCloseIcon,
         isDragHandleContentEnabled = true,
-        dragHandle = { BottomSheetDragHandle() },
+        dragHandle = { BottomSheetDragHandle(Modifier.padding(bottom = 8.dp)) },
         bottomSheetContent = {
             Column(
                 modifier = modifier

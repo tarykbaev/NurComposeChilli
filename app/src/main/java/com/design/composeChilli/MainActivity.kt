@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import com.design.composeChilli.screen.CellsScreen
+import com.design.composeChilli.screen.NavigationBarScreen
 import com.design.composeChilli.screen.SnackbarScreen
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBarParams
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                         ),
                         onEndIconClick = { isDarkModeEnable = !isDarkModeEnable }
                     )
-                    CellsScreen()
+                    NavigationBarScreen()
                 }
                 /*ComponentSelectorScreen(
                     onTextAppearanceItemClicked = {},
