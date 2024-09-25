@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -44,7 +45,7 @@ fun BaseInput(
                 painter = painterResource(id = startIcon),
                 contentDescription = "Input field start description icon",
                 modifier = Modifier
-                    .wrapContentSize()
+                    .fillMaxHeight()
                     .padding(
                         start = dimensionResource(id = R.dimen.padding_8dp),
                         top = dimensionResource(id = R.dimen.padding_8dp),
@@ -95,6 +96,7 @@ fun BaseInput(
                 painter = painterResource(id = endIcon),
                 contentDescription = "Input field end description icon",
                 modifier = Modifier
+                    .fillMaxHeight()
                     .wrapContentSize()
                     .padding(
                         end = dimensionResource(id = R.dimen.padding_8dp),
