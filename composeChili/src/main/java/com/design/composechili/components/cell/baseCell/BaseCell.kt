@@ -69,7 +69,7 @@ fun BaseCell(
                 onClick = { onClick?.invoke() },
                 interactionSource = interactionSource,
                 indication = ripple(
-                    color = ChiliTheme.Colors.chiliRippleForegroundColor
+                    color = ChiliTheme.Colors.СhiliRippleForegroundColor
                 )
             )
     ) {

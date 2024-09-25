@@ -22,13 +22,13 @@ fun BottomSheetCell(
     icon: Any? = null,
     onClick: (() -> Unit)? = null
 ) {
-    BaseCell(
-        modifier = Modifier.clickable { onClick?.invoke() },
-        title = title,
-        startIcon = icon,
-        isChevronVisible = true,
-        isDividerVisible = true
-    )
+//    BaseCell(
+//        modifier = Modifier.clickable { onClick?.invoke() },
+//        title = title,
+//        startIcon = icon,
+//        isChevronVisible = true,
+//        isDividerVisible = true
+//    )
 }
 
 @Composable

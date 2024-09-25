@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import com.design.composeChilli.screen.ButtonsScreen
 import com.design.composeChilli.screen.NavigationBarScreen
 import com.design.composeChilli.screen.SnackbarScreen
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         ),
                         onEndIconClick = { isDarkModeEnable = !isDarkModeEnable }
                     )
-                    NavigationBarScreen()
+//                    NavigationBarScreen()
+                    ButtonsScreen()
                 }
                 /*ComponentSelectorScreen(
                     onTextAppearanceItemClicked = {},
