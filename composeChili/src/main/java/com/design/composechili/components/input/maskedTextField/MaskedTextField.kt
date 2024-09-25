@@ -4,21 +4,26 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,11 +33,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.theme.ChiliTheme
 
 
@@ -61,6 +69,7 @@ import com.design.composechili.theme.ChiliTheme
  *  @param [rootContainerPadding] padding for root container, def value 16dp
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MaskedTextField(
     modifier: Modifier = Modifier,
@@ -84,16 +93,23 @@ fun MaskedTextField(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(12.dp))
                 .background(fieldContainerColor)
                 .padding(horizontal = 16.dp)
         ) {
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 16.dp),
+                    .defaultMinSize(
+                        minWidth = TextFieldDefaults.MinWidth,
+                        minHeight = 40.dp
+                    ),
                 value = TextFieldValue(text, TextRange(selectionPosition)),
                 visualTransformation = MaskTextFieldVisualTransformation(maskInputParams.hintTextColor),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    capitalization = KeyboardCapitalization.Characters
+                ),
                 onValueChange = { newText ->
                     if (!isEditing) {
                         isEditing = true
@@ -135,7 +151,27 @@ fun MaskedTextField(
                 },
                 textStyle = maskInputParams.titleTextStyle.copy(textAlign = TextAlign.Center),
                 cursorBrush = SolidColor(colorResource(id = R.color.magenta_1)),
-            )
+            ){ innerTextField ->
+                TextFieldDefaults.DecorationBox(
+                    value = text,
+                    visualTransformation = MaskTextFieldVisualTransformation(maskInputParams.hintTextColor),
+                    innerTextField = innerTextField,
+                    shape = CircleShape.copy(CornerSize(12.dp)),
+                    singleLine = true,
+                    enabled = true,
+                    isError = false,
+                    interactionSource = remember {MutableInteractionSource()},
+                    colors = TextFieldDefaults.colors().copy(
+                        focusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
+                        disabledContainerColor = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
+                        unfocusedContainerColor = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor
+                    ),
+                    contentPadding = BaseInputParams.Default.textFieldPadding,
+                )
+            }
             endIconVisibility = text != mask
             AnimatedVisibility(
                 visible = endIconVisibility,
@@ -218,7 +254,7 @@ fun mergeStrings(
 @Preview
 @Composable
 fun MaskedTextFieldPreview() {
-    ChiliTheme{
-        MaskedTextField(initialText = "+997 XXX XXX XXX", onValueChange = {},)
+    ChiliTheme {
+        MaskedTextField(initialText = "+997 XXX XXX XXX", onValueChange = {})
     }
 }

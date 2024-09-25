@@ -24,7 +24,8 @@ data class BaseInputParams(
     val keyboardType: KeyboardType = KeyboardType.Text,
     val autoCorrectionEnable: Boolean = true,
     val imeAction: ImeAction = ImeAction.None,
-    val textFieldPadding:PaddingValues
+    val textFieldPadding:PaddingValues,
+    val maxLines: Int = 1,
 ) {
 
     companion object {
@@ -32,8 +33,9 @@ data class BaseInputParams(
             @Composable
             get() = BaseInputParams(
                 textStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
+                    ChiliTheme.Colors.ChiliPrimaryTextColor,
+                    ChiliTheme.Attribute.ChiliBoldTextFont,
                 ),
                 errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),

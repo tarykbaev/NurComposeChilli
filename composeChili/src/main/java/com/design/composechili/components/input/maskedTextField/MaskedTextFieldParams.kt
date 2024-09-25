@@ -21,14 +21,14 @@ data class MaskedTextFieldParams(
             @Composable
             get() = MaskedTextFieldParams(
                 titleTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                     ChiliTheme.Colors.ChiliPrimaryTextColor,
                     ChiliTheme.Attribute.ChiliBoldTextFont
                 ),
                 hintTextColor = colorResource(id = R.color.gray_2),
                 representation = 'X',
                 maskSymbols = listOf('-', ' ', '/'),
-                allowedInputSymbols = "*",
+                allowedInputSymbols = "1234567890",
                 fieldContainerColor = colorResource(id = R.color.gray_5)
             )
     }
