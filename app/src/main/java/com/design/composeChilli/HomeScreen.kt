@@ -1,6 +1,7 @@
 package com.design.composeChilli
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -35,7 +36,7 @@ fun HomeScreen() {
         Pair("Tooltip", ChiliScreens.Tooltip)
     )
 
-    LazyColumn {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(24.dp)) {
         item {
             Image(
                 modifier = Modifier.fillMaxWidth(),
@@ -44,7 +45,6 @@ fun HomeScreen() {
             )
         }
         items(homeScreenItems){
-            Spacer(modifier = Modifier.size(24.dp))
             BaseButton(
                 onClick = {
                     composeNavigator.navigate(it.second)
