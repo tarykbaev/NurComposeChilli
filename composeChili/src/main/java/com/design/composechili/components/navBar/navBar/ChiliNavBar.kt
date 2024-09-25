@@ -16,13 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
 import com.design.composechili.components.navBar.navBar.model.ChiliNavBarParams
-import com.design.composechili.components.navBar.navBar.model.ChiliNavItem
+import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavButtonItem
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -63,12 +64,12 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun ChiliNavBar(
     modifier: Modifier = Modifier,
-    navBarItems: List<ChiliNavItem>,
+    navBarItems: List<ChiliNavButtonItem.ChiliNavButtonItemButton>,
     previewInsets: Boolean = true,
     navBarParams: ChiliNavBarParams = ChiliNavBarParams.Default,
-    onNavItemClicked: (ChiliNavItem) -> Unit
+    onNavItemClicked: (ChiliNavButtonItem.ChiliNavButtonItemButton) -> Unit
 ) {
-    var selectedItem by remember { mutableStateOf(navBarItems.firstOrNull()) }
+    var selectedItem by rememberSaveable { mutableStateOf(navBarItems.firstOrNull()) }
 
     LazyRow(
         modifier = modifier
@@ -116,19 +117,19 @@ fun ChiliNavBarPreview() {
             Row(modifier = Modifier.align(Alignment.BottomCenter)) {
                 ChiliNavBar(
                     navBarItems = listOf(
-                        ChiliNavItem(
+                        ChiliNavButtonItem.ChiliNavButtonItemButton(
                             icon = R.drawable.ic_home,
                             label = "Главная",
                         ),
-                        ChiliNavItem(
+                        ChiliNavButtonItem.ChiliNavButtonItemButton(
                             icon = R.drawable.ic_payment,
                             label = "Платежи",
                         ),
-                        ChiliNavItem(
+                        ChiliNavButtonItem.ChiliNavButtonItemButton(
                             icon = R.drawable.ic_history,
                             label = "История",
                         ),
-                        ChiliNavItem(
+                        ChiliNavButtonItem.ChiliNavButtonItemButton(
                             icon = R.drawable.ic_menu,
                             label = "Ещё",
                         ),

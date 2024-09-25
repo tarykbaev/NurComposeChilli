@@ -13,26 +13,26 @@ data class ChiliTooltipParams(
     val subtitleTextStyle: TextStyle,
     val tooltipBackground: Color,
     val tooltipCornerSize: Dp,
-    val arrowHeight:Dp
-){
+    val arrowHeight: Dp
+) {
 
-    companion object{
+    companion object {
         val Default
-        @Composable
-        get() = ChiliTooltipParams(
-            titleTextStyle = ChiliTextStyle.get(
-                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
-                ChiliTheme.Colors.ChiliMarkedTextColor,
-                ChiliTheme.Attribute.ChiliBoldTextFont
-            ),
-            subtitleTextStyle = ChiliTextStyle.get(
-                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
-                ChiliTheme.Colors.ChiliMarkedTextColor,
-            ),
-            tooltipBackground = ChiliTheme.Colors.ChiliTooltipBackground,
-            tooltipCornerSize = ChiliTheme.Attribute.ChiliToolipCornerRadius,
-            arrowHeight = 4.dp
-        )
+            @Composable
+            get() = ChiliTooltipParams(
+                titleTextStyle = ChiliTextStyle.get(
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
+                    ChiliTheme.Colors.ChiliMarkedTextColor,
+                    ChiliTheme.Attribute.ChiliBoldTextFont
+                ),
+                subtitleTextStyle = ChiliTextStyle.get(
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
+                    ChiliTheme.Colors.ChiliMarkedTextColor,
+                ),
+                tooltipBackground = ChiliTheme.Colors.ChiliTooltipBackground,
+                tooltipCornerSize = ChiliTheme.Attribute.ChiliToolipCornerRadius,
+                arrowHeight = 8.dp
+            )
     }
 
 }

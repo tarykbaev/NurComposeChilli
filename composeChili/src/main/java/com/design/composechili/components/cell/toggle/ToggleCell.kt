@@ -62,7 +62,7 @@ fun ToggleCell(
     Box(
         modifier
             .clip(toggleCellParams.cornerMode.toRoundedShape())
-            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+            .background(ChiliTheme.Colors.ChiliCellBackground)
     ) {
         Row(
             Modifier

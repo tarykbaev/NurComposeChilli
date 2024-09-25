@@ -20,7 +20,7 @@ data class NavBarWithFabParams(
             @Composable get() = NavBarWithFabParams(
                 selectedColor = ChiliTheme.Colors.ChiliNavBarSelectedItemColor,
                 unselectedColor = ChiliTheme.Colors.ChiliNavBarUnSelectedItemColor,
-                backgroundColor = ChiliTheme.Colors.chiliScreenBackground,
+                backgroundColor = ChiliTheme.Colors.СhiliScreenBackground,
                 backgroundShape = RoundedCornerShape(
                     ChiliRadiusDimensions.fromResources().radius24Dp,
                     ChiliRadiusDimensions.fromResources().radius24Dp,

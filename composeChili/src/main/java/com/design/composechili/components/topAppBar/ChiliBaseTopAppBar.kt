@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,12 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.pxToDp
@@ -81,8 +77,8 @@ fun ChiliBaseTopAppBar(
     @DrawableRes navigationIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     isCenteredTitle: Boolean = false,
-    onNavigationClick: (() -> Unit)? = null,
-    onEndIconClick: (() -> Unit)? = null
+    onEndIconClick: (() -> Unit)? = null,
+    onNavigationClick: (() -> Unit)? = null
 ) {
     Column {
         Box(
@@ -108,27 +104,26 @@ fun ChiliBaseTopAppBar(
             }
 
             Row(
-                modifier = Modifier.align(Alignment.CenterEnd),
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = dimensionResource(R.dimen.padding_16dp)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 additionalText?.let {
                     Text(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(end = dimensionResource(R.dimen.padding_16dp)),
+                        modifier = Modifier.wrapContentSize(),
                         text = additionalText,
                         style = params.additionalTextStyle
                     )
                 }
 
                 endIcon?.let { icon ->
-                    IconButton(modifier = Modifier
-                        .wrapContentSize()
-                        .padding(horizontal = 4.dp),
-                        onClick = { onEndIconClick?.invoke() }) {
+                    IconButton(
+                        modifier = Modifier.size(params.endIconSize),
+                        onClick = { onEndIconClick?.invoke() }
+                    ) {
                         Image(
                             colorFilter = params.endIconColorFilter,
-                            modifier = Modifier.size(params.endIconSize),
                             painter = painterResource(icon),
                             contentDescription = "endIcon"
                         )
