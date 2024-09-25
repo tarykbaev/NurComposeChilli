@@ -48,7 +48,7 @@ inline fun <T : Any> LazyListScope.draggableItems(
 }
 
 fun <T : Any> Modifier.dragContainer(dragDropState: DragDropState<T>): Modifier {
-    return this.then(pointerInput(dragDropState) {
+    return this.pointerInput(dragDropState) {
         detectDragGesturesAfterLongPress(
             onDrag = { change, offset ->
                 change.consume()
@@ -58,7 +58,7 @@ fun <T : Any> Modifier.dragContainer(dragDropState: DragDropState<T>): Modifier 
             onDragEnd = { dragDropState.onDragInterrupted() },
             onDragCancel = { dragDropState.onDragInterrupted() }
         )
-    })
+    }
 }
 
 @Composable

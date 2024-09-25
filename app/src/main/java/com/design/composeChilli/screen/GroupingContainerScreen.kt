@@ -17,28 +17,28 @@ import com.design.composeChilli.utils.dragContainer
 import com.design.composeChilli.utils.draggableItems
 import com.design.composeChilli.utils.rememberDragDropState
 import com.design.composechili.components.cell.baseCell.BaseCell
-import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
 fun GroupingContainerScreen() {
-    val list1 by remember { mutableStateOf(
-        listOf(
-            listOf("1", "2", "3", "4", "5", "6", "7"),
-            listOf("8", "9", "10", "11", "12", "13", "14"),
-            listOf("15", "16", "17", "18", "19", "20", "21"),
-            listOf("22", "23", "24", "25", "26", "27", "28")
+    val list1 by remember {
+        mutableStateOf(
+            listOf(
+                listOf("1", "2", "3", "4", "5", "6", "7"),
+                listOf("8", "9", "10", "11", "12", "13", "14"),
+                listOf("15", "16", "17", "18", "19", "20", "21"),
+                listOf("22", "23", "24", "25", "26", "27", "28")
+            )
         )
-    ) }
+    }
     val stateList = rememberLazyListState()
 
     val dragDropState =
         rememberDragDropState(
             lazyListState = stateList,
             items = list1,
-            onMove = { fromIndex, toIndex, sublistIndex ->
-            })
+            onMove = { fromIndex, toIndex, sublistIndex -> })
 
     LazyColumn(
         modifier = Modifier
@@ -56,14 +56,12 @@ fun GroupingContainerScreen() {
                 title = value,
                 isChevronVisible = true,
                 isDividerVisible = !isSingleItem && !isLastItem,
-                baseCellParams = BaseCellParams.Default.copy(
-                    cornerMode = when {
-                        isSingleItem -> CellCornerMode.Single
-                        isFirstItem -> CellCornerMode.Top
-                        isLastItem -> CellCornerMode.Bottom
-                        else -> CellCornerMode.Middle
-                    }
-                )
+                cellCornerMode = when {
+                    isSingleItem -> CellCornerMode.Single
+                    isFirstItem -> CellCornerMode.Top
+                    isLastItem -> CellCornerMode.Bottom
+                    else -> CellCornerMode.Middle
+                }
             )
             if (isLastItem) {
                 Spacer(modifier = Modifier.height(16.dp))
