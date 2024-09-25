@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -80,7 +80,7 @@ fun AdditionalDoubleButtons(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = ChiliTheme.Colors.ChiliCellViewBackground,
+                color = ChiliTheme.Colors.ChiliCellBackground,
                 shape = CellCornerMode.Single.toRoundedShape()
             )
     ) {
@@ -88,7 +88,7 @@ fun AdditionalDoubleButtons(
             modifier = Modifier
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(), onClick = onTitleClick
+                    indication = ripple(), onClick = onTitleClick
                 )
                 .background(Color.Transparent)
                 .padding(vertical = 16.dp)

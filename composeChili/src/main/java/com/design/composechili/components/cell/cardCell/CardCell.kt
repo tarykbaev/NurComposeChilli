@@ -63,7 +63,7 @@ fun CardCell(
     Box(
         Modifier
             .clip(cardCellParams.cornerMode.toRoundedShape())
-            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+            .background(ChiliTheme.Colors.ChiliCellBackground)
             .clickable(isSurfaceClickable) { onClickListener() }
     ) {
         Row(

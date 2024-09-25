@@ -12,7 +12,8 @@ activityCompose = "1.9.1"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
 material = "1.12.0"
-material2 = "1.6.8"
+material2 = "1.7.2"
+kotlinCompilerExtension = "1.5.1"
 snapper = "0.3.0"
 
 [libraries]
