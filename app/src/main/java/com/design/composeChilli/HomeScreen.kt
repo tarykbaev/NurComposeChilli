@@ -22,6 +22,17 @@ fun HomeScreen() {
         Pair("Text Appearances", ChiliScreens.TextAppearance),
         Pair("Buttons", ChiliScreens.Buttons),
         Pair("Input fields", ChiliScreens.InputFields),
+        Pair("Cards", ChiliScreens.Cards),
+        Pair("Cells ALL", ChiliScreens.Cells),
+        Pair("Snackbar", ChiliScreens.Snackbar),
+        Pair("Common", ChiliScreens.Common),
+        Pair("Bottom sheets", ChiliScreens.BottomSheets),
+        Pair("Toolbars", ChiliScreens.Toolbars),
+        Pair("Navigation bar", ChiliScreens.NavigationBar),
+        Pair("Pickers", ChiliScreens.Pickers),
+        Pair("Highlighter container", ChiliScreens.HighlighterContainer),
+        Pair("Grouping container", ChiliScreens.GroupingContainer),
+        Pair("Tooltip", ChiliScreens.Tooltip)
     )
 
     LazyColumn {
