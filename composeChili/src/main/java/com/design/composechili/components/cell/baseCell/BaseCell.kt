@@ -1,19 +1,25 @@
 package com.design.composechili.components.cell.baseCell
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,8 +29,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
+import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -33,8 +39,10 @@ import com.design.composechili.theme.ChiliTheme
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
- * @param [startIcon] accepts [Any], but should be a valid object that can be converted into a Coil `AsyncImagePainter`. It's displayed at the start of the cell as [Image]
- * @param [baseCellParams] cell visual transformation params and paddings
+ * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
+ * @param [params] cell visual transformation params and paddings
+ * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample BaseCellParams.Default
  */
 
@@ -45,64 +53,89 @@ fun BaseCell(
     subtitle: String = String(),
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
-    startIcon: Any? = null,
-    baseCellParams: BaseCellParams = BaseCellParams.Default,
+    @DrawableRes startIcon: Int? = null,
+    cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    params: BaseCellParams = BaseCellParams.Default,
+    onClick: (() -> Unit)? = null,
 ) {
+
+    val interactionSource = remember { MutableInteractionSource() }
+
     Box(
         modifier
-            .defaultMinSize(minHeight = 48.dp)
-            .clip(baseCellParams.cornerMode.toRoundedShape())
-            .background(ChiliTheme.Colors.ChiliCellViewBackground)
+            .clip(cellCornerMode.toRoundedShape())
+            .background(params.background)
+            .clickable(
+                onClick = { onClick?.invoke() },
+                interactionSource = interactionSource,
+                indication = ripple(
+                    color = ChiliTheme.Colors.chiliRippleForegroundColor
+                )
+            )
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                val painter = rememberAsyncImagePainter(model = startIcon)
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(start = 12.dp)
-                        .size(dimensionResource(id = R.dimen.view_32dp)),
-                    painter = painter,
+                        .padding(
+                            vertical = params.iconSize.verticalPadding,
+                            horizontal = params.iconSize.horizontalPadding
+                        )
+                        .size(params.iconSize.iconSize),
+                    painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )
             }
-            Column(
-                Modifier
+
+            Box(
+                modifier = Modifier
                     .weight(1f)
                     .wrapContentHeight()
-                    .padding(end = 16.dp)
+                    .padding(end = 16.dp),
+                contentAlignment = Alignment.CenterStart
             ) {
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    val adjustedTitlePadding = params.titlePadding.copy(
+                        start = if (startIcon != null) 0.dp else params.titlePadding.start,
+                        bottom = if (subtitle.isBlank()) {
+                            dimensionResource(id = R.dimen.padding_12dp)
+                        } else {
+                            dimensionResource(id = R.dimen.padding_4dp)
+                        }
+                    )
 
-                val cellBottomPadding = if (subtitle.isBlank()) {
-                    dimensionResource(id = R.dimen.padding_12dp)
-                } else {
-                    dimensionResource(id = R.dimen.padding_4dp)
-                }
-
-                Text(
-                    text = title,
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(
-                            baseCellParams.titlePadding
-                                .copy(bottom = cellBottomPadding)
-                                .toPaddingValues()
-                        ),
-                    style = baseCellParams.titleTextStyle,
-                )
-
-                if (subtitle.isNotBlank()) {
                     Text(
-                        text = subtitle,
+                        text = title,
                         modifier = Modifier
                             .wrapContentSize()
-                            .padding(baseCellParams.subtitlePadding.toPaddingValues()),
-                        style = baseCellParams.subTitleTextStyle
+                            .padding(
+                                adjustedTitlePadding.toPaddingValues()
+                            ),
+                        style = params.titleTextStyle,
                     )
+
+                    val subTitlePadding = params.subtitlePadding.copy(
+                        start = if (startIcon != null) 0.dp else params.subtitlePadding.start
+                    )
+
+                    if (subtitle.isNotBlank()) {
+                        Text(
+                            text = subtitle,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(subTitlePadding.toPaddingValues()),
+                            style = params.subTitleTextStyle
+                        )
+                    }
                 }
             }
 
@@ -110,11 +143,11 @@ fun BaseCell(
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(end = 8.dp),
+                        .padding(end = params.endIconPadding.end),
                     painter = painterResource(id = R.drawable.chili_ic_chevron),
                     contentDescription = "Navigation icon",
                     colorFilter = ColorFilter.tint(
-                        baseCellParams.chevronIconTint, BlendMode.SrcIn
+                        params.chevronIconTint, BlendMode.SrcIn
                     )
                 )
             }
@@ -131,8 +164,8 @@ fun BaseCell(
 
 @Preview
 @Composable
-fun BaseCellPreview(){
-    ChiliTheme{
+fun BaseCellPreview() {
+    ChiliTheme {
         BaseCell(
             title = "Test",
             subtitle = "TestSubtitle",

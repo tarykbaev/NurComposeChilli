@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ripple
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -158,7 +159,7 @@ fun CodeInput(
                             start = dimensionResource(id = R.dimen.padding_2dp)
                         )
                         .clickable(
-                            indication = rememberRipple(),
+                            indication = ripple(),
                             interactionSource = remember { MutableInteractionSource() },
                             enabled = isActionTextEnabled,
                             onClick = onActionTextClick
