@@ -39,6 +39,9 @@ import com.design.composechili.utils.rememberPressState
  * @param enabled A [Boolean] indicating whether the button is enabled or disabled. Defaults to `true`.
  * When `false`, the `disabledIcon` is used, and the button is not clickable.
  *
+ *  @param visible Controls the visibility of the QuickActionButton.
+ *  If false, the button will not be rendered.
+ *
  * @param params An instance of [ChiliQuickActionButtonParams] to configure additional
  * parameters for the button, such as icon size and text style. Defaults to [ChiliQuickActionButtonParams.Default].
  *
@@ -54,9 +57,12 @@ fun QuickActionButton(
     @DrawableRes rippleIcon: Int? = null,
     @DrawableRes disabledIcon: Int? = null,
     enabled: Boolean = true,
+    visible: Boolean = true,
     params: ChiliQuickActionButtonParams = ChiliQuickActionButtonParams.Default,
     onClick: (() -> Unit)? = null
 ) {
+
+    if (!visible) return
 
     val isPressed = rememberPressState()
 

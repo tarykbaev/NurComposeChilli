@@ -131,6 +131,7 @@ fun ButtonsScreen() {
                 modifier = Modifier,
                 title = "To favorites",
                 enabled = false,
+                visible = false,
                 icon = com.design.composechili.R.drawable.ic_favourite,
                 rippleIcon = com.design.composechili.R.drawable.ic_ripple_favourite,
                 disabledIcon = com.design.composechili.R.drawable.ic_favourite_disabled
