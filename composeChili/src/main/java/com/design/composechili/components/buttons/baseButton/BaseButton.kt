@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -66,7 +67,7 @@ fun BaseButton(
     Button(
         modifier = modifier
             .padding(buttonPadding)
-            .defaultMinSize(minHeight = buttonStyle.minHeight),
+            .heightIn(min = buttonStyle.minHeight),
         onClick = onClick,
         shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
         border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),

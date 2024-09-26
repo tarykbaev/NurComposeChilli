@@ -45,7 +45,7 @@ data class ChiliButtonStyle(
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
                 ),
-                minHeight = 48.dp
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val ComponentButton
@@ -66,7 +66,7 @@ data class ChiliButtonStyle(
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
                 ),
-                minHeight = 48.dp
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val Secondary
@@ -87,7 +87,7 @@ data class ChiliButtonStyle(
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
                 ),
-                minHeight = 48.dp
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val Additional
@@ -106,7 +106,7 @@ data class ChiliButtonStyle(
                     ChiliTheme.ChiliButtonAttribute.ChiliComponentButtonHorizontalPadding,
                     ChiliTheme.ChiliButtonAttribute.ChiliComponentButtonVerticalPadding
                 ),
-                minHeight = 48.dp
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
     }
 

@@ -28,7 +28,7 @@ data class MaskedTextFieldParams(
                 hintTextColor = colorResource(id = R.color.gray_2),
                 representation = 'X',
                 maskSymbols = listOf('-', ' ', '/'),
-                allowedInputSymbols = "1234567890",
+                allowedInputSymbols = "*",
                 fieldContainerColor = colorResource(id = R.color.gray_5)
             )
     }
