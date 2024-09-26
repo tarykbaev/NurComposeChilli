@@ -25,7 +25,6 @@ fun BottomSheetCell(
     BaseCell(
         modifier = Modifier.clickable { onClick?.invoke() },
         title = title,
-        startIcon = icon,
         isChevronVisible = true,
         isDividerVisible = true
     )

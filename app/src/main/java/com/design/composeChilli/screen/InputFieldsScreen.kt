@@ -43,7 +43,8 @@ fun InputFieldsScreen() {
         BaseInput(
             textFieldValue = baseInputText ,
             onValueChange = { baseInputText = it },
-            hint = "BaseInput"
+            hint = String(),
+            startIcon = com.design.composechili.R.drawable.ic_cat
         )
         Spacer(modifier = Modifier.height(16.dp))
         BaseInput(

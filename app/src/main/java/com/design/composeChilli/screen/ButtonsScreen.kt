@@ -109,7 +109,7 @@ fun ButtonsScreen() {
         Spacer(modifier = Modifier.size(12.dp))
         BaseButton(
             onClick = {},
-            startIcon = com.design.composechili.R.drawable.ic_market,
+            endIcon = com.design.composechili.R.drawable.ic_market,
             title = "Iconed button",
             buttonStyle = ChiliButtonStyle.Additional
         )

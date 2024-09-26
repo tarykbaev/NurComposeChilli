@@ -50,7 +50,7 @@ data class BaseCellParams(
                 endIconPadding = ChiliPadding(
                     end = dimensionResource(R.dimen.padding_8dp)
                 ),
-                chevronIconTint = ChiliTheme.Colors.chiliChevronColor,
+                chevronIconTint = ChiliTheme.Colors.СhiliChevronColor,
                 background = ChiliTheme.Colors.ChiliCellBackground,
                 iconSize = CellIconSize.SMALL
             )
