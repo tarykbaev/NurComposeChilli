@@ -1,13 +1,10 @@
 package com.design.composeChilli.screen
 
 import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,9 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,8 +34,11 @@ import com.design.composechili.theme.ChiliTheme
 fun CommonsScreen() {
 
     val context = LocalContext.current
-    var isSwitchEnabled by rememberSaveable {
+    var isFirstSwitchChecked by rememberSaveable {
         mutableStateOf(false)
+    }
+    var isSecondSwitchChecked by rememberSaveable {
+        mutableStateOf(true)
     }
     var isFirstCheckBoxChecked by rememberSaveable {
         mutableStateOf(false)
@@ -51,13 +49,17 @@ fun CommonsScreen() {
     var isAgreementChecked by rememberSaveable {
         mutableStateOf(false)
     }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Material Design slider",
+            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+        )
         ChiliMaterialDesignSlider(
             initialValue = 20f,
             range = 0f..100f,
@@ -70,6 +72,11 @@ fun CommonsScreen() {
         )
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "CheckBox",
+            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             ChiliCheckbox(isChecked = isFirstCheckBoxChecked) {
@@ -106,6 +113,11 @@ fun CommonsScreen() {
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
         )
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "AgreementView",
+            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+        )
         ChiliAgreementItem(
             isChecked = isAgreementChecked,
             agreementHtmlText = stringResource(id = R.string.agree_terms),
@@ -136,17 +148,24 @@ fun CommonsScreen() {
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        ChiliSwitch(description = "ChiliSwitch", checkedState = isSwitchEnabled) {
-            isSwitchEnabled = it
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Switch",
+            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+        )
+        ChiliSwitch(
+            description = "ChiliSwitch",
+            checkedState = isFirstSwitchChecked
+        ) {
+            isFirstSwitchChecked = it
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        ChiliSwitch(
+            description = "ChiliSwitch",
+            checkedState = isSecondSwitchChecked
+        ) {
+            isSecondSwitchChecked = it
+        }
     }
-}
-
-
-data class ChiliImage(val image: Painter){
-    
 }
 
 @Composable
