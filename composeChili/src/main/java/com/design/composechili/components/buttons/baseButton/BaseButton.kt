@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -64,7 +65,9 @@ fun BaseButton(
     @DrawableRes endIcon: Int? = null,
 ) {
     Button(
-        modifier = modifier.padding(buttonPadding).defaultMinSize(minHeight = 48.dp),
+        modifier = modifier
+            .padding(buttonPadding)
+            .heightIn(min = buttonStyle.minHeight),
         onClick = onClick,
         shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
         border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
@@ -84,7 +87,10 @@ fun BaseButton(
         )
         if (startIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(end = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 4.dp),
                 painter = painterResource(id = startIcon),
                 contentDescription = "Button start icon"
             )
@@ -97,7 +103,10 @@ fun BaseButton(
         )
         if (endIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(start = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 4.dp),
                 painter = painterResource(endIcon),
                 contentDescription = "Button end icon"
             )

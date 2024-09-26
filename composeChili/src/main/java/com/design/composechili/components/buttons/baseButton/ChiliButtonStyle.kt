@@ -7,6 +7,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
@@ -20,7 +22,8 @@ data class ChiliButtonStyle(
     val borderColor: Color,
     val borderWidth: Dp,
     val textFont: Font,
-    val contentPaddingValues: PaddingValues
+    val contentPaddingValues: PaddingValues,
+    val minHeight:Dp
 ) {
 
     companion object {
@@ -41,7 +44,8 @@ data class ChiliButtonStyle(
                     bottom = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingBottom,
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
-                )
+                ),
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val ComponentButton
@@ -61,7 +65,8 @@ data class ChiliButtonStyle(
                     bottom = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingBottom,
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
-                )
+                ),
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val Secondary
@@ -81,7 +86,8 @@ data class ChiliButtonStyle(
                     bottom = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingBottom,
                     start = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingStart,
                     end = ChiliTheme.ChiliButtonAttribute.ChiliButtonPaddingEnd
-                )
+                ),
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
 
         val Additional
@@ -99,7 +105,8 @@ data class ChiliButtonStyle(
                 contentPaddingValues = PaddingValues(
                     ChiliTheme.ChiliButtonAttribute.ChiliComponentButtonHorizontalPadding,
                     ChiliTheme.ChiliButtonAttribute.ChiliComponentButtonVerticalPadding
-                )
+                ),
+                minHeight = dimensionResource(id = R.dimen.view_48dp)
             )
     }
 
