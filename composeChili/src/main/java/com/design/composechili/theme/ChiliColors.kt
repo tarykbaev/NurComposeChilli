@@ -176,7 +176,7 @@ data class ChiliColors(
             ChiliAdditionalButtonBackgroundActive = colorResource(id = R.color.black_5),
             ChiliAdditionalButtonBackgroundDisabled = colorResource(id = R.color.black_5),
             ChiliAdditionalButtonTextColorActive = colorResource(id = R.color.white_1),
-            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.white_1),
+            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.gray_1_alpha_50),
             ChiliAdditionalButtonTextColorPressed = colorResource(id = R.color.gray_1),
             ChiliAdditionalButtonBorderColor = colorResource(id = R.color.black_5),
             ChiliCellBackground = colorResource(id = R.color.black_3),
