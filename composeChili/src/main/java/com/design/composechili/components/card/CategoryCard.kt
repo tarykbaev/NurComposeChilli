@@ -27,7 +27,6 @@ fun CategoryCard(
     categoryCardParams: CategoryCardParams,
     onClick: () -> Unit,
 ) {
-    val iconPadding = if (categoryCardParams == CategoryCardParams.LeftAligned8Dp) 8.dp else 12.dp
     Column(
         modifier = modifier
             .background(
@@ -36,8 +35,10 @@ fun CategoryCard(
                 )
             )
             .clickable { onClick() }
-            .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
-            .padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.padding_16dp),
+                vertical = dimensionResource(id = R.dimen.padding_8dp)
+            ),
         horizontalAlignment = categoryCardParams.alignment
     ) {
         Image(
@@ -45,7 +46,7 @@ fun CategoryCard(
             contentDescription = null
         )
         Text(
-            modifier = Modifier.padding(top = iconPadding),
+            modifier = Modifier.padding(categoryCardParams.iconPaddings),
             text = title,
             style = categoryCardParams.style
         )
