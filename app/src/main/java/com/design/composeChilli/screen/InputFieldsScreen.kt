@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -66,7 +65,11 @@ fun InputFieldsScreen() {
             description = "Simple",
             actionTitle = "Сканер"
         ) {
-            MaskedTextField(initialText = "+996 XXX XXX XXX", onValueChange = {}, rootContainerPadding = PaddingValues(0.dp))
+            MaskedTextField(
+                initialText = "+996 XXX XXX XXX",
+                onValueChange = {},
+                rootContainerPadding = PaddingValues(0.dp)
+            )
         }
         InputFieldWithDescAndAction(
             modifier = Modifier.padding(bottom = 16.dp),
@@ -76,7 +79,7 @@ fun InputFieldsScreen() {
                 textFieldValue = descriptionText,
                 onValueChange = { descriptionText = it },
                 hint = "Hint",
-                params =  BaseInputParams.Default.copy(
+                params = BaseInputParams.Default.copy(
                     textStyle = ChiliTextStyle.get(
                         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                         ChiliTheme.Colors.ChiliPrimaryTextColor,

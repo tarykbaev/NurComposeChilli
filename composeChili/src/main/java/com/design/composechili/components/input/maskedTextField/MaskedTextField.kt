@@ -151,7 +151,7 @@ fun MaskedTextField(
                 },
                 textStyle = maskInputParams.titleTextStyle.copy(textAlign = TextAlign.Center),
                 cursorBrush = SolidColor(colorResource(id = R.color.magenta_1)),
-            ){ innerTextField ->
+            ) { innerTextField ->
                 TextFieldDefaults.DecorationBox(
                     value = text,
                     visualTransformation = MaskTextFieldVisualTransformation(maskInputParams.hintTextColor),

@@ -74,7 +74,7 @@ fun InputFieldWithDescAndAction(
     inputField: @Composable (Modifier) -> Unit,
 ) {
     val localDensity = LocalDensity.current
-    var calculateTextHeight by remember{ mutableStateOf(0.dp) }
+    var calculateTextHeight by remember { mutableStateOf(0.dp) }
 
     Column(
         modifier = modifier
@@ -87,7 +87,8 @@ fun InputFieldWithDescAndAction(
                 Text(
                     modifier = descriptionModifier
                         .onGloballyPositioned { coordinates ->
-                            calculateTextHeight = with(localDensity) { coordinates.size.height.toDp() }
+                            calculateTextHeight =
+                                with(localDensity) { coordinates.size.height.toDp() }
                         }
                         .weight(1f)
                         .padding(horizontal = 8.dp)
@@ -130,10 +131,11 @@ fun InputFieldWithDescAndActionPreview() {
             description = "Description",
             actionTitle = "Action",
         ) {
-            BaseInput(textFieldValue = inputFieldText, onValueChange = {
-                inputFieldText = it
-            }, params = BaseInputParams.Default.copy(textFieldPadding = PaddingValues(0.dp))
-                )
+            BaseInput(
+                textFieldValue = inputFieldText, onValueChange = {
+                    inputFieldText = it
+                }, params = BaseInputParams.Default.copy(textFieldPadding = PaddingValues(0.dp))
+            )
         }
     }
 }

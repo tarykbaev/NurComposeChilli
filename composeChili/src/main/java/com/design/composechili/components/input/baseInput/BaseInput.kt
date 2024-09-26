@@ -129,43 +129,6 @@ fun BaseInput(
                 contentPadding = params.textFieldPadding,
             )
         }
-//        TextField(
-//            modifier = Modifier
-//                .weight(1f)
-//                .padding(params.textFieldPadding),
-//            value = textFieldValue,
-//            onValueChange = onValueChange,
-//            textStyle = params.textStyle,
-//            enabled = isEnabled,
-//            isError = isError,
-//            maxLines = 1,
-//            keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
-//            shape = CircleShape.copy(CornerSize(8.dp)),
-//            colors = TextFieldDefaults.colors().copy(
-//                focusedContainerColor = params.fieldBackground,
-//                unfocusedContainerColor = params.fieldBackground,
-//                disabledContainerColor = params.fieldBackground,
-//                errorTextColor = params.errorTextColor,
-//                errorIndicatorColor = Color.Transparent,
-//                errorCursorColor = params.errorTextColor,
-//                textSelectionColors = TextSelectionColors(
-//                    params.cursorColor,
-//                    params.selectionBackgroundColor
-//                ),
-//                cursorColor = params.cursorColor,
-//                focusedIndicatorColor = Color.Transparent,
-//                unfocusedIndicatorColor = Color.Transparent,
-//                disabledIndicatorColor = Color.Transparent,
-//            ),
-//            placeholder = {
-//                Text(
-//                    text = hint,
-//                    style = params.textStyle,
-//                    color = params.hintColor,
-//                    modifier = modifier.animateContentSize()
-//                )
-//            },
-//        )
         if (endIcon != null) {
             Image(
                 painter = painterResource(id = endIcon),
