@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -24,7 +25,6 @@ class MainActivity : ComponentActivity() {
                 LocalComposeNavigator provides composeNavigator,
             ) {
                 ChiliMain(composeNavigator = composeNavigator)
-                
             }
         }
     }

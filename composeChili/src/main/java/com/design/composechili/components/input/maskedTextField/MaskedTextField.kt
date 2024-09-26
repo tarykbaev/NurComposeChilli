@@ -78,6 +78,10 @@ fun MaskedTextField(
     mask: String = initialText,
     fieldContainerColor: Color = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
     onValueChange: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Number,
+        capitalization = KeyboardCapitalization.Characters
+    ),
     rootContainerPadding: PaddingValues = PaddingValues(horizontal = 16.dp)
 ) {
     var text by remember { mutableStateOf(initialText) }
@@ -102,14 +106,11 @@ fun MaskedTextField(
                     .weight(1f)
                     .defaultMinSize(
                         minWidth = TextFieldDefaults.MinWidth,
-                        minHeight = 40.dp
+                        minHeight = TextFieldDefaults.MinHeight
                     ),
                 value = TextFieldValue(text, TextRange(selectionPosition)),
                 visualTransformation = MaskTextFieldVisualTransformation(maskInputParams.hintTextColor),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    capitalization = KeyboardCapitalization.Characters
-                ),
+                keyboardOptions = keyboardOptions,
                 onValueChange = { newText ->
                     if (!isEditing) {
                         isEditing = true
@@ -122,15 +123,22 @@ fun MaskedTextField(
                             )
                                 .clearForbiddenSymbols(maskInputParams.allowedInputSymbols)
                         val maskedText =
-                            mergeStrings(clearedText, mask, maskInputParams.representation, selectionPosition) {
+                            mergeStrings(
+                                clearedText,
+                                mask,
+                                maskInputParams.representation,
+                                selectionPosition
+                            ) {
                                 selectionPosition++
                             }
 
-                        val isMaskAdding = checkIsMaskAdding(text, maskedText, maskInputParams.representation)
+                        val isMaskAdding =
+                            checkIsMaskAdding(text, maskedText, maskInputParams.representation)
 
                         // Определение позиции для маски
                         val lastMaskSym =
-                            maskedText.indexOfFirst { it == maskInputParams.representation }.takeIf { it != -1 }
+                            maskedText.indexOfFirst { it == maskInputParams.representation }
+                                .takeIf { it != -1 }
                                 ?: maskedText.length
 
 
@@ -160,7 +168,7 @@ fun MaskedTextField(
                     singleLine = true,
                     enabled = true,
                     isError = false,
-                    interactionSource = remember {MutableInteractionSource()},
+                    interactionSource = remember { MutableInteractionSource() },
                     colors = TextFieldDefaults.colors().copy(
                         focusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,

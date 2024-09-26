@@ -1,21 +1,21 @@
 package com.design.composeChilli.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +24,7 @@ import com.design.composechili.components.input.baseInput.BaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.components.input.code.CodeInput
 import com.design.composechili.components.input.code.CodeInputItemState
+import com.design.composechili.components.input.code.CodeLength
 import com.design.composechili.components.input.code.OnCodeChangeListener
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
@@ -35,7 +36,10 @@ fun InputFieldsScreen() {
 
     var baseInputText by remember { mutableStateOf("") }
     var baseInputWithIconsText by remember { mutableStateOf("") }
+    var passwordText by remember { mutableStateOf("") }
+    var commentText by remember { mutableStateOf("") }
     var baseInputWithErrorText by remember { mutableStateOf("") }
+    var isFieldError by remember { mutableStateOf(true) }
     var descriptionText by remember { mutableStateOf("") }
     var codeInputState by remember { mutableStateOf(CodeInputItemState.INACTIVE) }
     var codeInputClear by remember { mutableStateOf(false) }
@@ -44,11 +48,11 @@ fun InputFieldsScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = ChiliTheme.Colors.ChiliSurfaceBackground)
-            .padding(top = 56.dp, bottom = 16.dp)
-            .verticalScroll(state = rememberScrollState())
+            .padding(16.dp)
+            .verticalScroll(state = rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         BaseInput(
-            modifier = Modifier.padding(16.dp),
             textFieldValue = baseInputText,
             onValueChange = { baseInputText = it },
             params = BaseInputParams.Default.copy(
@@ -58,12 +62,11 @@ fun InputFieldsScreen() {
                     ChiliTheme.Attribute.ChiliBoldTextFont
                 ),
             ),
-            startIcon = R.drawable.ic_scaner_48,
+            containerStartIcon = painterResource(id = R.drawable.ic_cat),
         )
         InputFieldWithDescAndAction(
-            modifier = Modifier.padding(bottom = 16.dp),
             description = "Simple",
-            actionTitle = "Сканер"
+            actionTitle = "Сканер",
         ) {
             MaskedTextField(
                 initialText = "+996 XXX XXX XXX",
@@ -72,7 +75,6 @@ fun InputFieldsScreen() {
             )
         }
         InputFieldWithDescAndAction(
-            modifier = Modifier.padding(bottom = 16.dp),
             description = "Simple",
         ) {
             BaseInput(
@@ -88,24 +90,69 @@ fun InputFieldsScreen() {
                 )
             )
         }
-        BaseInput(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            textFieldValue = baseInputWithIconsText,
-            onValueChange = { baseInputWithIconsText = it },
-            params = BaseInputParams.Default.copy(
-                textStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor,
-                    ChiliTheme.Attribute.ChiliBoldTextFont
+
+        InputFieldWithDescAndAction(
+            description = "Simple with start icon"
+        ) {
+            BaseInput(
+                textFieldValue = baseInputWithIconsText,
+                onValueChange = { baseInputWithIconsText = it },
+                hint = "Search Service",
+                params = BaseInputParams.Default.copy(
+                    textStyle = ChiliTextStyle.get(
+                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                        ChiliTheme.Colors.ChiliPrimaryTextColor,
+                        ChiliTheme.Attribute.ChiliRegularTextFont
+                    )
+                ),
+                fieldEndIcon = painterResource(id = R.drawable.chili_ic_clear_24),
+                fieldStartIcon = painterResource(id = R.drawable.chili_ic_search)
+            )
+        }
+
+
+        InputFieldWithDescAndAction(
+            description = "Simple with start icon",
+            descriptionTextStyle = ChiliTextStyle.get(
+                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                if (isFieldError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
+            )
+        ) {
+            BaseInput(
+                textFieldValue = passwordText,
+                hint = "Password",
+                isError = isFieldError,
+                onValueChange = { passwordText = it },
+                params = BaseInputParams.Default.copy(
+                    textStyle = ChiliTextStyle.get(
+                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                        ChiliTheme.Colors.ChiliPrimaryTextColor,
+                        ChiliTheme.Attribute.ChiliBoldTextFont
+                    ).copy(textAlign = TextAlign.Center),
                 )
-            ),
-            endIcon = R.drawable.chili_ic_card_oil
+            )
+        }
+
+        InputFieldWithDescAndAction(
+            description = "mask"
+        ) {
+            MaskedTextField(
+                initialText = "123123123123XXXXXXXXX",
+                onValueChange = { },
+                rootContainerPadding = PaddingValues(0.dp)
+            )
+        }
+
+        BaseInput(
+            hint = "Введите комментарий",
+            params = BaseInputParams.Default.copy(maxLines = 4),
+            textFieldValue = commentText,
+            onValueChange = {
+                commentText = it
+            }
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(modifier = Modifier.padding(horizontal = 16.dp), text = "CodeInputField")
-        Spacer(modifier = Modifier.height(8.dp))
+
         CodeInput(
-            modifier = Modifier.padding(horizontal = 16.dp),
             message = "Message",
             actionText = "Action",
             state = codeInputState,
@@ -122,9 +169,24 @@ fun InputFieldsScreen() {
                     codeInputClear = false
                 }
             })
-        Spacer(modifier = Modifier.height(16.dp))
-        MaskedTextField(initialText = "+996 XXX XXX XXX", onValueChange = {})
-        Spacer(modifier = Modifier.height(16.dp))
+
+        CodeInput(
+            codeLength = CodeLength.FOUR,
+            state = codeInputState,
+            isActionTextEnabled = false,
+            clearCode = codeInputClear,
+            onActionTextClick = {},
+            codeCompleteListener = object : OnCodeChangeListener {
+                override fun onCodeComplete(otp: String) {
+                    codeInputState = CodeInputItemState.ERROR
+                    codeInputClear = true
+                }
+
+                override fun onCodeChange(text: String?) {
+                    codeInputState = CodeInputItemState.INACTIVE
+                    codeInputClear = false
+                }
+            })
     }
 }
 

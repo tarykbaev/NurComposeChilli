@@ -64,7 +64,7 @@ data class ChiliButtonAttribute(
             ChiliAdditionalButtonTextFont = Font(R.font.roboto_medium),
             ChiliAdditionalButtonTextAllCaps = false,
             ChiliComponentButtonCornerRadius = 4.dp,
-            ChiliComponentButtonTextSize = 14.sp,
+            ChiliComponentButtonTextSize = 16.sp,
             ChiliComponentButtonTextFont = Font(R.font.roboto_regular),
             ChiliComponentButtonHorizontalPadding = 4.dp,
             ChiliComponentButtonVerticalPadding = 0.dp

@@ -1,15 +1,15 @@
 package com.design.composechili.components.input.baseInput
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -24,8 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
@@ -46,27 +47,12 @@ fun BaseInput(
     isEnabled: Boolean = true,
     isError: Boolean = false,
     params: BaseInputParams = BaseInputParams.Default,
-    @DrawableRes startIcon: Int? = null,
-    @DrawableRes endIcon: Int? = null
+    containerStartIcon: Painter? = null,
+    fieldStartIcon: Painter? = null,
+    fieldEndIcon: Painter? = null
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
-
-    val colors = TextFieldDefaults.colors().copy(
-        focusedContainerColor = params.fieldBackground,
-        unfocusedContainerColor = params.fieldBackground,
-        disabledContainerColor = params.fieldBackground,
-        errorTextColor = params.errorTextColor,
-        errorIndicatorColor = Color.Transparent,
-        errorCursorColor = params.errorTextColor,
-        textSelectionColors = TextSelectionColors(
-            params.cursorColor,
-            params.selectionBackgroundColor
-        ),
-        focusedIndicatorColor = Color.Transparent,
-        unfocusedIndicatorColor = Color.Transparent,
-        disabledIndicatorColor = Color.Transparent
-    )
 
     val textColor = params.textStyle.color.takeOrElse {
         val focused = interactionSource.collectIsFocusedAsState().value
@@ -81,30 +67,32 @@ fun BaseInput(
 
     Row(
         modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (startIcon != null) {
+        if (containerStartIcon != null) {
             Image(
-                painter = painterResource(id = startIcon),
+                painter = containerStartIcon,
                 contentDescription = "Input field start description icon",
                 modifier = Modifier
-                    .wrapContentSize()
-                    .padding(horizontal = 8.dp)
+                    .size(48.dp)
             )
         }
         BasicTextField(
             modifier = Modifier
                 .weight(1f)
                 .defaultMinSize(
-                    minWidth = params.minWidth,
-                    minHeight = params.minHeight
-                ),
+                    minWidth = TextFieldDefaults.MinWidth,
+                    minHeight = TextFieldDefaults.MinHeight
+                )
+                .animateContentSize(),
             value = textFieldValue,
             onValueChange = onValueChange,
             enabled = isEnabled,
             textStyle = mergedTextStyle,
             keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
-            maxLines = 1
+            maxLines = params.maxLines,
+            cursorBrush = SolidColor(params.cursorColor)
         ) { innerTextField ->
             TextFieldDefaults.DecorationBox(
                 value = textFieldValue,
@@ -125,17 +113,28 @@ fun BaseInput(
                 enabled = isEnabled,
                 isError = isError,
                 interactionSource = interactionSource,
-                colors = colors,
+                colors = params.getTextFieldColorParameter(),
+                trailingIcon = if (fieldEndIcon != null) {
+                    {
+                        Image(
+                            painter = fieldEndIcon,
+                            contentDescription = "Input field end description icon",
+                            modifier = Modifier
+                                .size(params.fieldIconSize)
+                        )
+                    }
+                } else null,
+                leadingIcon = if (fieldStartIcon != null){
+                    {
+                        Image(
+                            painter = fieldStartIcon,
+                            contentDescription = "Input field end description icon",
+                            modifier = Modifier
+                                .size(params.fieldIconSize)
+                        )
+                    }
+                } else null,
                 contentPadding = params.textFieldPadding,
-            )
-        }
-        if (endIcon != null) {
-            Image(
-                painter = painterResource(id = endIcon),
-                contentDescription = "Input field end description icon",
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(horizontal = dimensionResource(id = R.dimen.padding_8dp))
             )
         }
     }
@@ -149,7 +148,7 @@ fun BaseInput_Preview() {
             BaseInput(
                 textFieldValue = "",
                 onValueChange = {},
-                endIcon = R.drawable.chili_ic_card_oil,
+                fieldEndIcon = painterResource(id = R.drawable.chili_ic_card_oil),
                 hint = "HINT",
                 params = BaseInputParams.Default.copy(
                     textStyle = ChiliTextStyle.get(

@@ -64,7 +64,9 @@ fun BaseButton(
     @DrawableRes endIcon: Int? = null,
 ) {
     Button(
-        modifier = modifier.padding(buttonPadding).defaultMinSize(minHeight = 48.dp),
+        modifier = modifier
+            .padding(buttonPadding)
+            .defaultMinSize(minHeight = buttonStyle.minHeight),
         onClick = onClick,
         shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
         border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
@@ -84,7 +86,10 @@ fun BaseButton(
         )
         if (startIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(end = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 4.dp),
                 painter = painterResource(id = startIcon),
                 contentDescription = "Button start icon"
             )
@@ -97,7 +102,10 @@ fun BaseButton(
         )
         if (endIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(start = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 4.dp),
                 painter = painterResource(endIcon),
                 contentDescription = "Button end icon"
             )
