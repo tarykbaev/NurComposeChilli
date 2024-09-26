@@ -3,6 +3,7 @@ package com.design.composechili.components.common.chiliAgreement
 import android.text.Html
 import android.text.style.URLSpan
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -90,7 +91,6 @@ fun ChiliAgreementItem(
         when (displayMode) {
             DisplayMode.CHECKBOX -> {
                 ChiliCheckbox(
-                    modifier = Modifier,
                     isChecked = isChecked,
                     onCheckedChange = onCheckedChange
                 )
@@ -98,7 +98,9 @@ fun ChiliAgreementItem(
 
             DisplayMode.ICON -> {
                 Image(
-                    modifier = Modifier.size(chiliAgreementItemParams.startIconSize),
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp, start = 12.dp)
+                        .size(chiliAgreementItemParams.startIconSize),
                     painter = painterResource(chiliAgreementItemParams.startIcon),
                     contentDescription = "agreement_item_icon"
                 )
@@ -166,20 +168,37 @@ fun ChiliAgreementItemPreview() {
     ChiliTheme {
         var isChecked by remember { mutableStateOf(false) }
 
-        ChiliAgreementItem(
-            modifier = Modifier
-                .padding(
-                    start = 8.dp,
-                    end = 16.dp
-                ),
-            agreementHtmlText = "AgreementText",
-            isChecked = isChecked,
-            displayMode = DisplayMode.CHECKBOX,
-            onCheckedChange = {
-                isChecked = it
-            }
-        ) {
+        Column {
+            ChiliAgreementItem(
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        end = 16.dp
+                    ),
+                agreementHtmlText = "AgreementText",
+                isChecked = isChecked,
+                displayMode = DisplayMode.CHECKBOX,
+                onCheckedChange = {
+                    isChecked = it
+                }
+            ) {
 
+            }
+            ChiliAgreementItem(
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        end = 16.dp
+                    ),
+                agreementHtmlText = "AgreementText",
+                isChecked = true,
+                displayMode = DisplayMode.ICON,
+                onCheckedChange = {
+                    isChecked = it
+                }
+            ) {
+
+            }
         }
     }
 }

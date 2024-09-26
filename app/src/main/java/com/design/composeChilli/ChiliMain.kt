@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.design.composeChilli.navigation.ChiliComposeNavigator
 import com.design.composeChilli.screen.ButtonsScreen
 import com.design.composeChilli.screen.CardsScreen
+import com.design.composeChilli.screen.CellsScreen
 import com.design.composeChilli.screen.CommonsScreen
 import com.design.composeChilli.screen.HighlighterContainersScreen
 import com.design.composeChilli.screen.InputFieldsScreen
@@ -27,6 +28,7 @@ import com.design.composeChilli.screen.PickersScreen
 import com.design.composeChilli.screen.SnackbarScreen
 import com.design.composeChilli.screen.TextAppearanceScreen
 import com.design.composeChilli.screen.ToolbarsScreen
+import com.design.composeChilli.screen.TooltipScreen
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
 import com.design.composechili.components.topAppBar.ChiliBaseTopAppBarParams
 import com.design.composechili.theme.ChiliTheme
@@ -84,7 +86,7 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Buttons> { ButtonsScreen() }
         composable<ChiliScreens.InputFields> { InputFieldsScreen() }
         composable<ChiliScreens.Cards> { CardsScreen() }
-        composable<ChiliScreens.Cells> { throw IllegalStateException("Cells screen not implemented yet") }
+        composable<ChiliScreens.Cells> { CellsScreen() }
         composable<ChiliScreens.Snackbar> { SnackbarScreen() }
         composable<ChiliScreens.Common> { CommonsScreen() }
         composable<ChiliScreens.BottomSheets> { throw IllegalStateException("BottomSheet screen not implemented yet") }
@@ -93,6 +95,7 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Pickers> { PickersScreen() }
         composable<ChiliScreens.HighlighterContainer> { HighlighterContainersScreen() }
         composable<ChiliScreens.GroupingContainer> { throw IllegalStateException("GroupingContainer screen not implemented yet") }
+        composable<ChiliScreens.Tooltip> { TooltipScreen() }
     }
 
 

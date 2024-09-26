@@ -1,6 +1,8 @@
 package com.design.composeChilli.screen
 
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +20,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,38 +42,48 @@ fun CommonsScreen() {
     var isSwitchEnabled by rememberSaveable {
         mutableStateOf(false)
     }
+    var isFirstCheckBoxChecked by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var isSecondCheckBoxChecked by rememberSaveable {
+        mutableStateOf(true)
+    }
+    var isAgreementChecked by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
         ChiliMaterialDesignSlider(
             initialValue = 20f,
             range = 0f..100f,
         )
-        Spacer(modifier = Modifier.height(16.dp))
         ChiliMaterialDesignSlider(
             initialValue = 20f,
             description = "Slider with steps",
             range = 0f..100f,
             stepsSize = 4
         )
-        Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
         )
-        Spacer(modifier = Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            ChiliCheckbox(isChecked = false)
+            ChiliCheckbox(isChecked = isFirstCheckBoxChecked) {
+                isFirstCheckBoxChecked = isFirstCheckBoxChecked.not()
+            }
             Text(
                 text = "Checkbox enabled & not checked",
                 style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            ChiliCheckbox(isChecked = true)
+            ChiliCheckbox(isChecked = isSecondCheckBoxChecked) {
+                isSecondCheckBoxChecked = isSecondCheckBoxChecked.not()
+            }
             Text(
                 text = "Checkbox enabled & checked",
                 style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
@@ -89,28 +103,20 @@ fun CommonsScreen() {
                 style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
         )
-        Spacer(modifier = Modifier.height(16.dp))
         ChiliAgreementItem(
+            isChecked = isAgreementChecked,
             agreementHtmlText = stringResource(id = R.string.agree_terms),
             onLinkClick = {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            },
+            onCheckedChange = {
+                isAgreementChecked = it
             }
         )
-        Spacer(modifier = Modifier.height(16.dp))
         ChiliAgreementItem(
-            isChecked = true,
-            agreementHtmlText = stringResource(id = R.string.agree_terms),
-            onLinkClick = {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-            }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        ChiliAgreementItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
             isChecked = true,
             displayMode = DisplayMode.ICON,
             agreementHtmlText = stringResource(id = R.string.agree_terms),
@@ -118,7 +124,6 @@ fun CommonsScreen() {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         )
-        Spacer(modifier = Modifier.height(16.dp))
         ChiliAgreementItem(
             modifier = Modifier.padding(horizontal = 8.dp),
             isChecked = true,
@@ -128,20 +133,24 @@ fun CommonsScreen() {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         )
-        Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(
             color = ChiliTheme.Colors.ChiliDividerColor
         )
         Spacer(modifier = Modifier.height(16.dp))
-        ChiliSwitch(description = "ChiliSwitch", checkedState = isSwitchEnabled){
+        ChiliSwitch(description = "ChiliSwitch", checkedState = isSwitchEnabled) {
             isSwitchEnabled = it
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
+
+data class ChiliImage(val image: Painter){
+    
+}
+
 @Composable
-@Preview(showBackground = true, )
+@Preview(showBackground = true)
 fun CommonsScreenPreview() {
     ChiliTheme {
         CommonsScreen()
