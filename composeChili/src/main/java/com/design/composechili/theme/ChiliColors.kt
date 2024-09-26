@@ -42,7 +42,13 @@ data class ChiliColors(
     val chiliCheckedBoxUncheckedColor: Color,
     val chiliCheckBoxDisabledColor: Color,
 
-    // Primary Button
+    //Switch
+    val ChiliSwitchBoxCheckedBackground: Color,
+    val ChiliSwitchBoxUncheckedBackground: Color,
+    val ChiliSwitchBoxCheckedToggleColor: Color,
+    val ChiliSwitchBoxUncheckedToggleColor: Color,
+
+// Primary Button
     val ChiliPrimaryButtonBackgroundActive: Color,
     val ChiliPrimaryButtonBackgroundDisabled: Color,
     val ChiliPrimaryButtonTextColorActive: Color,
@@ -52,14 +58,14 @@ data class ChiliColors(
     val ChiliPrimaryButtonRippleColor: Color,
     val ChiliPrimaryButtonBorderColor: Color,
 
-    // Secondary Button
+// Secondary Button
     val ChiliSecondaryButtonBackgroundActive: Color,
     val ChiliSecondaryButtonBackgroundDisabled: Color,
     val ChiliSecondaryButtonTextColorActive: Color,
     val ChiliSecondaryButtonTextColorPressed: Color,
     val ChiliSecondaryButtonTextColorDisabled: Color,
 
-    // Additional Button
+// Additional Button
     val ChiliAdditionalButtonBackgroundActive: Color,
     val ChiliAdditionalButtonBackgroundDisabled: Color,
     val ChiliAdditionalButtonTextColorActive: Color,
@@ -67,22 +73,22 @@ data class ChiliColors(
     val ChiliAdditionalButtonTextColorDisabled: Color,
     val ChiliAdditionalButtonBorderColor: Color,
 
-    // Component Button Attributes
+// Component Button Attributes
     val ChiliComponentButtonBackgroundActive: Color,
     val ChiliComponentButtonBackgroundDisabled: Color,
     val ChiliComponentButtonTextColorActive: Color,
     val ChiliComponentButtonTextColorPressed: Color,
     val ChiliComponentButtonTextColorDisabled: Color,
 
-    // Accent Button Attributes
+// Accent Button Attributes
     val ChiliAccentButtonBackgroundActive: Color,
     val ChiliAccentButtonBackgroundDisabled: Color,
 
-    // Cell View
+// Cell View
     val ChiliCellBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
-    // ToggleCellView
+// ToggleCellView
     val ChiliToggleCellViewTrackColor: Color,
     val ChiliToggleCellViewThumbNormalColor: Color,
     val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
@@ -91,13 +97,13 @@ data class ChiliColors(
     val ChiliTooltipBackground: Color,
 
 
-    // TopAppBar
+// TopAppBar
     val ChiliTopAppBarDividerColor: Color,
     val ChiliTopAppBarIconsTint: Color,
     val ChiliTopAppBarBackground: Color,
     val ChiliStartIconTopAppBarBackground: Color,
 
-    // Code Input View
+// Code Input View
     val ChiliCodeInputViewMessageColor: Color,
     val ChiliCodeInputViewActionTextActiveColor: Color,
     val ChiliCodeInputViewActionTextInActiveColor: Color,
@@ -105,7 +111,7 @@ data class ChiliColors(
     val ChiliCodeInputItemBackgroundColor: Color,
     val ChiliCodeInputItemErrorBackgroundColor: Color,
 
-    // NavBar
+// NavBar
     val ChiliNavBarSelectedItemColor: Color,
     val ChiliNavBarUnSelectedItemColor: Color,
 
@@ -116,25 +122,25 @@ data class ChiliColors(
     val ChiliNavBarItemStrokeColor: Color,
     val ChiliNavBarBackgroundColor: Color,
 
-    // Bottom Sheet
+// Bottom Sheet
     val ChiliBottomSheetBackgroundColor: Color,
     val ChiliBottomSheetGrayBackgroundColor: Color,
 
-    // Card Cell View
+// Card Cell View
     val ChiliCardErrorTextColor: Color,
 
-    // Action Bottom Sheet
+// Action Bottom Sheet
     val ChiliActionBottomSheetButtonTextColor: Color,
     val ChiliActionBottomSheetAccentButtonTextColor: Color,
 
-    // In App Push
+// In App Push
     val ChiliInAppPushBackgroundColor: Color,
 
-    // Bottom Sheet Drag Handle line color
+// Bottom Sheet Drag Handle line color
     val ChiliThickBottomSheetDragHandleColor: Color,
     val ChiliBottomSheetDragHandleColor: Color,
 
-    // ChiliQuickActionButton
+// ChiliQuickActionButton
     val ChiliQuickActionButtonTitleEnabledColor: Color,
     val ChiliQuickActionButtonTitleDisabledColor: Color
 ) {
@@ -161,6 +167,10 @@ data class ChiliColors(
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.gray_3),
+            ChiliSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
+            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
+            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
@@ -243,6 +253,10 @@ data class ChiliColors(
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.black_5),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
+            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
+            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_3),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
