@@ -96,8 +96,8 @@ fun BaseInput(
             modifier = Modifier
                 .weight(1f)
                 .defaultMinSize(
-                    minWidth = TextFieldDefaults.MinWidth,
-                    minHeight = 40.dp
+                    minWidth = params.minWidth,
+                    minHeight = params.minHeight
                 ),
             value = textFieldValue,
             onValueChange = onValueChange,

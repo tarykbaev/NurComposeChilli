@@ -19,7 +19,7 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun BottomSheetCell(
     title: String,
-    icon: String? = null,
+    icon: Any? = null,
     onClick: (() -> Unit)? = null
 ) {
     BaseCell(
@@ -44,6 +44,6 @@ fun BottomSheetCellPreview() {
 @Stable
 data class BottomSheetCellParams(
     val title: String,
-    val icon: String? = null,
+    val icon: Any? = null,
     val onClick: (() -> Unit)? = null
 )

@@ -9,6 +9,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -26,6 +28,8 @@ data class BaseInputParams(
     val imeAction: ImeAction = ImeAction.None,
     val textFieldPadding:PaddingValues,
     val maxLines: Int = 1,
+    val minWidth:Dp = 280.dp,
+    val minHeight:Dp = 40.dp
 ) {
 
     companion object {

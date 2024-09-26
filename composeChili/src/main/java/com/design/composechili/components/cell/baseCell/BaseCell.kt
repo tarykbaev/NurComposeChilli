@@ -29,7 +29,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.design.composechili.R
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
@@ -54,7 +53,7 @@ fun BaseCell(
     subtitle: String = String(),
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
-    startIcon: String? = null,
+    @DrawableRes startIcon: Int? = null,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
     params: BaseCellParams = BaseCellParams.Default,
     onClick: (() -> Unit)? = null,
@@ -81,7 +80,7 @@ fun BaseCell(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                AsyncImage(
+                Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
@@ -89,7 +88,7 @@ fun BaseCell(
                             horizontal = params.iconSize.horizontalPadding
                         )
                         .size(params.iconSize.iconSize),
-                    model = startIcon,
+                    painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )
             }
