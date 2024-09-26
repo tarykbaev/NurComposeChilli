@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.navBar.navBar.model.ChiliNavSimpleItemParams
+import com.design.composechili.components.navBar.navBarWithFab.model.ChiliNavWithFabSimpleItemParams
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
 import com.design.composechili.utils.pressEffect
@@ -73,7 +73,7 @@ fun ChiliNavWithFabSimpleItem(
     scaleAnimationDuration:Int = DefaultDurationMillis,
     isScaleAnimationEnabled: Boolean = true,
     verticalOffset: Dp = ChiliPaddingDimensions.fromResources().padding20Dp,
-    params: ChiliNavSimpleItemParams = ChiliNavSimpleItemParams.Default,
+    params: ChiliNavWithFabSimpleItemParams = ChiliNavWithFabSimpleItemParams.Default,
     onNavClicked: () -> Unit = {},
 ) {
 

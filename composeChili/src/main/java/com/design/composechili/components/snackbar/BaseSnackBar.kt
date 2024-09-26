@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -36,7 +37,7 @@ import kotlinx.coroutines.launch
  * @param [startIcon] accept [DrawableRes] set [Image] on the start in snackBar
  * @param [actionListener] will invoke when user will click [actionText]
  * @param [dismissAction] will invoke when snackBar will dismiss
- * @param [baseSnackBarParams] snackBar visual transformation params
+ * @param [params] snackBar visual transformation params
  * @sample BaseSnackBarParams.Default
  */
 
@@ -49,17 +50,19 @@ fun BaseSnackBar(
     @DrawableRes startIcon: Int? = null,
     actionListener: (() -> Unit)? = null,
     dismissAction: (() -> Unit)? = null,
-    baseSnackBarParams: BaseSnackBarParams = BaseSnackBarParams.Default
+    params: BaseSnackBarParams = BaseSnackBarParams.Default
 ) {
     Snackbar(
-        modifier = modifier.padding(
-            horizontal = ChiliTheme.Attribute.ChiliSnackbarContentPaddingHorizontal,
-            vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
-        ),
-        shape = RoundedCornerShape(baseSnackBarParams.cornersSize),
-        containerColor = baseSnackBarParams.containerColor,
+        modifier = modifier
+            .defaultMinSize(minHeight = 50.dp)
+            .padding(
+                horizontal = ChiliTheme.Attribute.ChiliSnackbarContentPaddingHorizontal,
+                vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
+            ),
+        shape = RoundedCornerShape(params.cornersSize),
+        containerColor = params.containerColor,
         action = {
-            Text(actionText, color = baseSnackBarParams.actionTextColor, modifier = Modifier
+            Text(actionText, color = params.actionTextColor, modifier = Modifier
                 .padding(
                     horizontal = dimensionResource(id = R.dimen.padding_16dp),
                     vertical = ChiliTheme.Attribute.ChiliSnackbarContentPaddingVertical
@@ -69,14 +72,16 @@ fun BaseSnackBar(
         dismissAction = { dismissAction?.invoke() },
         content = {
             Row(
-                modifier = Modifier.wrapContentHeight(),
+                modifier = Modifier
+                    .wrapContentHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(
+                        strokeWidth = 2.dp,
                         modifier = Modifier
                             .width(dimensionResource(id = R.dimen.view_32dp)),
-                        color = baseSnackBarParams.textColor,
+                        color = params.textColor,
                     )
                 }
                 if (startIcon != null) {
@@ -96,8 +101,9 @@ fun BaseSnackBar(
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                         .padding(start = 12.dp),
+                    style = params.textStyle,
                     text = title,
-                    color = baseSnackBarParams.textColor
+                    color = params.textColor
                 )
             }
         },

@@ -108,6 +108,10 @@ data class ChiliColors(
     // NavBar
     val ChiliNavBarSelectedItemColor: Color,
     val ChiliNavBarUnSelectedItemColor: Color,
+
+    val ChiliNavBarAlternativeSelectedItemColor: Color,
+    val ChiliNavBarAlternativeUnSelectedItemColor: Color,
+
     val ChiliNavBarItemBackgroundColor: Color,
     val ChiliNavBarItemStrokeColor: Color,
     val ChiliNavBarBackgroundColor: Color,
@@ -150,7 +154,7 @@ data class ChiliColors(
             ChiliDividerColor = colorResource(id = R.color.black_4),
             СhiliChevronColor = colorResource(id = R.color.white_1),
             ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
-            ChiliSnackbarBackground = colorResource(id = R.color.black_3),
+            ChiliSnackbarBackground = colorResource(id = R.color.c_4a4a4a),
             СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.black_4),
             СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.black_3),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.gray_3),
@@ -172,7 +176,7 @@ data class ChiliColors(
             ChiliAdditionalButtonBackgroundActive = colorResource(id = R.color.black_5),
             ChiliAdditionalButtonBackgroundDisabled = colorResource(id = R.color.black_5),
             ChiliAdditionalButtonTextColorActive = colorResource(id = R.color.white_1),
-            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.white_1),
+            ChiliAdditionalButtonTextColorDisabled = colorResource(id = R.color.gray_1_alpha_50),
             ChiliAdditionalButtonTextColorPressed = colorResource(id = R.color.gray_1),
             ChiliAdditionalButtonBorderColor = colorResource(id = R.color.black_5),
             ChiliCellBackground = colorResource(id = R.color.black_3),
@@ -213,7 +217,9 @@ data class ChiliColors(
             ChiliNavBarItemStrokeColor = colorResource(id = R.color.black_4),
             ChiliNavBarBackgroundColor = colorResource(id = R.color.black_1),
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.white_1),
-            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1)
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1),
+            ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.white_1),
+            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1)
         )
 
         @Composable
@@ -229,8 +235,8 @@ data class ChiliColors(
             СhiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
             СhiliChevronColor = colorResource(id = R.color.gray_2),
-            ChiliSnackbarBackground = colorResource(id = R.color.white_1),
-            ChiliSnackbarTextColor = colorResource(id = R.color.black_5),
+            ChiliSnackbarBackground = colorResource(id = R.color.c_4a4a4a),
+            ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
             СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
             СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.black_5),
@@ -293,7 +299,9 @@ data class ChiliColors(
             ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30),
             ChiliNavBarBackgroundColor = colorResource(id = R.color.gray_9),
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.black_1),
-            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2)
+            ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2),
+            ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.magenta_1),
+            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1)
         )
     }
 }

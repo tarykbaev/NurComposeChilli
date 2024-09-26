@@ -94,4 +94,8 @@
     <color name="black_alpha_0_08">#14000000</color>
     <color name="black_alpha_40">#66000000</color>
     <color name="white_alpha_0">#00FFFFFF</color>
+
+    <!-- Chili3 Colors -->
+    <color name="c_4a4a4a">#4a4a4a</color>
+
 </resources>
