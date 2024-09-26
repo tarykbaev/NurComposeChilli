@@ -215,7 +215,7 @@ data class ChiliColors(
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliNavBarItemBackgroundColor = colorResource(id = R.color.black_4),
             ChiliNavBarItemStrokeColor = colorResource(id = R.color.black_4),
-            ChiliNavBarBackgroundColor = colorResource(id = R.color.black_1),
+            ChiliNavBarBackgroundColor = colorResource(id = R.color.black_4),
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.white_1),
             ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1),
             ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.white_1),
