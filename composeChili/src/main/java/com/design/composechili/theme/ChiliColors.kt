@@ -42,6 +42,12 @@ data class ChiliColors(
     val chiliCheckedBoxUncheckedColor: Color,
     val chiliCheckBoxDisabledColor: Color,
 
+    //Switch
+    val ChiliSwitchBoxCheckedBackground: Color,
+    val ChiliSwitchBoxUncheckedBackground: Color,
+    val ChiliSwitchBoxCheckedToggleColor: Color,
+    val ChiliSwitchBoxUncheckedToggleColor: Color,
+
     // Primary Button
     val ChiliPrimaryButtonBackgroundActive: Color,
     val ChiliPrimaryButtonBackgroundDisabled: Color,
@@ -168,6 +174,10 @@ data class ChiliColors(
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.gray_3),
+            ChiliSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
+            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
+            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.white_1),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
@@ -249,14 +259,23 @@ data class ChiliColors(
             СhiliRippleForegroundColor = colorResource(id = R.color.black_1_alpha_20),
             ChiliDividerColor = colorResource(id = R.color.gray_6),
             СhiliChevronColor = colorResource(id = R.color.gray_2),
+
             ChiliSnackbarBackground = colorResource(id = R.color.c_4a4a4a),
             ChiliSnackbarTextColor = colorResource(id = R.color.gray_3),
+
             СhiliSegmentedPickerBackgroundColor = colorResource(id = R.color.gray_6),
             СhiliSegmentedPickerTabIndicatorColor = colorResource(id = R.color.white_1),
             chiliSegmentedPickerTabTextColor = colorResource(id = R.color.black_5),
+
             chiliCheckBoxCheckedColor = colorResource(id = R.color.magenta_1),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.black_5),
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_2),
+
+            ChiliSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
+            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
+            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.white_1),
+
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_3),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),

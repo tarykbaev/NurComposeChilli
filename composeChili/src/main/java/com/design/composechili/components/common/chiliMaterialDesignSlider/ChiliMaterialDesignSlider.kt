@@ -58,8 +58,10 @@ fun ChiliMaterialDesignSlider(
 @Preview(showBackground = true)
 @Composable
 fun ChiliSliderM2_Preview() {
-    Column {
-        ChiliMaterialDesignSlider(stepsSize = 40, range = 0f..20f)
-        ChiliMaterialDesignSlider(range = 0f..4f)
+    ChiliTheme{
+        Column {
+            ChiliMaterialDesignSlider(stepsSize = 40, range = 0f..20f)
+            ChiliMaterialDesignSlider(range = 0f..4f)
+        }
     }
 }
