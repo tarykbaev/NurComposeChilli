@@ -1,5 +1,7 @@
 package com.design.composeChilli.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.snackbar.BaseSnackBar
+import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.spacerVerticalDefaultPadding
 import kotlinx.coroutines.launch
 
@@ -33,6 +36,7 @@ fun SnackbarScreen() {
             .fillMaxSize()
     ) {
         Scaffold(
+            containerColor = ChiliTheme.Colors.ChiliSurfaceBackground,
             snackbarHost = {
                 SnackbarHost(hostState = simpleSnackbarHostState) {
                     BaseSnackBar(

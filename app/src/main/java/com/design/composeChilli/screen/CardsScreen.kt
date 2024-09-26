@@ -22,6 +22,7 @@ import com.design.composechili.components.card.CardContainerParams
 import com.design.composechili.components.card.PromoBannerCard
 import com.design.composechili.components.card.PromoBannerCardParams
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.utils.softLayerShadow
 
 @Composable
 fun CardsScreen() {
