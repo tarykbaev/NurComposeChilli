@@ -48,7 +48,7 @@ data class ChiliColors(
     val ChiliSwitchBoxCheckedToggleColor: Color,
     val ChiliSwitchBoxUncheckedToggleColor: Color,
 
-// Primary Button
+    // Primary Button
     val ChiliPrimaryButtonBackgroundActive: Color,
     val ChiliPrimaryButtonBackgroundDisabled: Color,
     val ChiliPrimaryButtonTextColorActive: Color,
@@ -58,14 +58,14 @@ data class ChiliColors(
     val ChiliPrimaryButtonRippleColor: Color,
     val ChiliPrimaryButtonBorderColor: Color,
 
-// Secondary Button
+    // Secondary Button
     val ChiliSecondaryButtonBackgroundActive: Color,
     val ChiliSecondaryButtonBackgroundDisabled: Color,
     val ChiliSecondaryButtonTextColorActive: Color,
     val ChiliSecondaryButtonTextColorPressed: Color,
     val ChiliSecondaryButtonTextColorDisabled: Color,
 
-// Additional Button
+    // Additional Button
     val ChiliAdditionalButtonBackgroundActive: Color,
     val ChiliAdditionalButtonBackgroundDisabled: Color,
     val ChiliAdditionalButtonTextColorActive: Color,
@@ -73,22 +73,22 @@ data class ChiliColors(
     val ChiliAdditionalButtonTextColorDisabled: Color,
     val ChiliAdditionalButtonBorderColor: Color,
 
-// Component Button Attributes
+    // Component Button Attributes
     val ChiliComponentButtonBackgroundActive: Color,
     val ChiliComponentButtonBackgroundDisabled: Color,
     val ChiliComponentButtonTextColorActive: Color,
     val ChiliComponentButtonTextColorPressed: Color,
     val ChiliComponentButtonTextColorDisabled: Color,
 
-// Accent Button Attributes
+    // Accent Button Attributes
     val ChiliAccentButtonBackgroundActive: Color,
     val ChiliAccentButtonBackgroundDisabled: Color,
 
-// Cell View
+    // Cell View
     val ChiliCellBackground: Color,
     val ChilicellSquircleIconBackground: Color,
 
-// ToggleCellView
+    // ToggleCellView
     val ChiliToggleCellViewTrackColor: Color,
     val ChiliToggleCellViewThumbNormalColor: Color,
     val ChiliToggleCellViewTextOnOffCheckedEnabledColor: Color,
@@ -97,13 +97,20 @@ data class ChiliColors(
     val ChiliTooltipBackground: Color,
 
 
-// TopAppBar
+    // TopAppBar
     val ChiliTopAppBarDividerColor: Color,
     val ChiliTopAppBarIconsTint: Color,
     val ChiliTopAppBarBackground: Color,
     val ChiliStartIconTopAppBarBackground: Color,
 
-// Code Input View
+    val ChiliInputEndIconTint:Color,
+    val ChiliInputHintTextColor:Color,
+    val ChiliInputViewBackgroundColor:Color,
+    val ChiliInputViewBackgroundErrorColor:Color,
+    val ChiliInputViewCursorColor:Color,
+    val ChiliInputViewErrorMessageTextColor:Color,
+
+    // Code Input View
     val ChiliCodeInputViewMessageColor: Color,
     val ChiliCodeInputViewActionTextActiveColor: Color,
     val ChiliCodeInputViewActionTextInActiveColor: Color,
@@ -111,7 +118,7 @@ data class ChiliColors(
     val ChiliCodeInputItemBackgroundColor: Color,
     val ChiliCodeInputItemErrorBackgroundColor: Color,
 
-// NavBar
+    // NavBar
     val ChiliNavBarSelectedItemColor: Color,
     val ChiliNavBarUnSelectedItemColor: Color,
 
@@ -122,25 +129,25 @@ data class ChiliColors(
     val ChiliNavBarItemStrokeColor: Color,
     val ChiliNavBarBackgroundColor: Color,
 
-// Bottom Sheet
+    // Bottom Sheet
     val ChiliBottomSheetBackgroundColor: Color,
     val ChiliBottomSheetGrayBackgroundColor: Color,
 
-// Card Cell View
+    // Card Cell View
     val ChiliCardErrorTextColor: Color,
 
-// Action Bottom Sheet
+    // Action Bottom Sheet
     val ChiliActionBottomSheetButtonTextColor: Color,
     val ChiliActionBottomSheetAccentButtonTextColor: Color,
 
-// In App Push
+    // In App Push
     val ChiliInAppPushBackgroundColor: Color,
 
-// Bottom Sheet Drag Handle line color
+    // Bottom Sheet Drag Handle line color
     val ChiliThickBottomSheetDragHandleColor: Color,
     val ChiliBottomSheetDragHandleColor: Color,
 
-// ChiliQuickActionButton
+    // ChiliQuickActionButton
     val ChiliQuickActionButtonTitleEnabledColor: Color,
     val ChiliQuickActionButtonTitleDisabledColor: Color
 ) {
@@ -229,7 +236,14 @@ data class ChiliColors(
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.white_1),
             ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_1),
             ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.white_1),
-            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1)
+            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1),
+
+            ChiliInputEndIconTint = colorResource(id = R.color.gray_1),
+            ChiliInputHintTextColor = colorResource(id = R.color.gray_1_alpha_50),
+            ChiliInputViewBackgroundColor = colorResource(id = R.color.black_3),
+            ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_2),
+            ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
+            ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
         )
 
         @Composable
@@ -289,10 +303,12 @@ data class ChiliColors(
             ChiliTopAppBarIconsTint = colorResource(id = R.color.black_1),
             ChiliTopAppBarBackground = colorResource(id = R.color.white_1),
             ChiliStartIconTopAppBarBackground = colorResource(R.color.white_1),
+
             ChiliToggleCellViewTrackColor = colorResource(id = R.color.gray_2),
             ChiliToggleCellViewThumbNormalColor = colorResource(id = R.color.white_1),
             ChiliToggleCellViewTextOnOffCheckedEnabledColor = colorResource(id = R.color.white_1),
             ChiliToggleCellViewTextOnOffCheckedDisabledColor = colorResource(id = R.color.black_1),
+
             ChiliCodeInputViewMessageColor = colorResource(id = R.color.red_1),
             ChiliCodeInputViewActionTextActiveColor = colorResource(id = R.color.blue_1),
             ChiliCodeInputViewActionTextInActiveColor = colorResource(id = R.color.gray_1),
@@ -300,22 +316,36 @@ data class ChiliColors(
             ChiliCodeInputItemBorderColor = colorResource(id = R.color.magenta_1),
             ChiliCardErrorTextColor = colorResource(id = R.color.custom_red_3),
             ChiliCodeInputItemErrorBackgroundColor = colorResource(id = R.color.red_3),
+
             ChiliBottomSheetBackgroundColor = colorResource(id = R.color.white_1),
             ChiliBottomSheetGrayBackgroundColor = colorResource(id = R.color.gray_4),
+
             ChiliActionBottomSheetButtonTextColor = colorResource(id = R.color.black_4),
             ChiliActionBottomSheetAccentButtonTextColor = colorResource(id = R.color.blue_1),
+
             ChiliInAppPushBackgroundColor = colorResource(id = R.color.white_1),
             ChiliThickBottomSheetDragHandleColor = colorResource(id = R.color.gray_1),
+
             ChiliNavBarSelectedItemColor = colorResource(id = R.color.magenta_1),
             ChiliNavBarUnSelectedItemColor = colorResource(id = R.color.gray_1),
             ChiliBottomSheetDragHandleColor = colorResource(id = R.color.black_5),
             ChiliNavBarItemBackgroundColor = colorResource(id = R.color.white_1),
             ChiliNavBarItemStrokeColor = colorResource(id = R.color.c_ececec_alpha_30),
             ChiliNavBarBackgroundColor = colorResource(id = R.color.gray_9),
+
+            ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.magenta_1),
+            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1),
+
             ChiliQuickActionButtonTitleEnabledColor = colorResource(id = R.color.black_1),
             ChiliQuickActionButtonTitleDisabledColor = colorResource(id = R.color.gray_2),
-            ChiliNavBarAlternativeSelectedItemColor = colorResource(id = R.color.magenta_1),
-            ChiliNavBarAlternativeUnSelectedItemColor = colorResource(id = R.color.gray_1)
+
+            ChiliInputEndIconTint = colorResource(id = R.color.gray_1),
+            ChiliInputHintTextColor = colorResource(id = R.color.gray_1_alpha_50),
+            ChiliInputViewBackgroundColor = colorResource(id = R.color.gray_5),
+            ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_3),
+            ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
+            ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
         )
+
     }
 }
