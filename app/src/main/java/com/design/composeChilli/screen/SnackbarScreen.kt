@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -16,7 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.design.composeChilli.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.snackbar.BaseSnackBar
 import com.design.composechili.theme.ChiliTheme
@@ -87,9 +90,14 @@ fun SnackbarScreen() {
                         .fillMaxWidth(),
                     onClick = {
                         scope.launch {
-                            loadingSnackbarHostState.showSnackbar(
-                                message = "Snackbar message"
-                            )
+                            if (loadingSnackbarHostState.currentSnackbarData != null){
+                                loadingSnackbarHostState.currentSnackbarData?.dismiss()
+                            }else{
+                                loadingSnackbarHostState.showSnackbar(
+                                    message = "Snackbar message",
+                                    duration = SnackbarDuration.Indefinite
+                                )
+                            }
                         }
                     },
                     title = "Loading Snackbar"
@@ -116,8 +124,9 @@ fun SnackbarScreen() {
                     onClick = {
                         scope.launch {
                             topGravitySnackbarHostState.showSnackbar(
-                                message = "Top Snackbar",
+                                message = "Похоже пропал интернет. \n" + "Проверьте интернет-соединение",
                                 actionLabel = "OK",
+                                duration = SnackbarDuration.Short
                             )
                         }
                     },
@@ -132,14 +141,7 @@ fun SnackbarScreen() {
             BaseSnackBar(
                 modifier = Modifier,
                 title = it.visuals.message,
-                actionText = it.visuals.actionLabel ?: "",
-                actionListener = {
-                    scope.launch {
-                        simpleSnackbarHostState.showSnackbar(
-                            message = "Action"
-                        )
-                    }
-                }
+                startIcon = com.design.composechili.R.drawable.chili_ic_orange_warning,
             )
         }
     }
