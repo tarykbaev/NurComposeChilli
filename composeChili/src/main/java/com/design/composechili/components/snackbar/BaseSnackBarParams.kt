@@ -3,7 +3,9 @@ package com.design.composechili.components.snackbar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
+import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -25,6 +27,7 @@ data class BaseSnackBarParams(
                 textStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                    font = Font(R.font.roboto_medium)
                 )
             )
     }
