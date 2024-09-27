@@ -10,24 +10,26 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +51,8 @@ fun BaseInput(
     params: BaseInputParams = BaseInputParams.Default,
     containerStartIcon: Painter? = null,
     fieldStartIcon: Painter? = null,
-    fieldEndIcon: Painter? = null
+    fieldEndIcon: Painter? = null,
+    endIconClicked: (() -> Unit)? = null
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -74,16 +77,14 @@ fun BaseInput(
             Image(
                 painter = containerStartIcon,
                 contentDescription = "Input field start description icon",
-                modifier = Modifier
-                    .size(48.dp)
+                modifier = Modifier.size(48.dp)
             )
         }
         BasicTextField(
             modifier = Modifier
                 .weight(1f)
                 .defaultMinSize(
-                    minWidth = TextFieldDefaults.MinWidth,
-                    minHeight = TextFieldDefaults.MinHeight
+                    minWidth = TextFieldDefaults.MinWidth, minHeight = TextFieldDefaults.MinHeight
                 )
                 .animateContentSize(),
             value = textFieldValue,
@@ -116,21 +117,22 @@ fun BaseInput(
                 colors = params.getTextFieldColorParameter(),
                 trailingIcon = if (fieldEndIcon != null) {
                     {
-                        Image(
-                            painter = fieldEndIcon,
-                            contentDescription = "Input field end description icon",
-                            modifier = Modifier
-                                .size(params.fieldIconSize)
-                        )
+                        IconButton(modifier = Modifier.size(params.fieldIconSize), onClick = {
+                            endIconClicked?.invoke()
+                        }) {
+                            Image(
+                                painter = fieldEndIcon,
+                                contentDescription = "Input field end description icon"
+                            )
+                        }
                     }
                 } else null,
-                leadingIcon = if (fieldStartIcon != null){
+                leadingIcon = if (fieldStartIcon != null) {
                     {
                         Image(
                             painter = fieldStartIcon,
                             contentDescription = "Input field end description icon",
-                            modifier = Modifier
-                                .size(params.fieldIconSize)
+                            modifier = Modifier.size(params.fieldIconSize)
                         )
                     }
                 } else null,

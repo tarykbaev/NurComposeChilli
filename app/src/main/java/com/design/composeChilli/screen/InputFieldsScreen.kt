@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import com.design.composechili.components.input.code.CodeInput
 import com.design.composechili.components.input.code.CodeLength
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
+import com.design.composechili.components.input.maskedTextField.MaskedTextFieldParams
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -41,6 +43,9 @@ fun InputFieldsScreen() {
     var isFieldError by remember { mutableStateOf(false) }
     var descriptionText by remember { mutableStateOf("") }
     var isCodeInputError by remember { mutableStateOf(true) }
+    var simpleWithClearText by remember {
+        mutableStateOf(String())
+    }
 
     Column(
         modifier = Modifier
@@ -69,7 +74,8 @@ fun InputFieldsScreen() {
             MaskedTextField(
                 initialText = "+996 XXX XXX XXX",
                 onValueChange = {},
-                rootContainerPadding = PaddingValues(0.dp)
+                rootContainerPadding = PaddingValues(0.dp),
+                maskInputParams = MaskedTextFieldParams.Default.copy(allowedInputSymbols = "1234567890")
             )
         }
         InputFieldWithDescAndAction(
@@ -81,9 +87,9 @@ fun InputFieldsScreen() {
                 hint = "Hint",
                 params = BaseInputParams.Default.copy(
                     textStyle = ChiliTextStyle.get(
-                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                         ChiliTheme.Colors.ChiliPrimaryTextColor,
-                        ChiliTheme.Attribute.ChiliBoldTextFont
+                        Font(R.font.roboto_700)
                     ).copy(textAlign = TextAlign.Center)
                 )
             )
@@ -105,6 +111,27 @@ fun InputFieldsScreen() {
                 ),
                 fieldEndIcon = painterResource(id = R.drawable.chili_ic_clear_24),
                 fieldStartIcon = painterResource(id = R.drawable.chili_ic_search)
+            )
+        }
+
+        InputFieldWithDescAndAction(
+            description = "Simple with clear"
+        ) {
+            BaseInput(
+                textFieldValue = simpleWithClearText,
+                onValueChange = { simpleWithClearText = it },
+                hint = "Hint",
+                params = BaseInputParams.Default.copy(
+                    textStyle = ChiliTextStyle.get(
+                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
+                        ChiliTheme.Colors.ChiliPrimaryTextColor,
+                        Font(R.font.roboto_700)
+                    ).copy(textAlign = TextAlign.Center)
+                ),
+                fieldEndIcon = if (simpleWithClearText.isNotBlank()) painterResource(id = R.drawable.chili_ic_clear_24) else null,
+                endIconClicked = {
+                    simpleWithClearText = String()
+                }
             )
         }
 

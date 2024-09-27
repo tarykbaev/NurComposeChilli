@@ -23,6 +23,7 @@ import com.design.composeChilli.screen.ButtonsScreen
 import com.design.composeChilli.screen.CardsScreen
 import com.design.composeChilli.screen.CellsScreen
 import com.design.composeChilli.screen.CommonsScreen
+import com.design.composeChilli.screen.GroupingContainerScreen
 import com.design.composeChilli.screen.HighlighterContainersScreen
 import com.design.composeChilli.screen.InputFieldsScreen
 import com.design.composeChilli.screen.NavigationBarScreen
@@ -45,7 +46,6 @@ fun ChiliMain(
         mutableStateOf(isDarkTheme)
     }
 
-
     ChiliTheme(darkTheme = darkModeEnabled) {
         val navHostController = rememberNavController()
 
@@ -63,7 +63,8 @@ fun ChiliMain(
                 ChiliBaseTopAppBar(
                     navigationIcon = if (isNotHomeScreen) painterResource(id = com.design.composechili.R.drawable.chili_ic_chevron_left) else null,
                     title = "NurComposeChili",
-                    isDividerVisible = false,
+                    isDividerVisible = true,
+                    isCenteredTitle = true,
                     endIcon = painterResource(id = R.drawable.ic_dark_mode),
                     params = ChiliBaseTopAppBarParams.Default.copy(
                         endIconColorFilter = ColorFilter.tint(
@@ -105,7 +106,7 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.NavigationBar> { NavigationBarScreen() }
         composable<ChiliScreens.Pickers> { PickersScreen() }
         composable<ChiliScreens.HighlighterContainer> { HighlighterContainersScreen() }
-        composable<ChiliScreens.GroupingContainer> { throw IllegalStateException("GroupingContainer screen not implemented yet") }
+        composable<ChiliScreens.GroupingContainer> { GroupingContainerScreen() }
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
     }
 
