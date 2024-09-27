@@ -1,20 +1,18 @@
 package com.design.composeChilli
 
-import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +23,7 @@ import com.design.composeChilli.screen.ButtonsScreen
 import com.design.composeChilli.screen.CardsScreen
 import com.design.composeChilli.screen.CellsScreen
 import com.design.composeChilli.screen.CommonsScreen
+import com.design.composeChilli.screen.GroupingContainerScreen
 import com.design.composeChilli.screen.HighlighterContainersScreen
 import com.design.composeChilli.screen.InputFieldsScreen
 import com.design.composeChilli.screen.NavigationBarScreen
@@ -47,7 +46,6 @@ fun ChiliMain(
         mutableStateOf(isDarkTheme)
     }
 
-
     ChiliTheme(darkTheme = darkModeEnabled) {
         val navHostController = rememberNavController()
 
@@ -59,15 +57,15 @@ fun ChiliMain(
         Scaffold(
             backgroundColor = ChiliTheme.Colors.ChiliSurfaceBackground,
             topBar = {
-
                 // TODO (remove in future), this case using reflection
                 val isNotHomeScreen = backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
 
                 ChiliBaseTopAppBar(
-                    navigationIcon = if (isNotHomeScreen) com.design.composechili.R.drawable.chili_ic_chevron_left else null,
+                    navigationIcon = if (isNotHomeScreen) painterResource(id = com.design.composechili.R.drawable.chili_ic_chevron_left) else null,
                     title = "NurComposeChili",
-                    isDividerVisible = false,
-                    endIcon = R.drawable.ic_dark_mode,
+                    isDividerVisible = true,
+                    isCenteredTitle = true,
+                    endIcon = painterResource(id = R.drawable.ic_dark_mode),
                     params = ChiliBaseTopAppBarParams.Default.copy(
                         endIconColorFilter = ColorFilter.tint(
                             ChiliTheme.Colors.ChiliPrimaryTextColor
@@ -75,6 +73,9 @@ fun ChiliMain(
                     ),
                     onEndIconClick = {
                         darkModeEnabled = darkModeEnabled.not()
+                    },
+                    onNavigationClick = {
+                        composeNavigator.navigateUp()
                     }
                 )
             }, content = { paddingValues ->
@@ -105,7 +106,7 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.NavigationBar> { NavigationBarScreen() }
         composable<ChiliScreens.Pickers> { PickersScreen() }
         composable<ChiliScreens.HighlighterContainer> { HighlighterContainersScreen() }
-        composable<ChiliScreens.GroupingContainer> { throw IllegalStateException("GroupingContainer screen not implemented yet") }
+        composable<ChiliScreens.GroupingContainer> { GroupingContainerScreen() }
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
     }
 

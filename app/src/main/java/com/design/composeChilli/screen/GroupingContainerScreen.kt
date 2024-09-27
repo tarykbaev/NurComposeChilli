@@ -24,6 +24,8 @@ import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.cell.baseCell.BaseCell
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.utils.ChiliShadowParams
+import com.design.composechili.utils.softLayerShadow
 
 @Composable
 fun GroupingContainerScreen() {
@@ -38,7 +40,7 @@ fun GroupingContainerScreen() {
         )
     }
     val stateList = rememberLazyListState()
-    var isDraggingEnabled by remember { mutableStateOf(false) }
+    var isDraggingEnabled by remember { mutableStateOf(true) }
 
     val dragDropState =
         rememberDragDropState(
@@ -49,6 +51,7 @@ fun GroupingContainerScreen() {
     Box {
         LazyColumn(
             modifier = Modifier
+                .softLayerShadow(params = ChiliShadowParams.Default.copy(spread = 2.dp))
                 .dragContainer(dragDropState)
                 .fillMaxWidth(),
             state = if (isDraggingEnabled) stateList else rememberLazyListState(),
@@ -60,7 +63,7 @@ fun GroupingContainerScreen() {
                 val isLastItem = index == list1[subListIndex].lastIndex
                 BaseCell(
                     modifier = modifier,
-                    title = if (isDraggingEnabled) "Dragging item $value" else value,
+                    title = value,
                     isChevronVisible = true,
                     isDividerVisible = !isSingleItem && !isLastItem,
                     cellCornerMode = when {
@@ -74,16 +77,7 @@ fun GroupingContainerScreen() {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
-            item { Spacer(modifier = Modifier.height(48.dp)) }
         }
-        BaseButton(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .padding(16.dp),
-            onClick = { isDraggingEnabled = !isDraggingEnabled },
-            title = "DraggingEnabled"
-        )
     }
 
 }
