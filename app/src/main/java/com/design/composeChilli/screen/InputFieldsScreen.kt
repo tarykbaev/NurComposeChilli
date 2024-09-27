@@ -124,10 +124,10 @@ fun InputFieldsScreen() {
         ) {
             PasswordInput(
                 modifier = Modifier.fillMaxWidth(),
-                value = passwordText,
+                value = passwordInputText,
                 hint = "Password",
                 isError = isPasswordInputError,
-                onValueChange = { passwordText = it },
+                onValueChange = { passwordInputText = it },
             )
         }
 

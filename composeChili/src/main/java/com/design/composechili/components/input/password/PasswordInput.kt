@@ -3,10 +3,6 @@ package com.design.composechili.components.input.password
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.KeyboardActions
@@ -41,12 +37,10 @@ import com.design.composechili.theme.ChiliTheme
  * This can be used to set padding, width, etc.
  * @param [value] The current text value of the [PasswordInput]. This should be a [String]
  * @param [hint] A hint or placeholder text to display when the text field is empty. Default is empty [String]
- * @param [message] An optional message that can be displayed below the input field.
  * Typically used for error or helper messages.
  * @param [isEnabled] A flag to enable or disable the [PasswordInput] field.
  * @param [isError] Indicates whether the input field should be displayed in an error state.
- * It also changes [message] style to [PasswordInputParams.errorMessageTextStyle] if true or
- * [PasswordInputParams.messageTextStyle] if false
+ * Default value is false
  * @param [transformationMask] A character used to mask the password input (e.g., • or *).
  * Default value is bullet char (\u2022)
  * @param [onValueChange] Callback function that gets triggered when the value of the input field changes.
