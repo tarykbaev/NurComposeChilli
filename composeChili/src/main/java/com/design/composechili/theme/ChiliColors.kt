@@ -80,6 +80,9 @@ data class ChiliColors(
     val ChiliComponentButtonTextColorPressed: Color,
     val ChiliComponentButtonTextColorDisabled: Color,
 
+    // Chili Card View
+    val ChiliCardViewBackground:Color,
+
     // Accent Button Attributes
     val ChiliAccentButtonBackgroundActive: Color,
     val ChiliAccentButtonBackgroundDisabled: Color,
@@ -244,6 +247,7 @@ data class ChiliColors(
             ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_2),
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
+            ChiliCardViewBackground = colorResource(id = R.color.black_3)
         )
 
         @Composable
@@ -350,6 +354,7 @@ data class ChiliColors(
             ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_3),
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
+            ChiliCardViewBackground = colorResource(id = R.color.white_1)
         )
 
     }

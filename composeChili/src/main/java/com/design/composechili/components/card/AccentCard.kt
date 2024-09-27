@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
@@ -57,10 +58,13 @@ fun AccentCard(
 ) {
     Row(
         modifier = modifier
-            .background(
-                color = cardParams.containerColor, shape = RoundedCornerShape(
+            .clip(
+                RoundedCornerShape(
                     dimensionResource(id = R.dimen.radius_12dp)
                 )
+            )
+            .background(
+                color = cardParams.containerColor
             )
             .clickable(interactionSource = remember {
                 MutableInteractionSource()
