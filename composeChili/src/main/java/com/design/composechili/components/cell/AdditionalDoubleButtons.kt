@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
-import com.design.composechili.components.cell.additionalText.AdditionalTextCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -106,7 +105,10 @@ fun AdditionalDoubleButtons(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Left,
-                style = AdditionalTextCellParams.AdditionalText.titleTextAppearance
+                style = ChiliTextStyle.get(
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    ChiliTheme.Colors.ChiliPrimaryTextColor,
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
