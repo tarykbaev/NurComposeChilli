@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextStyle
@@ -28,70 +31,70 @@ fun TextAppearanceScreen() {
 
     val textStyleList = listOf(
         TextAppearanceScreenModel(
-            text = "Headline1",
+            text = "Headline H1",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH1,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline2",
+            text = "Headline H2",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH2,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline3",
+            text = "Headline H3",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH3,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline4",
+            text = "Headline H4",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH4,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline5",
+            text = "Headline H5",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline6",
+            text = "Headline H6",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline7",
+            text = "Headline H7",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline8",
+            text = "Headline H8",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline9",
+            text = "Headline H9",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
             )
         ),
         TextAppearanceScreenModel(
-            text = "Headline10",
+            text = "Headline H10",
             style = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH10,
                 ChiliTheme.Colors.ChiliPrimaryTextColor
@@ -163,9 +166,22 @@ fun TextAppearanceScreen() {
             .fillMaxSize()
             .background(ChiliTheme.Colors.ChiliSurfaceBackground)
     ) {
-        items(textStyleList){
+        items(textStyleList) {
             Text(modifier = Modifier.padding(horizontal = 16.dp), text = it.text, style = it.style)
-            Spacer(modifier = Modifier.padding(16.dp))
+            HorizontalDivider(
+                modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_16dp)),
+                color = ChiliTheme.Colors.ChiliDividerColor,
+                thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
         }
+    }
+}
+
+@Preview
+@Composable
+fun TextAppearanceScreen_Preview() {
+    ChiliTheme {
+        TextAppearanceScreen()
     }
 }
