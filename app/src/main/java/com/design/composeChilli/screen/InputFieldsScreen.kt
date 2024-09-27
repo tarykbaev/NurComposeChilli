@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -23,9 +25,7 @@ import com.design.composechili.R
 import com.design.composechili.components.input.baseInput.BaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.components.input.code.CodeInput
-import com.design.composechili.components.input.code.CodeInputItemState
 import com.design.composechili.components.input.code.CodeLength
-import com.design.composechili.components.input.code.OnCodeChangeListener
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
 import com.design.composechili.theme.ChiliTextStyle
@@ -38,11 +38,9 @@ fun InputFieldsScreen() {
     var baseInputWithIconsText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
     var commentText by remember { mutableStateOf("") }
-    var baseInputWithErrorText by remember { mutableStateOf("") }
-    var isFieldError by remember { mutableStateOf(true) }
+    var isFieldError by remember { mutableStateOf(false) }
     var descriptionText by remember { mutableStateOf("") }
-    var codeInputState by remember { mutableStateOf(CodeInputItemState.INACTIVE) }
-    var codeInputClear by remember { mutableStateOf(false) }
+    var isCodeInputError by remember { mutableStateOf(true) }
 
     Column(
         modifier = Modifier
@@ -153,40 +151,45 @@ fun InputFieldsScreen() {
         )
 
         CodeInput(
-            message = "Message",
-            actionText = "Action",
-            state = codeInputState,
-            clearCode = codeInputClear,
-            onActionTextClick = {},
-            codeCompleteListener = object : OnCodeChangeListener {
-                override fun onCodeComplete(otp: String) {
-                    codeInputState = CodeInputItemState.ERROR
-                    codeInputClear = true
-                }
-
-                override fun onCodeChange(text: String?) {
-                    codeInputState = CodeInputItemState.INACTIVE
-                    codeInputClear = false
-                }
-            })
+            errorMessage = "Неверный пароль",
+            actionText = "Сбросить пароль",
+            isError = isCodeInputError,
+            onCodeComplete = {
+                isCodeInputError = true
+            },
+            onCodeChange = {
+                isCodeInputError = false
+            }
+        )
 
         CodeInput(
             codeLength = CodeLength.FOUR,
-            state = codeInputState,
-            isActionTextEnabled = false,
-            clearCode = codeInputClear,
-            onActionTextClick = {},
-            codeCompleteListener = object : OnCodeChangeListener {
-                override fun onCodeComplete(otp: String) {
-                    codeInputState = CodeInputItemState.ERROR
-                    codeInputClear = true
-                }
+            isError = false,
+            onCodeComplete = {
 
-                override fun onCodeChange(text: String?) {
-                    codeInputState = CodeInputItemState.INACTIVE
-                    codeInputClear = false
-                }
-            })
+            }
+        )
+
+        Spacer(modifier = Modifier.size(54.dp))
+
+        /*
+                CodeInput(
+                    codeLength = CodeLength.FOUR,
+                    state = codeInputState,
+                    isActionTextEnabled = false,
+                    clearCode = codeInputClear,
+                    onActionTextClick = {},
+                    codeCompleteListener = object : OnCodeChangeListener {
+                        override fun onCodeComplete(otp: String) {
+                            codeInputState = CodeInputItemState.ERROR
+                            codeInputClear = true
+                        }
+
+                        override fun onCodeChange(text: String?) {
+                            codeInputState = CodeInputItemState.INACTIVE
+                            codeInputClear = false
+                        }
+                    })*/
     }
 }
 

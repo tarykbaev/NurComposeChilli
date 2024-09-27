@@ -71,7 +71,7 @@ fun InputFieldWithDescAndAction(
     description: String = String(),
     descriptionTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        colorResource(id = R.color.black_5)
+        ChiliTheme.Colors.ChiliPrimaryTextColor
     ),
     actionTitle: String = String(),
     onActionClick: (() -> Unit)? = null,
