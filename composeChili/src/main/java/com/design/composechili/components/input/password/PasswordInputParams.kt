@@ -23,9 +23,6 @@ data class PasswordInputParams(
     val selectionBackgroundColor: Color,
     val hintColor: Color,
     val endIconColor: Color,
-    val messageTextStyle: TextStyle,
-    val errorMessageTextStyle: TextStyle,
-    val messagePadding: ChiliPadding,
     val keyboardType: KeyboardType = KeyboardType.Password,
     val imeAction: ImeAction = ImeAction.Done,
 ) {
@@ -43,18 +40,8 @@ data class PasswordInputParams(
                 fieldErrorBackground = ChiliTheme.Colors.ChiliCodeInputItemErrorBackgroundColor,
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),
                 hintColor = colorResource(id = R.color.gray_1),
-                endIconColor = ChiliTheme.Colors.ChiliSecondaryTextColor,
-                messageTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor
-                ), errorMessageTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.Colors.ChiliErrorTextColor
-                ), messagePadding = ChiliPadding(
-                    top = dimensionResource(id = R.dimen.padding_8dp),
-                    start = dimensionResource(id = R.dimen.padding_16dp),
-                    end = dimensionResource(id = R.dimen.padding_16dp),
-                ), keyboardType = KeyboardType.Text,
+                endIconColor = ChiliTheme.Colors.ChiliInputEndIconTint,
+                keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.None,
             )
     }

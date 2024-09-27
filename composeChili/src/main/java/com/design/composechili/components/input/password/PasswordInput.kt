@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -63,7 +64,6 @@ fun PasswordInput(
     modifier: Modifier = Modifier,
     value: String,
     hint: String = String(),
-    message: String? = null,
     isEnabled: Boolean = true,
     isError: Boolean = true,
     transformationMask: Char = '\u2022',
@@ -77,82 +77,70 @@ fun PasswordInput(
 
     var isPasswordVisible by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = modifier
-    ) {
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = value,
-            onValueChange = onValueChange,
-            textStyle = params.textStyle,
-            enabled = isEnabled,
-            isError = isError,
-            maxLines = 1,
-            visualTransformation = if (isPasswordVisible) VisualTransformation.None
-            else PasswordVisualTransformation(transformationMask),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = params.keyboardType,
-                imeAction = params.imeAction
-            ),
-            keyboardActions = KeyboardActions { onImeAction() },
-            shape = CircleShape.copy(CornerSize(8.dp)),
-            leadingIcon = if (startIcon != null) {{
-                Icon(painter = painterResource(id = startIcon), contentDescription = "Start icon")
-            }} else null,
-            trailingIcon = if (passwordInvisibleEndIcon == null && passwordVisibleEndIcon == null) null
-            else {{
-                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                    Icon(
-                        painter = painterResource(
-                            id = when {
-                                passwordInvisibleEndIcon != null && passwordVisibleEndIcon != null ->
-                                    if (isPasswordVisible) passwordInvisibleEndIcon else passwordVisibleEndIcon
-                                passwordInvisibleEndIcon == null -> passwordVisibleEndIcon!!
-                                else -> passwordInvisibleEndIcon
-                            }
-                        ),
-                        contentDescription = "Clear icon"
-                    )
-                }
-            }},
-            colors = TextFieldDefaults.colors().copy(
-                focusedContainerColor = params.fieldBackground,
-                unfocusedContainerColor = params.fieldBackground,
-                disabledContainerColor = params.fieldBackground,
-                errorContainerColor = params.fieldErrorBackground,
-                errorTextColor = params.errorTextColor,
-                errorIndicatorColor = Color.Transparent,
-                errorCursorColor = params.errorTextColor,
-                textSelectionColors = TextSelectionColors(
-                    params.cursorColor,
-                    params.selectionBackgroundColor
-                ),
-                unfocusedTrailingIconColor = params.endIconColor,
-                focusedTrailingIconColor = params.endIconColor,
-                errorTrailingIconColor = params.endIconColor,
-                cursorColor = params.cursorColor,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-            ),
-            placeholder = {
-                Text(
-                    text = hint,
-                    style = params.textStyle,
-                    color = params.hintColor,
-                    modifier = modifier.animateContentSize()
+    TextField(
+        modifier = modifier,
+        value = value,
+        onValueChange = onValueChange,
+        textStyle = params.textStyle,
+        enabled = isEnabled,
+        isError = isError,
+        maxLines = 1,
+        visualTransformation = if (isPasswordVisible) VisualTransformation.None
+        else PasswordVisualTransformation(transformationMask),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = params.keyboardType,
+            imeAction = params.imeAction
+        ),
+        keyboardActions = KeyboardActions { onImeAction() },
+        shape = CircleShape.copy(CornerSize(8.dp)),
+        leadingIcon = if (startIcon != null) {{
+            Icon(painter = painterResource(id = startIcon), contentDescription = "Start icon")
+        }} else null,
+        trailingIcon = if (passwordInvisibleEndIcon == null && passwordVisibleEndIcon == null) null
+        else {{
+            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                Icon(
+                    painter = painterResource(
+                        id = when {
+                            passwordInvisibleEndIcon != null && passwordVisibleEndIcon != null ->
+                                if (isPasswordVisible) passwordInvisibleEndIcon else passwordVisibleEndIcon
+                            passwordInvisibleEndIcon == null -> passwordVisibleEndIcon!!
+                            else -> passwordInvisibleEndIcon
+                        }
+                    ),
+                    contentDescription = "Clear icon"
                 )
             }
-        )
-        if (message != null) {
+        }},
+        colors = TextFieldDefaults.colors().copy(
+            focusedContainerColor = params.fieldBackground,
+            unfocusedContainerColor = params.fieldBackground,
+            disabledContainerColor = params.fieldBackground,
+            errorContainerColor = params.fieldErrorBackground,
+            errorTextColor = params.errorTextColor,
+            errorIndicatorColor = Color.Transparent,
+            errorCursorColor = params.errorTextColor,
+            textSelectionColors = TextSelectionColors(
+                params.cursorColor,
+                params.selectionBackgroundColor
+            ),
+            unfocusedTrailingIconColor = params.endIconColor,
+            focusedTrailingIconColor = params.endIconColor,
+            errorTrailingIconColor = params.endIconColor,
+            cursorColor = params.cursorColor,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+        ),
+        placeholder = {
             Text(
-                modifier = Modifier.padding(params.messagePadding.toPaddingValues()),
-                text = message,
-                style = if (isError) params.errorMessageTextStyle else params.messageTextStyle,
+                text = hint,
+                style = params.textStyle,
+                color = params.hintColor,
+                modifier = modifier.animateContentSize()
             )
         }
-    }
+    )
 }
 
 @Composable

@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import com.design.composechili.components.input.code.CodeLength
 import com.design.composechili.components.input.code.OnCodeChangeListener
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
+import com.design.composechili.components.input.password.PasswordInput
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -43,6 +46,8 @@ fun InputFieldsScreen() {
     var descriptionText by remember { mutableStateOf("") }
     var codeInputState by remember { mutableStateOf(CodeInputItemState.INACTIVE) }
     var codeInputClear by remember { mutableStateOf(false) }
+    var passwordInputText by remember { mutableStateOf("") }
+    var isPasswordInputError by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -110,6 +115,21 @@ fun InputFieldsScreen() {
             )
         }
 
+        InputFieldWithDescAndAction(
+            description = "PasswordInput message",
+            descriptionTextStyle = ChiliTextStyle.get(
+                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                if (isPasswordInputError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
+            )
+        ) {
+            PasswordInput(
+                modifier = Modifier.fillMaxWidth(),
+                value = passwordText,
+                hint = "Password",
+                isError = isPasswordInputError,
+                onValueChange = { passwordText = it },
+            )
+        }
 
         InputFieldWithDescAndAction(
             description = "Simple with start icon",
