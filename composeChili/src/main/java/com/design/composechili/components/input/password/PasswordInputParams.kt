@@ -23,8 +23,8 @@ data class PasswordInputParams(
     val selectionBackgroundColor: Color,
     val hintColor: Color,
     val endIconColor: Color,
-    val keyboardType: KeyboardType = KeyboardType.Password,
-    val imeAction: ImeAction = ImeAction.Done,
+    val keyboardType: KeyboardType,
+    val imeAction: ImeAction,
 ) {
 
     companion object {
@@ -41,8 +41,8 @@ data class PasswordInputParams(
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),
                 hintColor = colorResource(id = R.color.gray_1),
                 endIconColor = ChiliTheme.Colors.ChiliInputEndIconTint,
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.None,
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
             )
     }
 
