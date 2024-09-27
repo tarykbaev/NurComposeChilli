@@ -19,14 +19,15 @@ data class PasswordInputParams(
     val errorTextColor: Color,
     val cursorColor: Color,
     val fieldBackground: Color,
+    val fieldErrorBackground: Color,
     val selectionBackgroundColor: Color,
     val hintColor: Color,
     val endIconColor: Color,
     val messageTextStyle: TextStyle,
     val errorMessageTextStyle: TextStyle,
     val messagePadding: ChiliPadding,
-    val keyboardType: KeyboardType = KeyboardType.Text,
-    val imeAction: ImeAction = ImeAction.None,
+    val keyboardType: KeyboardType = KeyboardType.Password,
+    val imeAction: ImeAction = ImeAction.Done,
 ) {
 
     companion object {
@@ -39,9 +40,10 @@ data class PasswordInputParams(
                 ), errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
                 fieldBackground = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
+                fieldErrorBackground = ChiliTheme.Colors.ChiliCodeInputItemErrorBackgroundColor,
                 selectionBackgroundColor = colorResource(id = R.color.magenta_3),
                 hintColor = colorResource(id = R.color.gray_1),
-                endIconColor = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                endIconColor = ChiliTheme.Colors.ChiliSecondaryTextColor,
                 messageTextStyle = ChiliTextStyle.get(
                     ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     ChiliTheme.Colors.ChiliPrimaryTextColor
