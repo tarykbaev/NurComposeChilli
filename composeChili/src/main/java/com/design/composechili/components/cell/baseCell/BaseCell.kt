@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -98,14 +97,12 @@ fun BaseCell(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(end = dimensionResource(R.dimen.padding_16dp))
-                    .background(Color.Green),
+                    .padding(end = dimensionResource(R.dimen.padding_16dp)),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Red),
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center
                 ) {
                     val adjustedTitlePadding = params.titlePadding.copy(
