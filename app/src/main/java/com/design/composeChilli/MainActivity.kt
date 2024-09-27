@@ -3,9 +3,6 @@ package com.design.composeChilli
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.compose.runtime.CompositionLocalProvider
 import com.design.composeChilli.navigation.ChiliComposeNavigator
 import com.design.composeChilli.navigation.LocalComposeNavigator
