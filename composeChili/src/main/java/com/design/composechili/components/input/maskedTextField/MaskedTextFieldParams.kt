@@ -21,7 +21,7 @@ data class MaskedTextFieldParams(
             @Composable
             get() = MaskedTextFieldParams(
                 titleTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                     ChiliTheme.Colors.ChiliPrimaryTextColor,
                     ChiliTheme.Attribute.ChiliBoldTextFont
                 ),

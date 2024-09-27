@@ -1,5 +1,7 @@
 package com.design.composechili.components.common.switch
 
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,21 +45,26 @@ fun ChiliSwitch(
                 onValueChange(it)
             },
             colors = SwitchDefaults.colors(
-                checkedThumbColor = ChiliTheme.Colors.ChiliLinkTextColor
+                checkedThumbColor = ChiliTheme.Colors.ChiliSwitchBoxCheckedToggleColor,
+                uncheckedThumbColor = ChiliTheme.Colors.ChiliSwitchBoxUncheckedToggleColor,
+                checkedTrackColor = ChiliTheme.Colors.ChiliSwitchBoxCheckedBackground,
+                uncheckedTrackColor = ChiliTheme.Colors.ChiliSwitchBoxUncheckedBackground
             )
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Switch_Preview() {
     ChiliTheme {
         var checkedState by remember {
             mutableStateOf(false)
         }
-        ChiliSwitch(checkedState = checkedState){
-            checkedState = it
+        Row(Modifier.background(ChiliTheme.Colors.ChiliSurfaceBackground)) {
+            ChiliSwitch(checkedState = checkedState) {
+                checkedState = it
+            }
         }
     }
 }

@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -13,17 +15,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.input.baseInput.BaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.theme.ChiliTextStyle
@@ -63,46 +71,46 @@ fun InputFieldWithDescAndAction(
     description: String = String(),
     descriptionTextStyle: TextStyle = ChiliTextStyle.get(
         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-        ChiliTheme.Colors.ChiliPrimaryTextColor
+        colorResource(id = R.color.black_5)
     ),
     actionTitle: String = String(),
     onActionClick: (() -> Unit)? = null,
     inputField: @Composable (Modifier) -> Unit,
 ) {
+    val localDensity = LocalDensity.current
+    var calculateTextHeight by remember { mutableStateOf(0.dp) }
+
     Column(
         modifier = modifier
-            .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
             .wrapContentHeight()
     ) {
         inputField(Modifier.fillMaxWidth())
-        Row {
+        Row(modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp)) {
             if (description.isNotBlank()) {
                 Text(
                     modifier = descriptionModifier
+                        .onGloballyPositioned { coordinates ->
+                            calculateTextHeight =
+                                with(localDensity) { coordinates.size.height.toDp() }
+                        }
                         .weight(1f)
-                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                        .padding(horizontal = 8.dp)
                         .align(Alignment.CenterVertically),
                     text = description,
                     style = descriptionTextStyle.copy(textAlign = TextAlign.Start)
                 )
             }
             if (actionTitle.isNotBlank()) {
-                Button(
-                    shape = RoundedCornerShape(12.dp),
-                    contentPadding = PaddingValues(top = 10.dp, bottom = 12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                    onClick = {
-                        onActionClick?.invoke()
-                    },
-                    content = {
-                        Text(
-                            text = actionTitle,
-                            style = ChiliTextStyle.get(
-                                color = ChiliTheme.Colors.ChiliComponentButtonTextColorPressed,
-                                font = ChiliTheme.Attribute.ChiliComponentButtonTextFont,
-                            ).copy(textAlign = TextAlign.End)
-                        )
-                    },
+                BaseButton(
+                    modifier = Modifier.wrapContentSize(),
+                    buttonPadding = PaddingValues(0.dp),
+                    onClick = { onActionClick?.invoke() },
+                    title = actionTitle,
+                    buttonStyle = ChiliButtonStyle.ComponentButton.copy(
+                        contentPaddingValues = PaddingValues(
+                            0.dp
+                        ), minHeight = 0.dp
+                    )
                 )
             }
         }
@@ -119,10 +127,11 @@ fun InputFieldWithDescAndActionPreview() {
             description = "Description",
             actionTitle = "Action",
         ) {
-            BaseInput(textFieldValue = inputFieldText, onValueChange = {
-                inputFieldText = it
-            }, params = BaseInputParams.Default.copy(textFieldPadding = PaddingValues(0.dp))
-                )
+            BaseInput(
+                textFieldValue = inputFieldText, onValueChange = {
+                    inputFieldText = it
+                }, params = BaseInputParams.Default.copy(textFieldPadding = PaddingValues(0.dp))
+            )
         }
     }
 }

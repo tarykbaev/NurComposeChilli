@@ -3,71 +3,74 @@ package com.design.composeChilli
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import com.design.composeChilli.screen.ButtonsScreen
-import com.design.composeChilli.screen.NavigationBarScreen
-import com.design.composeChilli.screen.SnackbarScreen
-import com.design.composechili.components.topAppBar.ChiliBaseTopAppBar
-import com.design.composechili.components.topAppBar.ChiliBaseTopAppBarParams
-import com.design.composechili.theme.ChiliTheme
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.compose.runtime.CompositionLocalProvider
+import com.design.composeChilli.navigation.ChiliComposeNavigator
+import com.design.composeChilli.navigation.LocalComposeNavigator
+import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
 
+    private val composeNavigator by lazy { ChiliComposeNavigator<ChiliScreens>() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         setContent {
-            var isDarkModeEnable by rememberSaveable {
-                mutableStateOf(false)
-            }
-
-            ChiliTheme(darkTheme = isDarkModeEnable) {
-                Column(modifier = Modifier.safeDrawingPadding()) {
-                    ChiliBaseTopAppBar(
-                        title = "NurComposeChili",
-                        isDividerVisible = false,
-                        endIcon = R.drawable.ic_dark_mode,
-                        params = ChiliBaseTopAppBarParams.Default.copy(
-                            endIconColorFilter = ColorFilter.tint(
-                                ChiliTheme.Colors.ChiliPrimaryTextColor
-                            )
-                        ),
-                        onEndIconClick = { isDarkModeEnable = !isDarkModeEnable }
-                    )
-//                    NavigationBarScreen()
-                    ButtonsScreen()
-                }
-                /*ComponentSelectorScreen(
-                    onTextAppearanceItemClicked = {},
-                    onButtonItemClicked = {},
-                    onInputFieldsItemClicked = {},
-                    onCardsItemClicked = {},
-                    onCellsItemClicked = {},
-                    onSnackBarItemClicked = {},
-                    onCommonItemClicked = {},
-                    onBottomSheetItemClicked = {},
-                    onToolbarsItemClicked = {},
-                    onNavigationBarItemClicked = {},
-                    onPickersItemClicked = {},
-                    onHighlighterContainerItemClicked = {},
-                    onCameraOverlaysItemClicked = {},
-                    onGroupingContainersItemClicked = {},
-                    onTooltipsItemClicked = {},
-                    onDividersItemClicked = {},
-                    onDarkModeClicked = {
-                        isDarkModeEnable = isDarkModeEnable.not()
-                    }
-                )*/
+            CompositionLocalProvider(
+                LocalComposeNavigator provides composeNavigator,
+            ) {
+                ChiliMain(composeNavigator = composeNavigator)
             }
         }
     }
+}
+
+sealed interface ChiliScreens {
+    @Serializable
+    data object Home : ChiliScreens
+
+    @Serializable
+    data object TextAppearance : ChiliScreens
+
+    @Serializable
+    data object Buttons : ChiliScreens
+
+    @Serializable
+    data object InputFields : ChiliScreens
+
+    @Serializable
+    data object Cards : ChiliScreens
+
+    @Serializable
+    data object Cells : ChiliScreens
+
+    @Serializable
+    data object Snackbar : ChiliScreens
+
+    @Serializable
+    data object Common : ChiliScreens
+
+    @Serializable
+    data object BottomSheets : ChiliScreens
+
+    @Serializable
+    data object Toolbars : ChiliScreens
+
+    @Serializable
+    data object NavigationBar : ChiliScreens
+
+    @Serializable
+    data object Pickers : ChiliScreens
+
+    @Serializable
+    data object HighlighterContainer : ChiliScreens
+
+    @Serializable
+    data object GroupingContainer : ChiliScreens
+
+    @Serializable
+    data object Tooltip : ChiliScreens
 }

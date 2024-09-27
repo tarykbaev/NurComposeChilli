@@ -4,12 +4,14 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -19,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -62,7 +65,9 @@ fun BaseButton(
     @DrawableRes endIcon: Int? = null,
 ) {
     Button(
-        modifier = modifier.padding(buttonPadding).defaultMinSize(minHeight = 48.dp),
+        modifier = modifier
+            .padding(buttonPadding)
+            .heightIn(min = buttonStyle.minHeight),
         onClick = onClick,
         shape = CircleShape.copy(CornerSize(buttonStyle.cornerSize)),
         border = BorderStroke(buttonStyle.borderWidth, buttonStyle.borderColor),
@@ -82,7 +87,10 @@ fun BaseButton(
         )
         if (startIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(end = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 4.dp),
                 painter = painterResource(id = startIcon),
                 contentDescription = "Button start icon"
             )
@@ -95,7 +103,10 @@ fun BaseButton(
         )
         if (endIcon != null) {
             Image(
-                modifier = Modifier.wrapContentSize().align(Alignment.CenterVertically).padding(start = 4.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 4.dp),
                 painter = painterResource(endIcon),
                 contentDescription = "Button end icon"
             )

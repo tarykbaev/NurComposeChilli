@@ -47,7 +47,7 @@ fun CodeInputItem(
                     color = borderColor,
                     shape = RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp))
                 )
-                .padding(vertical = dimensionResource(id = R.dimen.padding_18dp)),
+                .padding(vertical = dimensionResource(id = R.dimen.padding_14dp)),
             text = text,
             textAlign = TextAlign.Center,
             style = ChiliTextStyle.get(

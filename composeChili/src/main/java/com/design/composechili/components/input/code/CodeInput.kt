@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ripple
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -76,7 +75,9 @@ fun CodeInput(
         CodeLength.EIGHT -> dimensionResource(id = R.dimen.view_40dp)
     }
     var code by remember { mutableStateOf("") }
-    if (clearCode) { code = "" }
+    if (clearCode) {
+        code = ""
+    }
 
     Column(
         modifier = modifier
