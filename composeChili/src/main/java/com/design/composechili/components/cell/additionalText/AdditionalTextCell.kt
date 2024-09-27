@@ -3,198 +3,239 @@ package com.design.composechili.components.cell.additionalText
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.ripple
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.cell.model.AdditionalTextCellViewItems
+import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.utils.softLayerShadow
 
 /**
- * A composable function that displays a text cell with optional subtitles, descriptions, and an icon.
- * The cell can be customized with different corner shapes, and it supports the inclusion of a chevron icon.
- *
- * @param modifier Modifier to be applied to the composable.
- * @param title Main title text, appears at the top left within the cell.
- * @param description Description text, appears at the top right within the cell.
- * @param subTitle Optional subtitle text, appears below the title on the left side of the cell. Defaults to null.
- * @param subDescription Optional sub-description text, appears below the description on the right side of the cell. Defaults to null.
- * @param chevronEnabled Boolean flag indicating whether to show a chevron icon on the far right of the cell. Defaults to false.
- * @param icon Optional drawable resource ID for an icon, appears centered on the left side of the cell before the title. Defaults to null.
- * @param shape Specifies the shape of the cell's corners. The corners can be fully rounded, partially rounded, or not rounded at all.
- * It uses the [CellCornerMode] enum to define the shape, which can be:
- * - [CellCornerMode.Single]: All corners rounded (e.g., for a standalone cell).
- * - [CellCornerMode.Top]: Only the top corners are rounded (e.g., for the top cell in a list).
- * - [CellCornerMode.Bottom]: Only the bottom corners are rounded (e.g., for the bottom cell in a list).
- * - [CellCornerMode.Middle]: No corners are rounded (e.g., for a cell in the middle of a list).
- *
- * Example usage:
- * @sample AdditionalTextCellView(
- *     title = "Main Title",
- *     description = "Description Text",
- *     subTitle = "Subtitle Text",
- *     subDescription = "Sub-Description Text",
- *     chevronEnabled = true,
- *     icon = R.drawable.ic_example_icon,
- *     shape = CellCornerMode.Single
- * )
+ * TODO (add shimmer effect)
+ * @param [title] accept [String] and showing on the start in cell
+ * @param [subtitle] accept [String] and showing on the start and below [title] in cell
+ * @param [additionalTitle] accept [String] and showing below [subtitle] in cell
+ * @param [additionalSubTitle] accept [String] and showing below [additionalTitle] in cell
+ * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
+ * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
+ * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
+ * @param [params] cell visual transformation params and paddings
+ * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
+ * @sample AdditionalTextCellParams.Default
  */
-
 @Composable
-fun AdditionalTextCellView(
+fun AdditionalTextCell(
     modifier: Modifier = Modifier,
-    title: String,
-    description: String,
-    subTitle: String? = null,
-    subDescription: String? = null,
-    chevronEnabled: Boolean = false,
-    @DrawableRes icon: Int? = null,
-    shape: CellCornerMode = CellCornerMode.Single
+    title: String = String(),
+    subtitle: String = String(),
+    additionalTitle: String = String(),
+    additionalSubTitle: String = String(),
+    isChevronVisible: Boolean = false,
+    isDividerVisible: Boolean = false,
+    @DrawableRes startIcon: Int? = null,
+    cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    params: AdditionalTextCellParams = AdditionalTextCellParams.Default,
+    onClick: (() -> Unit)? = null
 ) {
-    val hasSubtext = subDescription != null || subTitle != null
-    Column(
+
+    val baseCellParams = params.baseCellParams
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Box(
         modifier
-            .sizeIn(minHeight = 48.dp)
-            .background(
-                color = ChiliTheme.Colors.ChiliSurfaceBackground,
-                shape = shape.toRoundedShape()
-            ),
-        verticalArrangement = Arrangement.Center,
+            .clip(cellCornerMode.toRoundedShape())
+            .background(baseCellParams.background)
+            .clickable(
+                onClick = { onClick?.invoke() },
+                interactionSource = interactionSource,
+                indication = ripple(
+                    color = ChiliTheme.Colors.СhiliRippleForegroundColor
+                )
+            )
     ) {
         Row(
-            modifier = Modifier
+            Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .heightIn(min = dimensionResource(R.dimen.view_48dp)),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (icon != null)
+            if (startIcon != null) {
                 Image(
                     modifier = Modifier
-                        .size(48.dp)
-                        .padding(if (hasSubtext) 8.dp else 0.dp),
-                    painter = painterResource(id = icon),
-                    contentDescription = null
+                        .align(Alignment.CenterVertically)
+                        .padding(
+                            vertical = baseCellParams.iconSize.verticalPadding,
+                            horizontal = baseCellParams.iconSize.horizontalPadding
+                        )
+                        .size(baseCellParams.iconSize.iconSize),
+                    painter = painterResource(id = startIcon),
+                    contentDescription = "Base cell start icon"
                 )
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = title,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Left,
-                    style = AdditionalTextCellParams.AdditionalText.titleTextAppearance
-                )
-                if (subTitle != null)
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = subTitle,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        textAlign = TextAlign.Left,
-                        style = AdditionalTextCellParams.AdditionalText.titleTextAppearance
-                    )
             }
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.CenterStart
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = description,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Right,
-                    style = AdditionalTextCellParams.AdditionalText.additionalTextAppearance
-                )
-                if (subDescription != null)
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = subDescription,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        textAlign = TextAlign.Right,
-                        style = AdditionalTextCellParams.AdditionalText.additionalSubTextAppearance
-                    )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        val adjustedTitlePadding = baseCellParams.titlePadding.copy(
+                            start = if (startIcon != null) 0.dp else baseCellParams.titlePadding.start,
+                            bottom = if (subtitle.isBlank()) {
+                                dimensionResource(id = R.dimen.padding_12dp)
+                            } else {
+                                dimensionResource(id = R.dimen.padding_4dp)
+                            }
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(
+                                    adjustedTitlePadding.toPaddingValues()
+                                ),
+                            text = title,
+                            style = baseCellParams.titleTextStyle,
+                            maxLines = baseCellParams.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+
+                        val subTitlePadding = baseCellParams.subtitlePadding.copy(
+                            start = if (startIcon != null) 0.dp else baseCellParams.subtitlePadding.start
+                        )
+
+                        if (subtitle.isNotBlank()) {
+                            Text(
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(subTitlePadding.toPaddingValues()),
+                                text = subtitle,
+                                style = baseCellParams.subTitleTextStyle,
+                                maxLines = baseCellParams.textMaxLines,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .weight(1f),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        val adjustedAdditionalTitlePadding =
+                            params.additionalTitlePadding.copy(
+                                bottom = if (additionalSubTitle.isNotBlank()) {
+                                    dimensionResource(id = R.dimen.padding_4dp)
+                                } else {
+                                    dimensionResource(id = R.dimen.padding_12dp)
+                                }
+                            )
+
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.End)
+                                .wrapContentSize()
+                                .padding(adjustedAdditionalTitlePadding.toPaddingValues()),
+                            text = additionalTitle,
+                            style = params.additionalTitleStyle,
+                            maxLines = baseCellParams.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+
+                        if (additionalSubTitle.isNotBlank()) {
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.End)
+                                    .wrapContentSize()
+                                    .padding(
+                                        params.additionalSubTitlePadding.toPaddingValues()
+                                    ),
+                                text = additionalSubTitle,
+                                style = params.additionalSubTitleStyle,
+                                maxLines = baseCellParams.textMaxLines,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                }
             }
-            if (chevronEnabled)
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.chili_ic_chevron),
-                    contentDescription = null
+
+            if (isChevronVisible) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = baseCellParams.chevronIconPadding.end),
+                    painter = painterResource(id = R.drawable.chili_ic_chevron),
+                    contentDescription = "Navigation icon",
+                    colorFilter = ColorFilter.tint(
+                        baseCellParams.chevronIconTint, BlendMode.SrcIn
+                    )
                 )
+            }
+        }
+        if (isDividerVisible) {
+            HorizontalDivider(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                color = ChiliTheme.Colors.ChiliDividerColor,
+                thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+            )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun AdditionalTextCellView_Preview() {
+fun AdditionalTextCell_Preview() {
     ChiliTheme {
-        Column(
-            Modifier.background(Color.Black),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            AdditionalTextCellView(
-                title = "Длинный текст ",
-                description = "Текст значения выходящий за свои рамки своей вместимости",
-                chevronEnabled = true,
-            )
-            AdditionalTextCellView(
+        Column {
+            AdditionalTextCell(
+                modifier = Modifier
+                    .softLayerShadow(),
                 title = "Заголовок",
-                description = "Additional text no chevron",
-                chevronEnabled = false
-            )
-            AdditionalTextCellView(
-                title = "Заголовок",
-                description = "Additional text icon",
-                icon = R.drawable.ic_darkmode_false_,
-                chevronEnabled = true,
-            )
-            AdditionalTextCellViewList(
-                itemsList = listOf(
-                    AdditionalTextCellViewItems(
-                        text = "simple",
-                        description = "Value"
-                    ),
-                    AdditionalTextCellViewItems(
-                        text = "simple",
-                        description = "Value"
-                    ),
-                    AdditionalTextCellViewItems(
-                        text = "simple",
-                        description = "Value"
-                    ),
-                )
-            )
-            AdditionalTextCellView(
-                title = "simple",
-                description = "Value",
-                subTitle = "123123",
-                subDescription = "Sub text 123",
-                icon = R.drawable.ic_bonus_new,
-                chevronEnabled = false,
-            )
+                subtitle = "Подзаголовок",
+                additionalTitle = "Additional",
+                additionalSubTitle = "Additional Sub",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+            ) {
+
+            }
         }
     }
 }
