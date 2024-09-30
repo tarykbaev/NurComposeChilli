@@ -1,7 +1,6 @@
 package com.design.composechili.components.input.password
 
 import android.content.res.Configuration
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -20,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -63,9 +63,8 @@ fun PasswordInput(
     transformationMask: Char = '\u2022',
     onValueChange: (String) -> Unit = {},
     onImeAction: () -> Unit = {},
-    @DrawableRes passwordVisibleEndIcon: Int? = R.drawable.chili_ic_visible,
-    @DrawableRes passwordInvisibleEndIcon: Int? = R.drawable.chili_ic_invisible,
-    @DrawableRes startIcon: Int? = null,
+    passwordVisibleEndIcon: Painter = painterResource(id = R.drawable.chili_ic_visible),
+    passwordInvisibleEndIcon: Painter = painterResource(id = R.drawable.chili_ic_invisible),
     params: PasswordInputParams = PasswordInputParams.Default,
 ) {
 
@@ -78,7 +77,6 @@ fun PasswordInput(
         textStyle = params.textStyle,
         enabled = isEnabled,
         isError = isError,
-        maxLines = 1,
         visualTransformation = if (isPasswordVisible) VisualTransformation.None
         else PasswordVisualTransformation(transformationMask),
         keyboardOptions = KeyboardOptions(
@@ -87,25 +85,17 @@ fun PasswordInput(
         ),
         keyboardActions = KeyboardActions { onImeAction() },
         shape = CircleShape.copy(CornerSize(8.dp)),
-        leadingIcon = if (startIcon != null) {{
-            Icon(painter = painterResource(id = startIcon), contentDescription = "Start icon")
-        }} else null,
-        trailingIcon = if (passwordInvisibleEndIcon == null && passwordVisibleEndIcon == null) null
-        else {{
-            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+        trailingIcon = {
+            IconButton(
+                onClick = {
+                    isPasswordVisible = isPasswordVisible.not()
+                }) {
                 Icon(
-                    painter = painterResource(
-                        id = when {
-                            passwordInvisibleEndIcon != null && passwordVisibleEndIcon != null ->
-                                if (isPasswordVisible) passwordInvisibleEndIcon else passwordVisibleEndIcon
-                            passwordInvisibleEndIcon == null -> passwordVisibleEndIcon!!
-                            else -> passwordInvisibleEndIcon
-                        }
-                    ),
+                    painter = if (isPasswordVisible) passwordInvisibleEndIcon else passwordVisibleEndIcon,
                     contentDescription = "Clear icon"
                 )
             }
-        }},
+        },
         colors = TextFieldDefaults.colors().copy(
             focusedContainerColor = params.fieldBackground,
             unfocusedContainerColor = params.fieldBackground,

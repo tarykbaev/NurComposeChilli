@@ -115,21 +115,13 @@ fun InputFieldsScreen() {
             )
         }
 
-        InputFieldWithDescAndAction(
-            description = "PasswordInput message",
-            descriptionTextStyle = ChiliTextStyle.get(
-                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                if (isPasswordInputError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
-            )
-        ) {
-            PasswordInput(
-                modifier = Modifier.fillMaxWidth(),
-                value = passwordInputText,
-                hint = "Password",
-                isError = isPasswordInputError,
-                onValueChange = { passwordInputText = it },
-            )
-        }
+        PasswordInput(
+            modifier = Modifier.fillMaxWidth(),
+            value = passwordInputText,
+            hint = "Password",
+            isError = isPasswordInputError,
+            onValueChange = { passwordInputText = it },
+        )
 
         InputFieldWithDescAndAction(
             description = "Simple with start icon",

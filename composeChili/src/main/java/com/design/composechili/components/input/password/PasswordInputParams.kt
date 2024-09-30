@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.design.composechili.R
@@ -32,8 +33,9 @@ data class PasswordInputParams(
             @Composable
             get() = PasswordInputParams(
                 textStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor
+                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                    font = Font(R.font.roboto_medium)
                 ), errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
                 fieldBackground = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
