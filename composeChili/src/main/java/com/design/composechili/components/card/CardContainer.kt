@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -134,7 +135,7 @@ fun CardContainer_Preview() {
                     AccentCard(
                         title = "Сканнер штрих кодов и QR",
                         description = "Для удобной оплаты\nбез ввода реквизитов",
-                        endIcon = R.drawable.pay,
+                        endIcon = painterResource(id = R.drawable.pay),
                         cardParams = AccentCardParams.accentCardFucsia,
                         startIcon = null
                     ) {
@@ -144,7 +145,7 @@ fun CardContainer_Preview() {
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
                         endIcon = null,
-                        startIcon = R.drawable.icon_k,
+                        startIcon = painterResource(id = R.drawable.icon_k),
                         cardParams = AccentCardParams.accentCardBlack,
                     ) {
 
@@ -152,7 +153,7 @@ fun CardContainer_Preview() {
                     AccentCard(
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
-                        endIcon = R.drawable.ic_scaner_48,
+                        endIcon = painterResource(id = R.drawable.ic_scaner_48),
                         startIcon = null,
                         cardParams = AccentCardParams.accentCardWhite,
                     ) {

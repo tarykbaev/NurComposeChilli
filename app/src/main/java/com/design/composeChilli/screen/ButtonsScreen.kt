@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
@@ -109,7 +110,7 @@ fun ButtonsScreen() {
         Spacer(modifier = Modifier.size(12.dp))
         BaseButton(
             onClick = {},
-            endIcon = com.design.composechili.R.drawable.ic_market,
+            endIcon = painterResource(id = com.design.composechili.R.drawable.ic_market),
             title = "Iconed button",
             buttonStyle = ChiliButtonStyle.Additional
         )
