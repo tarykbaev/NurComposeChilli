@@ -1,8 +1,6 @@
 package com.design.composechili.components.picker.chiliDatePicker
 
-import android.os.Build
 import android.view.Gravity
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -69,7 +67,6 @@ import java.time.LocalDateTime
  * @see [ChiliWheelDatePicker]
  */
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChiliDatePickerDialog(
     modifier: Modifier,
@@ -106,7 +103,7 @@ fun ChiliDatePickerDialog(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
+            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliCellBackground),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -169,7 +166,6 @@ fun ChiliDatePickerDialog(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun ChiliDatePickerPreview() {

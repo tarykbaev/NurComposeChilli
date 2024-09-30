@@ -71,7 +71,7 @@ internal fun ChiliWheelDateTimePicker(
     startDateTime: LocalDateTime = LocalDateTime.now(),
     minDateTime: LocalDateTime = LocalDateTime.MIN,
     maxDateTime: LocalDateTime = LocalDateTime.MAX,
-    yearsRange: IntRange? = IntRange(minDateTime.year, maxDateTime.year.minus(1)),
+    yearsRange: IntRange? = IntRange(minDateTime.year, maxDateTime.year),
     size: DpSize = DpSize(250.dp, 150.dp),
     rowCount: Int = 3,
     textStyle: TextStyle = ChiliTextStyle.get(
