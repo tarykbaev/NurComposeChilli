@@ -49,6 +49,7 @@ import com.design.composechili.utils.softLayerShadow
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample AdditionalTextCellParams.Default
  */
+
 @Composable
 fun AdditionalTextCell(
     modifier: Modifier = Modifier,

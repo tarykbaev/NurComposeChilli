@@ -45,9 +45,11 @@ import com.design.composechili.theme.ChiliTheme
  * @param [switchTextOn] sets [String] value to the thumb on [Switch] when it is checked
  * @param [switchTextOff] sets [String] value to the thumb on [Switch] when it is not checked
  * @param [switchText] accepts [String] and shown at the start of [Switch]
- * @param [startIcon] accepts [DrawableRes] and sets [Image] to the start of cell
- * @param [onCheckedChangeListener] called when [Switch] checked value changes
+ * @param [startIcon] accepts [DrawableRes] and sets [Image] to the start of the cell
+ * @param [cellCornerMode] defines the visual corner mode of the cell (e.g. single, top, middle, bottom)
  * @param [params] cell's visual transformation params and paddings
+ * @param [onClick] called when the cell is clicked
+ * @param [onCheckedChangeListener] called when [Switch] checked value changes
  * @sample ToggleCellParams.Default
  */
 
