@@ -1,6 +1,5 @@
 package com.design.composechili.components.card
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -18,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,8 +61,8 @@ fun PromoBannerCard(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
-    @DrawableRes startIcon: Int? = null,
-    @DrawableRes rightImage: Int? = null,
+    startIcon: Painter? = null,
+    rightImage: Painter? = null,
     chevronVisible: Boolean = true,
     promoBannerCardParams: PromoBannerCardParams,
     onClick: () -> Unit,
@@ -90,7 +90,7 @@ fun PromoBannerCard(
             ) {
                 if (startIcon != null) {
                     Image(
-                        painter = painterResource(id = startIcon),
+                        painter = startIcon,
                         contentDescription = null,
                     )
                 }
@@ -109,7 +109,7 @@ fun PromoBannerCard(
         Box {
             if (rightImage != null) {
                 Image(
-                    painter = painterResource(id = rightImage),
+                    painter = rightImage,
                     contentDescription = null,
                 )
             }
@@ -131,8 +131,8 @@ fun PromoCardPreview() {
         PromoBannerCard(
             title = "Виртуальная карта",
             subtitle = "Открой бесплатно в приложении!",
-            startIcon = R.drawable.ic_visa_banner_logo,
-            rightImage = R.drawable.bg_virtual_cards_3,
+            startIcon = painterResource(id = R.drawable.ic_visa_banner_logo),
+            rightImage = painterResource(id = R.drawable.bg_virtual_cards_3),
             promoBannerCardParams = PromoBannerCardParams.Regular
         ) {}
     }
@@ -145,8 +145,8 @@ fun PromoCardPreview2() {
         PromoBannerCard(
             title = "Карта ЭЛКАРТ",
             subtitle = "Откройте карту в О!Store",
-            startIcon = R.drawable.ic_elcart_title_logo,
-            rightImage = R.drawable.bg_virtual_cards_2,
+            startIcon = painterResource(id = R.drawable.ic_elcart_title_logo),
+            rightImage = painterResource(id = R.drawable.bg_virtual_cards_2),
             promoBannerCardParams = PromoBannerCardParams.Small
         ) {}
     }

@@ -1,6 +1,5 @@
 package com.design.composechili.components.card
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
@@ -20,10 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,8 +50,8 @@ fun AccentCard(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    @DrawableRes startIcon: Int? = null,
-    @DrawableRes endIcon: Int? = null,
+    startIcon: Painter? = null,
+    endIcon:Painter? = null,
     cardParams: AccentCardParams,
     onClick: () -> Unit
 ) {
@@ -78,7 +77,7 @@ fun AccentCard(
                 if (startIcon != null)
                     Image(
                         modifier = Modifier.padding(end = dimensionResource(id = R.dimen.padding_4dp)),
-                        imageVector = ImageVector.vectorResource(id = startIcon),
+                        painter = startIcon,
                         contentDescription = null
                     )
                 Text(
@@ -96,7 +95,7 @@ fun AccentCard(
         if (endIcon != null)
             Image(
                 modifier = Modifier.size(dimensionResource(id = R.dimen.view_56dp)),
-                imageVector = ImageVector.vectorResource(id = endIcon),
+                painter = endIcon,
                 contentDescription = null
             )
     }
@@ -110,7 +109,7 @@ fun AccentCardPreview() {
             AccentCard(
                 title = "Сканнер штрих кодов и QR",
                 description = "Для удобной оплаты\nбез ввода реквизитов",
-                endIcon = R.drawable.pay,
+                endIcon = painterResource(id = R.drawable.pay),
                 cardParams = AccentCardParams.accentCardFucsia,
                 startIcon = null
             ) {
@@ -120,7 +119,7 @@ fun AccentCardPreview() {
                 title = "Цифровая карта",
                 description = "Для бесконтактных платежей",
                 endIcon = null,
-                startIcon = R.drawable.icon_k,
+                startIcon = painterResource(id = R.drawable.icon_k),
                 cardParams = AccentCardParams.accentCardBlack,
             ) {
 
@@ -128,7 +127,7 @@ fun AccentCardPreview() {
             AccentCard(
                 title = "Цифровая карта",
                 description = "Для бесконтактных платежей",
-                endIcon = R.drawable.ic_scaner_48,
+                endIcon = painterResource(id = R.drawable.ic_scaner_48),
                 startIcon = null,
                 cardParams = AccentCardParams.accentCardWhite,
             ) {

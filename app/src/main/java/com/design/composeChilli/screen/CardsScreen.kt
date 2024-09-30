@@ -61,16 +61,16 @@ fun CardsScreen() {
                             PromoBannerCard(
                                 title = "Виртуальная карта",
                                 subtitle = "Открой бесплатно в приложении!",
-                                startIcon = R.drawable.ic_visa_banner_logo,
-                                rightImage = R.drawable.bg_virtual_cards_3,
+                                startIcon = painterResource(id = R.drawable.ic_visa_banner_logo),
+                                rightImage = painterResource(id = R.drawable.bg_virtual_cards_3),
                                 promoBannerCardParams = PromoBannerCardParams.Regular
                             ) {}
                             Spacer(modifier = Modifier.padding(8.dp))
                             PromoBannerCard(
                                 title = "Карта ЭЛКАРТ",
                                 subtitle = "Откройте карту в О!Store",
-                                startIcon = R.drawable.ic_elcart_title_logo,
-                                rightImage = R.drawable.bg_virtual_cards_2,
+                                startIcon = painterResource(id = R.drawable.ic_elcart_title_logo),
+                                rightImage = painterResource(id = R.drawable.bg_virtual_cards_2),
                                 promoBannerCardParams = PromoBannerCardParams.Small
                             ) {}
                         }
@@ -84,13 +84,18 @@ fun CardsScreen() {
                 expandableContent = {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         CategoryCard(
-                            modifier = Modifier.weight(1f).softLayerShadow().padding(vertical = 16.dp),
+                            modifier = Modifier
+                                .weight(1f)
+                                .softLayerShadow()
+                                .padding(vertical = 16.dp),
                             title = "Переводы",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.LeftAligned
                         ) {}
                         CategoryCard(
-                            modifier = Modifier.softLayerShadow().padding(vertical = 16.dp),
+                            modifier = Modifier
+                                .softLayerShadow()
+                                .padding(vertical = 16.dp),
                             title = "Centered",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.Centered
@@ -106,14 +111,18 @@ fun CardsScreen() {
                 expandableContent = {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                         CategoryCard(
-                            modifier = Modifier.softLayerShadow().padding(vertical = 16.dp),
+                            modifier = Modifier
+                                .softLayerShadow()
+                                .padding(vertical = 16.dp),
                             title = "Кофейня.\nБонусная.",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.LeftAligned8Dp,
                             rootPadding = PaddingValues(top = 8.dp, bottom = 8.dp, end = 64.dp, start = 8.dp)
                         ) {}
                         CategoryCard(
-                            modifier = Modifier.softLayerShadow().padding(vertical = 16.dp),
+                            modifier = Modifier
+                                .softLayerShadow()
+                                .padding(vertical = 16.dp),
                             title = "Народный\nБонусная",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.LeftAligned8Dp,
@@ -132,7 +141,7 @@ private fun AccentCardList() {
         AccentCard(
             title = "Сканнер штрих кодов и QR",
             description = "Для удобной оплаты\nбез ввода реквизитов",
-            endIcon = R.drawable.pay,
+            endIcon = painterResource(id = R.drawable.pay),
             cardParams = AccentCardParams.accentCardFucsia,
             startIcon = null
         ) {
@@ -142,7 +151,7 @@ private fun AccentCardList() {
             title = "Цифровая карта",
             description = "Для бесконтактных платежей",
             endIcon = null,
-            startIcon = R.drawable.icon_k,
+            startIcon = painterResource(id = R.drawable.icon_k),
             cardParams = AccentCardParams.accentCardBlack,
         ) {
 
@@ -150,7 +159,7 @@ private fun AccentCardList() {
         AccentCard(
             title = "Цифровая карта",
             description = "Для бесконтактных платежей",
-            endIcon = R.drawable.ic_scaner_48,
+            endIcon = painterResource(id = R.drawable.ic_scaner_48),
             startIcon = null,
             cardParams = AccentCardParams.accentCardWhite,
         ) {
