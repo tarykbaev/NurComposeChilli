@@ -1,5 +1,6 @@
 package com.design.composeChilli.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
@@ -22,6 +24,7 @@ import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeP
 import com.design.composechili.components.picker.chiliTimePicker.ChiliTimePickerDialog
 import com.design.composechili.theme.ChiliTheme
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun PickersScreen() {
@@ -153,6 +156,9 @@ fun StandardDatePickerWithLimits(
     endLimit: LocalDateTime = LocalDateTime.of(2100, 1, 1, 0, 0),
     onSubmitBtn: () -> Unit
 ) {
+    val context = LocalContext.current
+    val formatter = DateTimeFormatter.ofPattern("yyyy MMM d HH:mm:ss")
+
     ChiliDatePickerDialog(
         modifier = Modifier,
         onDismissRequest = {},
@@ -168,6 +174,7 @@ fun StandardDatePickerWithLimits(
         ),
         onSubmitBtn = { startDate, _ ->
             onSubmitBtn()
+            Toast.makeText(context, startDate?.format(formatter), Toast.LENGTH_SHORT).show()
         })
 }
 
@@ -177,6 +184,9 @@ fun StandardDateRangePickerWithLimits(
     endLimit: LocalDateTime = LocalDateTime.of(2100, 1, 1, 0, 0),
     onSubmitBtn: () -> Unit
 ) {
+    val context = LocalContext.current
+    val formatter = DateTimeFormatter.ofPattern("yyyy MMM d HH:mm:ss")
+
     ChiliDatePickerDialog(
         modifier = Modifier,
         onDismissRequest = {},
@@ -197,5 +207,6 @@ fun StandardDateRangePickerWithLimits(
         ),
         onSubmitBtn = { startDate, endDate ->
             onSubmitBtn()
+            Toast.makeText(context, "${formatter.format(startDate)} - ${formatter.format(endDate)}", Toast.LENGTH_LONG).show()
         })
 }
