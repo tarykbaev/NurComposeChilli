@@ -20,6 +20,7 @@ data class CategoryCardParams(
             @Composable get() = CategoryCardParams(
                 style = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                     font = ChiliTheme.Attribute.ChiliBoldTextFont
                 ),
                 alignment = Alignment.Start,
@@ -29,6 +30,7 @@ data class CategoryCardParams(
             @Composable get() = CategoryCardParams(
                 style = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                     font = ChiliTheme.Attribute.ChiliBoldTextFont
                 ),
                 alignment = Alignment.CenterHorizontally,
@@ -38,6 +40,7 @@ data class CategoryCardParams(
             @Composable get() = CategoryCardParams(
                 style = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                     font = ChiliTheme.Attribute.ChiliRegularTextFont
                 ),
                 alignment = Alignment.Start,

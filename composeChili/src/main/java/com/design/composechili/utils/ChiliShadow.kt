@@ -39,10 +39,10 @@ data class ChiliShadowParams(
             radius = 8.dp,
             color = colorResource(id = R.color.black_alpha_0_08),
             shape = RectangleShape,
-            spread = 5.dp,
+            spread = 4.dp,
             offset = DpOffset(
                 x = 0.dp,
-                y = 6.dp
+                y = 3.dp
             ),
             isAlphaContentClip = false
         )
