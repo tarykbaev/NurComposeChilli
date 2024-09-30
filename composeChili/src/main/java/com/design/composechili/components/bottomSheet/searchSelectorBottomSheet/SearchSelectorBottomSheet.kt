@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -114,34 +115,33 @@ fun SearchSelectorBottomSheet(
                     Row(
                         modifier = Modifier
                             .padding(dimensionResource(id = R.dimen.padding_16dp))
-                            .background(
-                                color = params.searchInputBackgroundColor,
-                                shape = RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp))
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(color = params.searchInputBackgroundColor)
+                    ,
+                    verticalAlignment = Alignment.CenterVertically
                     ) {
-                        if (searchIcon != null) {
-                            Image(
-                                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
-                                painter = painterResource(id = searchIcon),
-                                contentDescription = "Search"
-                            )
-                        }
-                        BaseInput(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            textFieldValue = textValue,
-                            hint = searchHint,
-                            params = BaseInputParams.Default.copy(
-                                textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_0dp)),
-                                fieldBackground = Color.Transparent
-                            ),
-                            onValueChange = {
-                                textValue = it
-                                options = filterList(it)
-                            },
+                    if (searchIcon != null) {
+                        Image(
+                            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
+                            painter = painterResource(id = searchIcon),
+                            contentDescription = "Search"
                         )
                     }
+                    BaseInput(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        textFieldValue = textValue,
+                        hint = searchHint,
+                        params = BaseInputParams.Default.copy(
+                            textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_0dp)),
+                            fieldBackground = Color.Transparent
+                        ),
+                        onValueChange = {
+                            textValue = it
+                            options = filterList(it)
+                        },
+                    )
+                }
                 }
                 itemsIndexed(options) { index, option ->
                     when (option.first) {

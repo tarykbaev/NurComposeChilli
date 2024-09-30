@@ -1,18 +1,17 @@
 package com.design.composechili.components.input.code
 
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ripple
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -20,11 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -34,49 +33,78 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 /**
- * Input View component to enter code, OTP
- * @param [codeLength] sets the length of code, accepts enum [CodeLength]
- * @param [message] accepts [String] displays message and warnings below input view
- * @param [actionText] accepts [String] sets text to clickable [Text] at the end of component, below input view
- * @param [clearCode] clears code entered if value true
- * @param [isActionTextEnabled] sets actionText enabled/disabled
- * @param [state] sets component state, accepts [CodeInputItemState]
- * @param [onActionTextClick] called when actionText is clicked
- * @param [codeCompleteListener] interface called when code value changes, accepts [OnCodeChangeListener]
+ * A Composable function for a code input field that allows users to enter a code
+ * of a specified length. It provides visual feedback for errors and supports actions
+ * on text completion and action text click.
+ *
+ * @param modifier An optional [Modifier] to customize the layout and appearance of the code input.
+ * @param initialValue The initial value of the code input, default is an empty string.
+ * @param codeLength Specifies the length of the code to be entered. Defaults to [CodeLength.SIX].
+ * @param errorMessage An optional message to display when the input is invalid. Default is null.
+ * @param actionText An optional text that triggers an action when clicked. Default is null.
+ * @param isError A Boolean flag indicating whether the input is in an error state. Defaults to false.
+ * @param onCodeComplete A callback function that is invoked when the code input is completed.
+ * It provides the filled code as a parameter.
+ * @param onCodeChange A callback function that is invoked when the code input changes.
+ * It provides the current value of the input as a parameter. Defaults to an empty lambda.
+ * @param onActionTextClick A callback function that is invoked when the action text is clicked.
+ * Defaults to an empty lambda.
+ *
+ * Usage Example:
+ * ```kotlin
+ * CodeInput(
+ *     modifier = Modifier.padding(16.dp),
+ *     initialValue = "123456",
+ *     codeLength = CodeLength.SIX,
+ *     errorMessage = "Invalid code",
+ *     isError = true,
+ *     onCodeComplete = { code ->
+ *         // Handle code completion
+ *     },
+ *     onCodeChange = { value ->
+ *         // Handle code change
+ *     },
+ *     onActionTextClick = {
+ *         // Handle action text click
+ *     }
+ * )
+ * ```
  */
 
 @Composable
 fun CodeInput(
     modifier: Modifier = Modifier,
+    initialValue: String = String(),
     codeLength: CodeLength = CodeLength.SIX,
-    message: String? = null,
+    errorMessage: String? = null,
     actionText: String? = null,
-    clearCode: Boolean = false,
-    isActionTextEnabled: Boolean = true,
-    state: CodeInputItemState = CodeInputItemState.INACTIVE,
-    onActionTextClick: () -> Unit = {},
-    codeCompleteListener: OnCodeChangeListener
+    isError: Boolean = false,
+    onCodeComplete: (filledCode: String) -> Unit,
+    onCodeChange: (value: String) -> Unit = {},
+    onActionTextClick: () -> Unit = {}
 ) {
 
     val focusRequester = remember { FocusRequester() }
-    val actionTextColor =
-        if (isActionTextEnabled) ChiliTheme.Colors.ChiliCodeInputViewActionTextActiveColor
-        else ChiliTheme.Colors.ChiliCodeInputViewActionTextInActiveColor
     val itemWidth = when (codeLength) {
         CodeLength.FOUR -> dimensionResource(id = R.dimen.view_64dp)
         CodeLength.SIX -> dimensionResource(id = R.dimen.view_44dp)
         CodeLength.EIGHT -> dimensionResource(id = R.dimen.view_40dp)
     }
-    var code by remember { mutableStateOf("") }
-    if (clearCode) {
-        code = ""
+
+    var codeInputValue by rememberSaveable {
+        mutableStateOf(initialValue
+            .filter { it.isDigit() }
+            .take(codeLength.length)
+        )
     }
 
     Column(
@@ -92,13 +120,16 @@ fun CodeInput(
                     .focusable()
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
-                value = TextFieldValue(code, TextRange(code.length)),
+                value = TextFieldValue(codeInputValue, TextRange(codeInputValue.length)),
                 onValueChange = { newText ->
-                    if (newText.text.length <= codeLength.length && newText.text.all { it.isDigit() }) {
-                        code = newText.text
-                        codeCompleteListener.onCodeChange(newText.text)
+                    if (newText.text.length <= codeLength.length) {
+                        val digitText = newText.text.filter { it.isDigit() }
+
+                        codeInputValue = digitText
+                        onCodeChange(digitText)
+
                         if (newText.text.length == codeLength.length) {
-                            codeCompleteListener.onCodeComplete(newText.text)
+                            onCodeComplete.invoke(digitText)
                         }
                     }
                 },
@@ -121,15 +152,15 @@ fun CodeInput(
                     CodeInputItem(
                         modifier = Modifier.width(itemWidth),
                         state = when {
-                            state == CodeInputItemState.ERROR && index == 0 -> CodeInputItemState.ACTIVE_ERROR
-                            state == CodeInputItemState.ERROR -> CodeInputItemState.ERROR
-                            code.isEmpty() && index == 0 -> CodeInputItemState.ACTIVE
-                            code.isEmpty() -> CodeInputItemState.INACTIVE
-                            code.length == codeLength.length && index == code.lastIndex -> CodeInputItemState.ACTIVE
-                            code.length == index -> CodeInputItemState.ACTIVE
+                            isError && index == codeInputValue.lastIndex -> CodeInputItemState.ACTIVE_ERROR
+                            isError -> CodeInputItemState.ERROR
+                            codeInputValue.isEmpty() && index == 0 -> CodeInputItemState.ACTIVE
+                            codeInputValue.isEmpty() -> CodeInputItemState.INACTIVE
+                            codeInputValue.length == codeLength.length && index == codeInputValue.lastIndex -> CodeInputItemState.ACTIVE
+                            codeInputValue.length == index -> CodeInputItemState.ACTIVE
                             else -> CodeInputItemState.INACTIVE
                         },
-                        text = code.getOrNull(index)?.toString().orEmpty(),
+                        text = codeInputValue.getOrNull(index)?.toString().orEmpty(),
                     )
                 }
             }
@@ -137,40 +168,32 @@ fun CodeInput(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = dimensionResource(id = R.dimen.padding_8dp)),
+                .padding(top = dimensionResource(id = R.dimen.padding_8dp))
+                .animateContentSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (message != null) {
+            if (errorMessage != null && isError) {
                 Text(
                     modifier = Modifier
-                        .weight(3f),
+                        .weight(1f),
                     style = ChiliTextStyle.get(
                         textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH9,
                         color = ChiliTheme.Colors.ChiliCodeInputViewMessageColor
                     ),
-                    text = message
+                    text = errorMessage
                 )
             }
-            if (actionText != null) {
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
-                        .padding(
-                            start = dimensionResource(id = R.dimen.padding_2dp)
-                        )
-                        .clickable(
-                            indication = ripple(),
-                            interactionSource = remember { MutableInteractionSource() },
-                            enabled = isActionTextEnabled,
-                            onClick = onActionTextClick
-                        ),
-                    text = actionText,
-                    textAlign = TextAlign.End,
-                    style = ChiliTextStyle.get(
-                        color = actionTextColor,
-                        font = ChiliTheme.Attribute.ChiliComponentButtonTextFont,
-                    ),
+            if (actionText != null && isError) {
+                BaseButton(
+                    modifier = Modifier.wrapContentSize(),
+                    buttonPadding = PaddingValues(0.dp),
+                    onClick = { onActionTextClick.invoke() },
+                    title = actionText,
+                    buttonStyle = ChiliButtonStyle.ComponentButton.copy(
+                        contentPaddingValues = PaddingValues(
+                            0.dp
+                        ), minHeight = 0.dp
+                    )
                 )
             }
         }
@@ -178,31 +201,22 @@ fun CodeInput(
 
 }
 
-interface OnCodeChangeListener {
-    fun onCodeComplete(otp: String)
-    fun onCodeChange(text: String?)
-}
-
 enum class CodeLength(val length: Int) {
     FOUR(4), SIX(6), EIGHT(8)
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CodeInputViewPreview() {
     ChiliTheme {
+
         CodeInput(
-            state = CodeInputItemState.ERROR,
+            modifier = Modifier.padding(top = 32.dp),
+            codeLength = CodeLength.SIX,
             actionText = "Action",
-            message = "Message",
-            codeCompleteListener = object : OnCodeChangeListener {
-                override fun onCodeChange(text: String?) {
+            errorMessage = "Message",
+            onCodeComplete = {
 
-                }
-
-                override fun onCodeComplete(otp: String) {
-
-                }
             }
         )
     }

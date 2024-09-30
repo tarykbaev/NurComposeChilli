@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -28,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +44,7 @@ import com.design.composechili.theme.ChiliTheme
  * @param [modifier] Modifier to be applied to the card container.
  * @param [title] The title text displayed on the card.
  * @param [endIcon] Nullable drawable resource ID for the icon displayed at the end of the card if not null.
- * @param [saveExpandedState] If true, the expanded state is saved across recompositions,
+ * @param [isContentExpandedInitValue] If true, the expanded state is saved across recompositions,
  * meaning the card will remember its expanded/collapsed state.
  * @param [cardContainerParams] Contains the default properties for the card, such as shape, colors, and text style.
  * @param [expandableContent] The composable content that will be shown when the card is expanded.
@@ -57,15 +57,16 @@ fun CardContainer(
     modifier: Modifier = Modifier,
     title: String,
     @DrawableRes endIcon: Int? = null,
-    saveExpandedState: Boolean,
+    isContentExpandedInitValue: Boolean,
     cardContainerParams: CardContainerParams,
     expandableContent: @Composable () -> Unit,
 ) {
 
-    var expandedSaveableState by rememberSaveable { mutableStateOf(false) }
-    var expandedState by remember { mutableStateOf(false) }
+    var isContentExpandedState by rememberSaveable {
+        mutableStateOf(isContentExpandedInitValue)
+    }
     val rotationState by animateFloatAsState(
-        targetValue = if (expandedState) 90f else 0f, label = ""
+        targetValue = if (isContentExpandedState) 90f else 0f, label = ""
     )
 
     Card(
@@ -80,10 +81,7 @@ fun CardContainer(
         shape = cardContainerParams.shape,
         colors = cardContainerParams.colors,
         onClick = {
-            if (saveExpandedState)
-                expandedSaveableState = !expandedSaveableState
-            else expandedState =
-                expandedState.not()
+            isContentExpandedState = isContentExpandedState.not()
         }) {
         Column(
             modifier = modifier
@@ -101,7 +99,7 @@ fun CardContainer(
                 IconButton(
                     modifier = Modifier.rotate(rotationState),
                     onClick = {
-                        expandedState = !expandedState
+                        isContentExpandedState = isContentExpandedState.not()
                     }) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.chili_ic_chevron),
@@ -116,7 +114,7 @@ fun CardContainer(
                         contentDescription = null
                     )
             }
-            if (expandedState) {
+            if (isContentExpandedState) {
                 expandableContent()
             }
         }
@@ -131,13 +129,13 @@ fun CardContainer_Preview() {
             title = "AccentCardView",
             endIcon = R.drawable.ic_visa_banner_logo,
             cardContainerParams = CardContainerParams.Filled,
-            saveExpandedState = false,
+            isContentExpandedInitValue = false,
             expandableContent = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     AccentCard(
                         title = "Сканнер штрих кодов и QR",
                         description = "Для удобной оплаты\nбез ввода реквизитов",
-                        endIcon = R.drawable.pay,
+                        endIcon = painterResource(id = R.drawable.pay),
                         cardParams = AccentCardParams.accentCardFucsia,
                         startIcon = null
                     ) {
@@ -147,7 +145,7 @@ fun CardContainer_Preview() {
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
                         endIcon = null,
-                        startIcon = R.drawable.icon_k,
+                        startIcon = painterResource(id = R.drawable.icon_k),
                         cardParams = AccentCardParams.accentCardBlack,
                     ) {
 
@@ -155,7 +153,7 @@ fun CardContainer_Preview() {
                     AccentCard(
                         title = "Цифровая карта",
                         description = "Для бесконтактных платежей",
-                        endIcon = R.drawable.ic_scaner_48,
+                        endIcon = painterResource(id = R.drawable.ic_scaner_48),
                         startIcon = null,
                         cardParams = AccentCardParams.accentCardWhite,
                     ) {

@@ -70,4 +70,5 @@ sealed interface ChiliScreens {
 
     @Serializable
     data object Tooltip : ChiliScreens
+
 }
