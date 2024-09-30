@@ -87,7 +87,7 @@ fun BaseCell(
                             vertical = params.iconSize.verticalPadding,
                             horizontal = params.iconSize.horizontalPadding
                         )
-                        .size(params.iconSize.iconSize),
+                        .size(params.iconSize.size),
                     painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )

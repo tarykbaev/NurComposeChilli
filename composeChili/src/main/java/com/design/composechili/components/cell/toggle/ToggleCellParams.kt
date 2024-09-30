@@ -8,53 +8,35 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import com.design.composechili.R
-import com.design.composechili.components.cell.model.CellCornerMode
+import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 
 data class ToggleCellParams(
-    val titleTextStyle: TextStyle,
-    val subTitleTextStyle: TextStyle,
+    val baseCellParams: BaseCellParams,
     val switchTextStyle: TextStyle,
     val switchOnOffTextStyle: TextStyle,
-    val titlePadding: ChiliPadding,
-    val subtitlePadding: ChiliPadding,
-    val cornerMode: CellCornerMode,
-    val startIconPadding: ChiliPadding,
     val switchPadding: ChiliPadding,
     val toggleColors: SwitchColors
 ) {
+
     companion object {
         val Default
             @Composable get() = ToggleCellParams(
-                titleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                ), subTitleTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
-                ), switchTextStyle = ChiliTextStyle.get(
+                baseCellParams = BaseCellParams.Default,
+                switchTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                ), switchOnOffTextStyle = ChiliTextStyle.get(
+                ),
+                switchOnOffTextStyle = ChiliTextStyle.get(
                     textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                ), titlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    top = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_4dp)
-                ), subtitlePadding = ChiliPadding(
-                    start = dimensionResource(id = R.dimen.padding_12dp),
-                    end = dimensionResource(id = R.dimen.padding_4dp),
-                    bottom = dimensionResource(id = R.dimen.padding_12dp)
-                ), cornerMode = CellCornerMode.Single, startIconPadding = ChiliPadding(
-                    vertical = dimensionResource(id = R.dimen.padding_8dp),
-                    horizontal = dimensionResource(id = R.dimen.padding_12dp)
-                ), switchPadding = ChiliPadding(
+                ),
+                switchPadding = ChiliPadding(
                     end = dimensionResource(id = R.dimen.padding_12dp)
-                ), toggleColors = SwitchDefaults.colors(
+                ),
+                toggleColors = SwitchDefaults.colors(
                     checkedBorderColor = Color.Transparent,
                     uncheckedBorderColor = Color.Transparent,
                     disabledUncheckedBorderColor = Color.Transparent,

@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +29,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,22 +48,24 @@ import com.design.composechili.theme.ChiliTheme
 @Composable
 fun ExpandableCell(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = String(),
     description: String = String(),
     isInitiallyExpanded: Boolean = false,
-    animationDuration: Int = 500,
+    animationDuration: Int = 100,
     expandableCellParams: ExpandableCellParams = ExpandableCellParams.Default,
 ) {
 
+    val baseCellParams = expandableCellParams.baseCellParams
     var isExpanded by remember { mutableStateOf(isInitiallyExpanded) }
+    val mutableInteractionSource = remember { MutableInteractionSource() }
     val rotationState by animateFloatAsState(
-        targetValue = if (isExpanded) -90f else 90f, label = ""
+        targetValue = if (isExpanded) -90f else 90f, label = String()
     )
 
     Box(
         modifier
             .clip(CellCornerMode.Single.toRoundedShape())
-            .background(ChiliTheme.Colors.ChiliCellBackground)
+            .background(baseCellParams.background)
     ) {
         Column(
             Modifier
@@ -80,10 +80,9 @@ fun ExpandableCell(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple()
-                    ) { isExpanded = !isExpanded },
+                    .clickable {
+                        isExpanded = !isExpanded
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -91,25 +90,22 @@ fun ExpandableCell(
                     modifier = Modifier
                         .weight(1f)
                         .padding(
-                            expandableCellParams.titlePadding
-                                .toPaddingValues()
+                            baseCellParams.titlePadding.toPaddingValues()
                         ),
                     textAlign = TextAlign.Start,
-                    style = expandableCellParams.titleTextStyle,
+                    style = baseCellParams.titleTextStyle,
                 )
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
-                            end = dimensionResource(id = R.dimen.padding_12dp),
-                            top = dimensionResource(id = R.dimen.padding_12dp),
-                            bottom = dimensionResource(id = R.dimen.padding_12dp)
+                            baseCellParams.chevronIconPadding.toPaddingValues()
                         )
                         .rotate(rotationState),
                     painter = painterResource(id = R.drawable.chili_ic_chevron),
                     contentDescription = "Navigation icon",
                     colorFilter = ColorFilter.tint(
-                        expandableCellParams.chevronIconTint, BlendMode.SrcIn
+                        baseCellParams.chevronIconTint, BlendMode.SrcIn
                     )
                 )
             }
@@ -122,7 +118,9 @@ fun ExpandableCell(
                     text = description,
                     modifier = Modifier
                         .wrapContentSize()
-                        .padding(expandableCellParams.descriptionPadding.toPaddingValues()),
+                        .padding(
+                            expandableCellParams.descriptionPadding.toPaddingValues()
+                        ),
                     style = expandableCellParams.descriptionTextStyle
                 )
             }

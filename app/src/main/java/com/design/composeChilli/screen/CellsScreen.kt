@@ -1,7 +1,6 @@
 package com.design.composeChilli.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.cell.AdditionalDoubleButtons
+import com.design.composechili.components.cell.additionalText.AdditionalTextCell
+import com.design.composechili.components.cell.additionalText.AdditionalTextCellParams
 import com.design.composechili.components.cell.baseCell.BaseCell
 import com.design.composechili.components.cell.baseCell.BaseCellParams
+import com.design.composechili.components.cell.expandableCell.ExpandableCell
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.cell.model.CellIconSize
 import com.design.composechili.components.cell.toggle.ToggleCell
@@ -54,6 +57,12 @@ fun CellsScreen() {
         ToggleCellGroup()
         Spacer(modifier = Modifier.size(32.dp))
         AdditionalTextCellGroup()
+        Spacer(modifier = Modifier.size(32.dp))
+        ExpandableCellGroup()
+        Spacer(modifier = Modifier.size(32.dp))
+        AdditionalDoubleButtonsGroup()
+
+        Spacer(modifier = Modifier.size(32.dp))
     }
 }
 
@@ -61,535 +70,543 @@ fun CellsScreen() {
 fun RegularCellsGroup() {
     Column(
         modifier = Modifier
-            .softLayerShadow()
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
     ) {
-        BaseCell(
+        Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top
-        )
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top
+            )
 
-        BaseCell(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom
-        )
-    }
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom
+            )
+        }
 
-    Spacer(modifier = Modifier.size(16.dp))
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-    ) {
-        BaseCell(
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top
-        )
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top
+            )
 
-        BaseCell(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle
-        )
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle
+            )
 
-        BaseCell(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom
-        )
-    }
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom
+            )
+        }
 
-    Spacer(modifier = Modifier.size(16.dp))
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-    ) {
-        BaseCell(
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single
-        )
-    }
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single
+            )
+        }
 
-    Spacer(modifier = Modifier.size(16.dp))
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-    ) {
-        BaseCell(
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top
-        )
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top
+            )
 
-        BaseCell(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle
-        )
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle
+            )
 
-        BaseCell(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom
-        )
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom
+            )
+        }
     }
 }
 
 @Composable
 fun SmallIconSizeGroup() {
-    Text(
+    Column(
         modifier = Modifier
-            .padding(
-                horizontal = 16.dp
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
             ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
-        text = "BaseCellView iconSize = SMALL (32dp)"
-    )
-
-    Spacer(modifier = Modifier.size(8.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single
-        )
-    }
-
-    Spacer(modifier = Modifier.size(16.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top
+            text = "BaseCellView iconSize = SMALL (32dp)"
         )
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle
-        )
+        Spacer(modifier = Modifier.size(8.dp))
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single
+            )
+        }
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom
-        )
-    }
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top
+            )
 
-    Spacer(modifier = Modifier.size(16.dp))
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle
+            )
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single
-        )
-    }
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom
+            )
+        }
 
-    Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single
+            )
+        }
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top
-        )
+        Spacer(modifier = Modifier.size(16.dp))
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top
+            )
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle
-        )
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle
+            )
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom
-        )
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom
+            )
+        }
     }
 }
 
 @Composable
 fun MediumIconSizeGroup() {
-    Text(
+    Column(
         modifier = Modifier
-            .padding(
-                horizontal = 16.dp
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
             ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
-        text = "BaseCellView iconSize = MEDIUM (46dp)"
-    )
-
-    Spacer(modifier = Modifier.size(8.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
-    }
-
-    Spacer(modifier = Modifier.size(16.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            text = "BaseCellView iconSize = MEDIUM (46dp)"
         )
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
+        Spacer(modifier = Modifier.size(8.dp))
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
-    }
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+        }
 
-    Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
-    }
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
 
-    Spacer(modifier = Modifier.size(16.dp))
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+        }
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
+        Spacer(modifier = Modifier.size(16.dp))
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
-        )
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+        }
     }
 }
 
 @Composable
 fun LargeIconSizeGroup() {
-    Text(
+    Column(
         modifier = Modifier
-            .padding(
-                horizontal = 16.dp
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Text(
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
             ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
-        text = "BaseCellView iconSize = LARGE (48dp)"
-    )
-
-    Spacer(modifier = Modifier.size(8.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
-    }
-
-    Spacer(modifier = Modifier.size(16.dp))
-
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            text = "BaseCellView iconSize = LARGE (48dp)"
         )
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+        }
 
-        BaseCell(
-            title = "Заголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
-    }
+        Spacer(modifier = Modifier.size(16.dp))
 
-    Spacer(modifier = Modifier.size(16.dp))
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            modifier = Modifier,
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
-    }
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
 
-    Spacer(modifier = Modifier.size(16.dp))
+            BaseCell(
+                title = "Заголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+        }
 
-    Column(
-        modifier = Modifier
-            .softLayerShadow()
-            .padding(horizontal = 16.dp)
-    ) {
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Top,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
+        Spacer(modifier = Modifier.size(16.dp))
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            isDividerVisible = true,
-            cellCornerMode = CellCornerMode.Middle,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                modifier = Modifier,
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+        }
 
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Bottom,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
-        )
+        Spacer(modifier = Modifier.size(16.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Bottom,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+        }
     }
 }
 
 @Composable
 fun CustomIconSizeGroup() {
-    Text(
-        modifier = Modifier
-            .padding(
-                horizontal = 16.dp
-            ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
-        text = "BaseCellView iconSize = CUSTOM (72dp)"
-    )
-
-    Spacer(modifier = Modifier.size(8.dp))
-
     Column(
         modifier = Modifier
-            .softLayerShadow()
+            .wrapContentSize()
             .padding(horizontal = 16.dp)
     ) {
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_cat,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
+
+        Text(
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            text = "BaseCellView iconSize = CUSTOM (72dp)"
         )
 
         Spacer(modifier = Modifier.size(8.dp))
-        BaseCell(
-            title = "Заголовок",
-            subtitle = "Подзаголовок",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
-        )
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_cat,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            BaseCell(
+                title = "Заголовок",
+                subtitle = "Подзаголовок",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
+            )
+        }
     }
 }
 
 @Composable
 fun MaxCharGroup() {
-    Text(
-        modifier = Modifier
-            .padding(
-                horizontal = 16.dp
-            ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
-        text = "BaseCell max char"
-    )
-
-    Spacer(modifier = Modifier.size(8.dp))
-
     Column(
         modifier = Modifier
-            .softLayerShadow()
+            .wrapContentSize()
             .padding(horizontal = 16.dp)
     ) {
-        BaseCell(
-            title = "Заголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
-            subtitle = "Подзаголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
-            startIcon = R.drawable.ic_squircle_phone,
-            isChevronVisible = true,
-            cellCornerMode = CellCornerMode.Single,
-            params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+        Text(
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            text = "BaseCell max char"
         )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            BaseCell(
+                title = "Заголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
+                subtitle = "Подзаголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
+                startIcon = R.drawable.ic_squircle_phone,
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+        }
     }
 }
 
@@ -630,6 +647,7 @@ fun ToggleCellGroup() {
         )
 
         Spacer(modifier = Modifier.size(16.dp))
+
         ToggleCell(
             modifier = Modifier.softLayerShadow(),
             title = "Заголовок",
@@ -642,6 +660,7 @@ fun ToggleCellGroup() {
         )
 
         Spacer(modifier = Modifier.size(16.dp))
+
         ToggleCell(
             modifier = Modifier.softLayerShadow(),
             title = "Заголовок",
@@ -655,6 +674,7 @@ fun ToggleCellGroup() {
         )
 
         Spacer(modifier = Modifier.size(16.dp))
+
         ToggleCell(
             modifier = Modifier.softLayerShadow(),
             title = "Заголовок",
@@ -680,7 +700,7 @@ fun ToggleCellGroup() {
                 isSwitchEnabled = true,
                 isDividerVisible = true,
                 startIcon = R.drawable.ic_cat,
-                toggleCellParams = ToggleCellParams.Default.copy(cornerMode = CellCornerMode.Top),
+                cellCornerMode = CellCornerMode.Top,
                 onCheckedChangeListener = {
                     isCheckedSubTitleWithIconState.value = it
                 }
@@ -692,7 +712,12 @@ fun ToggleCellGroup() {
                 isChecked = isCheckedSubTitleWithIconState.value,
                 isSwitchEnabled = true,
                 startIcon = R.drawable.ic_cat,
-                toggleCellParams = ToggleCellParams.Default.copy(cornerMode = CellCornerMode.Bottom),
+                cellCornerMode = CellCornerMode.Bottom,
+                params = ToggleCellParams.Default.copy(
+                    baseCellParams = BaseCellParams.Default.copy(
+                        iconSize = CellIconSize.MEDIUM
+                    )
+                ),
                 onCheckedChangeListener = {
                     isCheckedSubTitleWithIconState.value = it
                 }
@@ -706,9 +731,179 @@ fun AdditionalTextCellGroup() {
     Column(
         modifier = Modifier
             .wrapContentSize()
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(horizontal = 16.dp)
     ) {
+        Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp
+                ),
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            text = "AdditionalTextCell"
+        )
 
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            AdditionalTextCell(
+                title = "Заголовок",
+                additionalTitle = "Additional Additional Additional Additional Additional ",
+                isChevronVisible = true,
+                cellCornerMode = CellCornerMode.Single,
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            AdditionalTextCell(
+                title = "Заголовок",
+                additionalTitle = "Additional text no chevron",
+                cellCornerMode = CellCornerMode.Single,
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            AdditionalTextCell(
+                title = "Заголовок",
+                additionalTitle = "Additional icon",
+                isChevronVisible = true,
+                startIcon = R.drawable.chili_ic_airpods,
+                cellCornerMode = CellCornerMode.Single,
+                params = AdditionalTextCellParams.Default.copy(
+                    baseCellParams = BaseCellParams.Default.copy(
+                        iconSize = CellIconSize.MEDIUM
+                    )
+                )
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            AdditionalTextCell(
+                title = "Simple",
+                additionalTitle = "Value",
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Top,
+            )
+
+            AdditionalTextCell(
+                title = "Simple",
+                additionalTitle = "Value",
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle,
+            )
+
+            AdditionalTextCell(
+                title = "Simple",
+                additionalTitle = "Value",
+                cellCornerMode = CellCornerMode.Bottom,
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            AdditionalTextCell(
+                title = "Simple",
+                subtitle = "1447",
+                additionalTitle = "Value",
+                additionalSubTitle = "1337",
+                startIcon = R.drawable.ic_bonus_new,
+                cellCornerMode = CellCornerMode.Single
+            )
+        }
+    }
+}
+
+@Composable
+fun ExpandableCellGroup() {
+    Column(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp
+                ),
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            text = "ExpandableCell"
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            ExpandableCell(
+                title = "Welcome to the club Buddy",
+                description = "Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app"
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            ExpandableCell(
+                title = "Welcome to the club Buddy",
+                description = "Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app"
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            ExpandableCell(
+                title = "Welcome to the club Buddy",
+                description = "Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app"
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            ExpandableCell(
+                title = "Welcome to the club Buddy",
+                description = "Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app Android Studio: Crashes when you run the app"
+            )
+        }
+    }
+}
+
+@Composable
+fun AdditionalDoubleButtonsGroup() {
+    Column(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp
+                ),
+            style = ChiliTextStyle.get(
+                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
+                color = ChiliTheme.Colors.ChiliPrimaryTextColor
+            ),
+            text = "Additional double Buttons "
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .softLayerShadow()
+        ) {
+            AdditionalDoubleButtons(
+                title = "Заголовок",
+                positiveTitle = "ОПЛАТИТЬ",
+                negativeTitle = "ОТМЕНИТЬ"
+            )
+        }
     }
 }

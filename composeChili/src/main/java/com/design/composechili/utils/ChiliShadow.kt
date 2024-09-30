@@ -18,40 +18,40 @@ import androidx.compose.ui.graphics.scale
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.withSave
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 
 data class ChiliShadowParams(
-    val radius:Dp,
-    val color:Color,
-    val shape:Shape,
-    val spread:Dp,
-    val offset:DpOffset,
-    val isAlphaContentClip:Boolean
-){
-    companion object{
+    val radius: Dp,
+    val color: Color,
+    val shape: Shape,
+    val spread: Dp,
+    val offset: DpOffset,
+    val isAlphaContentClip: Boolean
+) {
+    companion object {
         val Default
-        @Composable
-        get() = ChiliShadowParams(
-            radius = 8.dp,
-            color = colorResource(id = R.color.black_alpha_0_08),
-            shape = RectangleShape,
-            spread = 5.dp,
-            offset = DpOffset(
-                x = 0.dp,
-                y = 6.dp
-            ),
-            isAlphaContentClip = false
-        )
+            @Composable
+            get() = ChiliShadowParams(
+                radius = dimensionResource(R.dimen.radius_16dp),
+                color = colorResource(id = R.color.black_alpha_0_08),
+                shape = RectangleShape,
+                spread = dimensionResource(R.dimen.padding_1dp),
+                offset = DpOffset(
+                    x = dimensionResource(R.dimen.padding_0dp),
+                    y = dimensionResource(R.dimen.padding_6dp)
+                ),
+                isAlphaContentClip = false
+            )
     }
 }
 
 @Composable
 fun Modifier.softLayerShadow(
-    params:ChiliShadowParams = ChiliShadowParams.Default
+    params: ChiliShadowParams = ChiliShadowParams.Default
 ): Modifier = this then drawWithCache {
     val radiusPx = params.radius.toPx()
     val isRadiusValid = radiusPx > 0.0F
