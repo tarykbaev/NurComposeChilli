@@ -77,6 +77,7 @@ fun PasswordInput(
         textStyle = params.textStyle,
         enabled = isEnabled,
         isError = isError,
+        singleLine = true,
         visualTransformation = if (isPasswordVisible) VisualTransformation.None
         else PasswordVisualTransformation(transformationMask),
         keyboardOptions = KeyboardOptions(

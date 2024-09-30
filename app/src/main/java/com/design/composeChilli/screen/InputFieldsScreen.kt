@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
@@ -41,16 +39,12 @@ fun InputFieldsScreen() {
 
     var baseInputText by remember { mutableStateOf("") }
     var baseInputWithIconsText by remember { mutableStateOf("") }
-    var passwordText by remember { mutableStateOf("") }
     var commentText by remember { mutableStateOf("") }
-    var isFieldError by remember { mutableStateOf(false) }
     var descriptionText by remember { mutableStateOf("") }
     var isCodeInputError by remember { mutableStateOf(true) }
     var simpleWithClearText by remember {
         mutableStateOf(String())
     }
-    var codeInputState by remember { mutableStateOf(CodeInputItemState.INACTIVE) }
-    var codeInputClear by remember { mutableStateOf(false) }
     var passwordInputText by remember { mutableStateOf("") }
     var isPasswordInputError by remember { mutableStateOf(false) }
 
@@ -96,7 +90,7 @@ fun InputFieldsScreen() {
                     textStyle = ChiliTextStyle.get(
                         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                         ChiliTheme.Colors.ChiliPrimaryTextColor,
-                        Font(R.font.roboto_700)
+                        ChiliTheme.Attribute.ChiliBoldTextFont
                     ).copy(textAlign = TextAlign.Center)
                 )
             )
@@ -132,7 +126,7 @@ fun InputFieldsScreen() {
                     textStyle = ChiliTextStyle.get(
                         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                         ChiliTheme.Colors.ChiliPrimaryTextColor,
-                        Font(R.font.roboto_700)
+                        ChiliTheme.Attribute.ChiliBoldTextFont
                     ).copy(textAlign = TextAlign.Center)
                 ),
                 fieldEndIcon = if (simpleWithClearText.isNotBlank()) painterResource(id = R.drawable.chili_ic_clear_24) else null,
@@ -147,30 +141,11 @@ fun InputFieldsScreen() {
             value = passwordInputText,
             hint = "Password",
             isError = isPasswordInputError,
+            onImeAction = {
+                isPasswordInputError = isPasswordInputError.not()
+            },
             onValueChange = { passwordInputText = it },
         )
-
-        InputFieldWithDescAndAction(
-            description = "Simple with start icon",
-            descriptionTextStyle = ChiliTextStyle.get(
-                ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                if (isFieldError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
-            )
-        ) {
-            BaseInput(
-                textFieldValue = passwordText,
-                hint = "Password",
-                isError = isFieldError,
-                onValueChange = { passwordText = it },
-                params = BaseInputParams.Default.copy(
-                    textStyle = ChiliTextStyle.get(
-                        ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                        ChiliTheme.Colors.ChiliPrimaryTextColor,
-                        ChiliTheme.Attribute.ChiliBoldTextFont
-                    ).copy(textAlign = TextAlign.Center),
-                )
-            )
-        }
 
         InputFieldWithDescAndAction(
             description = "mask"
@@ -212,25 +187,6 @@ fun InputFieldsScreen() {
         )
 
         Spacer(modifier = Modifier.size(54.dp))
-
-        /*
-                CodeInput(
-                    codeLength = CodeLength.FOUR,
-                    state = codeInputState,
-                    isActionTextEnabled = false,
-                    clearCode = codeInputClear,
-                    onActionTextClick = {},
-                    codeCompleteListener = object : OnCodeChangeListener {
-                        override fun onCodeComplete(otp: String) {
-                            codeInputState = CodeInputItemState.ERROR
-                            codeInputClear = true
-                        }
-
-                        override fun onCodeChange(text: String?) {
-                            codeInputState = CodeInputItemState.INACTIVE
-                            codeInputClear = false
-                        }
-                    })*/
     }
 }
 
