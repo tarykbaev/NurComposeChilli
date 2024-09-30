@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.cell.baseCell.BaseCell
+import com.design.composechili.components.cell.baseCell.BaseCellParams
+import com.design.composechili.components.cell.model.CellCornerMode
+import com.design.composechili.components.cell.model.CellIconSize
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
@@ -33,7 +36,51 @@ fun CellsScreen() {
                 title = "BaseCell",
                 subtitle = "ChevronVisible",
                 isChevronVisible = true,
+                isDividerVisible = true,
+                startIcon = com.design.composechili.R.drawable.ic_squircle_phone,
+                cellCornerMode = CellCornerMode.Top
+            )
+
+            BaseCell(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                title = "BaseCell",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                startIcon = com.design.composechili.R.drawable.ic_squircle_phone,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
+            )
+
+            BaseCell(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                title = "BaseCell",
+                subtitle = "ChevronVisible",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                startIcon = com.design.composechili.R.drawable.ic_squircle_phone,
+                cellCornerMode = CellCornerMode.Middle,
+                params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
+            )
+
+            BaseCell(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                title = "BaseCell",
+                subtitle = "ChevronVisible",
+                isChevronVisible = true,
+                isDividerVisible = true,
+                cellCornerMode = CellCornerMode.Middle
+            )
+
+            BaseCell(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                title = "BaseCell",
+                isChevronVisible = true,
                 isDividerVisible = false,
+                cellCornerMode = CellCornerMode.Bottom
             )
         }
     }

@@ -9,11 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
@@ -27,6 +26,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -76,7 +76,7 @@ fun BaseCell(
         Row(
             Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .heightIn(min = dimensionResource(R.dimen.view_48dp)),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
@@ -96,12 +96,13 @@ fun BaseCell(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .wrapContentHeight()
-                    .padding(end = 16.dp),
+                    .fillMaxWidth()
+                    .padding(end = dimensionResource(R.dimen.padding_16dp)),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column(
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center
                 ) {
                     val adjustedTitlePadding = params.titlePadding.copy(
@@ -121,6 +122,8 @@ fun BaseCell(
                                 adjustedTitlePadding.toPaddingValues()
                             ),
                         style = params.titleTextStyle,
+                        maxLines = params.textMaxLines,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     val subTitlePadding = params.subtitlePadding.copy(
@@ -133,7 +136,9 @@ fun BaseCell(
                             modifier = Modifier
                                 .wrapContentSize()
                                 .padding(subTitlePadding.toPaddingValues()),
-                            style = params.subTitleTextStyle
+                            style = params.subTitleTextStyle,
+                            maxLines = params.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
@@ -143,7 +148,7 @@ fun BaseCell(
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(end = params.endIconPadding.end),
+                        .padding(end = params.chevronIconPadding.end),
                     painter = painterResource(id = R.drawable.chili_ic_chevron),
                     contentDescription = "Navigation icon",
                     colorFilter = ColorFilter.tint(
@@ -168,7 +173,7 @@ fun BaseCellPreview() {
     ChiliTheme {
         BaseCell(
             title = "Test",
-            subtitle = "TestSubtitle",
+            subtitle = "Test",
             isChevronVisible = true,
             isDividerVisible = false,
         )

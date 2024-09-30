@@ -80,6 +80,9 @@ data class ChiliColors(
     val ChiliComponentButtonTextColorPressed: Color,
     val ChiliComponentButtonTextColorDisabled: Color,
 
+    // Chili Card View
+    val ChiliCardViewBackground:Color,
+
     // Accent Button Attributes
     val ChiliAccentButtonBackgroundActive: Color,
     val ChiliAccentButtonBackgroundDisabled: Color,
@@ -175,9 +178,9 @@ data class ChiliColors(
             chiliCheckBoxDisabledColor = colorResource(id = R.color.gray_1_alpha_50),
             chiliCheckedBoxUncheckedColor = colorResource(id = R.color.gray_3),
             ChiliSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
-            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.gray_2),
+            ChiliSwitchBoxUncheckedBackground = colorResource(id = R.color.black_5),
             ChiliSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
-            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.white_1),
+            ChiliSwitchBoxUncheckedToggleColor = colorResource(id = R.color.black_5),
             ChiliPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             ChiliPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
             ChiliPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),
@@ -244,6 +247,7 @@ data class ChiliColors(
             ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_2),
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
+            ChiliCardViewBackground = colorResource(id = R.color.black_3)
         )
 
         @Composable
@@ -350,6 +354,7 @@ data class ChiliColors(
             ChiliInputViewBackgroundErrorColor = colorResource(id = R.color.red_3),
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
+            ChiliCardViewBackground = colorResource(id = R.color.white_1)
         )
 
     }

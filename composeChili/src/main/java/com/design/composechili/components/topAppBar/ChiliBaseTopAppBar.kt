@@ -1,6 +1,5 @@
 package com.design.composechili.components.topAppBar
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -74,8 +74,8 @@ fun ChiliBaseTopAppBar(
     params: ChiliBaseTopAppBarParams = ChiliBaseTopAppBarParams.Default,
     isDividerVisible: Boolean = true,
     additionalText: String? = null,
-    @DrawableRes navigationIcon: Int? = null,
-    @DrawableRes endIcon: Int? = null,
+    navigationIcon: Painter? = null,
+    endIcon: Painter? = null,
     isCenteredTitle: Boolean = false,
     onEndIconClick: (() -> Unit)? = null,
     onNavigationClick: (() -> Unit)? = null
@@ -97,8 +97,9 @@ fun ChiliBaseTopAppBar(
                     }, onClick = { onNavigationClick?.invoke() }) {
                     Image(
                         modifier = Modifier.size(params.navigationIconSize),
-                        painter = painterResource(icon),
-                        contentDescription = "back"
+                        painter = icon,
+                        contentDescription = "back",
+                        colorFilter = params.startIconFilter
                     )
                 }
             }
@@ -124,7 +125,7 @@ fun ChiliBaseTopAppBar(
                     ) {
                         Image(
                             colorFilter = params.endIconColorFilter,
-                            painter = painterResource(icon),
+                            painter = icon,
                             contentDescription = "endIcon"
                         )
                     }
@@ -172,8 +173,8 @@ fun ChiliBaseTopAppBarPreview() {
         ChiliBaseTopAppBar(
             title = "TopAppBar",
             isCenteredTitle = true,
-            navigationIcon = R.drawable.chili_ic_nav_back,
-            endIcon = R.drawable.ic_cat,
+            navigationIcon = painterResource(id = R.drawable.chili_ic_nav_back),
+            endIcon = painterResource(id = R.drawable.ic_cat),
             onNavigationClick = {
 
             },

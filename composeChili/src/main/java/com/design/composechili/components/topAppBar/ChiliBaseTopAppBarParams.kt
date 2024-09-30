@@ -14,11 +14,12 @@ data class ChiliBaseTopAppBarParams(
     val titleTextStyle: TextStyle,
     val additionalTextStyle: TextStyle,
     val navigationIconSize: Dp,
-    val endIconSize:Dp,
+    val endIconSize: Dp,
     val containerColor: Color,
     val dividerColor: Color,
     val dividerThickness: Dp,
-    val endIconColorFilter:ColorFilter?
+    val startIconFilter: ColorFilter,
+    val endIconColorFilter: ColorFilter?
 ) {
     companion object {
         val Default
@@ -38,7 +39,10 @@ data class ChiliBaseTopAppBarParams(
                 containerColor = ChiliTheme.Colors.ChiliTopAppBarBackground,
                 dividerColor = ChiliTheme.Colors.ChiliTopAppBarDividerColor,
                 dividerThickness = ChiliTheme.Attribute.ChiliTopAppBarThicknessSize,
-                endIconColorFilter = null
+                endIconColorFilter = null,
+                startIconFilter = ColorFilter.tint(
+                    ChiliTheme.Colors.ChiliPrimaryTextColor
+                )
             )
     }
 }

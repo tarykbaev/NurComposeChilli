@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
+import com.design.composechili.components.input.maskedTextField.MaskedTextFieldParams
 import com.design.composechili.components.tooltip.ChiliTooltip
 import com.design.composechili.theme.ChiliTheme
 
@@ -21,7 +22,7 @@ fun TooltipScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(ChiliTheme.Colors.СhiliScreenBackground)
+            .background(ChiliTheme.Colors.ChiliSurfaceBackground)
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -37,8 +38,9 @@ fun TooltipScreen() {
                     ) {
                         MaskedTextField(
                             rootContainerPadding = PaddingValues(0.dp),
-                            initialText = "+996XXX XXX XXX",
-                            onValueChange = {}
+                            initialText = "+996 XXX XXX XXX",
+                            onValueChange = {},
+                            maskInputParams = MaskedTextFieldParams.Default.copy(allowedInputSymbols = "1234567890")
                         )
                     }
                 },

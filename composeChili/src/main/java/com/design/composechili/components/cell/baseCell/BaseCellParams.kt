@@ -16,10 +16,11 @@ data class BaseCellParams(
     val titlePadding: ChiliPadding,
     val subtitlePadding: ChiliPadding,
     val startIconPadding: ChiliPadding,
-    val endIconPadding: ChiliPadding,
+    val chevronIconPadding: ChiliPadding,
     val chevronIconTint: Color,
     val background: Color,
-    val iconSize: CellIconSize
+    val iconSize: CellIconSize,
+    val textMaxLines: Int
 ) {
     companion object {
         val Default
@@ -47,12 +48,13 @@ data class BaseCellParams(
                     vertical = dimensionResource(id = R.dimen.padding_8dp),
                     horizontal = dimensionResource(id = R.dimen.padding_12dp)
                 ),
-                endIconPadding = ChiliPadding(
+                chevronIconPadding = ChiliPadding(
                     end = dimensionResource(R.dimen.padding_8dp)
                 ),
                 chevronIconTint = ChiliTheme.Colors.СhiliChevronColor,
                 background = ChiliTheme.Colors.ChiliCellBackground,
-                iconSize = CellIconSize.SMALL
+                iconSize = CellIconSize.SMALL,
+                textMaxLines = 2
             )
     }
 }
