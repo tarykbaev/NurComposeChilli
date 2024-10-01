@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.values.ChiliPadding
 

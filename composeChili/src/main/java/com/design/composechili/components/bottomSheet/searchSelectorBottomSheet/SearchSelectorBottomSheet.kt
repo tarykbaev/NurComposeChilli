@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffoldState
@@ -34,7 +33,7 @@ import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottom
 import com.design.composechili.components.input.baseInput.BaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.extensions.getBottomSheetState
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 /**

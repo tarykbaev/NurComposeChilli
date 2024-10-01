@@ -1,4 +1,4 @@
-package com.design.composechili.theme
+package com.design.composechili.theme.textStyle
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle

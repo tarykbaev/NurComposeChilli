@@ -14,8 +14,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 
 @Immutable
 data class BaseInputParams(
@@ -58,11 +59,7 @@ data class BaseInputParams(
         val Default
             @Composable
             get() = BaseInputParams(
-                textStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
-                    ChiliTheme.Colors.ChiliPrimaryTextColor,
-                    ChiliTheme.Attribute.ChiliBoldTextFont,
-                ),
+                textStyle = ChiliTextStyleBuilder.H5.Primary.Bold,
                 errorTextColor = ChiliTheme.Colors.ChiliInputViewErrorMessageTextColor,
                 cursorColor = ChiliTheme.Colors.ChiliInputViewCursorColor,
                 fieldBackground = ChiliTheme.Colors.ChiliInputViewBackgroundColor,

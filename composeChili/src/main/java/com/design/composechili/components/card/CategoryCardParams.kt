@@ -6,7 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 @Stable

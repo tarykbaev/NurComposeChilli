@@ -32,7 +32,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.design.composechili.R
 import com.design.composechili.components.containers.HighlightContainer
 import com.design.composechili.components.containers.HighlightState
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 @Composable

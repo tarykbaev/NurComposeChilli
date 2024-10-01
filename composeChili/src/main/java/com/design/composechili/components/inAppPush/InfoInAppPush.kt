@@ -1,6 +1,5 @@
 package com.design.composechili.components.inAppPush
 
-import androidx.collection.mutableObjectListOf
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,11 +22,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 /**

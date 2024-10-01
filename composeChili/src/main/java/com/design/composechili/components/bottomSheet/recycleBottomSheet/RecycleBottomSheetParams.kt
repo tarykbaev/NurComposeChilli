@@ -2,7 +2,7 @@ package com.design.composechili.components.bottomSheet.recycleBottomSheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 data class RecycleBottomSheetParams(
