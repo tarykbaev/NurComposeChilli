@@ -25,7 +25,9 @@ fun RadioButtonCell(
     subtitle: String,
     onItemClick: () -> Unit
 ) {
+
     var selected by remember { mutableStateOf(false) }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -33,7 +35,7 @@ fun RadioButtonCell(
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column() {
+        Column {
             Text(
                 text = title,
                 style = ChiliTextStyle.get(
@@ -50,6 +52,7 @@ fun RadioButtonCell(
                 )
             )
         }
+        
         Spacer(modifier = modifier.weight(1f))
         RadioButton(selected = selected, onClick = {
             selected = !selected

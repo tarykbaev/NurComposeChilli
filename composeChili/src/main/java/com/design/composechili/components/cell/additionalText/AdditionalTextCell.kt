@@ -26,11 +26,11 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.softLayerShadow
@@ -49,6 +49,7 @@ import com.design.composechili.utils.softLayerShadow
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample AdditionalTextCellParams.Default
  */
+
 @Composable
 fun AdditionalTextCell(
     modifier: Modifier = Modifier,
@@ -93,7 +94,7 @@ fun AdditionalTextCell(
                             vertical = baseCellParams.iconSize.verticalPadding,
                             horizontal = baseCellParams.iconSize.horizontalPadding
                         )
-                        .size(baseCellParams.iconSize.iconSize),
+                        .size(baseCellParams.iconSize.size),
                     painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )
@@ -158,14 +159,13 @@ fun AdditionalTextCell(
                             .weight(1f),
                         verticalArrangement = Arrangement.Center
                     ) {
-                        val adjustedAdditionalTitlePadding =
-                            params.additionalTitlePadding.copy(
-                                bottom = if (additionalSubTitle.isNotBlank()) {
-                                    dimensionResource(id = R.dimen.padding_4dp)
-                                } else {
-                                    dimensionResource(id = R.dimen.padding_12dp)
-                                }
-                            )
+
+                        val adjustedAdditionalTitlePadding = params.additionalTitlePadding.copy(
+                            bottom = if (additionalSubTitle.isNotBlank()) dimensionResource(id = R.dimen.padding_4dp)
+                            else dimensionResource(id = R.dimen.padding_12dp),
+                            end = if (isChevronVisible) params.additionalTitlePadding.end
+                            else dimensionResource(R.dimen.padding_12dp)
+                        )
 
                         Text(
                             modifier = Modifier
@@ -175,16 +175,22 @@ fun AdditionalTextCell(
                             text = additionalTitle,
                             style = params.additionalTitleStyle,
                             maxLines = baseCellParams.textMaxLines,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            textAlign = TextAlign.End
                         )
 
                         if (additionalSubTitle.isNotBlank()) {
+                            val additionalSubTitlePadding = params.additionalSubTitlePadding.copy(
+                                end = if (isChevronVisible) params.additionalSubTitlePadding.end
+                                else dimensionResource(R.dimen.padding_12dp)
+                            )
+
                             Text(
                                 modifier = Modifier
                                     .align(Alignment.End)
                                     .wrapContentSize()
                                     .padding(
-                                        params.additionalSubTitlePadding.toPaddingValues()
+                                        additionalSubTitlePadding.toPaddingValues()
                                     ),
                                 text = additionalSubTitle,
                                 style = params.additionalSubTitleStyle,
@@ -233,9 +239,7 @@ fun AdditionalTextCell_Preview() {
                 additionalSubTitle = "Additional Sub",
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
-            ) {
-
-            }
+            )
         }
     }
 }
