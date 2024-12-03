@@ -40,8 +40,8 @@ import com.design.composechili.theme.ChiliTheme
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
  * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
- * @param [params] cell visual transformation params and paddings
  * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [params] cell visual transformation params and paddings
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample BaseCellParams.Default
  */
@@ -87,7 +87,7 @@ fun BaseCell(
                             vertical = params.iconSize.verticalPadding,
                             horizontal = params.iconSize.horizontalPadding
                         )
-                        .size(params.iconSize.iconSize),
+                        .size(params.iconSize.size),
                     painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )

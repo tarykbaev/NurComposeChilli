@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 
 data class CellIconSize(
-    val iconSize: Dp = 0.dp,
+    val size: Dp = 0.dp,
     val verticalPadding: Dp = 0.dp,
     val horizontalPadding: Dp = 0.dp
 ) {
@@ -17,7 +17,7 @@ data class CellIconSize(
         val LARGE
             @Composable
             get() = CellIconSize(
-                iconSize = dimensionResource(R.dimen.view_48dp),
+                size = dimensionResource(R.dimen.view_48dp),
                 verticalPadding = dimensionResource(R.dimen.padding_14dp),
                 horizontalPadding = dimensionResource(R.dimen.padding_12dp)
             )
@@ -25,7 +25,7 @@ data class CellIconSize(
         val MEDIUM
             @Composable
             get() = CellIconSize(
-                iconSize = dimensionResource(R.dimen.view_46dp),
+                size = dimensionResource(R.dimen.view_46dp),
                 verticalPadding = dimensionResource(R.dimen.padding_14dp),
                 horizontalPadding = dimensionResource(R.dimen.padding_12dp)
             )
@@ -33,7 +33,7 @@ data class CellIconSize(
         val SMALL
             @Composable
             get() = CellIconSize(
-                iconSize = dimensionResource(R.dimen.view_32dp),
+                size = dimensionResource(R.dimen.view_32dp),
                 verticalPadding = dimensionResource(R.dimen.padding_8dp),
                 horizontalPadding = dimensionResource(R.dimen.padding_12dp)
             )

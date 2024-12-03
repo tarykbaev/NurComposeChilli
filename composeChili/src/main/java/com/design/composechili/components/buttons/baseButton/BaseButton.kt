@@ -20,9 +20,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +45,6 @@ import com.design.composechili.theme.ChiliTheme
  * @sample ChiliButtonStyle.Primary
  */
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BaseButton(
     modifier: Modifier = Modifier
@@ -58,8 +56,8 @@ fun BaseButton(
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
     isEnabled: Boolean = true,
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
-    @DrawableRes startIcon: Int? = null,
-    @DrawableRes endIcon: Int? = null,
+    startIcon: Painter? = null,
+    endIcon: Painter? = null,
 ) {
     Button(
         modifier = modifier
@@ -88,7 +86,7 @@ fun BaseButton(
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
                     .padding(end = 4.dp),
-                painter = painterResource(id = startIcon),
+                painter = startIcon,
                 contentDescription = "Button start icon"
             )
         }
@@ -104,7 +102,7 @@ fun BaseButton(
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
                     .padding(start = 4.dp),
-                painter = painterResource(endIcon),
+                painter = endIcon,
                 contentDescription = "Button end icon"
             )
         }

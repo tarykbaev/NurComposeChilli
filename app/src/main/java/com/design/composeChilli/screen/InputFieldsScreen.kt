@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -16,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +30,8 @@ import com.design.composechili.components.input.code.CodeLength
 import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
 import com.design.composechili.components.input.maskedTextField.MaskedTextFieldParams
+import com.design.composechili.components.input.password.PasswordInput
+import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
@@ -47,6 +49,8 @@ fun InputFieldsScreen() {
     var simpleWithClearText by remember {
         mutableStateOf(String())
     }
+    var passwordInputText by remember { mutableStateOf("") }
+    var isPasswordInputError by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -113,7 +117,7 @@ fun InputFieldsScreen() {
                     textStyle = ChiliTextStyle.get(
                         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH5,
                         ChiliTheme.Colors.ChiliPrimaryTextColor,
-                        Font(R.font.roboto_700)
+                        ChiliTheme.Attribute.ChiliBoldTextFont
                     ).copy(textAlign = TextAlign.Center)
                 ),
                 fieldEndIcon = if (simpleWithClearText.isNotBlank()) painterResource(id = R.drawable.chili_ic_clear_24) else null,
@@ -143,6 +147,16 @@ fun InputFieldsScreen() {
                 )
             )
         }
+        PasswordInput(
+            modifier = Modifier.fillMaxWidth(),
+            value = passwordInputText,
+            hint = "Password",
+            isError = isPasswordInputError,
+            onImeAction = {
+                isPasswordInputError = isPasswordInputError.not()
+            },
+            onValueChange = { passwordInputText = it },
+        )
 
         InputFieldWithDescAndAction(
             description = "mask"
@@ -176,25 +190,6 @@ fun InputFieldsScreen() {
         })
 
         Spacer(modifier = Modifier.size(54.dp))
-
-        /*
-                CodeInput(
-                    codeLength = CodeLength.FOUR,
-                    state = codeInputState,
-                    isActionTextEnabled = false,
-                    clearCode = codeInputClear,
-                    onActionTextClick = {},
-                    codeCompleteListener = object : OnCodeChangeListener {
-                        override fun onCodeComplete(otp: String) {
-                            codeInputState = CodeInputItemState.ERROR
-                            codeInputClear = true
-                        }
-
-                        override fun onCodeChange(text: String?) {
-                            codeInputState = CodeInputItemState.INACTIVE
-                            codeInputClear = false
-                        }
-                    })*/
     }
 }
 
