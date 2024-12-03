@@ -3,9 +3,16 @@ package com.design.composeChilli
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.unit.TextUnit
 import com.design.composeChilli.navigation.ChiliComposeNavigator
 import com.design.composeChilli.navigation.LocalComposeNavigator
+import com.design.composechili.theme.textStyle.ChiliTextStyle
+import com.design.composechili.theme.ChiliTheme
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +31,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 sealed interface ChiliScreens {
     @Serializable

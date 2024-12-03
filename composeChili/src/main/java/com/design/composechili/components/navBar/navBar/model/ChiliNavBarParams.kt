@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.Dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTextDimensions
-import com.design.composechili.theme.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
 

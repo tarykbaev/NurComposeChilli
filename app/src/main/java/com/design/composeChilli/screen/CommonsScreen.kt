@@ -27,8 +27,8 @@ import com.design.composechili.components.common.chiliAgreement.ChiliAgreementIt
 import com.design.composechili.components.common.chiliAgreement.DisplayMode
 import com.design.composechili.components.common.chiliMaterialDesignSlider.ChiliMaterialDesignSlider
 import com.design.composechili.components.common.switch.ChiliSwitch
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 
 @Composable
 fun CommonsScreen() {
@@ -58,7 +58,7 @@ fun CommonsScreen() {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "Material Design slider",
-            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+            style = ChiliTextStyleBuilder.H6.Primary.Medium
         )
         ChiliMaterialDesignSlider(
             initialValue = 20f,
@@ -76,7 +76,7 @@ fun CommonsScreen() {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "CheckBox",
-            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+            style = ChiliTextStyleBuilder.H7.Primary.Regular
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             ChiliCheckbox(isChecked = isFirstCheckBoxChecked) {
@@ -84,7 +84,7 @@ fun CommonsScreen() {
             }
             Text(
                 text = "Checkbox enabled & not checked",
-                style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+                style =  ChiliTextStyleBuilder.H8.Primary.Regular
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -93,21 +93,21 @@ fun CommonsScreen() {
             }
             Text(
                 text = "Checkbox enabled & checked",
-                style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+                style =ChiliTextStyleBuilder.H8.Primary.Regular
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             ChiliCheckbox(enabled = false, isChecked = false)
             Text(
                 text = "Checkbox disabled & not checked",
-                style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+                style = ChiliTextStyleBuilder.H8.Primary.Regular
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             ChiliCheckbox(enabled = false, isChecked = true)
             Text(
                 text = "Checkbox disabled & checked",
-                style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+                style = ChiliTextStyleBuilder.H8.Primary.Regular
             )
         }
         HorizontalDivider(
@@ -116,7 +116,7 @@ fun CommonsScreen() {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "AgreementView",
-            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+            style = ChiliTextStyleBuilder.H8.Primary.Regular
         )
         ChiliAgreementItem(
             isChecked = isAgreementChecked,
@@ -151,7 +151,7 @@ fun CommonsScreen() {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "Switch",
-            style = ChiliTextStyle.get(color = ChiliTheme.Colors.ChiliPrimaryTextColor)
+            style = ChiliTextStyleBuilder.H8.Primary.Regular
         )
         ChiliSwitch(
             description = "ChiliSwitch",

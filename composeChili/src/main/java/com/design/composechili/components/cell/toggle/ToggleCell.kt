@@ -72,7 +72,7 @@ fun ToggleCell(
     onCheckedChangeListener: (isChecked: Boolean) -> Unit = {}
 ) {
 
-    val baseCellParams = params.baseCellParams
+
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
@@ -97,11 +97,8 @@ fun ToggleCell(
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(
-                            vertical = baseCellParams.iconSize.verticalPadding,
-                            horizontal = baseCellParams.iconSize.horizontalPadding
-                        )
-                        .size(baseCellParams.iconSize.size),
+                        .padding(params.startIconPadding.toPaddingValues())
+                        .size(48.dp),
                     painter = painterResource(id = startIcon),
                     contentDescription = "Base cell start icon"
                 )
@@ -113,8 +110,8 @@ fun ToggleCell(
                     .padding(end = dimensionResource(id = R.dimen.padding_16dp))
             ) {
 
-                val adjustedTitlePadding = baseCellParams.titlePadding.copy(
-                    start = if (startIcon != null) 0.dp else baseCellParams.titlePadding.start,
+                val adjustedTitlePadding = params.titlePadding.copy(
+                    start = if (startIcon != null) 0.dp else params.titlePadding.start,
                     bottom = if (subtitle.isBlank()) {
                         dimensionResource(id = R.dimen.padding_12dp)
                     } else {
@@ -129,13 +126,12 @@ fun ToggleCell(
                         .padding(
                             adjustedTitlePadding.toPaddingValues()
                         ),
-                    style = baseCellParams.titleTextStyle,
-                    maxLines = baseCellParams.textMaxLines,
+                    style = params.titleTextStyle,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                val subTitlePadding = baseCellParams.subtitlePadding.copy(
-                    start = if (startIcon != null) 0.dp else baseCellParams.subtitlePadding.start
+                val subTitlePadding = params.subtitlePadding.copy(
+                    start = if (startIcon != null) 0.dp else params.subtitlePadding.start
                 )
 
                 if (subtitle.isNotBlank()) {
@@ -144,8 +140,7 @@ fun ToggleCell(
                         modifier = Modifier
                             .wrapContentSize()
                             .padding(subTitlePadding.toPaddingValues()),
-                        style = baseCellParams.subTitleTextStyle,
-                        maxLines = baseCellParams.textMaxLines,
+                        style = params.subTitleTextStyle,
                         overflow = TextOverflow.Ellipsis
                     )
                 }

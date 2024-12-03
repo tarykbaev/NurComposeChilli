@@ -1,8 +1,8 @@
 package com.design.composechili.components.inAppPush
 
-import androidx.collection.mutableObjectListOf
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,12 +23,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
 import com.design.composechili.components.buttons.baseButton.BaseButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
+import com.design.composechili.utils.safeTake
 
 /**
  * A customizable in-app push notification component for displaying informational messages with a title, description, button, and optional banner.
@@ -93,8 +93,6 @@ fun InfoInAppPush(
     onDismissRequest: () -> Unit,
 ) {
 
-
-
     BaseInAppPush(
         modifier = Modifier.padding(horizontal = 8.dp), onDismissRequest = onDismissRequest
     ) {
@@ -102,11 +100,12 @@ fun InfoInAppPush(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .padding(top = 12.dp)
         ) {
 
             if (banner.isNotBlank()) {
                 SubcomposeAsyncImage(
-                    modifier = Modifier.align(Alignment.Center),
+                    modifier = Modifier.align(Alignment.Center).fillMaxWidth(),
                     model = banner,
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Fit,
@@ -128,15 +127,18 @@ fun InfoInAppPush(
 
         Text(
             modifier = Modifier.padding(top = 16.dp),
-            text = title,
+            text = title.safeTake(60),
             style = titleStyle,
+
             )
 
         Text(
-            modifier = Modifier.padding(top = 16.dp), text = description, style = descriptionStyle
+            modifier = Modifier.padding(top = 16.dp),
+            text = description.safeTake(190),
+            style = descriptionStyle
         )
         BaseButton(
-            modifier = Modifier.padding(top = 16.dp),
+            buttonPadding = PaddingValues(top = 16.dp),
             onClick = onClickListener,
             title = buttonText,
             buttonStyle = ChiliButtonStyle.Secondary,
@@ -146,13 +148,14 @@ fun InfoInAppPush(
 
 @Preview(showBackground = true)
 @Composable
-fun InfoInAppPushPreview(){
-    ChiliTheme{
-        Column (Modifier.fillMaxSize()){
+fun InfoInAppPushPreview() {
+    ChiliTheme {
+        Column(Modifier.fillMaxSize()) {
             InfoInAppPush(
-                title = "TestInfoInAppPushTitle",
-                description = "TestInfoAppPushDescription",
-                buttonText = "TestInfoInAppPushButtonText",
+                title = "Максимальная длина заголовка равна 60 символов, а если не по",
+                description = "Описание описания, которое описывает описанное описание описанного описания, максимум из 190 символов," +
+                        "но если ничего \n не помещается, не проблема, потому что у нас всегда...",
+                buttonText = "ПОДРОБНЕЕ",
                 onClickListener = { /*TODO*/ }) {
             }
         }

@@ -2,6 +2,7 @@ package com.design.composechili.components.bottomSheet.baseBottomSheet
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -85,6 +86,7 @@ fun BaseBottomSheet(
                     .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
                     .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
                     .windowInsetsPadding(WindowInsets.navigationBars)
+                    .animateContentSize()
             ) {
                 if (hasCloseIcon) {
                     Image(

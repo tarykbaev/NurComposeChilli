@@ -25,9 +25,8 @@ import com.design.composechili.components.cell.expandableCell.ExpandableCell
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.cell.model.CellIconSize
 import com.design.composechili.components.cell.toggle.ToggleCell
-import com.design.composechili.components.cell.toggle.ToggleCellParams
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 import com.design.composechili.utils.softLayerShadow
 
 @Composable
@@ -182,10 +181,7 @@ fun SmallIconSizeGroup() {
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "BaseCellView iconSize = SMALL (32dp)"
         )
 
@@ -293,10 +289,7 @@ fun MediumIconSizeGroup() {
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "BaseCellView iconSize = MEDIUM (46dp)"
         )
 
@@ -417,10 +410,7 @@ fun LargeIconSizeGroup() {
         Spacer(modifier = Modifier.size(8.dp))
 
         Text(
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "BaseCellView iconSize = LARGE (48dp)"
         )
 
@@ -539,10 +529,7 @@ fun CustomIconSizeGroup() {
     ) {
 
         Text(
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "BaseCellView iconSize = CUSTOM (72dp)"
         )
 
@@ -584,10 +571,7 @@ fun MaxCharGroup() {
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "BaseCell max char"
         )
 
@@ -623,10 +607,7 @@ fun ToggleCellGroup() {
             .padding(
                 horizontal = 16.dp
             ),
-        style = ChiliTextStyle.get(
-            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-            color = ChiliTheme.Colors.ChiliPrimaryTextColor
-        ),
+        style = ChiliTextStyleBuilder.H8.Primary.Default,
         text = "ToggleCells"
     )
 
@@ -713,11 +694,6 @@ fun ToggleCellGroup() {
                 isSwitchEnabled = true,
                 startIcon = R.drawable.ic_cat,
                 cellCornerMode = CellCornerMode.Bottom,
-                params = ToggleCellParams.Default.copy(
-                    baseCellParams = BaseCellParams.Default.copy(
-                        iconSize = CellIconSize.MEDIUM
-                    )
-                ),
                 onCheckedChangeListener = {
                     isCheckedSubTitleWithIconState.value = it
                 }
@@ -738,10 +714,7 @@ fun AdditionalTextCellGroup() {
                 .padding(
                     horizontal = 16.dp
                 ),
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "AdditionalTextCell"
         )
 
@@ -830,10 +803,7 @@ fun ExpandableCellGroup() {
                 .padding(
                     horizontal = 16.dp
                 ),
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "ExpandableCell"
         )
 
@@ -885,10 +855,7 @@ fun AdditionalDoubleButtonsGroup() {
                 .padding(
                     horizontal = 16.dp
                 ),
-            style = ChiliTextStyle.get(
-                textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                color = ChiliTheme.Colors.ChiliPrimaryTextColor
-            ),
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
             text = "Additional double Buttons "
         )
 
