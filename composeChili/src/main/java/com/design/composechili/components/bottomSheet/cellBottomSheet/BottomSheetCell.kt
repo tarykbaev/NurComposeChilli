@@ -16,6 +16,10 @@ import com.design.composechili.theme.ChiliTheme
  * @see [CellBottomSheet]
  */
 
+@Deprecated(
+    message = "не нужная обертка, никакой доп логики не скрывает",
+    replaceWith = ReplaceWith("юзай стандартный BottomSheetCell")
+)
 @Composable
 fun BottomSheetCell(
     title: String,

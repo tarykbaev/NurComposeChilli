@@ -6,18 +6,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.cell.radioButtonCell.RadioButtonCell
-import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlin.random.Random
 
@@ -39,59 +35,47 @@ import kotlin.random.Random
  * @sample RecycleBottomSheet_Preview
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> RecycleBottomSheet(
+fun <T> RecycleBottomSheetContent(
     modifier: Modifier = Modifier,
-    sheetState: BottomSheetScaffoldState,
-    peekHeight: Dp = 0.dp,
     title: String,
     subtitle: String,
     listOfItems: List<T>,
     onItemClick: (T) -> Unit = {},
     recycleBottomSheetParams: RecycleBottomSheetParams = RecycleBottomSheetParams.Default,
     composableItem: @Composable (LazyItemScope.(T, (T) -> Unit) -> Unit),
-    screenContent: @Composable () -> Unit,
 ) {
-    BaseBottomSheet(
-        sheetState = sheetState,
-        peekHeight = peekHeight,
-        bottomSheetContent = {
-            LazyColumn(modifier = modifier) {
-                item {
-                    Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
-                        Text(
-                            modifier = Modifier.padding(bottom = 16.dp), text = title,
-                            style = recycleBottomSheetParams.titleStyle
-                        )
-                        Text(
-                            text = subtitle,
-                            style = recycleBottomSheetParams.subtitleStyle
-                        )
-                    }
-                }
-                itemsIndexed(listOfItems) { index, itemData ->
-                    composableItem(itemData, onItemClick)
-                    if (index != listOfItems.size - 1) {
-                        HorizontalDivider(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = ChiliTheme.Colors.ChiliDividerColor,
-                            thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
-                        )
-                    }
-                }
+    LazyColumn(modifier = modifier) {
+        item {
+            Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp), text = title,
+                    style = recycleBottomSheetParams.titleStyle
+                )
+                Text(
+                    text = subtitle,
+                    style = recycleBottomSheetParams.subtitleStyle
+                )
             }
-        }) {
-        screenContent()
+        }
+        itemsIndexed(listOfItems) { index, itemData ->
+            composableItem(itemData, onItemClick)
+            if (index != listOfItems.size - 1) {
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = ChiliTheme.Colors.ChiliDividerColor,
+                    thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
+                )
+            }
+        }
     }
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun RecycleBottomSheet_Preview() {
-    val sheetState = getBottomSheetState()
     val listOfItems = listOf(
         SampleRadioItem("Visa", "···· 1234"),
         SampleRadioItem("Visa o!Dengi", "···· 12421"),
@@ -111,9 +95,7 @@ fun RecycleBottomSheet_Preview() {
         SampleRadioItem("Visa o!Dengi", "···· 12421"),
     )
     ChiliTheme {
-        RecycleBottomSheet(
-            sheetState = sheetState,
-            peekHeight = 800.dp,
+        RecycleBottomSheetContent(
             title = "Это боттомщит где вы можете засетить свой адаптер к ресайклу",
             subtitle = "Тут можно задать стиль тексту",
             listOfItems = listOfItems,
@@ -125,7 +107,7 @@ fun RecycleBottomSheet_Preview() {
                     onItemClick = { onClick(item) }
                 )
             }
-        ) {}
+        )
     }
 }
 

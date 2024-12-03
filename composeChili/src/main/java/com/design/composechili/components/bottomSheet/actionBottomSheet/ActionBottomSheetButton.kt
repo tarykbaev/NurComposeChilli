@@ -7,9 +7,9 @@ import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTheme
 
 /**
- * Used for [ActionBottomSheet], displayed on BottomSheet with LazyColumn
+ * Used for [ActionBottomSheetContent], displayed on BottomSheet with LazyColumn
  * @param [actionBottomSheetParams] ActionBottomSheetButton visual transformation params and click listener
- * @see [ActionBottomSheet]
+ * @see [ActionBottomSheetContent]
  */
 
 @Composable

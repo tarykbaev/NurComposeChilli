@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -86,7 +84,7 @@ fun BaseInAppPush(
     rootContentPadding: PaddingValues = PaddingValues(8.dp),
     onDismissRequest: () -> Unit,
     isCloseButtonEnable: Boolean = true,
-    closeButtonSize:Dp = 24.dp,
+    closeButtonSize: Dp = 24.dp,
     cornerRadius: Dp = ChiliTheme.Attribute.ChiliInAppPushCornerRadius,
     content: @Composable () -> Unit,
 ) {
@@ -101,11 +99,15 @@ fun BaseInAppPush(
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(inAppPushPadding,),
+                .padding(inAppPushPadding),
             colors = CardDefaults.cardColors(containerColor = params.contentColor),
             shape = RoundedCornerShape(cornerRadius),
         ) {
-            Column(Modifier.padding(rootContentPadding)) {
+            Column(
+                Modifier
+                    .padding(rootContentPadding)
+                    .align(Alignment.CenterHorizontally)
+            ) {
                 if (isCloseButtonEnable) {
                     IconButton(
                         modifier = Modifier
@@ -145,14 +147,19 @@ data class BaseInAppPushParams(
 
 @Preview(device = Devices.PIXEL_5, showBackground = true)
 @Composable
-fun BaseInAppPushPreview(){
-    ChiliTheme{
+fun BaseInAppPushPreview() {
+    ChiliTheme {
         Column(Modifier.fillMaxSize()) {
             BaseInAppPush(
                 isCloseButtonEnable = true,
                 onDismissRequest = { /* Handle dismiss */ },
                 content = {
-                    Text(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), text = "This is an in-app push message")
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        text = "This is an in-app push message"
+                    )
                 }
             )
         }
