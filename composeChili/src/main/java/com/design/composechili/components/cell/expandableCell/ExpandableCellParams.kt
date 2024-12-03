@@ -5,8 +5,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import com.design.composechili.R
 import com.design.composechili.components.cell.baseCell.BaseCellParams
-import com.design.composechili.theme.ChiliTextStyle
-import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 import com.design.composechili.values.ChiliPadding
 
 data class ExpandableCellParams(
@@ -32,10 +31,7 @@ data class ExpandableCellParams(
                         end = dimensionResource(R.dimen.padding_8dp)
                     )
                 ),
-                descriptionTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliSecondaryTextColor,
-                ),
+                descriptionTextStyle = ChiliTextStyleBuilder.H8.Secondary.Default,
                 descriptionPadding = ChiliPadding(
                     top = dimensionResource(R.dimen.padding_8dp),
                     bottom = dimensionResource(R.dimen.padding_8dp),

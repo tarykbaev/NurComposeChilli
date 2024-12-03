@@ -104,7 +104,7 @@ fun BottomSheetScreen() {
                     coScope.launch { sheetState.hide() }
                 }
 
-                ScreenEnum.SEARCH_SELECT_BOTTOM_SHEET -> {
+                SEARCH_SELECT_BOTTOM_SHEET -> {
                     SearchSelectorBottomSheet{
                         coScope.launch { sheetState.hide() }
                     }
@@ -249,9 +249,9 @@ fun SearchSelectorBottomSheet(
     SearchSelectorBottomSheetContent(
         list = listOf(
             SearchSelectorOptionItem("1", "Option 1", false),
-            SearchSelectorOptionItem("2", "Option 2", false),
-            SearchSelectorOptionItem("3", "Option 3", false),
-            SearchSelectorOptionItem("4", "Option 4", false),
+            SearchSelectorOptionItem("2", "Example 2", false),
+            SearchSelectorOptionItem("3", "Test 3", false),
+            SearchSelectorOptionItem("4", "Random 4", false),
         ),
         onOptionClick = { onClick() }
     )
@@ -282,11 +282,11 @@ fun RecycleBottomSheet(onClick: () -> Unit) {
         subtitle = "Тут можно задать стиль тексту",
         listOfItems = listOfItems,
         onItemClick = { onClick() },
-        composableItem = { item: SampleRadioItem, onClick: (SampleRadioItem) -> Unit ->
+        composableItem = { item: SampleRadioItem, click: (SampleRadioItem) -> Unit ->
             RadioButtonCell(
                 title = item.title,
                 subtitle = item.subtitle,
-                onItemClick = { onClick(item) }
+                onItemClick = { click(item) }
             )
         }
     )

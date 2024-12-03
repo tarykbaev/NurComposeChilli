@@ -17,8 +17,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,9 +31,8 @@ import com.design.composechili.components.input.inputFieldWithDescAndAction.Inpu
 import com.design.composechili.components.input.maskedTextField.MaskedTextField
 import com.design.composechili.components.input.maskedTextField.MaskedTextFieldParams
 import com.design.composechili.components.input.password.PasswordInput
-import com.design.composechili.theme.ChiliTextStyle
-import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 
 @Composable

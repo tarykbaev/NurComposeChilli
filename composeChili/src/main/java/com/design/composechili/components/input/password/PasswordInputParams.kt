@@ -4,15 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.design.composechili.R
-import com.design.composechili.theme.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.values.ChiliPadding
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 
 @Immutable
 data class PasswordInputParams(
@@ -32,11 +30,8 @@ data class PasswordInputParams(
         val Default
             @Composable
             get() = PasswordInputParams(
-                textStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                    font = Font(R.font.roboto_medium)
-                ), errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
+                textStyle = ChiliTextStyleBuilder.H6.Primary.Medium,
+                errorTextColor = ChiliTheme.Colors.ChiliErrorTextColor,
                 cursorColor = colorResource(id = R.color.magenta_1),
                 fieldBackground = ChiliTheme.Colors.ChiliCodeInputItemBackgroundColor,
                 fieldErrorBackground = ChiliTheme.Colors.ChiliCodeInputItemErrorBackgroundColor,
