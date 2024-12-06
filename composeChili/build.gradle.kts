@@ -74,7 +74,7 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("release") {
+            create<MavenPublication>("maven") {
                 from(components["release"])
                 groupId = "kg.nurtelecom"
                 artifactId = "compose-chili"
