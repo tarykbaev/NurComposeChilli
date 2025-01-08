@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.cell.AdditionalDoubleButtons
@@ -194,7 +195,7 @@ fun SmallIconSizeGroup() {
             BaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single
             )
@@ -208,7 +209,7 @@ fun SmallIconSizeGroup() {
         ) {
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top
@@ -216,7 +217,7 @@ fun SmallIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle
@@ -224,7 +225,7 @@ fun SmallIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom
             )
@@ -240,7 +241,7 @@ fun SmallIconSizeGroup() {
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single
             )
@@ -255,7 +256,7 @@ fun SmallIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top
@@ -264,7 +265,7 @@ fun SmallIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle
@@ -273,7 +274,7 @@ fun SmallIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom
             )
@@ -302,7 +303,7 @@ fun MediumIconSizeGroup() {
         ) {
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
@@ -318,7 +319,7 @@ fun MediumIconSizeGroup() {
         ) {
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
@@ -327,7 +328,7 @@ fun MediumIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
@@ -336,7 +337,7 @@ fun MediumIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
@@ -354,7 +355,7 @@ fun MediumIconSizeGroup() {
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
@@ -371,7 +372,7 @@ fun MediumIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
@@ -381,7 +382,7 @@ fun MediumIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
@@ -391,7 +392,7 @@ fun MediumIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
@@ -422,7 +423,7 @@ fun LargeIconSizeGroup() {
             BaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
@@ -438,7 +439,7 @@ fun LargeIconSizeGroup() {
         ) {
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
@@ -447,7 +448,7 @@ fun LargeIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
@@ -456,7 +457,7 @@ fun LargeIconSizeGroup() {
 
             BaseCell(
                 title = "Заголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
@@ -474,7 +475,7 @@ fun LargeIconSizeGroup() {
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
@@ -491,7 +492,7 @@ fun LargeIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
@@ -501,7 +502,7 @@ fun LargeIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
@@ -511,7 +512,7 @@ fun LargeIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
@@ -543,7 +544,7 @@ fun CustomIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_cat,
+                startIcon = painterResource(R.drawable.ic_cat),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
@@ -554,7 +555,7 @@ fun CustomIconSizeGroup() {
             BaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
@@ -585,7 +586,7 @@ fun MaxCharGroup() {
             BaseCell(
                 title = "Заголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
                 subtitle = "Подзаголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
-                startIcon = R.drawable.ic_squircle_phone,
+                startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)

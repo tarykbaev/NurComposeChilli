@@ -74,9 +74,10 @@ fun ChiliBaseTopAppBar(
     params: ChiliBaseTopAppBarParams = ChiliBaseTopAppBarParams.Default,
     isDividerVisible: Boolean = true,
     additionalText: String? = null,
-    navigationIcon: Painter? = null,
+    navigationIcon: Painter = painterResource(R.drawable.chili_ic_nav_back),
     endIcon: Painter? = null,
     isCenteredTitle: Boolean = false,
+    isNavigationButtonEnabled: Boolean = true,
     onEndIconClick: (() -> Unit)? = null,
     onNavigationClick: (() -> Unit)? = null
 ) {
@@ -88,7 +89,8 @@ fun ChiliBaseTopAppBar(
                 .background(params.containerColor), contentAlignment = Alignment.CenterStart
         ) {
             var navigationIconWidth by remember { mutableStateOf(0) }
-            navigationIcon?.let { icon ->
+
+            if (isNavigationButtonEnabled){
                 IconButton(modifier = Modifier
                     .wrapContentSize()
                     .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
@@ -97,12 +99,13 @@ fun ChiliBaseTopAppBar(
                     }, onClick = { onNavigationClick?.invoke() }) {
                     Image(
                         modifier = Modifier.size(params.navigationIconSize),
-                        painter = icon,
+                        painter = navigationIcon,
                         contentDescription = "back",
                         colorFilter = params.startIconFilter
                     )
                 }
             }
+
 
             Row(
                 modifier = Modifier

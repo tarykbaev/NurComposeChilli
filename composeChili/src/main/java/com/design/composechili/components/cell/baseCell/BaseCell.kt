@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,7 +54,7 @@ fun BaseCell(
     subtitle: String = String(),
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
-    @DrawableRes startIcon: Int? = null,
+    startIcon: Painter? = null,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
     params: BaseCellParams = BaseCellParams.Default,
     onClick: (() -> Unit)? = null,
@@ -88,7 +89,7 @@ fun BaseCell(
                             horizontal = params.iconSize.horizontalPadding
                         )
                         .size(params.iconSize.size),
-                    painter = painterResource(id = startIcon),
+                    painter = startIcon,
                     contentDescription = "Base cell start icon"
                 )
             }
@@ -166,6 +167,8 @@ fun BaseCell(
         }
     }
 }
+
+
 
 @Preview
 @Composable
