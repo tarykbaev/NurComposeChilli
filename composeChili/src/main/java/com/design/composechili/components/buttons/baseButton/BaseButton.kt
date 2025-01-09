@@ -50,7 +50,6 @@ fun BaseButton(
     modifier: Modifier = Modifier
         .wrapContentSize()
         .fillMaxWidth(),
-    onClick: () -> Unit,
     title: String,
     titleStyle: TextStyle? = null,
     buttonStyle: ChiliButtonStyle = ChiliButtonStyle.Primary,
@@ -58,6 +57,7 @@ fun BaseButton(
     buttonPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
     startIcon: Painter? = null,
     endIcon: Painter? = null,
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier

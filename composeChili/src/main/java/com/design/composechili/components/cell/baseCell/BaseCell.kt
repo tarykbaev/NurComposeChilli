@@ -52,7 +52,7 @@ fun BaseCell(
     modifier: Modifier = Modifier,
     title: String = String(),
     subtitle: String = String(),
-    isChevronVisible: Boolean = false,
+    isChevronVisible: Boolean = true,
     isDividerVisible: Boolean = false,
     startIcon: Painter? = null,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
