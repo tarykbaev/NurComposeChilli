@@ -62,7 +62,8 @@ fun ChiliMain(
                 val isNotHomeScreen = backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
 
                 ChiliBaseTopAppBar(
-                    navigationIcon = if (isNotHomeScreen) painterResource(id = com.design.composechili.R.drawable.chili_ic_chevron_left) else null,
+                    isNavigationButtonEnabled = isNotHomeScreen,
+                    navigationIcon = painterResource(id = com.design.composechili.R.drawable.chili_ic_chevron_left),
                     title = "NurComposeChili",
                     isDividerVisible = true,
                     isCenteredTitle = true,
