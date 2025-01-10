@@ -46,7 +46,7 @@ import com.design.composechili.theme.ChiliTheme
  */
 
 @Composable
-fun BaseButton(
+fun NurChiliButton(
     modifier: Modifier = Modifier
         .wrapContentSize()
         .fillMaxWidth(),
@@ -119,19 +119,19 @@ fun BaseButtonPreview() {
                 .background(ChiliTheme.Colors.ChiliSurfaceBackground)
         ) {
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { /*TODO*/ },
                 title = "ChiliButtonStyle.Primary",
                 buttonStyle = ChiliButtonStyle.Primary
             )
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { /*TODO*/ },
                 title = "ChiliButtonStyle.Secondary",
                 buttonStyle = ChiliButtonStyle.Secondary
             )
             Spacer(modifier = Modifier.size(24.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { /*TODO*/ },
                 title = "ChiliButtonStyle.Additional",
                 buttonStyle = ChiliButtonStyle.Additional

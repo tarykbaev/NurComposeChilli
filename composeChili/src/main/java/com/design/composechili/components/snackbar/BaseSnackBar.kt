@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
@@ -124,7 +124,7 @@ fun BaseSnackBarPreview() {
                 }
             },
             content = { padding ->
-                BaseButton(modifier = Modifier.padding(padding), onClick = {
+                NurChiliButton(modifier = Modifier.padding(padding), onClick = {
                     scope.launch {
                         snackBarHostState.showSnackbar(message = "TestMessage")
                     }

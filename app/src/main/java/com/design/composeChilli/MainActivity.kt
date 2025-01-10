@@ -79,4 +79,7 @@ sealed interface ChiliScreens {
     @Serializable
     data object Tooltip : ChiliScreens
 
+    @Serializable
+    data object Dialog : ChiliScreens
+
 }

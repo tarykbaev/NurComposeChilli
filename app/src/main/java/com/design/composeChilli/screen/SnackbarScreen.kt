@@ -1,7 +1,5 @@
 package com.design.composeChilli.screen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,10 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.design.composeChilli.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.snackbar.BaseSnackBar
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.spacerVerticalDefaultPadding
@@ -73,7 +69,7 @@ fun SnackbarScreen() {
             ) {
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {
@@ -85,7 +81,7 @@ fun SnackbarScreen() {
                 )
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {
@@ -104,7 +100,7 @@ fun SnackbarScreen() {
                 )
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {
@@ -118,7 +114,7 @@ fun SnackbarScreen() {
                 )
 
                 Spacer(modifier = Modifier.spacerVerticalDefaultPadding(16.dp))
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {

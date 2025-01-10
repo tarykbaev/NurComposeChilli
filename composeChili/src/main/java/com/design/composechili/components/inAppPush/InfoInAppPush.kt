@@ -24,7 +24,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyle
@@ -137,7 +137,7 @@ fun InfoInAppPush(
             text = description.safeTake(190),
             style = descriptionStyle
         )
-        BaseButton(
+        NurChiliButton(
             buttonPadding = PaddingValues(top = 16.dp),
             onClick = onClickListener,
             title = buttonText,

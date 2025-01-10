@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -59,13 +59,13 @@ fun DetailedInfoBottomSheetContent(
             style = detailedInfoBottomSheetParams.textStyle
         )
         if (secondaryButtonTitle != null)
-            BaseButton(
+            NurChiliButton(
                 buttonPadding = PaddingValues(vertical = 12.dp, horizontal = 16.dp),
                 onClick = onSecondaryClick,
                 title = secondaryButtonTitle,
                 buttonStyle = ChiliButtonStyle.Additional
             )
-        BaseButton(onClick = onPrimaryClick, title = buttonTitle)
+        NurChiliButton(onClick = onPrimaryClick, title = buttonTitle)
     }
 }
 

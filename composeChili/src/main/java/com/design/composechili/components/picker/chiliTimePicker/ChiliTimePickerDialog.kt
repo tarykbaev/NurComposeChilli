@@ -27,7 +27,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.picker.chiliDatePicker.ChiliSnappedTime
 import com.design.composechili.theme.textStyle.ChiliTextStyle
@@ -146,7 +146,7 @@ fun ChiliTimePickerDialog(
                         }
                     }
                 )
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth(),

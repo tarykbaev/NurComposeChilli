@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -81,7 +81,7 @@ import com.design.composechili.theme.ChiliTheme
  */
 
 @Composable
-fun CodeInput(
+fun NurChiliCodeInput(
     modifier: Modifier = Modifier,
     initialValue: String = String(),
     codeLength: CodeLength = CodeLength.SIX,
@@ -149,7 +149,7 @@ fun CodeInput(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 repeat(codeLength.length) { index ->
-                    CodeInputItem(
+                    NurChiliCodeInputItem(
                         modifier = Modifier.width(itemWidth),
                         state = when {
                             isError && index == codeInputValue.lastIndex -> CodeInputItemState.ACTIVE_ERROR
@@ -184,7 +184,7 @@ fun CodeInput(
                 )
             }
             if (actionText != null && isError) {
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier.wrapContentSize(),
                     buttonPadding = PaddingValues(0.dp),
                     onClick = { onActionTextClick.invoke() },
@@ -210,7 +210,7 @@ enum class CodeLength(val length: Int) {
 fun CodeInputViewPreview() {
     ChiliTheme {
 
-        CodeInput(
+        NurChiliCodeInput(
             modifier = Modifier.padding(top = 32.dp),
             codeLength = CodeLength.SIX,
             actionText = "Action",

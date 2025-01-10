@@ -2,7 +2,7 @@ package com.design.composechili.components.bottomSheet.actionBottomSheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -18,7 +18,7 @@ fun ActionBottomSheetButton(
     chiliButtonStyle: ChiliButtonStyle,
     onClick: (() -> Unit)
 ) {
-    BaseButton(
+    NurChiliButton(
         onClick = { onClick.invoke() },
         title = title,
         buttonStyle = ChiliButtonStyle.Secondary,

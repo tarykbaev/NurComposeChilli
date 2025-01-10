@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -25,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.input.baseInput.BaseInput
+import com.design.composechili.components.input.baseInput.NurChiliBaseInputInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -102,7 +101,7 @@ fun SearchSelectorBottomSheetContent(
                         contentDescription = "Search"
                     )
                 }
-                BaseInput(
+                NurChiliBaseInputInput(
                     modifier = Modifier
                         .fillMaxWidth(),
                     textFieldValue = textValue,

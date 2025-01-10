@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
 import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
@@ -49,45 +49,45 @@ fun PickersScreen() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDatePickerDialog = true }, title = "Date picker"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDateRangePickerDialog = true }, title = "Date range picker"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDatePickerWithStartLimitDialog = true },
                 title = "Date picker with start limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDatePickerWithEndLimitDialog = true },
                 title = "Date picker with end limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDatePickerWithLimitsDialog = true },
                 title = "Date picker with start and end limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDateRangePickerWithStartLimitDialog = true },
                 title = "Range picker with start limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDateRangePickerWithEndLimitDialog = true },
                 title = "Range picker with end limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showDateRangePickerWithLimitsDialog = true },
                 title = "Range picker with start and end limit"
             )
             Spacer(modifier = Modifier.height(32.dp))
-            BaseButton(
+            NurChiliButton(
                 onClick = { showTimePickerDialog = true }, title = "Time picker"
             )
         }
