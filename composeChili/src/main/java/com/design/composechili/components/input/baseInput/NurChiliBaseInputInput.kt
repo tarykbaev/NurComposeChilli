@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,9 +36,37 @@ import com.design.composechili.R
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
+/**
+ * A custom Composable function representing a text input field with various configuration options.
+ *
+ * This Composable provides a wrapper around `TextField` with additional customizations, including hints,
+ * icons, error states, and keyboard actions.
+ *
+ * @param modifier [Modifier] to be applied to the input field's container. By default, it is set to [Modifier].
+ * @param textFieldValue The current text input value displayed in the field.
+ * @param onValueChange A lambda function to handle the change in text input. It takes the new value as a parameter.
+ * @param hint Optional hint text to be displayed when the input field is empty. Default is an empty string.
+ * @param isEnabled Boolean flag to enable/disable the input field. The default is `true`, meaning the field is enabled.
+ * @param isError Boolean flag indicating whether the input field is in an error state. The default is `false`.
+ * @param params A [BaseInputParams] object that holds additional configurations for the input. The default is [BaseInputParams.Default].
+ * @param keyboardActions A [KeyboardActions] object to define keyboard actions such as "Done" or "Next". Default is [KeyboardActions.Default].
+ * @param containerStartIcon Optional [Painter] representing an icon that will be shown at the start of the container (before the input field).
+ * @param fieldStartIcon Optional [Painter] representing an icon that will be shown at the start of the text field.
+ * @param fieldEndIcon Optional [Painter] representing an icon that will be shown at the end of the text field.
+ * @param endIconClicked Optional lambda function that will be invoked when the end icon is clicked. Default is `null`.
+ *
+ * @optIn [ExperimentalMaterial3Api] The composable uses experimental APIs from Material3, requiring opt-in.
+ *
+ * @note This composable is designed to be used with the latest Material 3 components and integrates custom error handling,
+ * icons, and keyboard support.
+ *
+ * @see [TextField] for the standard text field implementation.
+ * @see [BaseInputParams] for details on custom input configurations.
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseInput(
+fun NurChiliBaseInputInput(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     onValueChange: (String) -> Unit,
@@ -89,6 +116,7 @@ fun BaseInput(
             value = textFieldValue,
             onValueChange = onValueChange,
             enabled = isEnabled,
+            keyboardActions = keyboardActions,
             textStyle = mergedTextStyle,
             keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
             maxLines = params.maxLines,
@@ -146,7 +174,7 @@ fun BaseInput(
 fun BaseInput_Preview() {
     ChiliTheme {
         Column {
-            BaseInput(
+            NurChiliBaseInputInput(
                 textFieldValue = "",
                 onValueChange = {},
                 fieldEndIcon = painterResource(id = R.drawable.chili_ic_card_oil),

@@ -40,7 +40,7 @@ import com.design.composechili.components.bottomSheet.recycleBottomSheet.Recycle
 import com.design.composechili.components.bottomSheet.recycleBottomSheet.SampleRadioItem
 import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.SearchSelectorBottomSheetContent
 import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.SearchSelectorOptionItem
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.cell.radioButtonCell.RadioButtonCell
 import com.design.composechili.components.inAppPush.InfoInAppPush
@@ -137,7 +137,7 @@ fun BottomSheetScreen() {
                         .verticalScroll(scrollState),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    BaseButton(
+                    NurChiliButton(
                         modifier = Modifier
                             .wrapContentSize()
                             .fillMaxWidth()
@@ -149,7 +149,7 @@ fun BottomSheetScreen() {
                         title = "Action bottom sheet",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = INFO_BOTTOM_SHEET
                             coScope.launch { sheetState.expand() }
@@ -157,7 +157,7 @@ fun BottomSheetScreen() {
                         title = "Info bottom sheet",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = DETAILED_INFO_BOTTOM_SHEET
                             coScope.launch { sheetState.expand() }
@@ -165,7 +165,7 @@ fun BottomSheetScreen() {
                         title = "Detailed info bottom sheet",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = DETAILED_INFO_BOTTOM_SHEET_CUSTOM
                             coScope.launch { sheetState.expand() }
@@ -173,7 +173,7 @@ fun BottomSheetScreen() {
                         title = "Detailed info bottom sheet custom",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = DESCRIPTION_BOTTOM_SHEET
                             coScope.launch { sheetState.expand() }
@@ -181,7 +181,7 @@ fun BottomSheetScreen() {
                         title = "Description bottom sheet",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = BOTTOM_SHEET_WITH_RECYCLE
                             coScope.launch { sheetState.expand() }
@@ -189,21 +189,21 @@ fun BottomSheetScreen() {
                         title = "Bottom sheet with recycle",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             isInAppPushVisible = isInAppPushVisible.not()
                         },
                         title = "In App push",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             isInAppPushWithBannerVisible = isInAppPushWithBannerVisible.not()
                         },
                         title = "In App push with banner",
                         buttonStyle = ChiliButtonStyle.Primary
                     )
-                    BaseButton(
+                    NurChiliButton(
                         onClick = {
                             bottomSheetScreen = SEARCH_SELECT_BOTTOM_SHEET
                             coScope.launch { sheetState.expand() }

@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.textStyle.ChiliTextStyle
@@ -127,7 +127,7 @@ fun AdditionalDoubleButtons(
                 .background(Color.Transparent),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            BaseButton(
+            NurChiliButton(
                 modifier = Modifier.weight(1f),
                 onClick = { onNegativeButtonClick() },
                 title = negativeTitle,
@@ -146,7 +146,7 @@ fun AdditionalDoubleButtons(
                 color = ChiliTheme.Colors.ChiliDividerColor,
                 thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
             )
-            BaseButton(
+            NurChiliButton(
                 modifier = Modifier.weight(1f),
                 onClick = { onPositiveButtonClick() },
                 title = positiveTitle,

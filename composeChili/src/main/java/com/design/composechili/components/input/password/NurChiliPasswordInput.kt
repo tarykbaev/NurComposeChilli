@@ -35,10 +35,10 @@ import com.design.composechili.theme.ChiliTheme
  *
  * @param [modifier] [Modifier] to be applied to the entire PasswordInput composable.
  * This can be used to set padding, width, etc.
- * @param [value] The current text value of the [PasswordInput]. This should be a [String]
+ * @param [value] The current text value of the [NurChiliPasswordInput]. This should be a [String]
  * @param [hint] A hint or placeholder text to display when the text field is empty. Default is empty [String]
  * Typically used for error or helper messages.
- * @param [isEnabled] A flag to enable or disable the [PasswordInput] field.
+ * @param [isEnabled] A flag to enable or disable the [NurChiliPasswordInput] field.
  * @param [isError] Indicates whether the input field should be displayed in an error state.
  * Default value is false
  * @param [transformationMask] A character used to mask the password input (e.g., • or *).
@@ -48,13 +48,13 @@ import com.design.composechili.theme.ChiliTheme
  * @param [passwordVisibleEndIcon] A drawable resource representing the icon to show when the password is visible.
  * @param [passwordInvisibleEndIcon] A drawable resource representing the icon to show when the password is hidden.
  * @param [startIcon] An optional drawable resource representing the icon to display at the start of the input field.
- * @param [params] A set of customizable parameters (e.g., text style, colors, padding) for the [PasswordInput]
+ * @param [params] A set of customizable parameters (e.g., text style, colors, padding) for the [NurChiliPasswordInput]
  * Default is [PasswordInputParams.Default]
  *
  */
 
 @Composable
-fun PasswordInput(
+fun NurChiliPasswordInput(
     modifier: Modifier = Modifier,
     value: String,
     hint: String = String(),
@@ -132,7 +132,7 @@ fun PasswordInput(
 @Preview
 fun PasswordInputPreview() {
     ChiliTheme {
-        PasswordInput(value = "Password")
+        NurChiliPasswordInput(value = "Password")
     }
 }
 
@@ -140,6 +140,6 @@ fun PasswordInputPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun PasswordInputPreviewDark() {
     ChiliTheme {
-        PasswordInput(value = "Password")
+        NurChiliPasswordInput(value = "Password")
     }
 }

@@ -71,7 +71,7 @@ import com.design.composechili.theme.ChiliTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MaskedTextField(
+fun NurChiliMaskedTextField(
     modifier: Modifier = Modifier,
     maskInputParams: MaskedTextFieldParams = MaskedTextFieldParams.Default,
     initialText: String,
@@ -263,6 +263,6 @@ fun mergeStrings(
 @Composable
 fun MaskedTextFieldPreview() {
     ChiliTheme {
-        MaskedTextField(initialText = "+997 XXX XXX XXX", onValueChange = {})
+        NurChiliMaskedTextField(initialText = "+997 XXX XXX XXX", onValueChange = {})
     }
 }

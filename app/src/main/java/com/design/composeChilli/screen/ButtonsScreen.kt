@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.buttons.loaderButton.LoaderButton
 import com.design.composechili.components.buttons.quickActionButton.QuickActionButton
@@ -38,13 +38,13 @@ fun ButtonsScreen() {
             .verticalScroll(scrollState)
     ) {
         LoaderButton(isLoading = isButtonLoading) {
-            BaseButton(
+            NurChiliButton(
                 onClick = { isButtonLoading = isButtonLoading.not() },
                 title = "Loader Button",
                 buttonStyle = ChiliButtonStyle.Primary
             )
         }
-        BaseButton(
+        NurChiliButton(
             modifier = Modifier
                 .align(Alignment.End)
                 .wrapContentSize(),
@@ -53,42 +53,42 @@ fun ButtonsScreen() {
             buttonStyle = ChiliButtonStyle.ComponentButton
         )
         Spacer(modifier = Modifier.size(16.dp))
-        BaseButton(onClick = { }, title = "Primary button", buttonStyle = ChiliButtonStyle.Primary)
+        NurChiliButton(onClick = { }, title = "Primary button", buttonStyle = ChiliButtonStyle.Primary)
         Spacer(modifier = Modifier.size(16.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = { },
             title = "Secondary button disabled",
             buttonStyle = ChiliButtonStyle.Primary,
             isEnabled = false
         )
         Spacer(modifier = Modifier.size(32.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = { },
             title = "Secondary button",
             buttonStyle = ChiliButtonStyle.Secondary
         )
         Spacer(modifier = Modifier.size(16.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = { },
             title = "Secondary button disabled",
             buttonStyle = ChiliButtonStyle.Secondary,
             isEnabled = false
         )
         Spacer(modifier = Modifier.size(32.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = { },
             title = "Additional Button",
             buttonStyle = ChiliButtonStyle.Additional
         )
         Spacer(modifier = Modifier.size(16.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = { },
             title = "Additional Button disabled",
             buttonStyle = ChiliButtonStyle.Additional,
             isEnabled = false,
         )
         Spacer(modifier = Modifier.size(12.dp))
-        BaseButton(
+        NurChiliButton(
             modifier = Modifier
                 .align(Alignment.Start)
                 .wrapContentSize(),
@@ -97,7 +97,7 @@ fun ButtonsScreen() {
             title = "Component button",
             buttonStyle = ChiliButtonStyle.ComponentButton
         )
-        BaseButton(
+        NurChiliButton(
             modifier = Modifier
                 .wrapContentSize()
                 .align(Alignment.Start),
@@ -108,7 +108,7 @@ fun ButtonsScreen() {
             buttonStyle = ChiliButtonStyle.ComponentButton
         )
         Spacer(modifier = Modifier.size(12.dp))
-        BaseButton(
+        NurChiliButton(
             onClick = {},
             endIcon = painterResource(id = com.design.composechili.R.drawable.ic_market),
             title = "Iconed button",

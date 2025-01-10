@@ -23,14 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.input.baseInput.BaseInput
+import com.design.composechili.components.input.baseInput.NurChiliBaseInputInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
-import com.design.composechili.components.input.code.CodeInput
+import com.design.composechili.components.input.code.NurChiliCodeInput
 import com.design.composechili.components.input.code.CodeLength
-import com.design.composechili.components.input.inputFieldWithDescAndAction.InputFieldWithDescAndAction
-import com.design.composechili.components.input.maskedTextField.MaskedTextField
+import com.design.composechili.components.input.inputFieldWithDescAndAction.NurChiliInputFieldWithDescAndAction
+import com.design.composechili.components.input.maskedTextField.NurChiliMaskedTextField
 import com.design.composechili.components.input.maskedTextField.MaskedTextFieldParams
-import com.design.composechili.components.input.password.PasswordInput
+import com.design.composechili.components.input.password.NurChiliPasswordInput
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
@@ -59,7 +59,7 @@ fun InputFieldsScreen() {
             .verticalScroll(state = rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        BaseInput(
+        NurChiliBaseInputInput(
             textFieldValue = baseInputText,
             onValueChange = { baseInputText = it },
             params = BaseInputParams.Default.copy(
@@ -67,21 +67,21 @@ fun InputFieldsScreen() {
             ),
             containerStartIcon = painterResource(id = R.drawable.ic_cat),
         )
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Simple",
             actionTitle = "Сканер",
         ) {
-            MaskedTextField(
+            NurChiliMaskedTextField(
                 initialText = "+996 XXX XXX XXX",
                 onValueChange = {},
                 rootContainerPadding = PaddingValues(0.dp),
                 maskInputParams = MaskedTextFieldParams.Default.copy(allowedInputSymbols = "1234567890")
             )
         }
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Simple",
         ) {
-            BaseInput(
+            NurChiliBaseInputInput(
                 textFieldValue = descriptionText,
                 onValueChange = { descriptionText = it },
                 hint = "Hint",
@@ -91,10 +91,10 @@ fun InputFieldsScreen() {
             )
         }
 
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Simple with start icon"
         ) {
-            BaseInput(
+            NurChiliBaseInputInput(
                 textFieldValue = baseInputWithIconsText,
                 onValueChange = { baseInputWithIconsText = it },
                 hint = "Search Service",
@@ -106,10 +106,10 @@ fun InputFieldsScreen() {
             )
         }
 
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Simple with clear"
         ) {
-            BaseInput(textFieldValue = simpleWithClearText,
+            NurChiliBaseInputInput(textFieldValue = simpleWithClearText,
                 onValueChange = { simpleWithClearText = it },
                 hint = "Hint",
                 params = BaseInputParams.Default.copy(
@@ -126,13 +126,13 @@ fun InputFieldsScreen() {
         }
 
 
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Simple with start icon", descriptionTextStyle = ChiliTextStyle.get(
                 ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                 if (isFieldError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
             )
         ) {
-            BaseInput(
+            NurChiliBaseInputInput(
                 textFieldValue = passwordText,
                 hint = "Password",
                 isError = isFieldError,
@@ -146,7 +146,7 @@ fun InputFieldsScreen() {
                 )
             )
         }
-        PasswordInput(
+        NurChiliPasswordInput(
             modifier = Modifier.fillMaxWidth(),
             value = passwordInputText,
             hint = "Password",
@@ -157,24 +157,24 @@ fun InputFieldsScreen() {
             onValueChange = { passwordInputText = it },
         )
 
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "mask"
         ) {
-            MaskedTextField(
+            NurChiliMaskedTextField(
                 initialText = "123123123123XXXXXXXXX",
                 onValueChange = { },
                 rootContainerPadding = PaddingValues(0.dp)
             )
         }
 
-        BaseInput(hint = "Введите комментарий",
+        NurChiliBaseInputInput(hint = "Введите комментарий",
             params = BaseInputParams.Default.copy(maxLines = 4),
             textFieldValue = commentText,
             onValueChange = {
                 commentText = it
             })
 
-        CodeInput(errorMessage = "Неверный пароль",
+        NurChiliCodeInput(errorMessage = "Неверный пароль",
             actionText = "Сбросить пароль",
             isError = isCodeInputError,
             onCodeComplete = {
@@ -184,7 +184,7 @@ fun InputFieldsScreen() {
                 isCodeInputError = false
             })
 
-        CodeInput(codeLength = CodeLength.FOUR, isError = false, onCodeComplete = {
+        NurChiliCodeInput(codeLength = CodeLength.FOUR, isError = false, onCodeComplete = {
 
         })
 

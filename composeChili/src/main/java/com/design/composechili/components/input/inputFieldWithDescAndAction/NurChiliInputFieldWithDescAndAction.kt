@@ -22,11 +22,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
-import com.design.composechili.components.input.baseInput.BaseInput
+import com.design.composechili.components.input.baseInput.NurChiliBaseInputInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
-import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 
@@ -58,7 +57,7 @@ import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
  * The input field is fully customizable and must be provided by the caller.
  */
 @Composable
-fun InputFieldWithDescAndAction(
+fun NurChiliInputFieldWithDescAndAction(
     modifier: Modifier = Modifier,
     descriptionModifier: Modifier = Modifier,
     description: String = String(),
@@ -91,7 +90,7 @@ fun InputFieldWithDescAndAction(
                 )
             }
             if (actionTitle.isNotBlank()) {
-                BaseButton(
+                NurChiliButton(
                     modifier = Modifier.wrapContentSize(),
                     buttonPadding = PaddingValues(0.dp),
                     onClick = { onActionClick?.invoke() },
@@ -113,11 +112,11 @@ fun InputFieldWithDescAndActionPreview() {
     ChiliTheme {
         var inputFieldText by rememberSaveable { mutableStateOf("TestTextFieldValue") }
 
-        InputFieldWithDescAndAction(
+        NurChiliInputFieldWithDescAndAction(
             description = "Description",
             actionTitle = "Action",
         ) {
-            BaseInput(
+            NurChiliBaseInputInput(
                 textFieldValue = inputFieldText, onValueChange = {
                     inputFieldText = it
                 }, params = BaseInputParams.Default.copy(textFieldPadding = PaddingValues(0.dp))

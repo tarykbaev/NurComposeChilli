@@ -2,9 +2,7 @@ package com.design.composeChilli
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -12,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.navigation.currentComposeNavigator
-import com.design.composechili.components.buttons.baseButton.BaseButton
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 
 @Composable
 fun HomeScreen() {
@@ -33,7 +31,8 @@ fun HomeScreen() {
         Pair("Pickers", ChiliScreens.Pickers),
         Pair("Highlighter container", ChiliScreens.HighlighterContainer),
         Pair("Grouping container", ChiliScreens.GroupingContainer),
-        Pair("Tooltip", ChiliScreens.Tooltip)
+        Pair("Tooltip", ChiliScreens.Tooltip),
+        Pair("Dialog", ChiliScreens.Dialog)
     )
 
     LazyColumn(verticalArrangement = Arrangement.spacedBy(24.dp)) {
@@ -45,7 +44,7 @@ fun HomeScreen() {
             )
         }
         items(homeScreenItems){
-            BaseButton(
+            NurChiliButton(
                 onClick = {
                     composeNavigator.navigate(it.second)
                 }, title = it.first
