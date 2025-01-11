@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.input.baseInput.NurChiliBaseInputInput
+import com.design.composechili.components.input.baseInput.NurChiliBaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
@@ -101,7 +101,7 @@ fun SearchSelectorBottomSheetContent(
                         contentDescription = "Search"
                     )
                 }
-                NurChiliBaseInputInput(
+                NurChiliBaseInput(
                     modifier = Modifier
                         .fillMaxWidth(),
                     textFieldValue = textValue,

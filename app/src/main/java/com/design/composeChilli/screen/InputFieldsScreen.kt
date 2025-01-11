@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.input.baseInput.NurChiliBaseInputInput
+import com.design.composechili.components.input.baseInput.NurChiliBaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.components.input.code.NurChiliCodeInput
 import com.design.composechili.components.input.code.CodeLength
@@ -59,7 +59,7 @@ fun InputFieldsScreen() {
             .verticalScroll(state = rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        NurChiliBaseInputInput(
+        NurChiliBaseInput(
             textFieldValue = baseInputText,
             onValueChange = { baseInputText = it },
             params = BaseInputParams.Default.copy(
@@ -81,7 +81,7 @@ fun InputFieldsScreen() {
         NurChiliInputFieldWithDescAndAction(
             description = "Simple",
         ) {
-            NurChiliBaseInputInput(
+            NurChiliBaseInput(
                 textFieldValue = descriptionText,
                 onValueChange = { descriptionText = it },
                 hint = "Hint",
@@ -94,7 +94,7 @@ fun InputFieldsScreen() {
         NurChiliInputFieldWithDescAndAction(
             description = "Simple with start icon"
         ) {
-            NurChiliBaseInputInput(
+            NurChiliBaseInput(
                 textFieldValue = baseInputWithIconsText,
                 onValueChange = { baseInputWithIconsText = it },
                 hint = "Search Service",
@@ -109,7 +109,7 @@ fun InputFieldsScreen() {
         NurChiliInputFieldWithDescAndAction(
             description = "Simple with clear"
         ) {
-            NurChiliBaseInputInput(textFieldValue = simpleWithClearText,
+            NurChiliBaseInput(textFieldValue = simpleWithClearText,
                 onValueChange = { simpleWithClearText = it },
                 hint = "Hint",
                 params = BaseInputParams.Default.copy(
@@ -132,7 +132,7 @@ fun InputFieldsScreen() {
                 if (isFieldError) colorResource(id = R.color.red_1) else colorResource(id = R.color.black_5)
             )
         ) {
-            NurChiliBaseInputInput(
+            NurChiliBaseInput(
                 textFieldValue = passwordText,
                 hint = "Password",
                 isError = isFieldError,
@@ -167,7 +167,7 @@ fun InputFieldsScreen() {
             )
         }
 
-        NurChiliBaseInputInput(hint = "Введите комментарий",
+        NurChiliBaseInput(hint = "Введите комментарий",
             params = BaseInputParams.Default.copy(maxLines = 4),
             textFieldValue = commentText,
             onValueChange = {

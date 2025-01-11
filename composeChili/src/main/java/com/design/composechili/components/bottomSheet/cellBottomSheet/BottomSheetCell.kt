@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.design.composechili.components.cell.baseCell.BaseCell
+import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -26,7 +26,7 @@ fun BottomSheetCell(
     icon: Any? = null,
     onClick: (() -> Unit)? = null
 ) {
-    BaseCell(
+    NurChiliBaseCell(
         modifier = Modifier.clickable { onClick?.invoke() },
         title = title,
         isChevronVisible = true,

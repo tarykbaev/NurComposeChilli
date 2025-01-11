@@ -48,7 +48,7 @@ import com.design.composechili.theme.ChiliTheme
  */
 
 @Composable
-fun BaseCell(
+fun NurChiliBaseCell(
     modifier: Modifier = Modifier,
     title: String = String(),
     subtitle: String = String(),
@@ -172,9 +172,9 @@ fun BaseCell(
 
 @Preview
 @Composable
-fun BaseCellPreview() {
+fun NurChiliBaseCellPreview() {
     ChiliTheme {
-        BaseCell(
+        NurChiliBaseCell(
             title = "Test",
             subtitle = "Test",
             isChevronVisible = true,

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composeChilli.utils.dragContainer
 import com.design.composeChilli.utils.draggableItems
 import com.design.composeChilli.utils.rememberDragDropState
-import com.design.composechili.components.cell.baseCell.BaseCell
+import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.ChiliShadowParams
@@ -58,7 +58,7 @@ fun GroupingContainerScreen() {
                 val isSingleItem = list1[subListIndex].size == 1
                 val isFirstItem = index == 0
                 val isLastItem = index == list1[subListIndex].lastIndex
-                BaseCell(
+                NurChiliBaseCell(
                     modifier = modifier,
                     title = value,
                     isChevronVisible = true,

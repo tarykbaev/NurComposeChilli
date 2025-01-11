@@ -66,7 +66,7 @@ import com.design.composechili.theme.ChiliTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NurChiliBaseInputInput(
+fun NurChiliBaseInput(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     onValueChange: (String) -> Unit,
@@ -174,7 +174,7 @@ fun NurChiliBaseInputInput(
 fun BaseInput_Preview() {
     ChiliTheme {
         Column {
-            NurChiliBaseInputInput(
+            NurChiliBaseInput(
                 textFieldValue = "",
                 onValueChange = {},
                 fieldEndIcon = painterResource(id = R.drawable.chili_ic_card_oil),

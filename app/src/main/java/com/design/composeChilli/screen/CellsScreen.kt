@@ -20,7 +20,7 @@ import com.design.composechili.R
 import com.design.composechili.components.cell.AdditionalDoubleButtons
 import com.design.composechili.components.cell.additionalText.AdditionalTextCell
 import com.design.composechili.components.cell.additionalText.AdditionalTextCellParams
-import com.design.composechili.components.cell.baseCell.BaseCell
+import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.components.cell.expandableCell.ExpandableCell
 import com.design.composechili.components.cell.model.CellCornerMode
@@ -78,7 +78,7 @@ fun RegularCellsGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
@@ -86,7 +86,7 @@ fun RegularCellsGroup() {
                 cellCornerMode = CellCornerMode.Top
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
@@ -100,7 +100,7 @@ fun RegularCellsGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
@@ -108,7 +108,7 @@ fun RegularCellsGroup() {
                 cellCornerMode = CellCornerMode.Top
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
@@ -116,7 +116,7 @@ fun RegularCellsGroup() {
                 cellCornerMode = CellCornerMode.Middle
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
@@ -130,7 +130,7 @@ fun RegularCellsGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -145,7 +145,7 @@ fun RegularCellsGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -154,7 +154,7 @@ fun RegularCellsGroup() {
                 cellCornerMode = CellCornerMode.Top
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -163,7 +163,7 @@ fun RegularCellsGroup() {
                 cellCornerMode = CellCornerMode.Middle
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -192,7 +192,7 @@ fun SmallIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -207,7 +207,7 @@ fun SmallIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -215,7 +215,7 @@ fun SmallIconSizeGroup() {
                 cellCornerMode = CellCornerMode.Top
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -223,7 +223,7 @@ fun SmallIconSizeGroup() {
                 cellCornerMode = CellCornerMode.Middle
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -237,7 +237,7 @@ fun SmallIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -253,7 +253,7 @@ fun SmallIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -262,7 +262,7 @@ fun SmallIconSizeGroup() {
                 cellCornerMode = CellCornerMode.Top
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -271,7 +271,7 @@ fun SmallIconSizeGroup() {
                 cellCornerMode = CellCornerMode.Middle
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -301,7 +301,7 @@ fun MediumIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -317,7 +317,7 @@ fun MediumIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -326,7 +326,7 @@ fun MediumIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -335,7 +335,7 @@ fun MediumIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -351,7 +351,7 @@ fun MediumIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -369,7 +369,7 @@ fun MediumIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -379,7 +379,7 @@ fun MediumIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -389,7 +389,7 @@ fun MediumIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -420,7 +420,7 @@ fun LargeIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -437,7 +437,7 @@ fun LargeIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -446,7 +446,7 @@ fun LargeIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -455,7 +455,7 @@ fun LargeIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
@@ -471,7 +471,7 @@ fun LargeIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 modifier = Modifier,
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
@@ -489,7 +489,7 @@ fun LargeIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -499,7 +499,7 @@ fun LargeIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -509,7 +509,7 @@ fun LargeIconSizeGroup() {
                 params = BaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -541,7 +541,7 @@ fun CustomIconSizeGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_cat),
@@ -552,7 +552,7 @@ fun CustomIconSizeGroup() {
 
             Spacer(modifier = Modifier.size(8.dp))
 
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
@@ -583,7 +583,7 @@ fun MaxCharGroup() {
                 .wrapContentSize()
                 .softLayerShadow()
         ) {
-            BaseCell(
+            NurChiliBaseCell(
                 title = "Заголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
                 subtitle = "Подзаголовок максимальное кол-во строк 2, строк строк строк строк строк строк строк строк строк строк строк строк строк строк строк",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
