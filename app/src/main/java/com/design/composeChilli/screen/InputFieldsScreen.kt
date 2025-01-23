@@ -1,5 +1,6 @@
 package com.design.composeChilli.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +18,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.input.autoComplete.NurChiliAutoCompleteInput
 import com.design.composechili.components.input.baseInput.NurChiliBaseInput
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.components.input.code.NurChiliCodeInput
@@ -50,6 +54,20 @@ fun InputFieldsScreen() {
     }
     var passwordInputText by remember { mutableStateOf("") }
     var isPasswordInputError by remember { mutableStateOf(false) }
+
+    val autoCompleteList = listOf(
+        AutoCompleteItem(1, "test"),
+        AutoCompleteItem(2, "yesteday"),
+        AutoCompleteItem(2, "test2")
+    )
+
+    var autoCompleteInputText by remember { mutableStateOf(String()) }
+    var autoCompleteItemListState: List<AutoCompleteItem> by remember {
+        mutableStateOf(listOf())
+    }
+
+
+    var context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -167,6 +185,34 @@ fun InputFieldsScreen() {
             )
         }
 
+        NurChiliAutoCompleteInput<AutoCompleteItem>(
+            modifier = Modifier.fillMaxWidth(),
+            autoCompleteItems = autoCompleteItemListState,
+            onDisplayData = { it.name },
+            onItemClick = { Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show() },
+            inputComponent = {
+                NurChiliBaseInput(
+                    textFieldValue = autoCompleteInputText,
+                    onValueChange = {
+                        autoCompleteInputText = it
+                        autoCompleteItemListState =
+                            if (it.isBlank()) listOf() else autoCompleteList.filter {
+                                it.name.contains(
+                                    autoCompleteInputText.lowercase()
+                                )
+                            }
+                    },
+                    hint = "Auto Complete Input",
+                    params = BaseInputParams.Default.copy(
+                        textStyle = ChiliTextStyleBuilder.H6.Primary.Regular
+                    ),
+                    fieldStartIcon = painterResource(id = R.drawable.chili_ic_search)
+                )
+            }
+        )
+
+
+
         NurChiliBaseInput(hint = "Введите комментарий",
             params = BaseInputParams.Default.copy(maxLines = 4),
             textFieldValue = commentText,
@@ -191,6 +237,8 @@ fun InputFieldsScreen() {
         Spacer(modifier = Modifier.size(54.dp))
     }
 }
+
+data class AutoCompleteItem(val id: Int, val name: String)
 
 
 @Composable

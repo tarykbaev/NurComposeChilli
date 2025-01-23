@@ -2,16 +2,17 @@ package com.design.composechili.components.input.autoComplete
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.design.composechili.components.input.inputFieldWithDescAndAction.NurChiliAutoCompleteInputParams
-import com.design.composechili.components.input.inputFieldWithDescAndAction.NurChiliAutoCompleteItem
-import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H6
 
 /**
  * A composable function for displaying an input field with autocomplete functionality.
@@ -42,8 +43,8 @@ import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H
  */
 
 @Composable
-fun <T : NurChiliAutoCompleteItem> NurChiliAutoCompleteInput(
-    modifier: Modifier,
+fun <T> NurChiliAutoCompleteInput(
+    modifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
     autoCompleteItems: List<T>,
     onDropDownMenuDismiss: () -> Unit = {},
     popupProperties: PopupProperties = PopupProperties(
@@ -52,6 +53,7 @@ fun <T : NurChiliAutoCompleteItem> NurChiliAutoCompleteInput(
         dismissOnClickOutside = true
     ),
     params: NurChiliAutoCompleteInputParams = NurChiliAutoCompleteInputParams.Default,
+    onDisplayData: (T) -> String,
     onItemClick: (T) -> Unit = { },
     inputComponent: @Composable () -> Unit
 ) {
@@ -62,12 +64,12 @@ fun <T : NurChiliAutoCompleteItem> NurChiliAutoCompleteInput(
                 .clip(params.dropDownShape)
                 .background(params.dropDownBackgroundColor),
             properties = popupProperties,
-            expanded = autoCompleteItems.isNotEmpty(),
+            expanded = autoCompleteItems.isNotEmpty() ,
             onDismissRequest = onDropDownMenuDismiss,
         ) {
             autoCompleteItems.forEach { item ->
                 DropdownMenuItem(onClick = { onItemClick(item) }) {
-                    Text(item.getDisplayValue(), style = H6.Primary.Regular, maxLines = 1)
+                    Text(onDisplayData(item), style = params.dropDownItemTextStyle, maxLines = 1)
                 }
             }
         }
