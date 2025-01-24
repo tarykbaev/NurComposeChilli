@@ -49,11 +49,9 @@ fun DialogScreen() {
         )
     }
 
-    if (isLoaderVisible) {
-        NurChiliLoader {
-            isLoaderVisible = isLoaderVisible.not()
-        }
+    NurChiliLoader(isLoaderVisible)
 
+    if (isLoaderVisible){
         LaunchedEffect(true) {
             delay(3_000)
             isLoaderVisible = isLoaderVisible.not()
