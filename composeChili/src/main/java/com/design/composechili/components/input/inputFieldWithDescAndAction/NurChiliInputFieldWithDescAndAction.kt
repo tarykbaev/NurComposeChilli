@@ -61,7 +61,7 @@ fun NurChiliInputFieldWithDescAndAction(
     modifier: Modifier = Modifier,
     descriptionModifier: Modifier = Modifier,
     description: String = String(),
-    descriptionTextStyle: TextStyle = ChiliTextStyleBuilder.H8.Primary.Default,
+    descriptionTextStyle: TextStyle = ChiliTextStyleBuilder.H8.Value.Regular,
     actionTitle: String = String(),
     onActionClick: (() -> Unit)? = null,
     inputField: @Composable (Modifier) -> Unit,
