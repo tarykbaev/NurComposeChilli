@@ -28,49 +28,51 @@ import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H
 
 @Composable
 fun NurChiliLoader(
-    onDismissRequest: () -> Unit
+    isVisible: Boolean,
+    onDismissRequest: () -> Unit = { }
 ) {
-
-    Dialog(
-        onDismissRequest,
-        DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false,
-            usePlatformDefaultWidth = false
-        )
-    ) {
-        Card(
-            modifier = Modifier
-                .wrapContentSize(),
-            colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
-            shape = RoundedCornerShape(16.dp)
+    if (isVisible) {
+        Dialog(
+            onDismissRequest,
+            DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                usePlatformDefaultWidth = false
+            )
         ) {
-            Column(
+            Card(
                 modifier = Modifier
-                    .padding(vertical = 16.dp, horizontal = 48.dp)
-                    .defaultMinSize(minHeight = 100.dp, minWidth = 150.dp)
-                    .wrapContentSize()
-                    .background(ChiliTheme.Background.color),
-                verticalArrangement = Arrangement.Center
+                    .wrapContentSize(),
+                colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                AnimatedVisibility(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    visible = true,
-                    enter = fadeIn()
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 16.dp, horizontal = 48.dp)
+                        .defaultMinSize(minHeight = 100.dp, minWidth = 150.dp)
+                        .wrapContentSize()
+                        .background(ChiliTheme.Background.color),
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    CircularProgressIndicator(
-                        color = ChiliTheme.Colors.ChiliLoaderColor,
-                        strokeWidth = 4.dp
+                    AnimatedVisibility(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        visible = true,
+                        enter = fadeIn()
+                    ) {
+                        CircularProgressIndicator(
+                            color = ChiliTheme.Colors.ChiliLoaderColor,
+                            strokeWidth = 4.dp
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally),
+                        text = "Loading...",
+                        textAlign = TextAlign.Center,
+                        style = H6.Primary.Medium
                     )
                 }
-                Spacer(modifier = Modifier.size(16.dp))
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally),
-                    text = "Loading...",
-                    textAlign = TextAlign.Center,
-                    style = H6.Primary.Medium
-                )
             }
         }
     }
@@ -80,8 +82,6 @@ fun NurChiliLoader(
 @Composable
 fun NurChiliLoader_Preview() {
     ChiliTheme {
-        NurChiliLoader {
-
-        }
+        NurChiliLoader(isVisible = true)
     }
 }

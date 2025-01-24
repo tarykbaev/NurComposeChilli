@@ -1,5 +1,6 @@
 package com.design.composechili.components.input.autoComplete
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -62,7 +63,8 @@ fun <T> NurChiliAutoCompleteInput(
         DropdownMenu(
             modifier = Modifier
                 .clip(params.dropDownShape)
-                .background(params.dropDownBackgroundColor),
+                .background(params.dropDownBackgroundColor)
+                .animateContentSize(),
             properties = popupProperties,
             expanded = autoCompleteItems.isNotEmpty() ,
             onDismissRequest = onDropDownMenuDismiss,
