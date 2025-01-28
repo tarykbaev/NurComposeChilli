@@ -26,7 +26,7 @@ data class ChiliBaseTopAppBarParams(
             @Composable
             get() = ChiliBaseTopAppBarParams(
                 titleTextStyle = ChiliTextStyle.get(
-                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                    ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
                     ChiliTheme.Colors.ChiliPrimaryTextColor,
                     ChiliTheme.Attribute.ChiliBoldTextFont
                 ),

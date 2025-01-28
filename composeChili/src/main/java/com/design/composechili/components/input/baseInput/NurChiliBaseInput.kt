@@ -1,5 +1,6 @@
 package com.design.composechili.components.input.baseInput
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -35,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H8
 
 /**
  * A custom Composable function representing a text input field with various configuration options.
@@ -73,8 +76,9 @@ fun NurChiliBaseInput(
     hint: String = String(),
     isEnabled: Boolean = true,
     isError: Boolean = false,
+    errorMessage: String = String(),
     params: BaseInputParams = BaseInputParams.Default,
-    keyboardActions:KeyboardActions = KeyboardActions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     containerStartIcon: Painter? = null,
     fieldStartIcon: Painter? = null,
     fieldEndIcon: Painter? = null,
@@ -94,76 +98,87 @@ fun NurChiliBaseInput(
     }
     val mergedTextStyle = params.textStyle.merge(TextStyle(color = textColor))
 
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (containerStartIcon != null) {
-            Image(
-                painter = containerStartIcon,
-                contentDescription = "Input field start description icon",
-                modifier = Modifier.size(48.dp)
-            )
-        }
-        BasicTextField(
-            modifier = Modifier
-                .weight(1f)
-                .defaultMinSize(
-                    minWidth = TextFieldDefaults.MinWidth, minHeight = TextFieldDefaults.MinHeight
+    Column(modifier.animateContentSize()) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (containerStartIcon != null) {
+                Image(
+                    painter = containerStartIcon,
+                    contentDescription = "Input field start description icon",
+                    modifier = Modifier.size(48.dp)
                 )
-                .animateContentSize(),
-            value = textFieldValue,
-            onValueChange = onValueChange,
-            enabled = isEnabled,
-            keyboardActions = keyboardActions,
-            textStyle = mergedTextStyle,
-            keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
-            maxLines = params.maxLines,
-            cursorBrush = SolidColor(params.cursorColor)
-        ) { innerTextField ->
-            TextFieldDefaults.DecorationBox(
-                value = textFieldValue,
-                visualTransformation = VisualTransformation.None,
-                innerTextField = innerTextField,
-                placeholder = {
-                    Text(
-                        text = hint,
-                        style = params.textStyle,
-                        color = params.hintColor,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateContentSize()
+            }
+            BasicTextField(
+                modifier = Modifier
+                    .weight(1f)
+                    .defaultMinSize(
+                        minWidth = TextFieldDefaults.MinWidth,
+                        minHeight = TextFieldDefaults.MinHeight
                     )
-                },
-                shape = CircleShape.copy(CornerSize(12.dp)),
-                singleLine = true,
+                    .animateContentSize(),
+                value = textFieldValue,
+                onValueChange = onValueChange,
                 enabled = isEnabled,
-                isError = isError,
-                interactionSource = interactionSource,
-                colors = params.getTextFieldColorParameter(),
-                trailingIcon = if (fieldEndIcon != null) {
-                    {
-                        IconButton(modifier = Modifier.size(params.fieldIconSize), onClick = {
-                            endIconClicked?.invoke()
-                        }) {
+                keyboardActions = keyboardActions,
+                textStyle = mergedTextStyle,
+                keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
+                maxLines = params.maxLines,
+                cursorBrush = SolidColor(params.cursorColor)
+            ) { innerTextField ->
+                TextFieldDefaults.DecorationBox(
+                    value = textFieldValue,
+                    visualTransformation = VisualTransformation.None,
+                    innerTextField = innerTextField,
+                    placeholder = {
+                        Text(
+                            text = hint,
+                            style = params.textStyle,
+                            color = params.hintColor,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateContentSize()
+                        )
+                    },
+                    shape = CircleShape.copy(CornerSize(12.dp)),
+                    singleLine = true,
+                    enabled = isEnabled,
+                    isError = isError,
+                    interactionSource = interactionSource,
+                    colors = params.getTextFieldColorParameter(),
+                    trailingIcon = if (fieldEndIcon != null) {
+                        {
+                            IconButton(modifier = Modifier.size(params.fieldIconSize), onClick = {
+                                endIconClicked?.invoke()
+                            }) {
+                                Image(
+                                    painter = fieldEndIcon,
+                                    contentDescription = "Input field end description icon"
+                                )
+                            }
+                        }
+                    } else null,
+                    leadingIcon = if (fieldStartIcon != null) {
+                        {
                             Image(
-                                painter = fieldEndIcon,
-                                contentDescription = "Input field end description icon"
+                                painter = fieldStartIcon,
+                                contentDescription = "Input field end description icon",
+                                modifier = Modifier.size(params.fieldIconSize)
                             )
                         }
-                    }
-                } else null,
-                leadingIcon = if (fieldStartIcon != null) {
-                    {
-                        Image(
-                            painter = fieldStartIcon,
-                            contentDescription = "Input field end description icon",
-                            modifier = Modifier.size(params.fieldIconSize)
-                        )
-                    }
-                } else null,
-                contentPadding = params.textFieldPadding,
+                    } else null,
+                    contentPadding = params.textFieldPadding,
+                )
+            }
+        }
+
+        if (errorMessage.isNotBlank()) {
+            Text(
+                modifier = Modifier.padding(horizontal = 6.dp),
+                text = errorMessage,
+                style = H8.Error.Regular
             )
         }
     }
@@ -179,6 +194,7 @@ fun BaseInput_Preview() {
                 onValueChange = {},
                 fieldEndIcon = painterResource(id = R.drawable.chili_ic_card_oil),
                 hint = "HINT",
+                errorMessage = "test",
                 params = BaseInputParams.Default.copy(
                     textStyle = ChiliTextStyle.get(
                         ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,

@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -66,8 +65,17 @@ fun InputFieldsScreen() {
         mutableStateOf(listOf())
     }
 
+    var errorMessage by remember { mutableStateOf(String()) }
 
     var context = LocalContext.current
+
+    fun onErrorMessageClicked() {
+        if (errorMessage.isBlank()){
+            errorMessage = "test error message"
+        }else{
+            errorMessage = String()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -98,11 +106,15 @@ fun InputFieldsScreen() {
         }
         NurChiliInputFieldWithDescAndAction(
             description = "Simple",
+            actionTitle = "Error show",
+            onActionClick = { onErrorMessageClicked() }
         ) {
             NurChiliBaseInput(
                 textFieldValue = descriptionText,
                 onValueChange = { descriptionText = it },
                 hint = "Hint",
+                errorMessage = errorMessage,
+                isError = errorMessage.isNotBlank(),
                 params = BaseInputParams.Default.copy(
                     textStyle = ChiliTextStyleBuilder.H5.Primary.Bold.copy(textAlign = TextAlign.Center)
                 )
