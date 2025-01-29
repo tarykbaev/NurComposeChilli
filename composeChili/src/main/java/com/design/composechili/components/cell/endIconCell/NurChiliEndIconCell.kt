@@ -34,7 +34,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.cell.baseCell.BaseCellParams
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.theme.ChiliTheme
 
@@ -82,7 +81,7 @@ fun NurChiliEndIconCell(
                         )
                         .size(params.startIconSize.size)
                         .clickable(
-                            onClick = { onEndIconClick?.invoke() },
+                            onClick = { if (onStartIconClick != null) onStartIconClick() else onClick?.invoke() },
                             interactionSource = interactionSource,
                             indication = ripple(
                                 color = ChiliTheme.Colors.СhiliRippleForegroundColor
@@ -154,7 +153,7 @@ fun NurChiliEndIconCell(
                         )
                         .size(params.endIconSize.size)
                         .clickable(
-                            onClick = { onEndIconClick?.invoke() },
+                            onClick = { if (onEndIconClick != null) onEndIconClick() else onClick?.invoke() },
                             interactionSource = interactionSource,
                             indication = ripple(
                                 color = ChiliTheme.Colors.СhiliRippleForegroundColor
