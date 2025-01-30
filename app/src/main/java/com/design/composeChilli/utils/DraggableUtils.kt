@@ -21,7 +21,6 @@ import androidx.compose.ui.zIndex
 import kotlinx.coroutines.channels.Channel
 import java.util.Collections
 
-
 inline fun <T : Any> LazyListScope.draggableItems(
     items: List<List<T>>,
     dragDropState: DragDropState<T>,

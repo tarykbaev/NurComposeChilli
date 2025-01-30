@@ -1,6 +1,7 @@
 package com.design.composeChilli.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,14 +15,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.design.composeChilli.utils.showToast
 import com.design.composechili.R
 import com.design.composechili.components.cell.AdditionalDoubleButtons
+import com.design.composechili.components.cell.actionCell.ActionCellParams
+import com.design.composechili.components.cell.actionCell.NurChiliActionCell
 import com.design.composechili.components.cell.additionalText.AdditionalTextCell
 import com.design.composechili.components.cell.additionalText.AdditionalTextCellParams
 import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.components.cell.baseCell.BaseCellParams
+import com.design.composechili.components.cell.endIconCell.NurChiliEndIconCell
 import com.design.composechili.components.cell.expandableCell.ExpandableCell
 import com.design.composechili.components.cell.model.CellCornerMode
 import com.design.composechili.components.cell.model.CellIconSize
@@ -61,8 +67,74 @@ fun CellsScreen() {
         ExpandableCellGroup()
         Spacer(modifier = Modifier.size(32.dp))
         AdditionalDoubleButtonsGroup()
+        Spacer(modifier = Modifier.size(32.dp))
+        NurChiliEndIconCellGroup()
+        Spacer(modifier = Modifier.size(32.dp))
+        NurChiliActionCellGroup()
 
         Spacer(modifier = Modifier.size(32.dp))
+    }
+}
+
+@Composable
+fun NurChiliActionCellGroup() {
+    Column(
+        modifier = Modifier.padding(horizontal = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
+            text = "ActionCellView разные состояния"
+        )
+        NurChiliActionCell(
+            modifier = Modifier.softLayerShadow(),
+            title = "Заголовок",
+            actionTitle = "Action"
+        )
+        NurChiliActionCell(
+            modifier = Modifier.softLayerShadow(),
+            title = "Заголовок",
+            actionTitle = "Action no chevron"
+        )
+        NurChiliActionCell(
+            modifier = Modifier.softLayerShadow(),
+            title = "Заголовок",
+            actionTitle = "Action icon",
+            isChevronVisible = true,
+            startIcon = painterResource(R.drawable.ic_cat),
+            params = ActionCellParams.Default.copy(startIconSize = CellIconSize.MEDIUM),
+        )
+        Column(Modifier.softLayerShadow()) {
+            NurChiliActionCell(title = "Simple", actionTitle = "Value", cellCornerMode = CellCornerMode.Top)
+            NurChiliActionCell(title = "Simple", actionTitle = "Value", cellCornerMode = CellCornerMode.Middle)
+            NurChiliActionCell(title = "Simple", actionTitle = "Value", cellCornerMode = CellCornerMode.Bottom, isActionEnabled = false)
+        }
+
+    }
+}
+
+@Composable
+fun NurChiliEndIconCellGroup() {
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier.padding(horizontal = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            style = ChiliTextStyleBuilder.H8.Primary.Default,
+            text = "NurChiliEndIconCell iconSize = SMALL (32dp)"
+        )
+        NurChiliEndIconCell(
+            modifier = Modifier.softLayerShadow(),
+            title = "NurChiliEndIconCell Title",
+            subtitle = "NurChiliEndIconCell Subtitle",
+            startIcon = painterResource(R.drawable.ic_squircle_phone),
+            endIcon = painterResource(R.drawable.ic_cat),
+            onStartIconClick = { context.showToast("onStartIconClicked") },
+            onEndIconClick = { context.showToast("onEndIconClicked") },
+            onClick = { context.showToast("onClicked") },
+        )
     }
 }
 
