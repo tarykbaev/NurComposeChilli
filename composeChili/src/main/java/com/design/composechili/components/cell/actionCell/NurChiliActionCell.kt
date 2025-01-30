@@ -49,7 +49,7 @@ fun NurChiliActionCell(
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
     isActionEnabled: Boolean = true,
     onClick: () -> Unit = {},
-    onActionClick: () -> Unit = {},
+    onActionClick: (() -> Unit)? = null,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -117,7 +117,7 @@ fun NurChiliActionCell(
                 buttonStyle = ChiliButtonStyle.ComponentButton.copy(
                     contentPaddingValues = PaddingValues(0.dp)
                 ),
-                onClick = onActionClick
+                onClick = { if(onActionClick != null) onActionClick() else onClick() }
             )
 
             if (isChevronVisible) {
