@@ -15,6 +15,7 @@ material = "1.12.0"
 material2 = "1.7.2"
 kotlinCompilerExtension = "1.5.1"
 snapper = "0.3.0"
+permission = "0.37.0"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -38,6 +39,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material2" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.8.1" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+accompanist-permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "permission"}
 
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
 
