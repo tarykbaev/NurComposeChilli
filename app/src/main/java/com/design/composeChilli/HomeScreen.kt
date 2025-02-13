@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.navigation.currentComposeNavigator
 import com.design.composechili.components.buttons.baseButton.NurChiliButton
-import com.design.composechili.components.common.bublic.Preview_Arc
+import com.design.composechili.components.common.leftOver.Preview_Arc
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 
