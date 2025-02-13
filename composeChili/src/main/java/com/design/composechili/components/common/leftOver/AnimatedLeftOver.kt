@@ -1,5 +1,6 @@
-package com.design.composechili.components.common.bublic
+package com.design.composechili.components.common.leftOver
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -9,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +41,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -104,14 +107,14 @@ fun AnimatedLeftOver(
                     color = leftOverParams.arcBackgroundColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = absoluteProgressAngle,
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4.5f),
                     useCenter = false,
                 )
                 drawArc(
                     color = leftOverParams.arcProgressColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = progressAnimation.coerceIn(0f..absoluteProgressAngle),
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 3.5f),
                     useCenter = false,
                 )
             })
@@ -136,9 +139,9 @@ fun AnimatedLeftOver(
 }
 
 data class AnimatedLeftOverParams(
-    val size: Dp = 60.dp,
-    val arcBackgroundColor: Color = Color.LightGray,
-    val arcProgressColor: Color = Color(0xFF5AC8FA),
+    val size: Dp,
+    val arcBackgroundColor: Color,
+    val arcProgressColor: Color,
     @DrawableRes val centeredImage: Int = R.drawable.ic_internet_32_dp,
 ) {
     companion object {
@@ -148,8 +151,7 @@ data class AnimatedLeftOverParams(
                 arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
                 arcProgressColor = colorResource(R.color.cyan_1),
                 centeredImage = R.drawable.ic_internet_32_dp,
-
-                )
+            )
         val Call
             @Composable get() = AnimatedLeftOverParams(
                 size = 60.dp,
@@ -176,6 +178,61 @@ fun Preview_Arc() {
     ChiliTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(
+                value = limit.toString(),
+                onValueChange = { limit = it.toLong() },
+                label = { Text("Type total limit") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+            OutlinedTextField(
+                left.toString(),
+                onValueChange = { left = it.toLong() },
+                label = { Text("Type limit left") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+
+            Row {
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Internet
+                )
+                VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Call
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun Preview_Arc_Dark() {
+    var limit by remember { mutableLongStateOf(51200L) }
+    var left by remember { mutableLongStateOf(24000L) }
+    val listOfSmallIcons = listOf(
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
+    )
+
+    ChiliTheme {
+        Column(
+            modifier = Modifier.fillMaxSize().background(ChiliTheme.Background.color),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
