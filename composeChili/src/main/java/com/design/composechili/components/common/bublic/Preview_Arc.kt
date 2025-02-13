@@ -1,6 +1,5 @@
 package com.design.composechili.components.common.bublic
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -13,11 +12,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,11 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -53,9 +54,9 @@ fun Preview_Arc() {
     var left by remember { mutableLongStateOf(24000L) }
     val listOfSmallIcons = listOf(
         "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
         "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
     )
 
     ChiliTheme {
@@ -77,28 +78,39 @@ fun Preview_Arc() {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
-            ProgressCircleBar(
-                limit = limit,
-                left = left,
-                isUnlimited = false,
-                bottomUrlImageList = listOfSmallIcons
-            )
+            Row {
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Internet
+                )
+                VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Call
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ProgressCircleBar(
+fun AnimatedLeftOver(
     modifier: Modifier = Modifier,
-    size: Dp = 70.dp,
-    @DrawableRes centeredImage: Int = R.drawable.ic_internet_32_dp,
-    bottomUrlImageList: List<String> = listOf(),
-    limit: Long = 51200L,
-    left: Long = 39219L,
+    leftOverParams: AnimatedLeftOverParams,
+    limit: Long = 0L,
+    left: Long = 0L,
     isUnlimited: Boolean,
+    bottomUrlImageList: List<String> = listOf(),
 ) {
-    val centeredImagePainter = getPainter(centeredImage)
-
     val imageIndex = remember { mutableIntStateOf(0) }
 
     val absoluteProgressAngle = 300f
@@ -133,36 +145,29 @@ fun ProgressCircleBar(
             animate.value = false
             delay(1000)
             imageIndex.intValue = (imageIndex.intValue + 1) % bottomUrlImageList.size
-            Log.d("ProgressCircleBar", "imageIndex updated to: $imageIndex")
         }
     }
 
     Box(modifier = modifier) {
-        Canvas(modifier = modifier.size(size),
+        Image(
+            modifier = Modifier.align(Alignment.Center),
+            painter = painterResource(leftOverParams.centeredImage),
+            contentDescription = ""
+        )
+        Canvas(modifier = modifier.size(leftOverParams.size),
             onDraw = {
                 drawArc(
-                    color = Color.LightGray,
+                    color = leftOverParams.arcBackgroundColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = absoluteProgressAngle,
-                    style = Stroke(cap = StrokeCap.Round, width = size.value / 5f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4f),
                     useCenter = false,
                 )
-
-                translate(
-                    left = (this.size.width / 2) - (centeredImagePainter.intrinsicSize.width / 2),
-                    top = (this.size.height / 2) - (centeredImagePainter.intrinsicSize.height / 2)
-                ) {
-                    with(centeredImagePainter) {
-                        draw(
-                            size = centeredImagePainter.intrinsicSize
-                        )
-                    }
-                }
                 drawArc(
-                    color = Color(0xFF5AC8FA),
+                    color = leftOverParams.arcProgressColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = progressAnimation.coerceIn(0f..absoluteProgressAngle),
-                    style = Stroke(cap = StrokeCap.Round, width = size.value / 5f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4f),
                     useCenter = false,
                 )
             })
@@ -172,7 +177,8 @@ fun ProgressCircleBar(
             exit = fadeOut(),
             modifier = modifier
                 .align(Alignment.BottomCenter)
-                .size(size / 4, size / 4),
+                .size(leftOverParams.size / 3, leftOverParams.size / 3)
+                .offset(x = 0.dp, y = 8.dp),
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
@@ -185,9 +191,25 @@ fun ProgressCircleBar(
     }
 }
 
-@Composable
-private fun getPainter(image: Int): Painter {
-    val vector = ImageVector.vectorResource(id = image)
-    val painter = rememberVectorPainter(image = vector)
-    return painter
+data class AnimatedLeftOverParams(
+    val size: Dp = 60.dp,
+    val arcBackgroundColor: Color = Color.LightGray,
+    val arcProgressColor: Color = Color(0xFF5AC8FA),
+    @DrawableRes val centeredImage: Int = R.drawable.ic_internet_32_dp,
+    ){
+    companion object {
+        val Internet @Composable get() = AnimatedLeftOverParams(
+            size = 60.dp,
+            arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
+            arcProgressColor = colorResource(R.color.cyan_1),
+            centeredImage = R.drawable.ic_internet_32_dp,
+
+        )
+        val Call @Composable get() = AnimatedLeftOverParams(
+            size = 60.dp,
+            arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
+            arcProgressColor = colorResource(R.color.green_1),
+            centeredImage = R.drawable.ic_calls_outer_32_dp
+        )
+    }
 }

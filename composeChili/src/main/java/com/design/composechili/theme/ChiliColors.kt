@@ -154,7 +154,11 @@ data class ChiliColors(
     val ChiliQuickActionButtonTitleEnabledColor: Color,
     val ChiliQuickActionButtonTitleDisabledColor: Color,
 
-    val ChiliLoaderColor: Color
+    val ChiliLoaderColor: Color,
+
+    //ChiliLeftOver
+    val ChiliLeftOverBackgroundColor: Color,
+
 ) {
 
     companion object {
@@ -250,7 +254,8 @@ data class ChiliColors(
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
             ChiliCardViewBackground = colorResource(id = R.color.black_3),
-            ChiliLoaderColor = colorResource(id = R.color.magenta_1)
+            ChiliLoaderColor = colorResource(id = R.color.magenta_1),
+            ChiliLeftOverBackgroundColor = colorResource( id = R.color.black_5)
         )
 
         @Composable
@@ -358,7 +363,8 @@ data class ChiliColors(
             ChiliInputViewCursorColor = colorResource(id = R.color.magenta_1),
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
             ChiliCardViewBackground = colorResource(id = R.color.white_1),
-            ChiliLoaderColor = colorResource(id = R.color.magenta_1)
+            ChiliLoaderColor = colorResource(id = R.color.magenta_1),
+            ChiliLeftOverBackgroundColor = colorResource( id = R.color.gray_2)
         )
 
     }
