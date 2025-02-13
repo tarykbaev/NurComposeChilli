@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -46,61 +45,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.delay
-
-@Preview(showBackground = true)
-@Composable
-fun Preview_Arc() {
-    var limit by remember { mutableLongStateOf(51200L) }
-    var left by remember { mutableLongStateOf(24000L) }
-    val listOfSmallIcons = listOf(
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
-    )
-
-    ChiliTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
-                value = limit.toString(),
-                onValueChange = { limit = it.toLong() },
-                label = { Text("Type total limit") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-            OutlinedTextField(
-                left.toString(),
-                onValueChange = { left = it.toLong() },
-                label = { Text("Type limit left") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-
-            Row {
-                AnimatedLeftOver(
-                    modifier = Modifier.padding(12.dp),
-                    limit = limit,
-                    left = left,
-                    isUnlimited = false,
-                    bottomUrlImageList = listOfSmallIcons,
-                    leftOverParams = AnimatedLeftOverParams.Internet
-                )
-                VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
-
-                AnimatedLeftOver(
-                    modifier = Modifier.padding(12.dp),
-                    limit = limit,
-                    left = left,
-                    isUnlimited = false,
-                    bottomUrlImageList = listOfSmallIcons,
-                    leftOverParams = AnimatedLeftOverParams.Call
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun AnimatedLeftOver(
@@ -196,20 +140,78 @@ data class AnimatedLeftOverParams(
     val arcBackgroundColor: Color = Color.LightGray,
     val arcProgressColor: Color = Color(0xFF5AC8FA),
     @DrawableRes val centeredImage: Int = R.drawable.ic_internet_32_dp,
-    ){
+) {
     companion object {
-        val Internet @Composable get() = AnimatedLeftOverParams(
-            size = 60.dp,
-            arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
-            arcProgressColor = colorResource(R.color.cyan_1),
-            centeredImage = R.drawable.ic_internet_32_dp,
+        val Internet
+            @Composable get() = AnimatedLeftOverParams(
+                size = 60.dp,
+                arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
+                arcProgressColor = colorResource(R.color.cyan_1),
+                centeredImage = R.drawable.ic_internet_32_dp,
 
-        )
-        val Call @Composable get() = AnimatedLeftOverParams(
-            size = 60.dp,
-            arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
-            arcProgressColor = colorResource(R.color.green_1),
-            centeredImage = R.drawable.ic_calls_outer_32_dp
-        )
+                )
+        val Call
+            @Composable get() = AnimatedLeftOverParams(
+                size = 60.dp,
+                arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
+                arcProgressColor = colorResource(R.color.green_1),
+                centeredImage = R.drawable.ic_calls_outer_32_dp
+            )
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun Preview_Arc() {
+    var limit by remember { mutableLongStateOf(51200L) }
+    var left by remember { mutableLongStateOf(24000L) }
+    val listOfSmallIcons = listOf(
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
+    )
+
+    ChiliTheme {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(
+                value = limit.toString(),
+                onValueChange = { limit = it.toLong() },
+                label = { Text("Type total limit") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+            OutlinedTextField(
+                left.toString(),
+                onValueChange = { left = it.toLong() },
+                label = { Text("Type limit left") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+
+            Row {
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Internet
+                )
+                VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+
+                AnimatedLeftOver(
+                    modifier = Modifier.padding(12.dp),
+                    limit = limit,
+                    left = left,
+                    isUnlimited = false,
+                    bottomUrlImageList = listOfSmallIcons,
+                    leftOverParams = AnimatedLeftOverParams.Call
+                )
+            }
+        }
     }
 }
