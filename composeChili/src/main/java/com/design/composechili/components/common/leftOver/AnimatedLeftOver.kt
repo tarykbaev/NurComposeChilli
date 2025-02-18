@@ -46,6 +46,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.design.composechili.R
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.ABSOLUTE_PROGRESS_ANGLE
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.ARC_ANIMATION_DURATION
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.BACKGROUND_ARC_WIDTH_DIVIDER
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.PROGRESS_ARC_WIDTH_DIVIDER
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.START_PROGRESS_ANGLE
+import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.TETHERING_ANIMATION_DURATION
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.delay
 
@@ -56,12 +62,12 @@ fun AnimatedLeftOver(
     limit: Long = 0L,
     left: Long = 0L,
     isUnlimited: Boolean,
-    bottomUrlImageList: List<String> = listOf(),
+    bottomUrlImageList: List<String>? = listOf(),
 ) {
     val imageIndex = remember { mutableIntStateOf(0) }
 
-    val absoluteProgressAngle = 300f
-    val startDegreeAngle = 120f
+    val absoluteProgressAngle = ABSOLUTE_PROGRESS_ANGLE
+    val startDegreeAngle = START_PROGRESS_ANGLE
 
     var progress by remember { mutableFloatStateOf(0f) }
     val animate = remember { mutableStateOf(false) }
@@ -75,7 +81,7 @@ fun AnimatedLeftOver(
 
     LaunchedEffect(left, limit, isUnlimited) {
         progress = 0f
-        delay(500)
+        delay(ARC_ANIMATION_DURATION)
         val countLimitInPercents = (left * 100) / limit
         val arcRangePercent = absoluteProgressAngle / 100f
         progress =
@@ -88,33 +94,35 @@ fun AnimatedLeftOver(
     LaunchedEffect(Unit) {
         while (true) {
             animate.value = true
-            delay(1000)
+            delay(TETHERING_ANIMATION_DURATION)
             animate.value = false
-            delay(1000)
-            imageIndex.intValue = (imageIndex.intValue + 1) % bottomUrlImageList.size
+            delay(TETHERING_ANIMATION_DURATION)
+            if (bottomUrlImageList != null) {
+                imageIndex.intValue = (imageIndex.intValue + 1) % bottomUrlImageList.size
+            }
         }
     }
 
-    Box(modifier = modifier) {
+    Box(modifier) {
         Image(
             modifier = Modifier.align(Alignment.Center),
             painter = painterResource(leftOverParams.centeredImage),
             contentDescription = ""
         )
-        Canvas(modifier = modifier.size(leftOverParams.size),
+        Canvas(modifier = Modifier.size(leftOverParams.size),
             onDraw = {
                 drawArc(
                     color = leftOverParams.arcBackgroundColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = absoluteProgressAngle,
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 4.5f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / BACKGROUND_ARC_WIDTH_DIVIDER),
                     useCenter = false,
                 )
                 drawArc(
                     color = leftOverParams.arcProgressColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = progressAnimation.coerceIn(0f..absoluteProgressAngle),
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / 3.5f),
+                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / PROGRESS_ARC_WIDTH_DIVIDER),
                     useCenter = false,
                 )
             })
@@ -122,14 +130,14 @@ fun AnimatedLeftOver(
             visible = animate.value,
             enter = fadeIn(),
             exit = fadeOut(),
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .size(leftOverParams.size / 3, leftOverParams.size / 3)
                 .offset(x = 0.dp, y = 8.dp),
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    model = bottomUrlImageList.getOrNull(imageIndex.intValue),
+                    model = bottomUrlImageList?.getOrNull(imageIndex.intValue),
                     onSuccess = { it.painter },
                 ),
                 contentDescription = "",
@@ -145,6 +153,14 @@ data class AnimatedLeftOverParams(
     @DrawableRes val centeredImage: Int = R.drawable.ic_internet_32_dp,
 ) {
     companion object {
+
+        const val ABSOLUTE_PROGRESS_ANGLE = 300f
+        const val START_PROGRESS_ANGLE = 120f
+        const val ARC_ANIMATION_DURATION = 500L
+        const val TETHERING_ANIMATION_DURATION = 1000L
+        const val BACKGROUND_ARC_WIDTH_DIVIDER = 4.5f
+        const val PROGRESS_ARC_WIDTH_DIVIDER = 3.5f
+
         val Internet
             @Composable get() = AnimatedLeftOverParams(
                 size = 60.dp,
