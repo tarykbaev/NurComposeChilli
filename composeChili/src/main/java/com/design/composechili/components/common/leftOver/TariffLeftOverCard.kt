@@ -23,34 +23,9 @@ import com.design.composechili.theme.textStyle.ChiliTextStyle
 
 @Composable
 fun TariffLeftOverCard(
-    title: String = "Служебный 250+ (на месяц)",
-    description: String = "250с будет списано 01.03.2025",
-    lisOfLeftOvers: List<LeftOverUiModel> = listOf(
-        LeftOverUiModel(
-            packageType = AnimatedLeftOverParams.Internet,
-            limit = 5000000000L,
-            remain = 2400000000L,
-            expiryDate = null,
-            showUnlim = false,
-            isSuspended = false,
-            pieChartIcons = listOf(
-                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
-            )
-        ),
-        LeftOverUiModel(
-            packageType = AnimatedLeftOverParams.Call,
-            limit = 10000L,
-            remain = 2400L,
-            expiryDate = null,
-            showUnlim = false,
-            isSuspended = false,
-            pieChartIcons = listOf(
-                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
-            )
-        )
-    )
+    title: String = "",
+    description: String = "",
+    lisOfLeftOvers: List<LeftOverUiModel> = listOf()
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -98,7 +73,12 @@ fun TariffLeftOverCard(
                         isSuspended = false,
                         limit = item.limit,
                         remain = item.remain,
-                        pieChartIcons = item.pieChartIcons
+                        pieChartIcons = item.pieChartIcons,
+                        title = when(item.packageType){
+                            AnimatedLeftOverParams.Internet -> "Internet"
+                            AnimatedLeftOverParams.Call -> "Call"
+                            else -> ""
+                        }
                     )
                 }
             }
@@ -121,7 +101,36 @@ data class LeftOverUiModel(
 fun TariffLeftOverCard_Preview() {
     ChiliTheme{
         Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
-            TariffLeftOverCard()
+            TariffLeftOverCard(
+                title = "Служебный 250+ (на месяц)",
+                description = "250с будет списано 01.03.2025",
+                lisOfLeftOvers = listOf(
+                    LeftOverUiModel(
+                        packageType = AnimatedLeftOverParams.Internet,
+                        limit = 5000000000L,
+                        remain = 2400000000L,
+                        expiryDate = null,
+                        showUnlim = false,
+                        isSuspended = true,
+                        pieChartIcons = listOf(
+                            "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+                            "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
+                        )
+                    ),
+                    LeftOverUiModel(
+                        packageType = AnimatedLeftOverParams.Call,
+                        limit = 10000L,
+                        remain = 2400L,
+                        expiryDate = null,
+                        showUnlim = false,
+                        isSuspended = false,
+                        pieChartIcons = listOf(
+                            "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+                            "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
+                        )
+                    )
+                )
+            )
         }
     }
 }
