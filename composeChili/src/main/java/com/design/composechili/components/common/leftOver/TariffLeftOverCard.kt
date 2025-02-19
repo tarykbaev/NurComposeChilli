@@ -25,9 +25,31 @@ import com.design.composechili.theme.textStyle.ChiliTextStyle
 fun TariffLeftOverCard(
     title: String = "Служебный 250+ (на месяц)",
     description: String = "250с будет списано 01.03.2025",
-    lisOfLeftOvers: List<AnimatedLeftOverParams> = listOf(
-        AnimatedLeftOverParams.Internet,
-        AnimatedLeftOverParams.Call,
+    lisOfLeftOvers: List<LeftOverUiModel> = listOf(
+        LeftOverUiModel(
+            packageType = AnimatedLeftOverParams.Internet,
+            limit = 5000000000L,
+            remain = 2400000000L,
+            expiryDate = null,
+            showUnlim = false,
+            isSuspended = false,
+            pieChartIcons = listOf(
+                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
+            )
+        ),
+        LeftOverUiModel(
+            packageType = AnimatedLeftOverParams.Call,
+            limit = 10000L,
+            remain = 2400L,
+            expiryDate = null,
+            showUnlim = false,
+            isSuspended = false,
+            pieChartIcons = listOf(
+                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
+                "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png"
+            )
+        )
     )
 ) {
     Card(
@@ -72,14 +94,27 @@ fun TariffLeftOverCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp),
-                        packageType = item,
-                        isSuspended = false
+                        packageType = item.packageType,
+                        isSuspended = false,
+                        limit = item.limit,
+                        remain = item.remain,
+                        pieChartIcons = item.pieChartIcons
                     )
                 }
             }
         }
     }
 }
+
+data class LeftOverUiModel(
+    val packageType: AnimatedLeftOverParams,
+    var limit: Long = 0,
+    var remain: Long = 0,
+    var expiryDate: String? = null,
+    var showUnlim: Boolean = false,
+    var isSuspended: Boolean = false,
+    var pieChartIcons: List<String>? = null
+)
 
 @Preview(showBackground = false)
 @Composable
