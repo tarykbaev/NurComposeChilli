@@ -49,7 +49,7 @@ fun TariffLeftOverCard(
                     )
                     Text(
                         description, style = ChiliTextStyle.get(
-                            ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                            ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                             ChiliTheme.Colors.ChiliPrimaryTextColor,
                             ChiliTheme.Attribute.ChiliRegularTextFont
                         )
