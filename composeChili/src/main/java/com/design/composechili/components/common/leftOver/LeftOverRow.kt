@@ -25,7 +25,7 @@ import kotlin.math.pow
 @Composable
 fun LeftOverRow(
     modifier: Modifier = Modifier,
-    title: String = "Internet",
+    title: String,
     limit: Long = 50000000000L,
     remain: Long = 20000000000L,
     isSuspended: Boolean = false,
@@ -116,6 +116,7 @@ private fun getDescriptionText(
         if (type == AnimatedLeftOverParams.Call) callsUnit else internetUnits[limitIndex]
 
     val limitText = when {
+        isSuspended -> "Inactive"
         type == AnimatedLeftOverParams.Call -> "${limit / 60} $limitUnitName$suffix"
         limitIndex == GIGABYTE || limitIndex == TERRABYTE -> {
             "${limitUnitsFromSize.toThreeDigitsFormat} $limitUnitName$suffix"
@@ -124,6 +125,7 @@ private fun getDescriptionText(
     }
 
     val remainText = when {
+        isSuspended -> ""
         type == AnimatedLeftOverParams.Call -> "$prefix ${remain / 60} $remainUnitName"
         remainIndex == GIGABYTE || remainIndex == TERRABYTE -> {
             "$prefix ${remainUnitsFromSize.toThreeDigitsFormat} $remainUnitName"
@@ -148,7 +150,8 @@ fun LeftOverCard_Preview() {
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp),
                 packageType = AnimatedLeftOverParams.Internet,
-                isSuspended = true
+                isSuspended = true,
+                title = "Internet",
             )
             LeftOverRow(
                 modifier = Modifier
