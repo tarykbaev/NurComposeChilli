@@ -1,6 +1,5 @@
 package com.design.composechili.components.input.baseInput
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -35,8 +34,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H8
 
 /**
@@ -124,7 +123,10 @@ fun NurChiliBaseInput(
                 enabled = isEnabled,
                 keyboardActions = keyboardActions,
                 textStyle = mergedTextStyle,
-                keyboardOptions = KeyboardOptions(keyboardType = params.keyboardType),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = params.keyboardType,
+                    imeAction = params.imeAction
+                ),
                 maxLines = params.maxLines,
                 cursorBrush = SolidColor(params.cursorColor)
             ) { innerTextField ->
