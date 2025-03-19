@@ -2,6 +2,8 @@ package com.design.composechili.components.topAppBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,8 +13,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.dimensionResource
@@ -78,6 +85,7 @@ fun ChiliBaseTopAppBar(
     endIcon: Painter? = null,
     isCenteredTitle: Boolean = false,
     isNavigationButtonEnabled: Boolean = true,
+    onAdditionalTextClick: (() -> Unit)? = null,
     onEndIconClick: (() -> Unit)? = null,
     onNavigationClick: (() -> Unit)? = null
 ) {
@@ -90,13 +98,14 @@ fun ChiliBaseTopAppBar(
         ) {
             var navigationIconWidth by remember { mutableStateOf(0) }
 
-            if (isNavigationButtonEnabled){
-                IconButton(modifier = Modifier
-                    .wrapContentSize()
-                    .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
-                    .onGloballyPositioned { coordinates ->
-                        navigationIconWidth = coordinates.size.width
-                    }, onClick = { onNavigationClick?.invoke() }) {
+            if (isNavigationButtonEnabled) {
+                IconButton(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(horizontal = dimensionResource(R.dimen.padding_4dp))
+                        .onGloballyPositioned { coordinates ->
+                            navigationIconWidth = coordinates.size.width
+                        }, onClick = { onNavigationClick?.invoke() }) {
                     Image(
                         modifier = Modifier.size(params.navigationIconSize),
                         painter = navigationIcon,
@@ -113,12 +122,30 @@ fun ChiliBaseTopAppBar(
                     .padding(end = dimensionResource(R.dimen.padding_16dp)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                additionalText?.let {
-                    Text(
-                        modifier = Modifier.wrapContentSize(),
-                        text = additionalText,
-                        style = params.additionalTextStyle
-                    )
+                additionalText?.let { text ->
+                    Surface(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .clip(RoundedCornerShape(dimensionResource(R.dimen.radius_12dp)))
+                            .then(
+                                if (onAdditionalTextClick != null) {
+                                    Modifier.clickable(
+                                        onClick = { onAdditionalTextClick.invoke() },
+                                        indication = ripple(),
+                                        interactionSource = remember { MutableInteractionSource() }
+                                    )
+                                } else {
+                                    Modifier
+                                }
+                            ),
+                        color = Color.Transparent
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(all = dimensionResource(R.dimen.padding_4dp)),
+                            text = text,
+                            style = params.additionalTextStyle
+                        )
+                    }
                 }
 
                 endIcon?.let { icon ->
