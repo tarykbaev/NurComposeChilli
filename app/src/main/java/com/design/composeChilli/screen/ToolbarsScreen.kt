@@ -42,8 +42,13 @@ fun ToolbarsScreen(onBackPressed: (() -> Unit)? = null) {
         }
         Spacer(modifier = Modifier.height(16.dp))
         ChiliBaseTopAppBar(title = "Additional text", additionalText = "5 из 10")
+        ChiliBaseTopAppBar(
+            title = "Additional text",
+            additionalText = "Save",
+            onAdditionalTextClick = {}
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        ChiliBaseTopAppBar(title = "End icon", endIcon = painterResource(id =  R.drawable.ic_cat))
+        ChiliBaseTopAppBar(title = "End icon", endIcon = painterResource(id = R.drawable.ic_cat))
         Spacer(modifier = Modifier.height(16.dp))
         ChiliBaseTopAppBar(
             title = "+996 700 123 456",
@@ -52,7 +57,10 @@ fun ToolbarsScreen(onBackPressed: (() -> Unit)? = null) {
             params = ChiliBaseTopAppBarParams.Default.copy(endIconSize = 54.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        ChiliBaseTopAppBar(title = "Menu toolbar", navigationIcon = painterResource(id = R.drawable.chili_ic_nav_back)) {
+        ChiliBaseTopAppBar(
+            title = "Menu toolbar",
+            navigationIcon = painterResource(id = R.drawable.chili_ic_nav_back)
+        ) {
             onBackPressed?.invoke()
         }
         Spacer(modifier = Modifier.height(16.dp))
