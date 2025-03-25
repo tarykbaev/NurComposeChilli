@@ -7,60 +7,88 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.text.parseAsHtml
 import com.design.composechili.R
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import kotlin.math.abs
+import com.design.composechili.components.common.pieChart.model.EnumSpendingCategory
+import com.design.composechili.components.common.pieChart.model.PieChartData
+import com.design.composechili.components.common.pieChart.model.PieChartParams
+import com.design.composechili.components.common.pieChart.model.SpendingCategory
+import com.design.composechili.components.common.pieChart.model.getColor
+import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 
 @Composable
 fun PieChart(
-    modifier: Modifier = Modifier,
-    size: Dp = 300.dp,
-    totalAmount: Float,
+    totalAmount: Double?,
     categoriesList: List<SpendingCategory>,
-    innerText: String,
+    modifier: Modifier = Modifier,
+    params: PieChartParams,
 ) {
 
     val canvasItems = categoriesList.map {
         PieChartData(it.type?.getColor() ?: colorResource(R.color.gray_6), it.totalCharge ?: 0f)
     }
-    val somSymbol = "<b> <u>c</u> </b>".parseAsHtml()
 
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Canvas(modifier = modifier.size(size)) {
+        Canvas(modifier = modifier.size(params.size)) {
             var startAngle = 90f
-            canvasItems.forEach {
-                val sweepAngle = (it.amount * 360) / totalAmount
+            canvasItems.forEach { item ->
+                val sweepAngle = totalAmount?.let { (item.amount * 360) / totalAmount } ?: 360
                 drawArc(
-                    color = it.color,
+                    color = item.color,
                     startAngle = startAngle,
-                    sweepAngle = sweepAngle,
+                    sweepAngle = sweepAngle.toFloat(),
                     useCenter = false,
-                    style = Stroke(width = (size / 15).toPx())
+                    style = Stroke(width = (params.size / 7).toPx())
                 )
-                startAngle += sweepAngle
+                startAngle += sweepAngle.toFloat()
             }
         }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = innerText)
-            Text(text = "${totalAmount.toInt()} $somSymbol")
+            if (totalAmount != null) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = params.descriptionTextStyle
+                        ) {
+                            append(params.description)
+                            append("\n")
+                        }
+                        withStyle(
+                            style = params.amountTextStyle
+                        ) {
+                            append(totalAmount.toInt().toString())
+                            append(" ")
+                        }
+                        withStyle(
+                            style = params.currencyTextStyle
+                        ) {
+                            append(params.currency)
+                        }
+                    }, textAlign = TextAlign.Center
+                )
+            } else {
+                Text(
+                    text = params.emptyDescription,
+                    style = ChiliTextStyle.get(
+                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
+                        color = ChiliTheme.Colors.ChiliValueTextColor
+                    )
+                )
+            }
         }
     }
 }
@@ -68,139 +96,29 @@ fun PieChart(
 @Preview(showBackground = true)
 @Composable
 private fun PieChart_Preview() {
-    Column(
-        Modifier
-            .size(300.dp)
-            .padding(32.dp)
-    ) {
-        PieChart(
-            totalAmount = 1000.00f,
-            categoriesList = listOf(
-                SpendingCategory(
-                    "",
-                    type = EnumSpendingCategory.SUBSCRIPTION_FEE,
-                    totalCharge = 100f
-                ),
-                SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
-                SpendingCategory(
-                    "",
-                    type = EnumSpendingCategory.INTERNET_PACKAGE,
-                    totalCharge = 100f
-                ),
-                SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 100f),
-                SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 100f),
-            ),
-            innerText = "Some text"
-        )
+    val listOfCategories = listOf(
+        SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 250f),
+        SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 183f),
+    )
+    ChiliTheme {
+        Column(
+            Modifier
+                .size(300.dp)
+                .padding(32.dp), verticalArrangement = Arrangement.Center
+        ) {
+            PieChart(
+                totalAmount = 1233.44,
+                categoriesList = listOfCategories,
+                params = PieChartParams.Default
+            )
+        }
     }
-}
-
-data class PieChartData(
-    val color: Color,
-    val amount: Float
-)
-
-enum class EnumSpendingCategory {
-    SUBSCRIPTION_FEE,
-    OMONEY,
-    SERVICES,
-    INTERNET,
-    INTERNET_PACKAGE,
-    ROAMING,
-    OUT_VOICE,
-    SMS,
-    INNER_VOICE,
-    NONE,
-}
-
-@Composable
-fun EnumSpendingCategory.getColor(): Color {
-    return when (this) {
-        EnumSpendingCategory.SUBSCRIPTION_FEE -> colorResource(R.color.orange_1)
-        EnumSpendingCategory.OMONEY -> colorResource(R.color.magenta_1)
-        EnumSpendingCategory.SERVICES -> colorResource(R.color.green_5)
-        EnumSpendingCategory.INTERNET -> colorResource(R.color.cyan_1)
-        EnumSpendingCategory.INTERNET_PACKAGE -> colorResource(R.color.red_1)
-        EnumSpendingCategory.ROAMING -> colorResource(R.color.blue_2)
-        EnumSpendingCategory.OUT_VOICE -> colorResource(R.color.green_1)
-        EnumSpendingCategory.SMS -> colorResource(R.color.purple_1)
-        EnumSpendingCategory.INNER_VOICE -> colorResource(R.color.magenta_2)
-        EnumSpendingCategory.NONE -> colorResource(R.color.gray_6)
-    }
-}
-
-
-data class SpendingCategory(
-    var name: String? = null,
-    var type: EnumSpendingCategory? = null,
-    var totalCharge: Float? = null,
-    var subCategories: List<SpendingSubCategory>? = null
-) {
-
-    fun getTotalCharge(): String {
-        return totalCharge?.toDouble()?.toThreeDigitsFormat ?: ""
-    }
-
-}
-
-data class SpendingSubCategory(
-    var name: String? = null,
-    var charge: Double? = null,
-    var amount: Double? = null,
-    var date: Long? = null,
-    var subType: EnumSpendingSubCategory? = null,
-    var count: Int? = null,
-    var desc: String? = null,
-    var number: String? = null,
-    //no,for now making variable below of enum type would be illogical. i think
-    var indDesc: String? = null
-) {
-    fun getPaymentDate(): String {
-        date?.let { return Date(it).formatByRegex("dd.MM.yyyy - HH:mm:ss").toLowerCase() }
-        return ""
-    }
-
-    fun getCharge(): String {
-        return charge?.toThreeDigitsFormat ?: ""
-    }
-}
-
-val Double.toThreeDigitsFormat: String
-    get() {
-        return when {
-            (abs(this) < 10.0) -> this.round("0.00")
-            (abs(this) in 10.0..100.0) -> this.round("#.0")
-            else -> this.round("#")
-        }.replace(".", ",")
-    }
-
-private fun Double.round(format: String = "#.##", roundingMode: RoundingMode? = null): String {
-    val df = DecimalFormat(format)
-    roundingMode?.let { df.roundingMode = roundingMode }
-    return df.format(this).replace(".", ",")
-}
-
-fun Date.formatByRegex(regex: String): String {
-    return SimpleDateFormat(regex, Locale.getDefault()).format(this)
-}
-
-enum class EnumSpendingSubCategory {
-    INTERNET,
-    OUT_SMS,
-    OUT_CALL,
-    INCOMING_CALL,
-    INCOMING_SMS,
-    PREPAYMENT_BACK,
-    INTERNATIONAL_OUT_CALL,
-    SUBSCRIPTION_FEE,
-    SERVICES,
-    OMONEY,
-    INTERNET_PACKAGE,
-    ROAMING,
-    OTHER;
 }
