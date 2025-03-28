@@ -1,5 +1,6 @@
 package com.design.composeChilli.screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,7 +29,10 @@ import com.design.composechili.components.card.CategoryCard
 import com.design.composechili.components.card.CategoryCardParams
 import com.design.composechili.components.card.PromoBannerCard
 import com.design.composechili.components.card.PromoBannerCardParams
+import com.design.composechili.components.card.base.NurChiliBaseCard
+import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.utils.softLayerShadow
 
 @Composable
@@ -130,6 +135,40 @@ fun CardsScreen() {
                         ) {}
                     }
                 })
+
+            NurChiliBaseCard(
+                modifier = Modifier
+                    .softLayerShadow()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Title",
+                        style = ChiliTextStyle.get(
+                            textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH6,
+                            font = ChiliTheme.Attribute.ChiliBoldTextFont,
+                            color = ChiliTheme.Colors.ChiliPrimaryTextColor
+                        )
+                    )
+                    Text(
+                        text = "SubTitle",
+                        style = ChiliTextStyle.get(
+                            font = ChiliTheme.Attribute.ChiliRegularTextFont,
+                            color = ChiliTheme.Colors.ChiliSecondaryTextColor
+                        )
+                    )
+                    Text(
+                        text = "SubTitle",
+                        style = ChiliTextStyle.get(
+                            font = ChiliTheme.Attribute.ChiliRegularTextFont,
+                            color = ChiliTheme.Colors.ChiliSecondaryTextColor
+                        )
+                    )
+                }
+            }
         }
     }
 }
@@ -167,7 +206,7 @@ private fun AccentCardList() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CardsScreen_Preview() {
     ChiliTheme {
