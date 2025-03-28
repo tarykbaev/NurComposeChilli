@@ -19,7 +19,7 @@ data class PieChartParams(
     val currency: String,
     val pieStartAngle: Float,
     val pieChartMaxAngle: Float,
-    val strokeWidth: Int,
+    val strokeWidthDivider: Int,
     val descriptionTextStyle: SpanStyle,
     val amountTextStyle: SpanStyle,
     val currencyTextStyle: SpanStyle,
@@ -28,13 +28,13 @@ data class PieChartParams(
     companion object {
         val Default
             @Composable get() = PieChartParams(
-                size = 200.dp,
+                size = 220.dp,
                 description = "Все расходы",
                 emptyDescription = "Нет расходов",
                 currency = "с",
                 pieStartAngle = 90f,
                 pieChartMaxAngle = 360f,
-                strokeWidth = 5,
+                strokeWidthDivider = 8,
                 descriptionTextStyle = SpanStyle(
                     fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
                     color = ChiliTheme.Colors.ChiliPrimaryTextColor
