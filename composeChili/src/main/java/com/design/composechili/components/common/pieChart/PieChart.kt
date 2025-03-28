@@ -1,7 +1,6 @@
 package com.design.composechili.components.common.pieChart
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
@@ -37,6 +35,7 @@ import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.theme.ChiliTheme
 import kotlin.math.atan2
 import kotlin.math.roundToInt
+
 
 @Composable
 fun PieChart(
@@ -65,23 +64,29 @@ fun PieChart(
         Canvas(
             modifier = Modifier
                 .size(params.size)
-                .background(Color.Blue)
                 .pointerInput(canvasItems) {
                     detectTapGestures(onTap = { offset ->
-                        val center =  Offset((params.size.toPx()/2), (params.size.toPx()/2))
+                        val center = Offset((params.size.toPx() / 2), (params.size.toPx() / 2))
                         val angle = calculateAngle(center, offset)
-                        selectedCategory = findCategoryByAngle(totalAmount = totalAmount, params = params, items = canvasItems, angle = angle)
+                        selectedCategory = findCategoryByAngle(
+                            totalAmount = totalAmount,
+                            params = params,
+                            items = canvasItems,
+                            angle = angle
+                        )
                         onSliceClick(selectedCategory?.type ?: EnumSpendingCategory.NONE)
                     })
-
                 }
         ) {
             canvasItems.forEach { item ->
                 val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
                     ?: params.pieChartMaxAngle
                 val isSelected = item == selectedCategory
-                val strokeWidth = if (isSelected) ((params.size / params.strokeWidth) * 1.3f).toPx()
-                else (params.size / params.strokeWidth).toPx()
+                val strokeWidth = if (isSelected) ((params.size / params.strokeWidthDivider) * 1.3f).toPx()
+                else (params.size / params.strokeWidthDivider).toPx()
+                val radius = (params.size.value - params.strokeWidthDivider) * 2
+                val topLeftOffset = Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
+
 
                 drawArc(
                     color = item.color,
@@ -89,6 +94,8 @@ fun PieChart(
                     sweepAngle = sweepAngle.toFloat(),
                     useCenter = false,
                     style = Stroke(width = strokeWidth),
+                    size = Size(radius, radius),
+                    topLeft = topLeftOffset,
                 )
                 startAngle += sweepAngle.toFloat()
             }
@@ -100,7 +107,6 @@ fun PieChart(
         ) {
             totalAmount?.let {
                 Text(
-                    modifier = Modifier.background(Color.Red),
                     text = buildAnnotatedString {
                         withStyle(style = params.descriptionTextStyle) { append("${params.description}\n") }
                         withStyle(style = params.amountTextStyle) {
