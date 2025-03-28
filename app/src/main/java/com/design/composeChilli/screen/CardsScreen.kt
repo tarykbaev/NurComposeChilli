@@ -1,6 +1,5 @@
 package com.design.composeChilli.screen
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -217,7 +216,7 @@ private fun AccentCardList() {
     }
 }
 
-@Preview()
+@Preview
 @Composable
 fun CardsScreen_Preview() {
     ChiliTheme {
