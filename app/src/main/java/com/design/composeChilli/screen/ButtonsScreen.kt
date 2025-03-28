@@ -31,10 +31,6 @@ fun ButtonsScreen() {
     val scrollState = rememberScrollState()
     var isButtonLoading by rememberSaveable { mutableStateOf(false) }
 
-    ChiliTheme {
-
-    }
-
     Column(
         Modifier
             .background(ChiliTheme.Colors.ChiliSurfaceBackground)

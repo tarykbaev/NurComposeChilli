@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,7 +30,6 @@ import com.design.composechili.components.card.CategoryCardParams
 import com.design.composechili.components.card.PromoBannerCard
 import com.design.composechili.components.card.PromoBannerCardParams
 import com.design.composechili.components.card.base.NurChiliBaseCard
-import com.design.composechili.components.cell.baseCell.NurChiliBaseCell
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.utils.softLayerShadow
@@ -114,7 +113,10 @@ fun CardsScreen() {
                 cardContainerParams = CardContainerParams.Transparent,
                 isContentExpandedInitValue = true,
                 expandableContent = {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
                         CategoryCard(
                             modifier = Modifier
                                 .softLayerShadow()
@@ -122,7 +124,12 @@ fun CardsScreen() {
                             title = "Кофейня.\nБонусная.",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.LeftAligned8Dp,
-                            rootPadding = PaddingValues(top = 8.dp, bottom = 8.dp, end = 64.dp, start = 8.dp)
+                            rootPadding = PaddingValues(
+                                top = 8.dp,
+                                bottom = 8.dp,
+                                end = 64.dp,
+                                start = 8.dp
+                            )
                         ) {}
                         CategoryCard(
                             modifier = Modifier
@@ -131,11 +138,15 @@ fun CardsScreen() {
                             title = "Народный\nБонусная",
                             painter = painterResource(id = R.drawable.ic_payment),
                             categoryCardParams = CategoryCardParams.LeftAligned8Dp,
-                            rootPadding = PaddingValues(top = 8.dp, bottom = 8.dp, end = 64.dp, start = 8.dp)
+                            rootPadding = PaddingValues(
+                                top = 8.dp,
+                                bottom = 8.dp,
+                                end = 64.dp,
+                                start = 8.dp
+                            )
                         ) {}
                     }
                 })
-
             NurChiliBaseCard(
                 modifier = Modifier
                     .softLayerShadow()
@@ -206,7 +217,7 @@ private fun AccentCardList() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview()
 @Composable
 fun CardsScreen_Preview() {
     ChiliTheme {
