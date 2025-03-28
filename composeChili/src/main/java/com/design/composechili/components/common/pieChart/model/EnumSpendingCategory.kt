@@ -18,10 +18,6 @@ enum class EnumSpendingCategory {
     NONE,
 }
 
-
-
-
-
 @Composable
 fun EnumSpendingCategory.getColor(): Color {
     return when (this) {

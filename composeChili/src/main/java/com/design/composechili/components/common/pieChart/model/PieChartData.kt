@@ -4,5 +4,6 @@ import androidx.compose.ui.graphics.Color
 
 data class PieChartData(
     val color: Color,
-    val amount: Float
+    val amount: Float,
+    val type: EnumSpendingCategory,
 )

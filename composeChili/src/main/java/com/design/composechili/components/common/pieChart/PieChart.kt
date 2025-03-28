@@ -1,6 +1,8 @@
 package com.design.composechili.components.common.pieChart
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,9 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
@@ -25,7 +35,8 @@ import com.design.composechili.components.common.pieChart.model.PieChartParams
 import com.design.composechili.components.common.pieChart.model.SpendingCategory
 import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.textStyle.ChiliTextStyle
+import kotlin.math.atan2
+import kotlin.math.roundToInt
 
 @Composable
 fun PieChart(
@@ -33,91 +44,147 @@ fun PieChart(
     categoriesList: List<SpendingCategory>,
     modifier: Modifier = Modifier,
     params: PieChartParams,
+    onSliceClick: (EnumSpendingCategory) -> Unit = {}
 ) {
 
+    var selectedCategory by remember { mutableStateOf<PieChartData?>(null) }
+
     val canvasItems = categoriesList.map {
-        PieChartData(it.type?.getColor() ?: colorResource(R.color.gray_6), it.totalCharge ?: 0f)
+        PieChartData(
+            it.type?.getColor() ?: colorResource(R.color.gray_6),
+            it.totalCharge ?: 0f,
+            it.type ?: EnumSpendingCategory.NONE
+        )
     }
 
-    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Canvas(modifier = modifier.size(params.size)) {
-            var startAngle = 90f
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        var startAngle = params.pieStartAngle
+        Canvas(
+            modifier = Modifier
+                .size(params.size)
+                .background(Color.Blue)
+                .pointerInput(canvasItems) {
+                    detectTapGestures(onTap = { offset ->
+                        val center =  Offset((params.size.toPx()/2), (params.size.toPx()/2))
+                        val angle = calculateAngle(center, offset)
+                        selectedCategory = findCategoryByAngle(totalAmount = totalAmount, params = params, items = canvasItems, angle = angle)
+                        onSliceClick(selectedCategory?.type ?: EnumSpendingCategory.NONE)
+                    })
+
+                }
+        ) {
             canvasItems.forEach { item ->
-                val sweepAngle = totalAmount?.let { (item.amount * 360) / totalAmount } ?: 360
+                val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
+                    ?: params.pieChartMaxAngle
+                val isSelected = item == selectedCategory
+                val strokeWidth = if (isSelected) ((params.size / params.strokeWidth) * 1.3f).toPx()
+                else (params.size / params.strokeWidth).toPx()
+
                 drawArc(
                     color = item.color,
                     startAngle = startAngle,
                     sweepAngle = sweepAngle.toFloat(),
                     useCenter = false,
-                    style = Stroke(width = (params.size / 7).toPx())
+                    style = Stroke(width = strokeWidth),
                 )
                 startAngle += sweepAngle.toFloat()
             }
         }
+
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (totalAmount != null) {
+            totalAmount?.let {
                 Text(
+                    modifier = Modifier.background(Color.Red),
                     text = buildAnnotatedString {
-                        withStyle(
-                            style = params.descriptionTextStyle
-                        ) {
-                            append(params.description)
-                            append("\n")
+                        withStyle(style = params.descriptionTextStyle) { append("${params.description}\n") }
+                        withStyle(style = params.amountTextStyle) {
+                            if (hasNonZeroFraction(totalAmount)) {
+                                append(formatAmount(totalAmount))
+                            } else {
+                                append("${totalAmount.roundToInt()} ")
+                            }
                         }
-                        withStyle(
-                            style = params.amountTextStyle
-                        ) {
-                            append(totalAmount.toInt().toString())
-                            append(" ")
-                        }
-                        withStyle(
-                            style = params.currencyTextStyle
-                        ) {
-                            append(params.currency)
-                        }
+                        withStyle(style = params.currencyTextStyle) { append(params.currency) }
                     }, textAlign = TextAlign.Center
                 )
-            } else {
-                Text(
-                    text = params.emptyDescription,
-                    style = ChiliTextStyle.get(
-                        textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                        color = ChiliTheme.Colors.ChiliValueTextColor
-                    )
-                )
-            }
+            } ?: Text(
+                text = params.emptyDescription,
+                style = params.noValueTextStyle
+            )
         }
     }
 }
+
+private fun calculateAngle(center: Offset, touchPoint: Offset): Float {
+    val deltaX = touchPoint.x - center.x
+    val deltaY = touchPoint.y - center.y
+    val angle = Math.toDegrees(atan2(deltaY.toDouble(), deltaX.toDouble())).toFloat()
+    return (angle + 360) % 360
+}
+
+private fun findCategoryByAngle(
+    items: List<PieChartData>,
+    totalAmount: Double?,
+    params: PieChartParams,
+    angle: Float
+): PieChartData? {
+    var startAngle = params.pieStartAngle
+    items.forEach { item ->
+        val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }?.toFloat()
+            ?: params.pieChartMaxAngle
+
+        if (angle in startAngle..(startAngle + sweepAngle)) {
+            return item
+        }
+
+        startAngle = if (startAngle + sweepAngle > 360) {
+            (startAngle + sweepAngle) - 360
+        } else {
+            startAngle + sweepAngle
+        }
+    }
+    return null
+}
+
+
+private fun formatAmount(totalAmount: Double?) = ("$totalAmount ").replace(".", ",")
+
+private fun hasNonZeroFraction(totalAmount: Double) = totalAmount % 1 != 0.0
 
 @Preview(showBackground = true)
 @Composable
 private fun PieChart_Preview() {
     val listOfCategories = listOf(
-        SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 250f),
-        SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
+        SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
+        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 20f),
+        SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 180f),
+        SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
+        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 150f),
         SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 183f),
+        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
     )
     ChiliTheme {
         Column(
             Modifier
-                .size(300.dp)
-                .padding(32.dp), verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PieChart(
-                totalAmount = 1233.44,
+                totalAmount = 900.44,
                 categoriesList = listOfCategories,
-                params = PieChartParams.Default
+                params = PieChartParams.Default,
+                onSliceClick = { println("clicked $it") }
             )
         }
     }
