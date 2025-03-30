@@ -32,7 +32,7 @@ data class PieChartParams(
                 description = "Все расходы",
                 emptyDescription = "Нет расходов",
                 currency = "с",
-                pieStartAngle = 90f,
+                pieStartAngle = 270f,
                 pieChartMaxAngle = 360f,
                 strokeWidthDivider = 8,
                 descriptionTextStyle = SpanStyle(
