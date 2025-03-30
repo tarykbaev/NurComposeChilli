@@ -1,6 +1,9 @@
 package com.design.composechili.components.common.pieChart
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
@@ -57,17 +61,22 @@ fun PieChart(
     }
 
     Box(
-        modifier = modifier,
+        modifier = Modifier
+            .size(params.size + (params.size / params.strokeWidthDivider))
+            .border(2.dp, Color.Green)
+            .background(Color.Cyan),
         contentAlignment = Alignment.Center
     ) {
-        var startAngle = params.pieStartAngle
         Canvas(
-            modifier = Modifier
+            modifier = modifier
+                .border(2.dp, Color.Red) // Показывает границы
                 .size(params.size)
                 .pointerInput(canvasItems) {
                     detectTapGestures(onTap = { offset ->
                         val center = Offset((params.size.toPx() / 2), (params.size.toPx() / 2))
                         val angle = calculateAngle(center, offset)
+                        Log.d("@@@", "Touch: ${offset.x}, ${offset.y}, Center: ${center.x}, ${center.y}")
+                        Log.d("@@@", "PieChart angle: $angle")
                         selectedCategory = findCategoryByAngle(
                             totalAmount = totalAmount,
                             params = params,
@@ -78,15 +87,17 @@ fun PieChart(
                     })
                 }
         ) {
+            var startAngle = params.pieStartAngle
             canvasItems.forEach { item ->
                 val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
                     ?: params.pieChartMaxAngle
                 val isSelected = item == selectedCategory
-                val strokeWidth = if (isSelected) ((params.size / params.strokeWidthDivider) * 1.3f).toPx()
-                else (params.size / params.strokeWidthDivider).toPx()
-                val radius = (params.size.value - params.strokeWidthDivider) * 2
-                val topLeftOffset = Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
-
+                val strokeWidth =
+                    if (isSelected) ((params.size.toPx() / params.strokeWidthDivider.toFloat()) * 1.3f)
+                    else (params.size.toPx() / params.strokeWidthDivider.toFloat())
+                val radius = (params.size.toPx() - (params.size.toPx() / params.strokeWidthDivider.toFloat()))
+                val topLeftOffset =
+                    Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
 
                 drawArc(
                     color = item.color,
@@ -129,9 +140,12 @@ fun PieChart(
 
 private fun calculateAngle(center: Offset, touchPoint: Offset): Float {
     val deltaX = touchPoint.x - center.x
-    val deltaY = touchPoint.y - center.y
-    val angle = Math.toDegrees(atan2(deltaY.toDouble(), deltaX.toDouble())).toFloat()
-    return (angle + 360) % 360
+    val deltaY = center.y - touchPoint.y
+    var angle = Math.toDegrees(atan2(deltaY.toDouble(), deltaX.toDouble())).toFloat()
+
+    angle = (angle + 360) % 360
+
+    return 360 - angle
 }
 
 private fun findCategoryByAngle(
@@ -141,23 +155,25 @@ private fun findCategoryByAngle(
     angle: Float
 ): PieChartData? {
     var startAngle = params.pieStartAngle
+
     items.forEach { item ->
         val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }?.toFloat()
             ?: params.pieChartMaxAngle
 
-        if (angle in startAngle..(startAngle + sweepAngle)) {
-            return item
-        }
-
-        startAngle = if (startAngle + sweepAngle > 360) {
-            (startAngle + sweepAngle) - 360
+        val endAngle = (startAngle + sweepAngle) % 360
+        if (startAngle < endAngle) {
+            if (angle in startAngle..endAngle) {
+                return item
+            }
         } else {
-            startAngle + sweepAngle
+            if (angle in startAngle..360f || angle in 0f..endAngle) {
+                return item
+            }
         }
+        startAngle = endAngle
     }
     return null
 }
-
 
 private fun formatAmount(totalAmount: Double?) = ("$totalAmount ").replace(".", ",")
 
@@ -169,14 +185,14 @@ private fun PieChart_Preview() {
     val listOfCategories = listOf(
         SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
         SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
-        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 20f),
+        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 250f),
+        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 220f),
         SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 180f),
         SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
         SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 150f),
         SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
     )
     ChiliTheme {
         Column(
