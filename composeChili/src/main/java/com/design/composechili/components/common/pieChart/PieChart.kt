@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,7 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
@@ -32,6 +35,7 @@ import com.design.composechili.components.common.pieChart.model.PieChartParams
 import com.design.composechili.components.common.pieChart.model.SpendingCategory
 import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.utils.pxToDp
 import kotlin.math.atan2
 import kotlin.math.roundToInt
 
@@ -42,10 +46,8 @@ fun PieChart(
     categoriesList: List<SpendingCategory>,
     modifier: Modifier = Modifier,
     params: PieChartParams,
-    onSliceClick: (EnumSpendingCategory) -> Unit = {}
+    onSliceClick: (EnumSpendingCategory) -> Unit = {},
 ) {
-
-    var selectedCategory by remember { mutableStateOf<PieChartData?>(null) }
 
     val canvasItems = categoriesList.map {
         PieChartData(
@@ -55,67 +57,98 @@ fun PieChart(
         )
     }
 
-    Box(contentAlignment = Alignment.Center) {
-        Canvas(
-            modifier = modifier
-                .size(params.size)
-                .pointerInput(canvasItems) {
-                    detectTapGestures(onTap = { offset ->
-                        val centerPoint = (params.size.toPx() / 2)
-                        val center = Offset(centerPoint, centerPoint)
-                        val angle = calculateAngle(center, offset)
-                        selectedCategory = findCategoryByAngle(
-                            totalAmount = totalAmount,
-                            params = params,
-                            items = canvasItems,
-                            angle = angle
-                        )
-                        onSliceClick(selectedCategory?.type ?: EnumSpendingCategory.NONE)
-                    })
-                }
-        ) {
-            var startAngle = params.pieStartAngle
-            canvasItems.forEach { item ->
-                val sweepAngle = calculateSweepAngle(totalAmount, item, params.pieChartMaxAngle)
-                val isSelected = item == selectedCategory
-                val strokeWidth =
-                    if (isSelected) ((params.size.toPx() / params.strokeWidthDivider.toFloat()) * 1.3f)
-                    else (params.size.toPx() / params.strokeWidthDivider.toFloat())
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .clip(RoundedCornerShape(params.size))
+            .padding(params.strokeWidthDivider.pxToDp())
+    ) {
+        PieChartCanvas(modifier, params, canvasItems, totalAmount, onSliceClick)
+        PieChartText(totalAmount, params)
+    }
+}
 
-                drawArc(
-                    color = item.color,
-                    startAngle = startAngle,
-                    sweepAngle = sweepAngle,
-                    useCenter = false,
-                    style = Stroke(width = strokeWidth),
-                )
-                startAngle += sweepAngle
+@Composable
+private fun PieChartCanvas(
+    modifier: Modifier,
+    params: PieChartParams,
+    canvasItems: List<PieChartData>,
+    totalAmount: Double?,
+    onSliceClick: (EnumSpendingCategory) -> Unit,
+) {
+    var selectedCategory by remember { mutableStateOf<PieChartData?>(null) }
+
+    Canvas(
+        modifier = modifier
+            .size(params.size)
+            .pointerInput(canvasItems) {
+                detectTapGestures(onTap = { offset ->
+                    val center = Offset((params.size.toPx() / 2), (params.size.toPx() / 2))
+                    val angle = calculateAngle(center, offset)
+                    val foundCategory = findCategoryByAngle(
+                        totalAmount = totalAmount,
+                        params = params,
+                        items = canvasItems,
+                        angle = angle
+                    )
+                    selectedCategory = foundCategory
+                    onSliceClick(foundCategory?.type ?: EnumSpendingCategory.NONE)
+                })
             }
-        }
+    ) {
+        var startAngle = params.pieStartAngle
+        canvasItems.forEach { item ->
+            val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
+                ?: params.pieChartMaxAngle
+            val isSelected = item == selectedCategory
+            val strokeWidth =
+                if (isSelected) ((params.size.toPx() / params.strokeWidthDivider.toFloat()) * 1.3f)
+                else (params.size.toPx() / params.strokeWidthDivider.toFloat())
+            val radius = (params.size.toPx() - (params.size.toPx() / params.strokeWidthDivider.toFloat()))
+            val topLeftOffset =
+                Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
 
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            totalAmount?.let {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(style = params.descriptionTextStyle) { append("${params.description}\n") }
-                        withStyle(style = params.amountTextStyle) {
-                            if (hasNonZeroFraction(totalAmount)) {
-                                append(formatAmount(totalAmount))
-                            } else {
-                                append("${totalAmount.roundToInt()} ")
-                            }
-                        }
-                        withStyle(style = params.currencyTextStyle) { append(params.currency) }
-                    }, textAlign = TextAlign.Center
-                )
-            } ?: Text(
-                text = params.emptyDescription,
-                style = params.noValueTextStyle
+            drawArc(
+                color = item.color,
+                startAngle = startAngle,
+                sweepAngle = sweepAngle.toFloat(),
+                useCenter = false,
+                style = Stroke(width = strokeWidth),
+                size = Size(radius, radius),
+                topLeft = topLeftOffset,
             )
+            startAngle += sweepAngle.toFloat()
         }
+    }
+}
+
+@Composable
+private fun PieChartText(
+    totalAmount: Double?,
+    params: PieChartParams
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        totalAmount?.let {
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(style = params.descriptionTextStyle) { append("${params.description}\n") }
+                    withStyle(style = params.amountTextStyle) {
+                        if (hasNonZeroFraction(totalAmount)) {
+                            append(formatAmount(totalAmount))
+                        } else {
+                            append("${totalAmount.roundToInt()} ")
+                        }
+                    }
+                    withStyle(style = params.currencyTextStyle) { append(params.currency) }
+                }, textAlign = TextAlign.Center
+            )
+        } ?: Text(
+            text = params.emptyDescription,
+            style = params.noValueTextStyle
+        )
     }
 }
 
@@ -138,7 +171,9 @@ private fun findCategoryByAngle(
     var startAngle = params.pieStartAngle
 
     items.forEach { item ->
-        val sweepAngle = calculateSweepAngle(totalAmount, item, params.pieChartMaxAngle)
+        val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }?.toFloat()
+            ?: params.pieChartMaxAngle
+
         val endAngle = (startAngle + sweepAngle) % 360
         if (startAngle < endAngle) {
             if (angle in startAngle..endAngle) {
@@ -154,14 +189,6 @@ private fun findCategoryByAngle(
     return null
 }
 
-private fun calculateSweepAngle(
-    totalAmount: Double?,
-    item: PieChartData,
-    pieChartMaxAngle: Float
-): Float {
-    return totalAmount?.let { (item.amount * pieChartMaxAngle) / totalAmount }?.toFloat() ?: pieChartMaxAngle
-}
-
 private fun formatAmount(totalAmount: Double?) = ("$totalAmount ").replace(".", ",")
 
 private fun hasNonZeroFraction(totalAmount: Double) = totalAmount % 1 != 0.0
@@ -172,13 +199,13 @@ private fun PieChart_Preview() {
     val listOfCategories = listOf(
         SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
         SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
-        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 150f),
+        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
-        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100.44f),
-        SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
+        SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
+        SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 250f),
+        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50f),
         SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
     )
     ChiliTheme {
@@ -193,7 +220,7 @@ private fun PieChart_Preview() {
                 totalAmount = 900.44,
                 categoriesList = listOfCategories,
                 params = PieChartParams.Default,
-                onSliceClick = { println("clicked $it") }
+                onSliceClick = { println("clicked $it") },
             )
         }
     }
