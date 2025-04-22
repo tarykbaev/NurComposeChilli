@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.common.pieChart.model.DetalizationInfo
 import com.design.composechili.components.common.pieChart.model.EnumSpendingCategory
 import com.design.composechili.components.common.pieChart.model.PieChartData
 import com.design.composechili.components.common.pieChart.model.PieChartParams
@@ -42,20 +44,37 @@ import kotlin.math.roundToInt
 
 @Composable
 fun PieChart(
-    totalAmount: Double?,
-    categoriesList: List<SpendingCategory>,
+    detalizationInfo: DetalizationInfo?,
     modifier: Modifier = Modifier,
     params: PieChartParams,
     onSliceClick: (EnumSpendingCategory) -> Unit = {},
 ) {
-
-    val canvasItems = categoriesList.map {
+    val emptyCanvasItem = listOf(
         PieChartData(
-            it.type?.getColor() ?: colorResource(R.color.gray_6),
-            it.totalCharge ?: 0f,
-            it.type ?: EnumSpendingCategory.NONE
+            color = EnumSpendingCategory.NONE.getColor(),
+            amount = detalizationInfo?.totalAmount?.takeIf { it != 0.0 }?.toFloat() ?: 100.0f,
+            type = EnumSpendingCategory.NONE
         )
+    )
+
+    val pieChartData = detalizationInfo?.category?.map {
+        PieChartData(
+            color = it.type?.getColor() ?: colorResource(R.color.gray_6),
+            amount = it.totalCharge ?: 0f,
+            type = it.type ?: EnumSpendingCategory.NONE
+        )
+    }.orEmpty()
+
+    val canvasItems = when {
+        pieChartData.isEmpty() -> emptyCanvasItem
+        pieChartData.all { it.amount == 0f } -> emptyCanvasItem
+        detalizationInfo?.totalAmount == null || detalizationInfo.totalAmount == 0.0 -> emptyCanvasItem
+        else -> pieChartData
     }
+
+    val totalAmount = detalizationInfo?.totalAmount?.takeIf { it != 0.0 } ?: 100.0
+
+
 
     Box(
         contentAlignment = Alignment.Center,
@@ -64,7 +83,7 @@ fun PieChart(
             .padding(params.strokeWidthDivider.pxToDp())
     ) {
         PieChartCanvas(modifier, params, canvasItems, totalAmount, onSliceClick)
-        PieChartText(totalAmount, params)
+        PieChartText(detalizationInfo?.totalAmount, params)
     }
 }
 
@@ -131,23 +150,32 @@ private fun PieChartText(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        totalAmount?.let {
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(style = params.descriptionTextStyle) { append("${params.description}\n") }
-                    withStyle(style = params.amountTextStyle) {
-                        if (hasNonZeroFraction(totalAmount)) {
-                            append(formatAmount(totalAmount))
-                        } else {
-                            append("${totalAmount.roundToInt()} ")
-                        }
+        Text(
+            text = totalAmount?.let { amount ->
+                buildAnnotatedString {
+                    val description = if (amount != 0.0) params.description else params.emptyDescription
+                    withStyle(style = params.descriptionTextStyle) {
+                        append("$description\n")
                     }
-                    withStyle(style = params.currencyTextStyle) { append(params.currency) }
-                }, textAlign = TextAlign.Center
-            )
-        } ?: Text(
-            text = params.emptyDescription,
-            style = params.noValueTextStyle
+
+                    withStyle(style = params.amountTextStyle) {
+                        append(
+                            if (hasNonZeroFraction(amount)) formatAmount(amount)
+                            else "${amount.roundToInt()} "
+                        )
+                    }
+
+                    withStyle(style = params.currencyTextStyle) {
+                        append(params.currency)
+                    }
+                }
+            } ?: buildAnnotatedString {
+                withStyle(style = params.noValueTextStyle.toSpanStyle()) {
+                    append(params.emptyDescription)
+                }
+            },
+            textAlign = TextAlign.Center,
+            style = if (totalAmount == null) params.noValueTextStyle else LocalTextStyle.current // Fallback style
         )
     }
 }
@@ -196,7 +224,7 @@ private fun hasNonZeroFraction(totalAmount: Double) = totalAmount % 1 != 0.0
 @Preview(showBackground = true)
 @Composable
 private fun PieChart_Preview() {
-    val listOfCategories = listOf(
+    val listOfItems = listOf(
         SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
         SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
         SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
@@ -205,9 +233,18 @@ private fun PieChart_Preview() {
         SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
         SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
         SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 250f),
-        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50f),
+        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f),
         SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
     )
+    val listOfCategories = remember {
+        mutableStateOf(
+            DetalizationInfo(
+                totalAmount = 900.44,
+                category = listOfItems
+            )
+        )
+    }
+
     ChiliTheme {
         Column(
             Modifier
@@ -217,8 +254,7 @@ private fun PieChart_Preview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PieChart(
-                totalAmount = 900.44,
-                categoriesList = listOfCategories,
+                detalizationInfo = DetalizationInfo(listOfCategories.value.totalAmount, listOfItems),
                 params = PieChartParams.Default,
                 onSliceClick = { println("clicked $it") },
             )
