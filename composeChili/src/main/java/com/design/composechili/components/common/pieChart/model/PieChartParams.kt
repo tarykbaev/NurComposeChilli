@@ -28,7 +28,7 @@ data class PieChartParams(
     companion object {
         val Default
             @Composable get() = PieChartParams(
-                size = 200.dp,
+                size = 180.dp,
                 description = "Все расходы",
                 emptyDescription = "Нет расходов",
                 currency = "с",
