@@ -25,7 +25,6 @@ import com.design.composechili.theme.ChiliTheme
  * @sample [ActionBottomSheetButton]
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionBottomSheetContent(
     modifier: Modifier = Modifier,
@@ -41,7 +40,6 @@ fun ActionBottomSheetContent(
             ActionBottomSheetButton(
                 item.title,
                 item.buttonStyle,
-
                 item.onClick
             )
         }

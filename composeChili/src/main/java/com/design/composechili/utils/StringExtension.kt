@@ -12,7 +12,3 @@ fun String.safeTake(n:Int): String {
         else -> this
     }
 }
-
-fun String.toLocalDate(): LocalDateTime{
-    return LocalDateTime.parse(this, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-}
