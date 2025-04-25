@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,10 +47,19 @@ import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.DATE_PATTERN
 import com.design.composechili.utils.expand
 import com.design.composechili.utils.formatByRegex
+import com.design.composechili.utils.getFirstDayOfMonth
+import com.design.composechili.utils.getFirstDayOfWeek
+import com.design.composechili.utils.getLastDayOfMonth
+import com.design.composechili.utils.getLastDayOfMonthNotInFuture
+import com.design.composechili.utils.getLastDayOfWeek
+import com.design.composechili.utils.getLastDayOfWeekNotInFuture
 import com.design.composechili.utils.hide
 import com.design.composechili.utils.softLayerShadow
 import com.design.composechili.utils.toLocalDate
+import com.design.composechili.utils.toLocalDateTime
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Composable
@@ -56,9 +68,8 @@ fun PeriodSelectablePieChart(
     detalizationPeriod: Pair<String, String>?,
     detalizationInfo: DetalizationInfo,
     onPeriodClick: () -> Unit,
-    periodType: PeriodType? = PeriodType.DAY,
-    nextPeriod: (startDate: String, endDate: String) -> Unit,
-    previousPeriod: (startDate: String, endDate: String) -> Unit,
+    periodType: PeriodType?,
+    dateRangeListener: (startDate: String, endDate: String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -73,8 +84,8 @@ fun PeriodSelectablePieChart(
                     .padding(start = dimensionResource(R.dimen.padding_8dp))
                     .clickable {
                         detalizationPeriod?.let {
-                            getPreviousPeriod(it.first, detalizationPeriod.second, periodType)
-                        }?.let { previousPeriod(it.first, it.second) }
+                            getPreviousPeriod(it.first, it.second, periodType)
+                        }?.let { dateRangeListener(it.first, it.second) }
                     },
                 painter = painterResource(R.drawable.chili_ic_chevron_left),
                 contentDescription = null
@@ -86,11 +97,12 @@ fun PeriodSelectablePieChart(
                     .rotate(180f)
                     .clickable(enabled = checkIfPeriodAvailable(detalizationPeriod)) {
                         detalizationPeriod?.let {
-                            getPreviousPeriod(it.first, detalizationPeriod.second, periodType)
-                        }?.let { previousPeriod(it.first, it.second) }
+                            getNextPeriod(it.first, detalizationPeriod.second, periodType)
+                        }?.let { dateRangeListener(it.first, it.second) }
                     },
                 painter = painterResource(R.drawable.chili_ic_chevron_left),
-                contentDescription = null
+                contentDescription = null,
+                colorFilter = disableColorFilter(detalizationPeriod)
             )
         }
         Column(
@@ -116,8 +128,13 @@ fun PeriodSelectablePieChart(
     }
 }
 
+private fun disableColorFilter(detalizationPeriod: Pair<String, String>?) =
+    if (checkIfPeriodAvailable(detalizationPeriod))
+        ColorFilter.lighting(Color.Transparent, Color.Transparent)
+    else ColorFilter.lighting(Color.Gray, Color.Gray)
+
 private fun checkIfPeriodAvailable(detalizationPeriod: Pair<String, String>?) =
-    detalizationPeriod?.let { it.second.toLocalDate() >= LocalDateTime.now() } ?: true
+    detalizationPeriod?.let { it.second.toLocalDate() < LocalDate.now() } ?: false
 
 private fun getPeriodText(detalizationPeriod: Pair<String, String>?): String {
     return when {
@@ -141,16 +158,42 @@ private fun getPreviousPeriod(
 ): Pair<String, String> {
     return when (periodType) {
         PeriodType.DAY -> Pair(
-            startDate.toLocalDate().minusDays(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDate().minusDays(1).formatByRegex(DATE_PATTERN))
+            startDate.toLocalDateTime().minusDays(1).formatByRegex(DATE_PATTERN),
+            endDate.toLocalDateTime().minusDays(1).formatByRegex(DATE_PATTERN)
+        )
+
         PeriodType.WEEK -> Pair(
-            startDate.toLocalDate().minusWeeks(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDate().minusDays(1).formatByRegex(DATE_PATTERN)
+            startDate.toLocalDateTime().minusWeeks(1).formatByRegex(DATE_PATTERN),
+            startDate.toLocalDate().minusWeeks(1).getLastDayOfWeek()
         )
 
         PeriodType.MONTH -> Pair(
-            startDate.toLocalDate().minusMonths(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDate().minusMonths(1).formatByRegex(DATE_PATTERN))
+            startDate.toLocalDateTime().minusMonths(1).formatByRegex(DATE_PATTERN),
+            endDate.toLocalDateTime().minusMonths(1).getLastDayOfMonth()
+        )
+    }
+}
+
+private fun getNextPeriod(
+    startDate: String,
+    endDate: String,
+    periodType: PeriodType
+): Pair<String, String> {
+    return when (periodType) {
+        PeriodType.DAY -> Pair(
+            startDate.toLocalDateTime().plusDays(1).formatByRegex(DATE_PATTERN),
+            endDate.toLocalDateTime().plusDays(1).formatByRegex(DATE_PATTERN)
+        )
+
+        PeriodType.WEEK -> Pair(
+            startDate.toLocalDateTime().plusWeeks(1).formatByRegex(DATE_PATTERN),
+            startDate.toLocalDate().plusWeeks(1).getLastDayOfWeekNotInFuture()
+        )
+
+        PeriodType.MONTH -> Pair(
+            startDate.toLocalDateTime().plusMonths(1).formatByRegex(DATE_PATTERN),
+            endDate.toLocalDateTime().plusMonths(1).getLastDayOfMonthNotInFuture()
+        )
     }
 }
 
@@ -158,89 +201,14 @@ private fun getPreviousPeriod(
 @Preview(showBackground = true)
 @Composable
 fun PeriodSelectablePieChart_Preview() {
-    val listOfItems = listOf(
-        SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
-        SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
-        SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
-        SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
-        SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
-        SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 250f),
-        SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f),
-        SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
-    )
-    val listOfCategories = remember {
-        mutableStateOf(
-            DetalizationInfo(
-                totalAmount = 900.44,
-                category = listOfItems
-            )
-        )
-    }
-
-    val dateState = remember { mutableStateOf<Pair<String, String>?>(null) }
-    val showDatePickerDialog = remember { mutableStateOf(false) }
+    val uiState = remember { mutableStateOf(DetalizationUiState()) }
 
     val coScope = rememberCoroutineScope()
-    val sheetState = getBottomSheetState().apply {
-        coScope.launch { bottomSheetState.hide() }
-    }
+    val sheetState = getBottomSheetState().apply { coScope.launch { bottomSheetState.hide() } }
+
     ChiliTheme {
         BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
-            ActionBottomSheetContent(
-                buttons = listOf(
-                    ActionBottomSheetParams(
-                        title = "Today",
-                        buttonStyle = ChiliButtonStyle.Primary
-                    ) {
-                        coScope.launch {
-                            sheetState.hide()
-                            //todo will be implemented vm logic to get info from server
-                            listOfCategories.value = DetalizationInfo(0.0, emptyList())
-                            dateState.value = Pair(
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                            )
-                        }
-                    },
-                    ActionBottomSheetParams(
-                        title = "One week",
-                        buttonStyle = ChiliButtonStyle.Primary
-                    ) {
-                        coScope.launch {
-                            sheetState.hide()
-                            listOfCategories.value = DetalizationInfo(350.44, listOfItems.takeLast(5))
-                            dateState.value = Pair(
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                                LocalDateTime.now().plusWeeks(1).formatByRegex(DATE_PATTERN),
-                            )
-                        }
-                    },
-                    ActionBottomSheetParams(
-                        title = "One Month",
-                        buttonStyle = ChiliButtonStyle.Primary
-                    ) {
-                        coScope.launch {
-                            sheetState.hide();listOfCategories.value =
-                            DetalizationInfo(450.0, listOfItems.take(5))
-                            dateState.value = Pair(
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                                LocalDateTime.now().plusMonths(1).formatByRegex(DATE_PATTERN),
-                            )
-                        }
-                    },
-                    ActionBottomSheetParams(
-                        title = "Choose period manually",
-                        buttonStyle = ChiliButtonStyle.Primary
-                    ) {
-                        coScope.launch {
-                            sheetState.hide()
-                            showDatePickerDialog.value = true
-                        }
-                    },
-                )
-            )
+            DatePickerBottomSheet(coScope, sheetState, uiState.value) { uiState.value = it }
         }) {
             Box(
                 modifier = Modifier
@@ -250,45 +218,168 @@ fun PeriodSelectablePieChart_Preview() {
             ) {
                 PeriodSelectablePieChart(
                     modifier = Modifier.fillMaxWidth(),
-                    detalizationPeriod = dateState.value,
-                    detalizationInfo = listOfCategories.value,
+                    detalizationPeriod = uiState.value.dateRange,
+                    detalizationInfo = uiState.value.detalizationInfo,
                     onPeriodClick = { coScope.launch { sheetState.expand() } },
-                    previousPeriod = { start, end -> },
-                    nextPeriod = { start, end -> }
+                    dateRangeListener = { start, end ->
+                        uiState.value = uiState.value.copy(dateRange = Pair(start, end))
+                    },
+                    periodType = uiState.value.periodType
                 )
-                if (showDatePickerDialog.value) {
-                    ChiliDatePickerDialog(
-                        modifier = Modifier,
-                        onDismissRequest = { },
-                        datePickedParams = ChiliDatePickerParams(
-                            firstDate = DatePickerTimeParams(
-                                startDateTime = LocalDateTime.now(),
-                                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
-                                maxDateTime = LocalDateTime.of(2100, 1, 1, 0, 0),
-                            ),
-                            secondDate = DatePickerTimeParams(
-                                startDateTime = LocalDateTime.now(),
-                                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
-                                maxDateTime = LocalDateTime.of(2100, 1, 1, 0, 0),
-                            ),
-                        ),
-                        startDateTitle = "Начальная Дата",
-                        endDateTitle = "Конечная Дата",
-                        submitBtnTitle = "Готово",
-                        calendarLocale = "ru",
-                        onSubmitBtn = { startDate, endDate ->
-                            if (startDate != null && endDate != null) {
-                                dateState.value = Pair(
-                                    startDate.formatByRegex(DATE_PATTERN),
-                                    endDate.formatByRegex(DATE_PATTERN),
-                                )
-                                listOfCategories.value = DetalizationInfo(900.44, listOfItems)
-                                showDatePickerDialog.value = false
-                            }
-                        },
-                    )
+                if (uiState.value.showDatePicker) {
+                    DatePickerDialog(uiState)
                 }
             }
         }
     }
 }
+
+@Composable
+private fun DatePickerDialog(uiState: MutableState<DetalizationUiState>) {
+    ChiliDatePickerDialog(
+        modifier = Modifier,
+        onDismissRequest = { },
+        datePickedParams = ChiliDatePickerParams(
+            firstDate = DatePickerTimeParams(
+                startDateTime = LocalDateTime.now(),
+                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
+                maxDateTime = LocalDateTime.now(),
+            ),
+            secondDate = DatePickerTimeParams(
+                startDateTime = LocalDateTime.now(),
+                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
+                maxDateTime = LocalDateTime.now(),
+            ),
+        ),
+        startDateTitle = "Начальная Дата",
+        endDateTitle = "Конечная Дата",
+        submitBtnTitle = "Готово",
+        calendarLocale = "ru",
+        onSubmitBtn = { startDate, endDate ->
+            if (startDate != null && endDate != null) {
+                uiState.value = uiState.value.copy(
+                    dateRange = Pair(
+                        startDate.formatByRegex(DATE_PATTERN),
+                        endDate.formatByRegex(DATE_PATTERN),
+                    ),
+                    detalizationInfo = DetalizationInfo(
+                        900.44,
+                        uiState.value.detalizationInfo.category
+                    ),
+                    periodType = null
+                )
+                uiState.value = uiState.value.copy(showDatePicker = false)
+            }
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DatePickerBottomSheet(
+    coScope: CoroutineScope,
+    sheetState: BottomSheetScaffoldState,
+    uiState: DetalizationUiState,
+    onStateChange: (DetalizationUiState) -> Unit
+) {
+    ActionBottomSheetContent(
+        buttons = listOf(
+            ActionBottomSheetParams(
+                title = "Today",
+                buttonStyle = ChiliButtonStyle.Primary
+            ) {
+                coScope.launch {
+                    sheetState.hide()
+                    //todo will be implemented vm logic to get info from server
+                    onStateChange(
+                        DetalizationUiState().copy(
+                            detalizationInfo = DetalizationInfo(
+                                totalAmount = 0.0,
+                                category = emptyList()
+                            ),
+                            dateRange = Pair(
+                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
+                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
+                            ),
+                            periodType = PeriodType.DAY
+                        )
+                    )
+                }
+            },
+            ActionBottomSheetParams(
+                title = "One week",
+                buttonStyle = ChiliButtonStyle.Primary
+            ) {
+                coScope.launch {
+                    sheetState.hide()
+                    onStateChange(
+                        DetalizationUiState().copy(
+                            detalizationInfo = DetalizationInfo(
+                                totalAmount = 350.44,
+                                category = uiState.detalizationInfo.category?.takeLast(5)
+                            ),
+                            dateRange = Pair(
+                                LocalDate.now().getFirstDayOfWeek(),
+                                LocalDate.now().getLastDayOfWeekNotInFuture()
+                            ),
+                            periodType = PeriodType.WEEK
+                        )
+                    )
+                }
+            },
+            ActionBottomSheetParams(
+                title = "One Month",
+                buttonStyle = ChiliButtonStyle.Primary
+            ) {
+                coScope.launch {
+                    sheetState.hide()
+                    onStateChange(
+                        DetalizationUiState().copy(
+                            detalizationInfo = DetalizationInfo(
+                                totalAmount = 450.0,
+                                category = uiState.detalizationInfo.category?.take(5)
+                            ),
+                            dateRange = Pair(
+                                LocalDateTime.now().getFirstDayOfMonth(),
+                                LocalDateTime.now().getLastDayOfMonthNotInFuture(),
+                            ),
+                            periodType = PeriodType.MONTH
+                        )
+                    )
+                }
+            },
+            ActionBottomSheetParams(
+                title = "Choose period manually",
+                buttonStyle = ChiliButtonStyle.Primary
+            ) {
+                coScope.launch {
+                    sheetState.hide()
+                    onStateChange(DetalizationUiState().copy(showDatePicker = true))
+                }
+            },
+        )
+    )
+}
+
+data class DetalizationUiState(
+    val detalizationInfo: DetalizationInfo = DetalizationInfo(
+        totalAmount = 900.44, category = listOf(
+            SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
+            SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
+            SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
+            SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
+            SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
+            SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
+            SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
+            SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 250f),
+            SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f),
+            SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
+        )
+    ),
+    val dateRange: Pair<String, String> = Pair(
+        LocalDateTime.now().formatByRegex(DATE_PATTERN),
+        LocalDateTime.now().formatByRegex(DATE_PATTERN)
+    ),
+    val showDatePicker: Boolean = false,
+    val periodType: PeriodType? = PeriodType.DAY,
+)
