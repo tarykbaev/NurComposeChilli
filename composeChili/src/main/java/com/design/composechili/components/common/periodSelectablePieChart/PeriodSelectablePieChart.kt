@@ -1,20 +1,28 @@
 package com.design.composechili.components.common.periodSelectablePieChart
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,17 +43,21 @@ import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBo
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
 import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
+import com.design.composechili.components.card.AccentCardPreview
 import com.design.composechili.components.common.pieChart.PieChart
 import com.design.composechili.components.common.pieChart.model.DetalizationInfo
 import com.design.composechili.components.common.pieChart.model.EnumSpendingCategory
+import com.design.composechili.components.common.pieChart.model.EnumSpendingSubCategory
 import com.design.composechili.components.common.pieChart.model.PieChartParams
 import com.design.composechili.components.common.pieChart.model.SpendingCategory
+import com.design.composechili.components.common.pieChart.model.SpendingSubCategory
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
 import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.DATE_PATTERN
+import com.design.composechili.utils.addCurrency
 import com.design.composechili.utils.expand
 import com.design.composechili.utils.formatByRegex
 import com.design.composechili.utils.getFirstDayOfMonth
@@ -205,6 +218,7 @@ fun PeriodSelectablePieChart_Preview() {
 
     val coScope = rememberCoroutineScope()
     val sheetState = getBottomSheetState().apply { coScope.launch { bottomSheetState.hide() } }
+    val expandedState = remember { mutableStateOf(false) }
 
     ChiliTheme {
         BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
@@ -213,21 +227,111 @@ fun PeriodSelectablePieChart_Preview() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
                     .softLayerShadow()
             ) {
-                PeriodSelectablePieChart(
-                    modifier = Modifier.fillMaxWidth(),
-                    detalizationPeriod = uiState.value.dateRange,
-                    detalizationInfo = uiState.value.detalizationInfo,
-                    onPeriodClick = { coScope.launch { sheetState.expand() } },
-                    dateRangeListener = { start, end ->
-                        uiState.value = uiState.value.copy(dateRange = Pair(start, end))
-                    },
-                    periodType = uiState.value.periodType
-                )
-                if (uiState.value.showDatePicker) {
-                    DatePickerDialog(uiState)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    PeriodSelectablePieChart(
+                        modifier = Modifier.fillMaxWidth(),
+                        detalizationPeriod = uiState.value.dateRange,
+                        detalizationInfo = uiState.value.detalizationInfo,
+                        onPeriodClick = { coScope.launch { sheetState.expand() } },
+                        dateRangeListener = { start, end ->
+                            uiState.value = uiState.value.copy(dateRange = Pair(start, end))
+                        },
+                        periodType = uiState.value.periodType
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = dimensionResource(R.dimen.padding_12dp))
+                            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
+                            .background(Color.White),
+                    ) {
+                        uiState.value.detalizationInfo.category?.let { category ->
+                            category.forEach { item ->
+                                key(item.hashCode()) {
+                                    Row(
+                                        modifier = Modifier
+                                            .clickable { expandedState.value = !expandedState.value }
+                                            .padding(dimensionResource(R.dimen.padding_12dp))
+                                            .fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Start
+                                    ) {
+                                        Canvas(
+                                            modifier = Modifier
+                                                .padding(horizontal = dimensionResource(R.dimen.padding_12dp))
+                                                .size(dimensionResource(R.dimen.view_12dp))
+                                        ) {
+                                            drawCircle(Color.Green)
+                                        }
+                                        Text(modifier = Modifier.weight(1f), text = item.name ?: "")
+                                        Text(
+                                            text = item.totalCharge?.addCurrency()
+                                                ?: buildAnnotatedString { append("") },
+                                            color = ChiliTheme.Colors.ChiliValueTextColor
+                                        )
+                                    }
+                                    if (uiState.value.detalizationInfo.category?.last() != item)
+                                        HorizontalDivider(
+                                            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_48dp)),
+                                            color = ChiliTheme.Colors.ChiliDividerColor
+                                        )
+                                    AnimatedVisibility(expandedState.value) {
+                                        item.subCategories?.let {
+                                            it.forEach { subCategory ->
+                                                Column(
+                                                    modifier = Modifier
+                                                        .padding(
+                                                            top = dimensionResource(R.dimen.padding_12dp),
+                                                            start = dimensionResource(R.dimen.padding_48dp),
+                                                            end = dimensionResource(R.dimen.padding_12dp),
+                                                        )
+                                                        .fillMaxWidth(),
+                                                ) {
+                                                    Row {
+                                                        Text(
+                                                            modifier = Modifier.weight(1f),
+                                                            text = subCategory.name ?: ""
+                                                        )
+                                                        Text(
+                                                            text = subCategory.charge?.addCurrency()
+                                                                ?: buildAnnotatedString { append("") },
+                                                            color = ChiliTheme.Colors.ChiliValueTextColor
+                                                        )
+                                                    }
+                                                    Row {
+                                                        Text(
+                                                            modifier = Modifier
+                                                                .weight(1f)
+                                                                .padding(top = dimensionResource(R.dimen.padding_8dp)),
+                                                            text = subCategory.getPaymentDate()
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        HorizontalDivider(
+                                            modifier = Modifier.padding(
+                                                top = dimensionResource(R.dimen.padding_4dp),
+                                                start = dimensionResource(R.dimen.padding_48dp)
+                                            ),
+                                            color = ChiliTheme.Colors.ChiliDividerColor
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    AccentCardPreview()
+                    if (uiState.value.showDatePicker) {
+                        DatePickerDialog(uiState)
+                    }
                 }
             }
         }
@@ -364,16 +468,84 @@ private fun DatePickerBottomSheet(
 data class DetalizationUiState(
     val detalizationInfo: DetalizationInfo = DetalizationInfo(
         totalAmount = 900.44, category = listOf(
-            SpendingCategory("", type = EnumSpendingCategory.SUBSCRIPTION_FEE, totalCharge = 10f),
-            SpendingCategory("", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
-            SpendingCategory("", type = EnumSpendingCategory.SERVICES, totalCharge = 100f),
-            SpendingCategory("", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
-            SpendingCategory("", type = EnumSpendingCategory.INTERNET_PACKAGE, totalCharge = 50f),
-            SpendingCategory("", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
-            SpendingCategory("", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
-            SpendingCategory("", type = EnumSpendingCategory.SMS, totalCharge = 250f),
-            SpendingCategory("", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f),
-            SpendingCategory("", type = EnumSpendingCategory.NONE, totalCharge = 0f),
+            SpendingCategory(
+                "Subscriptions",
+                type = EnumSpendingCategory.SUBSCRIPTION_FEE,
+                totalCharge = 10f
+            ),
+            SpendingCategory("Banking", type = EnumSpendingCategory.OMONEY, totalCharge = 190f),
+            SpendingCategory(
+                "Services", type = EnumSpendingCategory.SERVICES, totalCharge = 100f,
+                subCategories = listOf(
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум",
+                        charge = 7.32,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                    SpendingSubCategory(
+                        name = "O!TV Премиум 2",
+                        charge = 7.33,
+                        date = 1745535333000,
+                        subType = EnumSpendingSubCategory.INCOMING_CALL,
+                        amount = 0.0
+                    ),
+                )
+            ),
+            SpendingCategory("Internet", type = EnumSpendingCategory.INTERNET, totalCharge = 100f),
+            SpendingCategory(
+                "Internet Package",
+                type = EnumSpendingCategory.INTERNET_PACKAGE,
+                totalCharge = 50f
+            ),
+            SpendingCategory("Roaming", type = EnumSpendingCategory.ROAMING, totalCharge = 100f),
+            SpendingCategory("Out Voice", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f),
+            SpendingCategory("SMS", type = EnumSpendingCategory.SMS, totalCharge = 250f),
+            SpendingCategory("InnerVoice", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f),
+            SpendingCategory("Other", type = EnumSpendingCategory.NONE, totalCharge = 0f),
         )
     ),
     val dateRange: Pair<String, String> = Pair(
