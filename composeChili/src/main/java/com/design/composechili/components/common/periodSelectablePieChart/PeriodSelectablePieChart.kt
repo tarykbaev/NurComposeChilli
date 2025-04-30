@@ -2,6 +2,8 @@ package com.design.composechili.components.common.periodSelectablePieChart
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,11 +12,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,21 +31,21 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetContent
@@ -58,6 +60,7 @@ import com.design.composechili.components.common.pieChart.model.EnumSpendingSubC
 import com.design.composechili.components.common.pieChart.model.PieChartParams
 import com.design.composechili.components.common.pieChart.model.SpendingCategory
 import com.design.composechili.components.common.pieChart.model.SpendingSubCategory
+import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
 import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
@@ -225,7 +228,7 @@ fun PeriodSelectablePieChart_Preview() {
 
     val coScope = rememberCoroutineScope()
     val sheetState = getBottomSheetState().apply { coScope.launch { bottomSheetState.hide() } }
-    val expandedState = remember { mutableStateOf(false) }
+    val localDensity = LocalDensity.current
 
     ChiliTheme {
         BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
@@ -259,36 +262,42 @@ fun PeriodSelectablePieChart_Preview() {
                             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
                             .background(Color.White),
                     ) {
+
                         uiState.value.detalizationInfo.category?.let { category ->
-                            val expandedContentHeight = remember { mutableStateOf(0.dp) }
-                            val localDensity = LocalDensity.current
                             category.forEach { item ->
                                 key(item.hashCode()) {
+                                    val expandedState = remember { mutableStateOf(false) }
+                                    val expandedContentHeight = remember { mutableStateOf(0.dp) }
+                                    val animatedCanvasHeight by animateDpAsState(
+                                        targetValue = if (expandedState.value) expandedContentHeight.value else 12.dp,
+                                        animationSpec = tween(300)
+                                    )
+                                    val canvasColor = item.type?.getColor() ?: colorResource(R.color.gray_6)
                                     Row(
                                         modifier = Modifier
-                                            .onSizeChanged { size ->
-                                                expandedContentHeight.value =
-                                                    with(localDensity) { size.height.toDp() }
+                                            .clickable {
+                                                expandedState.value =
+                                                    if (item.subCategories.isNullOrEmpty()) expandedState.value else !expandedState.value
                                             }
-                                            .clickable { expandedState.value = !expandedState.value }
                                             .padding(dimensionResource(R.dimen.padding_12dp))
                                             .fillMaxWidth(),
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.Start
                                     ) {
-                                        Column(Modifier.fillMaxHeight()) {
+                                        Column {
                                             Canvas(
                                                 modifier = Modifier
                                                     .padding(horizontal = dimensionResource(R.dimen.padding_12dp))
-                                                    .size(
-                                                        DpSize(
-                                                            width = dimensionResource(R.dimen.view_12dp),
-                                                            height = if (expandedState.value) expandedContentHeight.value
-                                                            else dimensionResource( R.dimen.view_12dp )
-                                                        )
-                                                    )
+                                                    .width(dimensionResource(R.dimen.view_12dp))
+                                                    .height(animatedCanvasHeight)
                                                     .animateContentSize()
-                                            ) { drawCircle(Color.Green) }
+                                            ) {
+                                                if (expandedState.value)
+                                                    drawRoundRect(
+                                                        color = canvasColor,
+                                                        cornerRadius = CornerRadius(6.dp.toPx())
+                                                    ) else drawCircle(canvasColor)
+                                            }
                                         }
                                         Column {
                                             Row {
@@ -300,14 +309,18 @@ fun PeriodSelectablePieChart_Preview() {
                                                 )
                                             }
                                             AnimatedVisibility(expandedState.value) {
-                                                Column {
+                                                Column(modifier = Modifier.onSizeChanged { size ->
+                                                    if (expandedState.value) {
+                                                        expandedContentHeight.value =
+                                                            with(localDensity) { size.height.toDp() }
+                                                    }
+                                                }) {
                                                     item.subCategories?.let {
                                                         it.forEach { subCategory ->
                                                             Column(
                                                                 modifier = Modifier
                                                                     .padding(
                                                                         top = dimensionResource(R.dimen.padding_12dp),
-                                                                        end = dimensionResource(R.dimen.padding_12dp),
                                                                     )
                                                                     .fillMaxWidth(),
                                                             ) {
