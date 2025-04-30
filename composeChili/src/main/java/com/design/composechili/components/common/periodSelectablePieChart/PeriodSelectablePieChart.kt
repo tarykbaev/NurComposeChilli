@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -241,38 +242,40 @@ fun PeriodSelectablePieChart_Preview() {
         BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
             DatePickerBottomSheet(coScope, sheetState, uiState.value) { uiState.value = it }
         }) {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(dimensionResource(R.dimen.padding_12dp))
                     .softLayerShadow()
             ) {
-                PeriodSelectablePieChart(
-                    modifier = Modifier.fillMaxWidth(),
-                    detalizationPeriod = uiState.value.dateRange,
-                    detalizationInfo = uiState.value.detalizationInfo,
-                    onPeriodClick = { coScope.launch { sheetState.expand() } },
-                    dateRangeListener = { start, end ->
-                        uiState.value = uiState.value.copy(dateRange = Pair(start, end))
-                    },
-                    periodType = uiState.value.periodType,
-                    onSelectedCategory = { uiState.value = uiState.value.copy(selectedCategory = it) },
-                    selectedCategory = uiState.value.selectedCategory
-                )
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(vertical = dimensionResource(R.dimen.padding_8dp))
+                        .padding(dimensionResource(R.dimen.padding_8dp))
                         .verticalScroll(rememberScrollState())
                 ) {
+                    Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_16dp)))
+                    PeriodSelectablePieChart(
+                        modifier = Modifier.fillMaxWidth(),
+                        detalizationPeriod = uiState.value.dateRange,
+                        detalizationInfo = uiState.value.detalizationInfo,
+                        onPeriodClick = { coScope.launch { sheetState.expand() } },
+                        dateRangeListener = { start, end ->
+                            uiState.value = uiState.value.copy(dateRange = Pair(start, end))
+                        },
+                        periodType = uiState.value.periodType,
+                        onSelectedCategory = { uiState.value = uiState.value.copy(selectedCategory = it) },
+                        selectedCategory = uiState.value.selectedCategory
+                    )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.padding_12dp))
+                            .padding(vertical = dimensionResource(R.dimen.padding_16dp))
                             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
                             .background(Color.White),
                     ) {
-
+                        AnimatedVisibility(uiState.value.selectedCategory != null) {
+                            Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)))
+                        }
                         uiState.value.detalizationInfo.category?.let { category ->
                             category.forEach { item ->
                                 key(item.hashCode()) {
@@ -289,21 +292,23 @@ fun PeriodSelectablePieChart_Preview() {
                                     Row(
                                         modifier = Modifier
                                             .clickable {
-                                                if (uiState.value.selectedCategory == item.type){
-                                                    uiState.value = uiState.value.copy(selectedCategory = null)
-                                                }
-                                                else
-                                                uiState.value = uiState.value.copy(selectedCategory = item.type)
+                                                if (uiState.value.selectedCategory == item.type) {
+                                                    uiState.value =
+                                                        uiState.value.copy(selectedCategory = null)
+                                                } else
+                                                    uiState.value =
+                                                        uiState.value.copy(selectedCategory = item.type)
                                             }
-                                            .padding(vertical = dimensionResource(R.dimen.padding_4dp))
-                                            .padding(start = dimensionResource(R.dimen.padding_24dp))
+                                            .padding(top = dimensionResource(R.dimen.padding_4dp))
+                                            .padding(start = dimensionResource(R.dimen.padding_18dp))
                                             .fillMaxWidth(),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Column {
                                             Canvas(
                                                 modifier = Modifier
-                                                    .padding(end = dimensionResource(R.dimen.padding_16dp))
+                                                    .padding(end = dimensionResource(R.dimen.padding_18dp))
+                                                    .padding(bottom = dimensionResource(R.dimen.padding_4dp))
                                                     .width(dimensionResource(R.dimen.view_8dp))
                                                     .height(animatedCanvasHeight)
                                                     .animateContentSize()
@@ -316,22 +321,34 @@ fun PeriodSelectablePieChart_Preview() {
                                             }
                                         }
                                         Column {
-                                            Row(modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_12dp))) {
-                                                Text(modifier = Modifier.weight(1f), text = item.name ?: "")
-                                                Text(modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
+                                            Row(
+                                                modifier = Modifier.padding(
+                                                    top = dimensionResource(R.dimen.padding_12dp),
+                                                    bottom = dimensionResource(R.dimen.padding_14dp)
+                                                )
+                                            ) {
+                                                Text(
+                                                    modifier = Modifier.weight(1f),
+                                                    text = item.name ?: "",
+                                                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
+                                                )
+                                                Text(
+                                                    modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
                                                     text = item.totalCharge?.addCurrency()
                                                         ?: buildAnnotatedString { append("") },
-                                                    color = ChiliTheme.Colors.ChiliValueTextColor
+                                                    color = ChiliTheme.Colors.ChiliValueTextColor,
+                                                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
                                                 )
                                             }
                                             if (uiState.value.detalizationInfo.category?.last() != item)
                                                 HorizontalDivider(color = ChiliTheme.Colors.ChiliDividerColor)
 
                                             AnimatedVisibility(expandedState.value) {
+                                                val padding = dimensionResource(R.dimen.padding_4dp)
                                                 Column(modifier = Modifier.onSizeChanged { size ->
                                                     if (expandedState.value) {
                                                         expandedContentHeight.value =
-                                                            with(localDensity) { size.height.toDp() }
+                                                            with(localDensity) { size.height.toDp() + padding }
                                                     }
                                                 }) {
                                                     item.subCategories?.let {
@@ -339,15 +356,14 @@ fun PeriodSelectablePieChart_Preview() {
                                                             key(it.hashCode()) {
                                                                 Column(
                                                                     modifier = Modifier
-                                                                        .padding(
-                                                                            top = dimensionResource(R.dimen.padding_8dp),
-                                                                        )
+                                                                        .padding(top = dimensionResource(R.dimen.padding_8dp))
                                                                         .fillMaxWidth(),
                                                                 ) {
                                                                     Row {
                                                                         Text(
                                                                             modifier = Modifier.weight(1f),
-                                                                            text = subCategory.name ?: ""
+                                                                            text = subCategory.name ?: "",
+                                                                            fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
                                                                         )
                                                                         Text(
                                                                             modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
@@ -357,29 +373,22 @@ fun PeriodSelectablePieChart_Preview() {
                                                                                         ""
                                                                                     )
                                                                                 },
-                                                                            color = ChiliTheme.Colors.ChiliPrimaryTextColor
+                                                                            color = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                                                                            fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
                                                                         )
                                                                     }
                                                                     Row {
                                                                         Text(
                                                                             modifier = Modifier
                                                                                 .weight(1f)
-                                                                                .padding(
-                                                                                    top = dimensionResource(
-                                                                                        R.dimen.padding_8dp
-                                                                                    )
-                                                                                ),
+                                                                                .padding(top = dimensionResource(R.dimen.padding_8dp)),
                                                                             text = subCategory.getPaymentDate()
                                                                         )
                                                                     }
                                                                 }
                                                             }
                                                             HorizontalDivider(
-                                                                modifier = Modifier.padding(
-                                                                    top = dimensionResource(
-                                                                        R.dimen.padding_4dp
-                                                                    )
-                                                                ),
+                                                                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_4dp)),
                                                                 color = ChiliTheme.Colors.ChiliDividerColor
                                                             )
                                                         }
