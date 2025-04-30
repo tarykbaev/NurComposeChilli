@@ -48,7 +48,8 @@ fun PieChart(
     modifier: Modifier = Modifier,
     params: PieChartParams,
     onSliceClick: (EnumSpendingCategory) -> Unit = {},
-) {
+    selectedCategory: EnumSpendingCategory? = null,
+    ) {
     val emptyCanvasItem = listOf(
         PieChartData(
             color = EnumSpendingCategory.NONE.getColor(),
@@ -82,7 +83,7 @@ fun PieChart(
             .clip(RoundedCornerShape(params.size))
             .padding(params.strokeWidthDivider.pxToDp())
     ) {
-        PieChartCanvas(modifier, params, canvasItems, totalAmount, onSliceClick)
+        PieChartCanvas(modifier, params, canvasItems, totalAmount, onSliceClick, selectedCategory)
         PieChartText(detalizationInfo?.totalAmount, params)
     }
 }
@@ -94,8 +95,9 @@ private fun PieChartCanvas(
     canvasItems: List<PieChartData>,
     totalAmount: Double?,
     onSliceClick: (EnumSpendingCategory) -> Unit,
+    selectedCategory: EnumSpendingCategory?,
 ) {
-    var selectedCategory by remember { mutableStateOf<PieChartData?>(null) }
+    var selectedCategoryType by remember { mutableStateOf(selectedCategory) }
 
     Canvas(
         modifier = modifier
@@ -110,7 +112,7 @@ private fun PieChartCanvas(
                         items = canvasItems,
                         angle = angle
                     )
-                    selectedCategory = foundCategory
+                    selectedCategoryType = foundCategory?.type
                     onSliceClick(foundCategory?.type ?: EnumSpendingCategory.NONE)
                 })
             }
@@ -119,7 +121,7 @@ private fun PieChartCanvas(
         canvasItems.forEach { item ->
             val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
                 ?: params.pieChartMaxAngle
-            val isSelected = item == selectedCategory
+            val isSelected = item.type == selectedCategoryType
             val strokeWidth =
                 if (isSelected) ((params.size.toPx() / params.strokeWidthDivider.toFloat()) * 1.3f)
                 else (params.size.toPx() / params.strokeWidthDivider.toFloat())
@@ -257,6 +259,7 @@ private fun PieChart_Preview() {
                 detalizationInfo = DetalizationInfo(listOfCategories.value.totalAmount, listOfItems),
                 params = PieChartParams.Default,
                 onSliceClick = { println("clicked $it") },
+                selectedCategory = EnumSpendingCategory.SMS
             )
         }
     }
