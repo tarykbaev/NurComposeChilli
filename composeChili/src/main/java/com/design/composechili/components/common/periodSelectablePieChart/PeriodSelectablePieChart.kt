@@ -2,8 +2,12 @@ package com.design.composechili.components.common.periodSelectablePieChart
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,6 +52,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetContent
@@ -95,7 +100,7 @@ fun PeriodSelectablePieChart(
     onPeriodClick: () -> Unit,
     periodType: PeriodType?,
     dateRangeListener: (startDate: String, endDate: String) -> Unit,
-    onSelectedCategory: (EnumSpendingCategory) -> Unit,
+    onSelectedCategory: (EnumSpendingCategory?) -> Unit,
     selectedCategory: EnumSpendingCategory?,
 ) {
     Box(
@@ -138,7 +143,8 @@ fun PeriodSelectablePieChart(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
-                .padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
+                .padding(vertical = dimensionResource(id = R.dimen.padding_8dp))
+                .clickable(interactionSource = null, indication = null) { onSelectedCategory(null) },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -236,11 +242,10 @@ fun PeriodSelectablePieChart_Preview() {
 
     val coScope = rememberCoroutineScope()
     val sheetState = getBottomSheetState().apply { coScope.launch { bottomSheetState.hide() } }
-    val localDensity = LocalDensity.current
 
     ChiliTheme {
         BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
-            DatePickerBottomSheet(coScope, sheetState, uiState.value) { uiState.value = it }
+            DatePickerBottomSheet(coScope, sheetState) { uiState.value = it }
         }) {
             Box(
                 modifier = Modifier
@@ -266,146 +271,188 @@ fun PeriodSelectablePieChart_Preview() {
                         onSelectedCategory = { uiState.value = uiState.value.copy(selectedCategory = it) },
                         selectedCategory = uiState.value.selectedCategory
                     )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.padding_16dp))
-                            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
-                            .background(Color.White),
-                    ) {
-                        AnimatedVisibility(uiState.value.selectedCategory != null) {
-                            Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)))
-                        }
-                        uiState.value.detalizationInfo.category?.let { category ->
-                            category.forEach { item ->
-                                key(item.hashCode()) {
-                                    val expandedState = remember { mutableStateOf(false) }
-                                    expandedState.value = item.type == uiState.value.selectedCategory
-
-                                    val expandedContentHeight = remember { mutableStateOf(0.dp) }
-                                    val animatedCanvasHeight by animateDpAsState(
-                                        targetValue = if (expandedState.value) expandedContentHeight.value else 12.dp,
-                                        animationSpec = tween(300)
-                                    )
-                                    val canvasColor = item.type?.getColor() ?: colorResource(R.color.gray_6)
-
-                                    Row(
-                                        modifier = Modifier
-                                            .clickable {
-                                                if (uiState.value.selectedCategory == item.type) {
-                                                    uiState.value =
-                                                        uiState.value.copy(selectedCategory = null)
-                                                } else
-                                                    uiState.value =
-                                                        uiState.value.copy(selectedCategory = item.type)
-                                            }
-                                            .padding(top = dimensionResource(R.dimen.padding_4dp))
-                                            .padding(start = dimensionResource(R.dimen.padding_18dp))
-                                            .fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Column {
-                                            Canvas(
-                                                modifier = Modifier
-                                                    .padding(end = dimensionResource(R.dimen.padding_18dp))
-                                                    .padding(bottom = dimensionResource(R.dimen.padding_4dp))
-                                                    .width(dimensionResource(R.dimen.view_8dp))
-                                                    .height(animatedCanvasHeight)
-                                                    .animateContentSize()
-                                            ) {
-                                                if (expandedState.value)
-                                                    drawRoundRect(
-                                                        color = canvasColor,
-                                                        cornerRadius = CornerRadius(6.dp.toPx())
-                                                    ) else drawCircle(canvasColor)
-                                            }
-                                        }
-                                        Column {
-                                            Row(
-                                                modifier = Modifier.padding(
-                                                    top = dimensionResource(R.dimen.padding_12dp),
-                                                    bottom = dimensionResource(R.dimen.padding_14dp)
-                                                )
-                                            ) {
-                                                Text(
-                                                    modifier = Modifier.weight(1f),
-                                                    text = item.name ?: "",
-                                                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                                                )
-                                                Text(
-                                                    modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
-                                                    text = item.totalCharge?.addCurrency()
-                                                        ?: buildAnnotatedString { append("") },
-                                                    color = ChiliTheme.Colors.ChiliValueTextColor,
-                                                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                                                )
-                                            }
-                                            if (uiState.value.detalizationInfo.category?.last() != item)
-                                                HorizontalDivider(color = ChiliTheme.Colors.ChiliDividerColor)
-
-                                            AnimatedVisibility(expandedState.value) {
-                                                val padding = dimensionResource(R.dimen.padding_4dp)
-                                                Column(modifier = Modifier.onSizeChanged { size ->
-                                                    if (expandedState.value) {
-                                                        expandedContentHeight.value =
-                                                            with(localDensity) { size.height.toDp() + padding }
-                                                    }
-                                                }) {
-                                                    item.subCategories?.let {
-                                                        it.forEach { subCategory ->
-                                                            key(it.hashCode()) {
-                                                                Column(
-                                                                    modifier = Modifier
-                                                                        .padding(top = dimensionResource(R.dimen.padding_8dp))
-                                                                        .fillMaxWidth(),
-                                                                ) {
-                                                                    Row {
-                                                                        Text(
-                                                                            modifier = Modifier.weight(1f),
-                                                                            text = subCategory.name ?: "",
-                                                                            fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                                                                        )
-                                                                        Text(
-                                                                            modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
-                                                                            text = subCategory.charge?.addCurrency()
-                                                                                ?: buildAnnotatedString {
-                                                                                    append(
-                                                                                        ""
-                                                                                    )
-                                                                                },
-                                                                            color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                                                                            fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                                                                        )
-                                                                    }
-                                                                    Row {
-                                                                        Text(
-                                                                            modifier = Modifier
-                                                                                .weight(1f)
-                                                                                .padding(top = dimensionResource(R.dimen.padding_8dp)),
-                                                                            text = subCategory.getPaymentDate()
-                                                                        )
-                                                                    }
-                                                                }
-                                                            }
-                                                            HorizontalDivider(
-                                                                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_4dp)),
-                                                                color = ChiliTheme.Colors.ChiliDividerColor
-                                                            )
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    CardWithCategoriesDetails(uiState = uiState.value, onCategoryClick = {
+                        if (uiState.value.selectedCategory == it) {
+                            uiState.value =
+                                uiState.value.copy(selectedCategory = null)
+                        } else
+                            uiState.value =
+                                uiState.value.copy(selectedCategory = it)
+                    })
+                    //todo just for check if last items shown
                     AccentCardPreview()
                     if (uiState.value.showDatePicker) {
                         DatePickerDialog(uiState)
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CardWithCategoriesDetails(
+    uiState: DetalizationUiState,
+    onCategoryClick: (EnumSpendingCategory) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = dimensionResource(R.dimen.padding_16dp))
+            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
+            .background(Color.White),
+    ) {
+        AnimatedVisibility(uiState.selectedCategory != null) {
+            Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)))
+        }
+        uiState.detalizationInfo.category?.let { category ->
+            category.forEach { categoryDetails ->
+                key(categoryDetails.hashCode()) {
+                    CategoryList(
+                        categoryDetails = categoryDetails,
+                        selectedSpendingCategory = uiState.selectedCategory,
+                        onClick = { it?.let { onCategoryClick(it) } },
+                        checkIfLastItem = {
+                            uiState.detalizationInfo.category.last() != categoryDetails
+                        })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategoryList(
+    categoryDetails: SpendingCategory,
+    selectedSpendingCategory: EnumSpendingCategory?,
+    onClick: (EnumSpendingCategory?) -> Unit,
+    checkIfLastItem: (SpendingCategory) -> Boolean
+) {
+    val expandedState = remember { mutableStateOf(false) }
+    expandedState.value = categoryDetails.type == selectedSpendingCategory
+
+    val expandedContentHeight = remember { mutableStateOf(0.dp) }
+    val animatedCanvasHeight by animateDpAsState(
+        targetValue = if (expandedState.value) expandedContentHeight.value else 12.dp,
+        animationSpec = tween(300)
+    )
+    val canvasColor = categoryDetails.type?.getColor() ?: colorResource(R.color.gray_6)
+
+    Row(
+        modifier = Modifier
+            .clickable { onClick(categoryDetails.type) }
+            .padding(top = dimensionResource(R.dimen.padding_4dp))
+            .padding(start = dimensionResource(R.dimen.padding_18dp))
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column {
+            Canvas(
+                modifier = Modifier
+                    .padding(end = dimensionResource(R.dimen.padding_18dp))
+                    .padding(bottom = dimensionResource(R.dimen.padding_4dp))
+                    .width(dimensionResource(R.dimen.view_8dp))
+                    .height(animatedCanvasHeight)
+                    .animateContentSize()
+            ) {
+                if (expandedState.value)
+                    drawRoundRect(
+                        color = canvasColor,
+                        cornerRadius = CornerRadius(6.dp.toPx())
+                    ) else drawCircle(canvasColor)
+            }
+        }
+        Column {
+            Row(
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.padding_12dp),
+                    bottom = dimensionResource(R.dimen.padding_14dp)
+                )
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = categoryDetails.name ?: "",
+                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
+                )
+                Text(
+                    modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
+                    text = categoryDetails.totalCharge?.addCurrency()
+                        ?: buildAnnotatedString { append("") },
+                    color = ChiliTheme.Colors.ChiliValueTextColor,
+                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
+                )
+            }
+            if (checkIfLastItem(categoryDetails))
+                HorizontalDivider(color = ChiliTheme.Colors.ChiliDividerColor)
+
+            AnimatedVisibility(
+                visible = expandedState.value,
+                enter = fadeIn() + expandVertically(animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessVeryLow))
+            ) {
+                InternalCategoryDetailsRow(
+                    expandedState = expandedState.value,
+                    onExpandedContentHeightChange = { expandedContentHeight.value = it },
+                    categoryDetails = categoryDetails
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun InternalCategoryDetailsRow(
+    expandedState: Boolean,
+    onExpandedContentHeightChange: (Dp) -> Unit,
+    categoryDetails: SpendingCategory
+) {
+    val localDensity = LocalDensity.current
+    val padding = dimensionResource(R.dimen.padding_4dp)
+
+    Column(modifier = Modifier.onSizeChanged { size ->
+        if (expandedState) {
+            onExpandedContentHeightChange(with(localDensity) { size.height.toDp() + padding })
+        }
+    }) {
+        categoryDetails.subCategories?.let {
+            it.forEach { subCategory ->
+                key(it.hashCode()) {
+                    Column(
+                        modifier = Modifier
+                            .padding(top = dimensionResource(R.dimen.padding_8dp))
+                            .fillMaxWidth(),
+                    ) {
+                        Row {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = subCategory.name ?: "",
+                                fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
+                            )
+                            Text(
+                                modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
+                                text = subCategory.charge?.addCurrency()
+                                    ?: buildAnnotatedString {
+                                        append(
+                                            ""
+                                        )
+                                    },
+                                color = ChiliTheme.Colors.ChiliPrimaryTextColor,
+                                fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
+                            )
+                        }
+                        Row {
+                            Text(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(top = dimensionResource(R.dimen.padding_8dp)),
+                                text = subCategory.getPaymentDate()
+                            )
+                        }
+                    }
+                }
+                HorizontalDivider(
+                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_4dp)),
+                    color = ChiliTheme.Colors.ChiliDividerColor
+                )
             }
         }
     }
@@ -456,7 +503,6 @@ private fun DatePickerDialog(uiState: MutableState<DetalizationUiState>) {
 private fun DatePickerBottomSheet(
     coScope: CoroutineScope,
     sheetState: BottomSheetScaffoldState,
-    uiState: DetalizationUiState,
     onStateChange: (DetalizationUiState) -> Unit
 ) {
     ActionBottomSheetContent(
@@ -492,8 +538,8 @@ private fun DatePickerBottomSheet(
                     onStateChange(
                         DetalizationUiState().copy(
                             detalizationInfo = DetalizationInfo(
-                                totalAmount = 350.44,
-                                category = uiState.detalizationInfo.category?.takeLast(5)
+                                totalAmount = 450.44,
+                                category = DetalizationUiState().detalizationInfo.category?.takeLast(5)
                             ),
                             dateRange = Pair(
                                 LocalDate.now().getFirstDayOfWeek(),
@@ -514,7 +560,7 @@ private fun DatePickerBottomSheet(
                         DetalizationUiState().copy(
                             detalizationInfo = DetalizationInfo(
                                 totalAmount = 450.0,
-                                category = uiState.detalizationInfo.category?.take(5)
+                                category = DetalizationUiState().detalizationInfo.category?.take(5)
                             ),
                             dateRange = Pair(
                                 LocalDateTime.now().getFirstDayOfMonth(),

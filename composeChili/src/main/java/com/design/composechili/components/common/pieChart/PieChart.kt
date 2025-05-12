@@ -1,5 +1,8 @@
 package com.design.composechili.components.common.pieChart
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +27,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
@@ -50,7 +54,7 @@ fun PieChart(
     params: PieChartParams,
     onSliceClick: (EnumSpendingCategory) -> Unit = {},
     selectedCategory: EnumSpendingCategory? = null,
-    ) {
+) {
     val emptyCanvasItem = listOf(
         PieChartData(
             color = EnumSpendingCategory.NONE.getColor(),
@@ -76,8 +80,6 @@ fun PieChart(
 
     val totalAmount = detalizationInfo?.totalAmount?.takeIf { it != 0.0 } ?: 100.0
 
-
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -94,56 +96,58 @@ private fun PieChartCanvas(
     modifier: Modifier,
     params: PieChartParams,
     canvasItems: List<PieChartData>,
-    totalAmount: Double?,
+    totalAmount: Double,
     onSliceClick: (EnumSpendingCategory) -> Unit,
     selectedCategory: EnumSpendingCategory?,
 ) {
     var selectedCategoryType by remember { mutableStateOf(selectedCategory) }
+    val localDensity = LocalDensity.current
+    var startAngle = params.pieStartAngle
 
     LaunchedEffect(selectedCategory) {
         selectedCategoryType = selectedCategory
     }
+    canvasItems.forEach { item ->
+        val animatedStrokeWidth by animateFloatAsState(
+            targetValue = if (item.type != selectedCategoryType)
+                with(localDensity) { (params.size.toPx() / params.strokeWidthDivider.toFloat()) }
+            else
+                with(localDensity) { (params.size.toPx() / params.strokeWidthDivider.toFloat()) }.toFloat() * 1.3f,
+            animationSpec = tween(1000)
+        )
 
-    Canvas(
-        modifier = modifier
-            .size(params.size)
-            .pointerInput(canvasItems) {
-                detectTapGestures(onTap = { offset ->
-                    val center = Offset((params.size.toPx() / 2), (params.size.toPx() / 2))
-                    val angle = calculateAngle(center, offset)
-                    val foundCategory = findCategoryByAngle(
-                        totalAmount = totalAmount,
-                        params = params,
-                        items = canvasItems,
-                        angle = angle
-                    )
-                    selectedCategoryType = foundCategory?.type
-                    onSliceClick(foundCategory?.type ?: EnumSpendingCategory.NONE)
-                })
-            }
-    ) {
-        var startAngle = params.pieStartAngle
-        canvasItems.forEach { item ->
-            val sweepAngle = totalAmount?.let { (item.amount * params.pieChartMaxAngle) / totalAmount }
-                ?: params.pieChartMaxAngle
-            val isSelected = item.type == selectedCategoryType
-            val strokeWidth =
-                if (isSelected) ((params.size.toPx() / params.strokeWidthDivider.toFloat()) * 1.3f)
-                else (params.size.toPx() / params.strokeWidthDivider.toFloat())
+        Canvas(
+            modifier = modifier
+                .size(params.size)
+                .pointerInput(canvasItems) {
+                    detectTapGestures(onTap = { offset ->
+                        val center = Offset((params.size.toPx() / 2), (params.size.toPx() / 2))
+                        val angle = calculateAngle(center, offset)
+                        val foundCategory = findCategoryByAngle(
+                            totalAmount = totalAmount,
+                            params = params,
+                            items = canvasItems,
+                            angle = angle
+                        )
+                        selectedCategoryType = foundCategory?.type
+                        onSliceClick(foundCategory?.type ?: EnumSpendingCategory.NONE)
+                    })
+                }
+        ) {
+            val sweepAngle = ((item.amount * params.pieChartMaxAngle) / totalAmount).toFloat()
             val radius = (params.size.toPx() - (params.size.toPx() / params.strokeWidthDivider.toFloat()))
-            val topLeftOffset =
-                Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
+            val topLeftOffset = Offset((params.size.toPx() - radius) / 2, (params.size.toPx() - radius) / 2)
 
             drawArc(
                 color = item.color,
                 startAngle = startAngle,
-                sweepAngle = sweepAngle.toFloat(),
+                sweepAngle = sweepAngle,
                 useCenter = false,
-                style = Stroke(width = strokeWidth),
+                style = Stroke(width = animatedStrokeWidth),
                 size = Size(radius, radius),
                 topLeft = topLeftOffset,
             )
-            startAngle += sweepAngle.toFloat()
+            startAngle += sweepAngle
         }
     }
 }
