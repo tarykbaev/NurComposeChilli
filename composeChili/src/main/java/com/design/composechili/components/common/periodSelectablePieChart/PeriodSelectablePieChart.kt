@@ -12,6 +12,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ripple
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -113,27 +115,41 @@ fun PeriodSelectablePieChart(
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(start = dimensionResource(R.dimen.padding_8dp))
-                    .size(dimensionResource(R.dimen.view_16dp))
-                    .clickable {
+                    .clickable(
+                        enabled = true,
+                        indication = ripple(),
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {
                         detalizationPeriod?.let {
                             getPreviousPeriod(it.first, it.second, periodType)
                         }?.let { dateRangeListener(it.first, it.second) }
-                    },
+                        onSelectedCategory(null)
+                    }
+                    .background(Color.Transparent)
+                    .padding(vertical = dimensionResource(R.dimen.padding_48dp))
+                    .padding(horizontal = dimensionResource(R.dimen.padding_8dp))
+                    .size(dimensionResource(R.dimen.view_16dp)),
                 painter = painterResource(R.drawable.chili_ic_chevron_left),
                 contentDescription = null
             )
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = dimensionResource(R.dimen.padding_8dp))
-                    .size(dimensionResource(R.dimen.view_16dp))
-                    .rotate(180f)
-                    .clickable(enabled = checkIfPeriodAvailable(detalizationPeriod)) {
+                    .clickable(
+                        enabled = checkIfPeriodAvailable(detalizationPeriod),
+                        indication = ripple(),
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {
                         detalizationPeriod?.let {
                             getNextPeriod(it.first, detalizationPeriod.second, periodType)
                         }?.let { dateRangeListener(it.first, it.second) }
-                    },
+                        onSelectedCategory(null)
+                    }
+                    .background(Color.Transparent)
+                    .padding(horizontal = dimensionResource(R.dimen.padding_8dp))
+                    .padding(vertical = dimensionResource(R.dimen.padding_48dp))
+                    .size(dimensionResource(R.dimen.view_16dp))
+                    .rotate(180f),
                 painter = painterResource(R.drawable.chili_ic_chevron_left),
                 contentDescription = null,
                 colorFilter = disableColorFilter(detalizationPeriod)
@@ -142,7 +158,7 @@ fun PeriodSelectablePieChart(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
+                .padding(horizontal = dimensionResource(id = R.dimen.padding_32dp))
                 .padding(vertical = dimensionResource(id = R.dimen.padding_8dp))
                 .clickable(interactionSource = null, indication = null) { onSelectedCategory(null) },
             verticalArrangement = Arrangement.Center,
@@ -387,7 +403,12 @@ private fun CategoryList(
 
             AnimatedVisibility(
                 visible = expandedState.value,
-                enter = fadeIn() + expandVertically(animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessVeryLow))
+                enter = fadeIn() + expandVertically(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioLowBouncy,
+                        stiffness = Spring.StiffnessVeryLow
+                    )
+                )
             ) {
                 InternalCategoryDetailsRow(
                     expandedState = expandedState.value,
