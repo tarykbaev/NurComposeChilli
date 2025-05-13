@@ -75,6 +75,7 @@ import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePicker
 import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 import com.design.composechili.utils.DATE_PATTERN
 import com.design.composechili.utils.addCurrency
 import com.design.composechili.utils.expand
@@ -97,6 +98,7 @@ import java.time.LocalDateTime
 @Composable
 fun PeriodSelectablePieChart(
     modifier: Modifier,
+    periodSelectablePieChartParams: PeriodSelectablePieChartParams = PeriodSelectablePieChartParams.Default,
     detalizationPeriod: Pair<String, String>?,
     detalizationInfo: DetalizationInfo,
     onPeriodClick: () -> Unit,
@@ -108,8 +110,8 @@ fun PeriodSelectablePieChart(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
-            .background(Color.White)
+            .clip(RoundedCornerShape(periodSelectablePieChartParams.cardCornerRadius))
+            .background(periodSelectablePieChartParams.cardBackgroundColor)
     ) {
         if (periodType != null) {
             Image(
@@ -126,10 +128,10 @@ fun PeriodSelectablePieChart(
                         onSelectedCategory(null)
                     }
                     .background(Color.Transparent)
-                    .padding(vertical = dimensionResource(R.dimen.padding_48dp))
-                    .padding(horizontal = dimensionResource(R.dimen.padding_8dp))
-                    .size(dimensionResource(R.dimen.view_16dp)),
-                painter = painterResource(R.drawable.chili_ic_chevron_left),
+                    .padding(vertical = periodSelectablePieChartParams.chevronClickableAreaHeight)
+                    .padding(horizontal = periodSelectablePieChartParams.chevronClickableAreaWidth)
+                    .size(periodSelectablePieChartParams.chevronSize),
+                painter = periodSelectablePieChartParams.chevronPainter,
                 contentDescription = null
             )
             Image(
@@ -146,11 +148,11 @@ fun PeriodSelectablePieChart(
                         onSelectedCategory(null)
                     }
                     .background(Color.Transparent)
-                    .padding(horizontal = dimensionResource(R.dimen.padding_8dp))
-                    .padding(vertical = dimensionResource(R.dimen.padding_48dp))
-                    .size(dimensionResource(R.dimen.view_16dp))
-                    .rotate(180f),
-                painter = painterResource(R.drawable.chili_ic_chevron_left),
+                    .padding(horizontal = periodSelectablePieChartParams.chevronClickableAreaWidth)
+                    .padding(vertical = periodSelectablePieChartParams.chevronClickableAreaHeight)
+                    .size(periodSelectablePieChartParams.chevronSize)
+                    .rotate(periodSelectablePieChartParams.rightChevronRotateDegree),
+                painter = periodSelectablePieChartParams.chevronPainter,
                 contentDescription = null,
                 colorFilter = disableColorFilter(detalizationPeriod)
             )
@@ -158,17 +160,18 @@ fun PeriodSelectablePieChart(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = dimensionResource(id = R.dimen.padding_32dp))
-                .padding(vertical = dimensionResource(id = R.dimen.padding_8dp))
+                .padding(horizontal = periodSelectablePieChartParams.pieChartWithTextHorizontalPadding)
+                .padding(vertical = periodSelectablePieChartParams.pieChartWithTextVerticalPadding)
                 .clickable(interactionSource = null, indication = null) { onSelectedCategory(null) },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = Modifier
-                    .padding(vertical = dimensionResource(R.dimen.padding_8dp))
+                    .padding(vertical = periodSelectablePieChartParams.periodTextVerticalPadding)
                     .clickable { onPeriodClick() },
                 text = getPeriodText(detalizationPeriod),
+                style = periodSelectablePieChartParams.periodTextStyle,
                 textAlign = TextAlign.Center
             )
             PieChart(
@@ -287,14 +290,18 @@ fun PeriodSelectablePieChart_Preview() {
                         onSelectedCategory = { uiState.value = uiState.value.copy(selectedCategory = it) },
                         selectedCategory = uiState.value.selectedCategory
                     )
-                    CardWithCategoriesDetails(uiState = uiState.value, onCategoryClick = {
-                        if (uiState.value.selectedCategory == it) {
-                            uiState.value =
-                                uiState.value.copy(selectedCategory = null)
-                        } else
-                            uiState.value =
-                                uiState.value.copy(selectedCategory = it)
-                    })
+                    CardWithCategoriesDetails(
+                        listOfCategories = uiState.value.detalizationInfo.category,
+                        onCategoryClick = {
+                            if (uiState.value.selectedCategory == it) {
+                                uiState.value =
+                                    uiState.value.copy(selectedCategory = null)
+                            } else
+                                uiState.value =
+                                    uiState.value.copy(selectedCategory = it)
+                        },
+                        selectedCategory = uiState.value.selectedCategory
+                    )
                     //todo just for check if last items shown
                     AccentCardPreview()
                     if (uiState.value.showDatePicker) {
@@ -308,7 +315,8 @@ fun PeriodSelectablePieChart_Preview() {
 
 @Composable
 private fun CardWithCategoriesDetails(
-    uiState: DetalizationUiState,
+    listOfCategories: List<SpendingCategory>?,
+    selectedCategory: EnumSpendingCategory?,
     onCategoryClick: (EnumSpendingCategory) -> Unit
 ) {
     Column(
@@ -318,18 +326,18 @@ private fun CardWithCategoriesDetails(
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
             .background(Color.White),
     ) {
-        AnimatedVisibility(uiState.selectedCategory != null) {
+        AnimatedVisibility(listOfCategories != null) {
             Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)))
         }
-        uiState.detalizationInfo.category?.let { category ->
+        listOfCategories?.let { category ->
             category.forEach { categoryDetails ->
                 key(categoryDetails.hashCode()) {
                     CategoryList(
                         categoryDetails = categoryDetails,
-                        selectedSpendingCategory = uiState.selectedCategory,
+                        selectedSpendingCategory = selectedCategory,
                         onClick = { it?.let { onCategoryClick(it) } },
                         checkIfLastItem = {
-                            uiState.detalizationInfo.category.last() != categoryDetails
+                            listOfCategories.last() != categoryDetails
                         })
                 }
             }
@@ -392,8 +400,7 @@ private fun CategoryList(
                 )
                 Text(
                     modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
-                    text = categoryDetails.totalCharge?.addCurrency()
-                        ?: buildAnnotatedString { append("") },
+                    text = categoryDetails.totalCharge?.addCurrency() ?: buildAnnotatedString { append("") },
                     color = ChiliTheme.Colors.ChiliValueTextColor,
                     fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
                 )
@@ -451,11 +458,7 @@ private fun InternalCategoryDetailsRow(
                             Text(
                                 modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
                                 text = subCategory.charge?.addCurrency()
-                                    ?: buildAnnotatedString {
-                                        append(
-                                            ""
-                                        )
-                                    },
+                                    ?: buildAnnotatedString { append("") },
                                 color = ChiliTheme.Colors.ChiliPrimaryTextColor,
                                 fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
                             )
