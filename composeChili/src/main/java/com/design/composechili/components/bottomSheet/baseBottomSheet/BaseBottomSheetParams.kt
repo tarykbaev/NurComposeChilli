@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
@@ -18,11 +20,11 @@ data class BaseBottomSheetParams(
     val bottomSheetBottomPadding: Dp,
     val closeIconPadding: PaddingValues,
     val backgroundDimmingColor: Color,
-    val bottomSheetShadowElevation: Dp
+    val bottomSheetShadowElevation: Dp,
+    val closeIcon: Painter
 ) {
 
     companion object {
-
         val Default
             @Composable
             get() = BaseBottomSheetParams(
@@ -32,8 +34,8 @@ data class BaseBottomSheetParams(
                 backgroundDimmingColor = Color.Black,
                 bottomSheetBottomPadding = ChiliTheme.Attribute.ChiliBottomSheetContainerBottomMargin,
                 closeIconPadding = PaddingValues(top = 8.dp, end = 12.dp),
-                bottomSheetShadowElevation = dimensionResource(id = R.dimen.elevation_8dp)
+                bottomSheetShadowElevation = dimensionResource(id = R.dimen.elevation_8dp),
+                closeIcon = painterResource(id = R.drawable.chili_ic_clear_24)
             )
     }
-
 }

@@ -56,8 +56,6 @@ import kotlinx.coroutines.launch
  * @param [screenContent] Screen content, which should be covered by the [BaseBottomSheet]. Bottom Sheet will show over this content
  * @sample [BaseBottomSheetParams]
  */
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseBottomSheet(

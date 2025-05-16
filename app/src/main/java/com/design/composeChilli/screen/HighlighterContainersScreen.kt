@@ -2,6 +2,7 @@ package com.design.composeChilli.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +16,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,13 +36,17 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getDrawable
 import com.design.composechili.R
+import com.design.composechili.components.bottomSheet.baseBottomSheet.nur.NurChiliModalBottomSheet
 import com.design.composechili.components.containers.HighlightContainer
 import com.design.composechili.components.containers.HighlightState
-import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyle
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HighlighterContainersScreen() {
+    var showModalBottomSheet by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -44,13 +54,27 @@ fun HighlighterContainersScreen() {
             .verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(16.dp))
+
+        NurChiliModalBottomSheet(
+            isVisible = showModalBottomSheet,
+            onDismissRequest = {
+                showModalBottomSheet = false
+            }
+        ) {
+            InfoBottomSheet {  }
+        }
+
+
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.width(16.dp))
             HighlightContainer(
-                modifier = Modifier,
+                modifier = Modifier
+                    .clickable(onClick = {
+                        showModalBottomSheet = true
+                    }),
                 highlighterColorStart = Color.Red,
                 highlighterIcon = getDrawable(LocalContext.current, R.drawable.lighting),
                 highlightState = HighlightState.WITH_CIRCLE_AND_ICON
