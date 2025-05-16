@@ -11,6 +11,7 @@ import com.design.composechili.R
 import com.design.composechili.theme.dimensions.ChiliElevationDimensions
 import com.design.composechili.theme.dimensions.ChiliPaddingDimensions
 import com.design.composechili.theme.dimensions.ChiliRadiusDimensions
+import com.design.composechili.theme.dimensions.ChiliTextDimensions
 import com.design.composechili.theme.dimensions.ChiliViewDimensions
 
 @Immutable

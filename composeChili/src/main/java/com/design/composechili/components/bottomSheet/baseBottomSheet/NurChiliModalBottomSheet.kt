@@ -1,10 +1,8 @@
-package com.design.composechili.components.bottomSheet.baseBottomSheet.nur
+package com.design.composechili.components.bottomSheet.baseBottomSheet
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -20,7 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheetParams
+import androidx.compose.ui.graphics.RectangleShape
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,12 +26,11 @@ import kotlinx.coroutines.launch
 fun NurChiliModalBottomSheet(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
-    swipeToDismissEnabled: Boolean = true,
     hasCloseIcon: Boolean = true,
-    hasDragTab: Boolean = false,
-    params: BaseBottomSheetParams = BaseBottomSheetParams.Default,
+    swipeToDismissEnabled: Boolean = true,
     dragHandle: @Composable () -> Unit = { BottomSheetDefaults.DragHandle() },
-    properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties(),
+    properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
+    params: NurChiliModalBottomSheetParams = NurChiliModalBottomSheetParams.Default,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -59,10 +56,13 @@ fun NurChiliModalBottomSheet(
     if (internalVisibleState) {
         ModalBottomSheet(
             sheetState = sheetState,
-            containerColor = Color.Transparent,
+            containerColor = Color.Unspecified,
             contentColor = Color.Unspecified,
-            shape = RoundedCornerShape(params.topCornerRadius),
-            dragHandle = null,
+            shape = RectangleShape,
+            tonalElevation = params.shadowElevation,
+            dragHandle = dragHandle,
+            contentWindowInsets = { WindowInsets.systemBars },
+            properties = properties,
             onDismissRequest = onDismissRequest
         ) {
             NurChiliModalBottomSheetContent(

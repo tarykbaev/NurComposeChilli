@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.Dp
 import com.design.composechili.R
 import com.design.composechili.extensions.isExpanded
 import com.design.composechili.extensions.isExpanding
-import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -47,14 +46,14 @@ import kotlinx.coroutines.launch
  * @param [peekHeight] The default peek height used by BottomSheetScaffold.
  * @param [hasCloseIcon] The icon which will show up on the top right corner of the sheet
  * @param [collapseOnBackPressed] System back button handler enable/disable flag. Button will hide bottomSheet
- * @param [baseBottomSheetParams] BottomSheet visual transformation params
+ * @param [nurChiliModalBottomSheetParams] BottomSheet visual transformation params
  * @param [isBackgroundDimmingEnabled] Background dimming enable/disable flag
  * @param [bottomSheetSwipeEnabled] Bottom sheet swipe(drag) enable/disable flag
  * @param [isDragHandleContentEnabled] Drag handle enable/disable flag
  * @param [dragHandle] Drag handle composable content, by default is [BottomSheetDefaults.DragHandle].Will show on the top of the sheet
  * @param [bottomSheetContent] BottomSheet content, which will show in the bottomSheet
  * @param [screenContent] Screen content, which should be covered by the [BaseBottomSheet]. Bottom Sheet will show over this content
- * @sample [BaseBottomSheetParams]
+ * @sample [NurChiliModalBottomSheetParams]
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +63,7 @@ fun BaseBottomSheet(
     peekHeight: Dp = BottomSheetDefaults.SheetPeekHeight,
     hasCloseIcon: Boolean = false,
     collapseOnBackPressed: Boolean = true,
-    baseBottomSheetParams: BaseBottomSheetParams = BaseBottomSheetParams.Default,
+    nurChiliModalBottomSheetParams: NurChiliModalBottomSheetParams = NurChiliModalBottomSheetParams.Default,
     isBackgroundDimmingEnabled: Boolean = true,
     bottomSheetSwipeEnabled: Boolean = true,
     isDragHandleContentEnabled: Boolean = false,
@@ -81,8 +80,8 @@ fun BaseBottomSheet(
             Column(
                 modifier = modifier
                     .fillMaxWidth()
-                    .background(baseBottomSheetParams.bottomSheetContentBackgroundColor)
-                    .padding(bottom = baseBottomSheetParams.bottomSheetBottomPadding)
+                    .background(nurChiliModalBottomSheetParams.backgroundColor)
+                    .padding(bottom = nurChiliModalBottomSheetParams.bottomPadding)
                     .windowInsetsPadding(WindowInsets.navigationBars)
                     .animateContentSize()
             ) {
@@ -90,7 +89,7 @@ fun BaseBottomSheet(
                     Image(
                         modifier = Modifier
                             .align(Alignment.End)
-                            .padding(baseBottomSheetParams.closeIconPadding)
+                            .padding(nurChiliModalBottomSheetParams.closeIconPadding)
                             .clickable {
                                 scope.launch { sheetState.bottomSheetState.hide() }
                             },
@@ -107,15 +106,15 @@ fun BaseBottomSheet(
         },
         scaffoldState = sheetState,
         sheetShape = RoundedCornerShape(
-            topStart = baseBottomSheetParams.topCornerRadius,
-            topEnd = baseBottomSheetParams.topCornerRadius,
-            bottomEnd = baseBottomSheetParams.bottomCornerRadius,
-            bottomStart = baseBottomSheetParams.bottomCornerRadius
+            topStart = nurChiliModalBottomSheetParams.topCornerRadius,
+            topEnd = nurChiliModalBottomSheetParams.topCornerRadius,
+            bottomEnd = nurChiliModalBottomSheetParams.bottomCornerRadius,
+            bottomStart = nurChiliModalBottomSheetParams.bottomCornerRadius
         ),
-        sheetContainerColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
+        sheetContainerColor = nurChiliModalBottomSheetParams.backgroundColor,
         sheetSwipeEnabled = bottomSheetSwipeEnabled,
-        sheetShadowElevation = baseBottomSheetParams.bottomSheetShadowElevation,
-        sheetContentColor = baseBottomSheetParams.bottomSheetContentBackgroundColor,
+        sheetShadowElevation = nurChiliModalBottomSheetParams.shadowElevation,
+        sheetContentColor = nurChiliModalBottomSheetParams.backgroundColor,
         sheetDragHandle = if (isDragHandleContentEnabled) {
             dragHandle
         } else null,
@@ -133,7 +132,7 @@ fun BaseBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(baseBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
+                    .background(nurChiliModalBottomSheetParams.backgroundDimmingColor.copy(alpha = 0.5f))
                     .clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }) {

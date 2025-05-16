@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getDrawable
 import com.design.composechili.R
-import com.design.composechili.components.bottomSheet.baseBottomSheet.nur.NurChiliModalBottomSheet
 import com.design.composechili.components.containers.HighlightContainer
 import com.design.composechili.components.containers.HighlightState
 import com.design.composechili.theme.ChiliTheme
@@ -54,16 +53,6 @@ fun HighlighterContainersScreen() {
             .verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-
-        NurChiliModalBottomSheet(
-            isVisible = showModalBottomSheet,
-            onDismissRequest = {
-                showModalBottomSheet = false
-            }
-        ) {
-            InfoBottomSheet {  }
-        }
-
 
         Row(
             modifier = Modifier
