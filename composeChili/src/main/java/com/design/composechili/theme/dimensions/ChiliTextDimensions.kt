@@ -1,4 +1,4 @@
-package com.design.composechili.theme
+package com.design.composechili.theme.dimensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable

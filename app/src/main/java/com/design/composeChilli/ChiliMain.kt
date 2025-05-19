@@ -3,12 +3,12 @@ package com.design.composeChilli
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -44,7 +44,7 @@ fun ChiliMain(
     isDarkTheme: Boolean = isSystemInDarkTheme()
 ) {
 
-    var darkModeEnabled by rememberSaveable {
+    var darkModeEnabled by remember {
         mutableStateOf(isDarkTheme)
     }
 
@@ -57,10 +57,11 @@ fun ChiliMain(
             composeNavigator.handleNavigationCommands(navHostController)
         }
         Scaffold(
-            backgroundColor = ChiliTheme.Colors.ChiliSurfaceBackground,
+            containerColor = ChiliTheme.Colors.ChiliSurfaceBackground,
             topBar = {
                 // TODO (remove in future), this case using reflection
-                val isNotHomeScreen = backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
+                val isNotHomeScreen =
+                    backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
 
                 ChiliBaseTopAppBar(
                     isNavigationButtonEnabled = isNotHomeScreen,
@@ -113,7 +114,4 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
         composable<ChiliScreens.Dialog> { DialogScreen() }
     }
-
-
 }
-
