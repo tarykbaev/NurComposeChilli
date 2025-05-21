@@ -20,12 +20,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.utils.safeTake
@@ -94,7 +95,9 @@ fun InfoInAppPush(
 ) {
 
     BaseInAppPush(
-        modifier = Modifier.padding(horizontal = 8.dp), onDismissRequest = onDismissRequest
+        modifier = Modifier
+            .padding(horizontal = 8.dp),
+        onDismissRequest = onDismissRequest
     ) {
         Box(
             modifier = Modifier
@@ -105,7 +108,9 @@ fun InfoInAppPush(
 
             if (banner.isNotBlank()) {
                 SubcomposeAsyncImage(
-                    modifier = Modifier.align(Alignment.Center).fillMaxWidth(),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth(),
                     model = banner,
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Fit,

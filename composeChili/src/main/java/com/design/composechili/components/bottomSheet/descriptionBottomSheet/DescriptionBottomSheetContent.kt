@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,8 +17,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -30,21 +31,20 @@ import com.design.composechili.theme.ChiliTheme
  * @param [onButtonClick] Will be called when [NurChiliButton] clicked
  *
  */
-
 @Composable
 fun DescriptionBottomSheetContent(
     modifier: Modifier = Modifier,
-    buttonText: String,
-    title: String,
     @DrawableRes icon: Int? = null,
+    title: String,
     description: String? = null,
     secondaryDescription: String? = null,
-    onButtonClick: () -> Unit,
+    buttonText: String,
     params: DescriptionBottomSheetParams = DescriptionBottomSheetParams.Default,
+    onButtonClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
+            .wrapContentSize()
             .padding(dimensionResource(id = R.dimen.padding_16dp))
     ) {
         if (icon != null) {

@@ -1,6 +1,5 @@
 package com.design.composechili.components.bottomSheet.searchSelectorBottomSheet
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,15 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.input.baseInput.NurChiliBaseInput
+import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorBottomSheetOption
+import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem
 import com.design.composechili.components.input.baseInput.BaseInputParams
-import com.design.composechili.theme.textStyle.ChiliTextStyle
+import com.design.composechili.components.input.baseInput.NurChiliBaseInput
 import com.design.composechili.theme.ChiliTheme
 
 /**
@@ -35,16 +32,14 @@ import com.design.composechili.theme.ChiliTheme
  *
  * @param [modifier] Will be applied to bottomSheetContent root composable content.
  * In this is case root is [LazyColumn]
- * @param [list] A list of options for the selector. Each item is represented by the [SearchSelectorOptionItem] class.
- * @param [hasCloseIcon] The icon which will show up on the top right corner of the sheet
+ * @param [list] A list of options for the selector. Each item is represented by the [com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem] class.
  * @param [searchHint] The [String] displayed on a search input field hint, Default is empty
- * @param [searchIcon] A drawable resource ID for the search icon. If null, no search icon is displayed.
  * Default is a search icon drawable [R.drawable.chili_ic_search]
  * @param [isHeaderVisible] Controls whether group headers are visible for the options. Default is true
  * @param [isGroupingEnabled] Determines whether the list of options is grouped by the first letter of the item. Default is true.
  * @param [isSingleSelection] Controls whether only one item can be selected (single selection mode). Default is true
  * @param [onOptionClick] A callback function that is triggered when an option is clicked.
- * The selected [SearchSelectorOptionItem] is passed as an argument. Default is an empty lambda
+ * The selected [com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem] is passed as an argument. Default is an empty lambda
  * @param [params] A custom parameter class for configuring the background color, text styles and e.t.c.
  * The default value uses [SearchSelectorBottomSheetParams.Default]
  *
@@ -55,12 +50,12 @@ fun SearchSelectorBottomSheetContent(
     modifier: Modifier = Modifier,
     list: List<SearchSelectorOptionItem>,
     searchHint: String = String(),
-    @DrawableRes searchIcon: Int? = R.drawable.chili_ic_search,
     isHeaderVisible: Boolean = true,
     isGroupingEnabled: Boolean = true,
     isSingleSelection: Boolean = true,
-    onOptionClick: (option: SearchSelectorOptionItem) -> Unit = {},
     params: SearchSelectorBottomSheetParams = SearchSelectorBottomSheetParams.Default,
+    inputParams: BaseInputParams = BaseInputParams.Default,
+    onOptionClick: (option: SearchSelectorOptionItem) -> Unit = {},
 ) {
 
     fun filterList(filter: String = String()): List<Pair<Type, Any>> {
@@ -82,7 +77,8 @@ fun SearchSelectorBottomSheetContent(
     var textValue by remember { mutableStateOf("") }
 
     LazyColumn(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         item {
             Row(
@@ -94,10 +90,11 @@ fun SearchSelectorBottomSheetContent(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (searchIcon != null) {
+                if (params.searchIcon != null) {
                     Image(
-                        modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
-                        painter = painterResource(id = searchIcon),
+                        modifier = Modifier
+                            .padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
+                        painter = params.searchIcon,
                         contentDescription = "Search"
                     )
                 }
@@ -106,9 +103,9 @@ fun SearchSelectorBottomSheetContent(
                         .fillMaxWidth(),
                     textFieldValue = textValue,
                     hint = searchHint,
-                    params = BaseInputParams.Default.copy(
+                    params = inputParams.copy(
                         textFieldPadding = PaddingValues(dimensionResource(id = R.dimen.padding_0dp)),
-                        fieldBackground = Color.Transparent
+                        fieldBackground = params.searchInputBackgroundColor
                     ),
                     onValueChange = {
                         textValue = it
@@ -119,13 +116,21 @@ fun SearchSelectorBottomSheetContent(
         }
         itemsIndexed(options) { index, option ->
             when (option.first) {
+                Type.HEADER -> Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = params.headerBackgroundColor)
+                        .padding(
+                            horizontal = dimensionResource(id = R.dimen.padding_16dp),
+                            vertical = dimensionResource(id = R.dimen.padding_8dp)
+                        ),
+                    text = option.second as String,
+                    style = params.groupHeaderTextStyle
+                )
+
                 Type.ITEM -> SearchSelectorBottomSheetOption(
                     option = option.second as SearchSelectorOptionItem,
-                    isDividerVisible = when {
-                        index == options.size - 1 -> false
-                        options[index + 1].first == Type.HEADER -> false
-                        else -> true
-                    },
+                    isDividerVisible = index != options.size - 1,
                     onOptionClick = { opt ->
                         list.forEach {
                             it.isSelected = if (isSingleSelection) {
@@ -138,33 +143,8 @@ fun SearchSelectorBottomSheetContent(
                         onOptionClick.invoke(opt)
                     }
                 )
-
-                Type.HEADER -> Text(
-                    modifier = Modifier.padding(
-                        horizontal = dimensionResource(id = R.dimen.padding_16dp),
-                        vertical = dimensionResource(id = R.dimen.padding_8dp)
-                    ),
-                    text = option.second as String,
-                    style = params.groupHeaderTextStyle
-                )
             }
         }
-    }
-}
-
-data class SearchSelectorBottomSheetParams(
-    val searchInputBackgroundColor: Color,
-    val groupHeaderTextStyle: TextStyle
-) {
-    companion object {
-        val Default
-            @Composable get() = SearchSelectorBottomSheetParams(
-                searchInputBackgroundColor = ChiliTheme.Colors.ChiliSurfaceBackground,
-                groupHeaderTextStyle = ChiliTextStyle.get(
-                    textSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                    color = ChiliTheme.Colors.ChiliPrimaryTextColor
-                )
-            )
     }
 }
 
@@ -177,7 +157,6 @@ fun SearchSelectorBottomSheetPreview() {
         SearchSelectorBottomSheetContent(
             list = listOf(
                 SearchSelectorOptionItem("1", "Option 1", true)
-
             )
         )
     }
