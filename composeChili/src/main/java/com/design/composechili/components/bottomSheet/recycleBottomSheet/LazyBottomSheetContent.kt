@@ -22,47 +22,51 @@ import kotlin.random.Random
  * You can provide a list of items, a custom layout for each item, and a header with a title and subtitle.
  *
  * @param modifier Modifier for applying layout changes to the LazyColumn in the bottom sheet.
- * @param sheetState State of the bottom sheet scaffold, used to control and observe the bottom sheet's behavior.
- * @param peekHeight The height of the bottom sheet when it is collapsed.
  * @param title The title text to be displayed at the top of the bottom sheet.
  * @param subtitle The subtitle text to be displayed below the title.
  * @param listOfItems The list of items to be displayed inside the bottom sheet.
  * @param onItemClick A callback invoked when an item in the list is clicked.
- * @param recycleBottomSheetParams Optional parameter for styling and configuration options for the bottom sheet.
+ * @param lazyBottomSheetContentParams Optional parameter for styling and configuration options for the bottom sheet.
  * @param composableItem A composable function for rendering each item in the list.
- * @param screenContent The composable content displayed behind the bottom sheet when it is shown.
  *
  * @sample RecycleBottomSheet_Preview
  */
 
 @Composable
-fun <T> RecycleBottomSheetContent(
+fun <T> LazyBottomSheetContent(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
     listOfItems: List<T>,
     onItemClick: (T) -> Unit = {},
-    recycleBottomSheetParams: RecycleBottomSheetParams = RecycleBottomSheetParams.Default,
+    isVisibleDivider: Boolean = true,
+    params: LazyBottomSheetContentParams = LazyBottomSheetContentParams.Default,
     composableItem: @Composable (LazyItemScope.(T, (T) -> Unit) -> Unit),
 ) {
     LazyColumn(modifier = modifier) {
         item {
-            Column(modifier = Modifier.padding(top = 16.dp, start = 16.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 16.dp)
+            ) {
                 Text(
-                    modifier = Modifier.padding(bottom = 16.dp), text = title,
-                    style = recycleBottomSheetParams.titleStyle
+                    modifier = Modifier
+                        .padding(bottom = 16.dp),
+                    text = title,
+                    style = params.titleStyle
                 )
                 Text(
                     text = subtitle,
-                    style = recycleBottomSheetParams.subtitleStyle
+                    style = params.subtitleStyle
                 )
             }
         }
         itemsIndexed(listOfItems) { index, itemData ->
             composableItem(itemData, onItemClick)
-            if (index != listOfItems.size - 1) {
+            if (index != listOfItems.size - 1 && isVisibleDivider) {
                 HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     color = ChiliTheme.Colors.ChiliDividerColor,
                     thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
                 )
@@ -95,8 +99,8 @@ fun RecycleBottomSheet_Preview() {
         SampleRadioItem("Visa o!Dengi", "···· 12421"),
     )
     ChiliTheme {
-        RecycleBottomSheetContent(
-            title = "Это боттомщит где вы можете засетить свой адаптер к ресайклу",
+        LazyBottomSheetContent(
+            title = "Это боттомщит со списком",
             subtitle = "Тут можно задать стиль тексту",
             listOfItems = listOfItems,
             onItemClick = {},

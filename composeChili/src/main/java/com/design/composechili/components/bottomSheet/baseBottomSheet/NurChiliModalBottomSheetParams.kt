@@ -1,7 +1,12 @@
 package com.design.composechili.components.bottomSheet.baseBottomSheet
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
@@ -15,6 +20,7 @@ import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
 @Stable
+@OptIn(ExperimentalMaterial3Api::class)
 data class NurChiliModalBottomSheetParams(
     val backgroundColor: Color,
     val topCornerRadius: Dp,
@@ -24,7 +30,8 @@ data class NurChiliModalBottomSheetParams(
     val backgroundDimmingColor: Color,
     val shadowElevation: Dp,
     val closeIcon: Painter,
-    val topRoundedCornerShape: Shape
+    val topRoundedCornerShape: Shape,
+    val contentWindowInsets: @Composable () -> WindowInsets,
 ) {
 
     companion object {
@@ -42,7 +49,8 @@ data class NurChiliModalBottomSheetParams(
                 topRoundedCornerShape = RoundedCornerShape(
                     topStart = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius,
                     topEnd = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius
-                )
+                ),
+                contentWindowInsets = { WindowInsets.systemBars }
             )
     }
 }

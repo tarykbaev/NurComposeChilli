@@ -25,14 +25,14 @@ fun HomeScreen() {
         Pair("Cells ALL", ChiliScreens.Cells),
         Pair("Snackbar", ChiliScreens.Snackbar),
         Pair("Common", ChiliScreens.Common),
-        Pair("Bottom sheets", ChiliScreens.BottomSheets),
         Pair("Toolbars", ChiliScreens.Toolbars),
         Pair("Navigation bar", ChiliScreens.NavigationBar),
         Pair("Pickers", ChiliScreens.Pickers),
         Pair("Highlighter container", ChiliScreens.HighlighterContainer),
         Pair("Grouping container", ChiliScreens.GroupingContainer),
         Pair("Tooltip", ChiliScreens.Tooltip),
-        Pair("Dialog", ChiliScreens.Dialog)
+        Pair("Dialog", ChiliScreens.Dialog),
+        Pair("BottomSheetPreview", ChiliScreens.BottomSheetPreview)
     )
 
     LazyColumn(verticalArrangement = Arrangement.spacedBy(24.dp)) {

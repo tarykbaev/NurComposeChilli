@@ -19,14 +19,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
+import com.design.composechili.components.buttons.baseButton.NurChiliButton
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
 import kotlinx.coroutines.launch
 
 /**
- * A composable function that displays a customizable bottom sheet with a title, description, icon, and action buttons.
+ * A composable function that displays a customizable bottom sheet with a title, description and icon.
  *
  * @param [modifier] Modifier to be applied to the root composable of the sheet content.
  * @param [title] The title text displayed at the top of the bottom sheet.
@@ -34,7 +34,6 @@ import kotlinx.coroutines.launch
  * @param [icon] Drawable resource ID for the icon displayed next to the title.
  * @param [buttons] A list of buttons to be displayed as action buttons within the bottom sheet.
  * @param [infoBottomSheetsParams] Parameters controlling the visual styles and character limits of the description.
- * @param [content] Content composable that will be displayed underneath the bottom sheet as the screen content.
  * @sample [InfoBottomSheet_Preview]
  */
 
@@ -54,9 +53,13 @@ fun InfoBottomSheetContent(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(painter = painterResource(id = icon), contentDescription = null)
+            Image(
+                painter = painterResource(id = icon),
+                contentDescription = "icon"
+            )
             Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
@@ -69,7 +72,9 @@ fun InfoBottomSheetContent(
                 )
             }
         }
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             items(buttons) {
                 NurChiliButton(
                     onClick = it.onClick,

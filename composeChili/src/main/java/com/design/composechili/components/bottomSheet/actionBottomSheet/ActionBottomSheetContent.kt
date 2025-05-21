@@ -1,6 +1,7 @@
 package com.design.composechili.components.bottomSheet.actionBottomSheet
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.theme.ChiliTheme
 
@@ -30,18 +30,18 @@ import com.design.composechili.theme.ChiliTheme
 fun ActionBottomSheetContent(
     modifier: Modifier = Modifier,
     buttons: List<ActionBottomSheetParams>,
+    containerPadding: PaddingValues = PaddingValues(16.dp)
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(containerPadding),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(buttons) { item ->
             ActionBottomSheetButton(
                 item.title,
                 item.buttonStyle,
-
                 item.onClick
             )
         }

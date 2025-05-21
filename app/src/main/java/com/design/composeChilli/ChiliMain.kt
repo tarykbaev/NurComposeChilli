@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.design.composeChilli.navigation.ChiliComposeNavigator
-import com.design.composeChilli.screen.BottomSheetScreen
+import com.design.composeChilli.screen.BottomSheetPreviewScreen
 import com.design.composeChilli.screen.ButtonsScreen
 import com.design.composeChilli.screen.CardsScreen
 import com.design.composeChilli.screen.CellsScreen
@@ -105,7 +105,6 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Cells> { CellsScreen() }
         composable<ChiliScreens.Snackbar> { SnackbarScreen() }
         composable<ChiliScreens.Common> { CommonsScreen() }
-        composable<ChiliScreens.BottomSheets> { BottomSheetScreen() }
         composable<ChiliScreens.Toolbars> { ToolbarsScreen() }
         composable<ChiliScreens.NavigationBar> { NavigationBarScreen() }
         composable<ChiliScreens.Pickers> { PickersScreen() }
@@ -113,5 +112,6 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.GroupingContainer> { GroupingContainerScreen() }
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
         composable<ChiliScreens.Dialog> { DialogScreen() }
+        composable<ChiliScreens.BottomSheetPreview> { BottomSheetPreviewScreen() }
     }
 }

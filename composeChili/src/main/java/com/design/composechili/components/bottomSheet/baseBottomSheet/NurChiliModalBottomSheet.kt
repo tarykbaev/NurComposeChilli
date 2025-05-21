@@ -1,13 +1,12 @@
 package com.design.composechili.components.bottomSheet.baseBottomSheet
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetDefaults
 import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +36,9 @@ fun NurChiliModalBottomSheet(
     var internalVisibleState by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { swipeToDismissEnabled }
+        confirmValueChange = { newState ->
+            if (!swipeToDismissEnabled) newState != SheetValue.Hidden else true
+        }
     )
     val coroutineScope = rememberCoroutineScope()
 
@@ -61,7 +62,7 @@ fun NurChiliModalBottomSheet(
             shape = RectangleShape,
             tonalElevation = params.shadowElevation,
             dragHandle = dragHandle,
-            contentWindowInsets = { WindowInsets.systemBars },
+            contentWindowInsets = params.contentWindowInsets,
             properties = properties,
             onDismissRequest = onDismissRequest
         ) {
