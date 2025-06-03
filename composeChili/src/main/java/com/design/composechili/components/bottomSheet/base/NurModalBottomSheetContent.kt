@@ -1,16 +1,13 @@
-package com.design.composechili.components.bottomSheet.baseBottomSheet
+package com.design.composechili.components.bottomSheet.base
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,10 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun NurChiliModalBottomSheetContent(
+fun NurModalBottomSheetContent(
     modifier: Modifier = Modifier,
     hasCloseIcon: Boolean = true,
-    params: NurChiliModalBottomSheetParams,
+    params: NurModalBottomSheetParams,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {

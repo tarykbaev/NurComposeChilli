@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.searchSelectorBottomSheet
+package com.design.composechili.components.bottomSheet.searchSelector
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -9,7 +9,7 @@ import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H8
 
-data class SearchSelectorBottomSheetParams(
+data class NurSearchSelectorBottomSheetParams(
     val searchInputBackgroundColor: Color,
     val groupHeaderTextStyle: TextStyle,
     val searchIcon: Painter? = null,
@@ -18,7 +18,7 @@ data class SearchSelectorBottomSheetParams(
     companion object {
 
         val Default
-            @Composable get() = SearchSelectorBottomSheetParams(
+            @Composable get() = NurSearchSelectorBottomSheetParams(
                 searchInputBackgroundColor = ChiliTheme.Colors.ChiliInputViewBackgroundColor,
                 groupHeaderTextStyle = H8.Primary.Default,
                 searchIcon = painterResource(R.drawable.chili_ic_search),

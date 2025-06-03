@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.searchSelectorBottomSheet
+package com.design.composechili.components.bottomSheet.searchSelector
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,8 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.design.composechili.R
-import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorBottomSheetOption
-import com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem
+import com.design.composechili.components.bottomSheet.base.NurModalBottomSheet
+import com.design.composechili.components.bottomSheet.searchSelector.optionItem.NurSearchSelectorBottomSheetOption
+import com.design.composechili.components.bottomSheet.searchSelector.optionItem.SearchSelectorOptionItem
 import com.design.composechili.components.input.baseInput.BaseInputParams
 import com.design.composechili.components.input.baseInput.NurChiliBaseInput
 import com.design.composechili.theme.ChiliTheme
@@ -32,40 +35,75 @@ import com.design.composechili.theme.ChiliTheme
  *
  * @param [modifier] Will be applied to bottomSheetContent root composable content.
  * In this is case root is [LazyColumn]
- * @param [list] A list of options for the selector. Each item is represented by the [com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem] class.
+ * @param [list] A list of options for the selector. Each item is represented by the [com.design.composechili.components.bottomSheet.searchSelector.optionItem.SearchSelectorOptionItem] class.
  * @param [searchHint] The [String] displayed on a search input field hint, Default is empty
  * Default is a search icon drawable [R.drawable.chili_ic_search]
  * @param [isHeaderVisible] Controls whether group headers are visible for the options. Default is true
  * @param [isGroupingEnabled] Determines whether the list of options is grouped by the first letter of the item. Default is true.
  * @param [isSingleSelection] Controls whether only one item can be selected (single selection mode). Default is true
  * @param [onOptionClick] A callback function that is triggered when an option is clicked.
- * The selected [com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem.SearchSelectorOptionItem] is passed as an argument. Default is an empty lambda
+ * The selected [com.design.composechili.components.bottomSheet.searchSelector.optionItem.SearchSelectorOptionItem] is passed as an argument. Default is an empty lambda
  * @param [params] A custom parameter class for configuring the background color, text styles and e.t.c.
- * The default value uses [SearchSelectorBottomSheetParams.Default]
+ * The default value uses [NurSearchSelectorBottomSheetParams.Default]
  *
+ * @see NurModalBottomSheet
+ * @see NurSearchSelectorBottomSheetOption
+ * @see SearchSelectorOptionItem
  */
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchSelectorBottomSheetContent(
+fun NurSearchSelectorBottomSheet(
     modifier: Modifier = Modifier,
+    isVisible: Boolean,
+    dragHandle: @Composable () -> Unit = { BottomSheetDefaults.DragHandle() },
     list: List<SearchSelectorOptionItem>,
-    searchHint: String = String(),
+    searchHint: String = "",
     isHeaderVisible: Boolean = true,
     isGroupingEnabled: Boolean = true,
     isSingleSelection: Boolean = true,
-    params: SearchSelectorBottomSheetParams = SearchSelectorBottomSheetParams.Default,
+    params: NurSearchSelectorBottomSheetParams = NurSearchSelectorBottomSheetParams.Default,
     inputParams: BaseInputParams = BaseInputParams.Default,
-    onOptionClick: (option: SearchSelectorOptionItem) -> Unit = {},
+    onOptionClick: (SearchSelectorOptionItem) -> Unit = {},
+    onDismissRequest: () -> Unit,
 ) {
+    NurModalBottomSheet(
+        modifier = modifier,
+        isVisible = isVisible,
+        dragHandle = dragHandle,
+        onDismissRequest = onDismissRequest
+    ) {
+        NurSearchSelectorBottomSheetContent(
+            list = list,
+            searchHint = searchHint,
+            isHeaderVisible = isHeaderVisible,
+            isGroupingEnabled = isGroupingEnabled,
+            isSingleSelection = isSingleSelection,
+            params = params,
+            inputParams = inputParams,
+            onOptionClick = onOptionClick
+        )
+    }
+}
 
-    fun filterList(filter: String = String()): List<Pair<Type, Any>> {
-        val newList = list
+@Composable
+private fun NurSearchSelectorBottomSheetContent(
+    list: List<SearchSelectorOptionItem>,
+    searchHint: String,
+    isHeaderVisible: Boolean,
+    isGroupingEnabled: Boolean,
+    isSingleSelection: Boolean,
+    params: NurSearchSelectorBottomSheetParams,
+    inputParams: BaseInputParams,
+    onOptionClick: (SearchSelectorOptionItem) -> Unit
+) {
+    fun filterList(filter: String): List<Pair<Type, Any>> {
+        val grouped = list
             .filter { it.value.contains(filter, ignoreCase = true) }
             .groupBy {
-                if (isGroupingEnabled) it.value.firstOrNull()?.uppercase().orEmpty() else String()
+                if (isGroupingEnabled) it.value.firstOrNull()?.uppercase().orEmpty() else ""
             }
 
-        return newList.flatMap { (header, items) ->
+        return grouped.flatMap { (header, items) ->
             val section = mutableListOf<Pair<Type, Any>>()
             if (isHeaderVisible) section.add(Type.HEADER to header)
             section.addAll(items.map { Type.ITEM to it.copy() })
@@ -73,13 +111,10 @@ fun SearchSelectorBottomSheetContent(
         }
     }
 
-    var options by remember { mutableStateOf(filterList()) }
+    var options by remember { mutableStateOf(filterList("")) }
     var textValue by remember { mutableStateOf("") }
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
         item {
             Row(
                 modifier = Modifier
@@ -90,11 +125,11 @@ fun SearchSelectorBottomSheetContent(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (params.searchIcon != null) {
+                params.searchIcon?.let {
                     Image(
                         modifier = Modifier
                             .padding(horizontal = dimensionResource(id = R.dimen.padding_8dp)),
-                        painter = params.searchIcon,
+                        painter = it,
                         contentDescription = "Search"
                     )
                 }
@@ -110,10 +145,11 @@ fun SearchSelectorBottomSheetContent(
                     onValueChange = {
                         textValue = it
                         options = filterList(it)
-                    },
+                    }
                 )
             }
         }
+
         itemsIndexed(options) { index, option ->
             when (option.first) {
                 Type.HEADER -> Text(
@@ -128,19 +164,19 @@ fun SearchSelectorBottomSheetContent(
                     style = params.groupHeaderTextStyle
                 )
 
-                Type.ITEM -> SearchSelectorBottomSheetOption(
+                Type.ITEM -> NurSearchSelectorBottomSheetOption(
                     option = option.second as SearchSelectorOptionItem,
-                    isDividerVisible = index != options.size - 1,
-                    onOptionClick = { opt ->
+                    isDividerVisible = index != options.lastIndex,
+                    onOptionClick = { selected ->
                         list.forEach {
                             it.isSelected = if (isSingleSelection) {
-                                it.id == opt.id
+                                it.id == selected.id
                             } else {
-                                if (it.id == opt.id) !it.isSelected else it.isSelected
+                                if (it.id == selected.id) !it.isSelected else it.isSelected
                             }
                         }
                         options = filterList(textValue)
-                        onOptionClick.invoke(opt)
+                        onOptionClick.invoke(selected)
                     }
                 )
             }
@@ -148,16 +184,27 @@ fun SearchSelectorBottomSheetContent(
     }
 }
 
-private enum class Type { HEADER, ITEM }
-
-@Preview
 @Composable
-fun SearchSelectorBottomSheetPreview() {
+@Preview(showBackground = true)
+private fun NurSearchSelectorBottomSheetContentPreview() {
+    val list = listOf(
+        SearchSelectorOptionItem("1", "Option 1", false),
+        SearchSelectorOptionItem("2", "Example 2", false),
+        SearchSelectorOptionItem("3", "Test 3", true),
+        SearchSelectorOptionItem("4", "Random 4", false),
+    )
     ChiliTheme {
-        SearchSelectorBottomSheetContent(
-            list = listOf(
-                SearchSelectorOptionItem("1", "Option 1", true)
-            )
+        NurSearchSelectorBottomSheetContent(
+            list = list,
+            searchHint = "Search...",
+            isHeaderVisible = true,
+            isGroupingEnabled = true,
+            isSingleSelection = true,
+            params = NurSearchSelectorBottomSheetParams.Default,
+            inputParams = BaseInputParams.Default,
+            onOptionClick = {}
         )
     }
 }
+
+private enum class Type { HEADER, ITEM }

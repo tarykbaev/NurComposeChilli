@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.baseBottomSheet
+package com.design.composechili.components.bottomSheet.base
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.BottomSheetDefaults
@@ -22,14 +22,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NurChiliModalBottomSheet(
+fun NurModalBottomSheet(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     hasCloseIcon: Boolean = true,
     swipeToDismissEnabled: Boolean = true,
     dragHandle: @Composable () -> Unit = { BottomSheetDefaults.DragHandle() },
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
-    params: NurChiliModalBottomSheetParams = NurChiliModalBottomSheetParams.Default,
+    params: NurModalBottomSheetParams = NurModalBottomSheetParams.Default,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -66,7 +66,7 @@ fun NurChiliModalBottomSheet(
             properties = properties,
             onDismissRequest = onDismissRequest
         ) {
-            NurChiliModalBottomSheetContent(
+            NurModalBottomSheetContent(
                 modifier = modifier,
                 hasCloseIcon = hasCloseIcon,
                 params = params,

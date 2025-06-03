@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem
+package com.design.composechili.components.bottomSheet.searchSelector.optionItem
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -11,7 +11,7 @@ import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H7
 import com.design.composechili.values.ChiliPadding
 
-data class SearchSelectorBottomSheetOptionParams(
+data class NurSearchSelectorBottomSheetOptionParams(
     val contentPadding: ChiliPadding,
     val valueTextStyle: TextStyle,
     val backgroundColor: Color,
@@ -20,7 +20,7 @@ data class SearchSelectorBottomSheetOptionParams(
     companion object {
 
         val Default
-            @Composable get() = SearchSelectorBottomSheetOptionParams(
+            @Composable get() = NurSearchSelectorBottomSheetOptionParams(
                 contentPadding = ChiliPadding(
                     top = dimensionResource(id = R.dimen.padding_16dp),
                     bottom = dimensionResource(id = R.dimen.padding_16dp),

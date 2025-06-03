@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.searchSelectorBottomSheet.optionItem
+package com.design.composechili.components.bottomSheet.searchSelector.optionItem
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,16 +32,16 @@ import com.design.composechili.theme.ChiliTheme
  * @param [onOptionClick] A callback function that is triggered when the option is clicked.
  * It passes the SearchSelectorOptionItem to the calling function.
  * @param [params] A set of parameters that control the padding, text style, and background color of the option.
- * Default is [SearchSelectorBottomSheetOptionParams.Default]
+ * Default is [NurSearchSelectorBottomSheetOptionParams.Default]
  *
  */
 
 @Composable
-fun SearchSelectorBottomSheetOption(
+fun NurSearchSelectorBottomSheetOption(
     modifier: Modifier = Modifier,
     option: SearchSelectorOptionItem,
     isDividerVisible: Boolean = true,
-    params: SearchSelectorBottomSheetOptionParams = SearchSelectorBottomSheetOptionParams.Default,
+    params: NurSearchSelectorBottomSheetOptionParams = NurSearchSelectorBottomSheetOptionParams.Default,
     onOptionClick: (option: SearchSelectorOptionItem) -> Unit
 ) {
     Box(
@@ -104,7 +104,7 @@ data class SearchSelectorOptionItem(
 @Composable
 fun SearchSelectorBottomSheetOptionPreview() {
     ChiliTheme {
-        SearchSelectorBottomSheetOption(
+        NurSearchSelectorBottomSheetOption(
             option = SearchSelectorOptionItem("1", "Option 1", true),
             onOptionClick = {}
         )

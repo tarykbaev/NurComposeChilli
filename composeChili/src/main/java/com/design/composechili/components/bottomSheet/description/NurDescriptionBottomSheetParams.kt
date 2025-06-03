@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.descriptionBottomSheet
+package com.design.composechili.components.bottomSheet.description
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -10,7 +10,7 @@ import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H
 import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H8
 
 @Stable
-data class DescriptionBottomSheetParams(
+data class NurDescriptionBottomSheetParams(
     val iconWidth: Dp,
     val iconHeight: Dp,
     val titleTextStyle: TextStyle,
@@ -21,7 +21,7 @@ data class DescriptionBottomSheetParams(
     companion object {
         val Default
             @Composable
-            get() = DescriptionBottomSheetParams(
+            get() = NurDescriptionBottomSheetParams(
                 iconWidth = dimensionResource(id = R.dimen.view_64dp),
                 iconHeight = dimensionResource(id = R.dimen.view_64dp),
                 titleTextStyle = H7.Primary.Bold,
