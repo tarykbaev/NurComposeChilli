@@ -1,6 +1,5 @@
 package com.design.composechili.components.common.pieChart
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -35,11 +34,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.common.pieChart.model.DetalizationInfo
-import com.design.composechili.components.common.pieChart.model.EnumSpendingCategory
+import com.design.composechili.components.common.pieChart.mapper.mapToPieChartInfo
+import com.design.composechili.components.common.pieChart.model.OModels.DetalizationInfo
+import com.design.composechili.components.common.pieChart.model.OModels.EnumSpendingCategory
+import com.design.composechili.components.common.pieChart.model.OModels.SpendingCategory
+import com.design.composechili.components.common.pieChart.model.PieChartCategoryType
 import com.design.composechili.components.common.pieChart.model.PieChartData
+import com.design.composechili.components.common.pieChart.model.PieChartInfo
 import com.design.composechili.components.common.pieChart.model.PieChartParams
-import com.design.composechili.components.common.pieChart.model.SpendingCategory
 import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.theme.ChiliTheme
 import com.design.composechili.utils.pxToDp
@@ -49,17 +51,17 @@ import kotlin.math.roundToInt
 
 @Composable
 fun PieChart(
-    detalizationInfo: DetalizationInfo?,
+    detalizationInfo: PieChartInfo?,
     modifier: Modifier = Modifier,
     params: PieChartParams,
-    onSliceClick: (EnumSpendingCategory) -> Unit = {},
-    selectedCategory: EnumSpendingCategory? = null,
+    onSliceClick: (PieChartCategoryType) -> Unit = {},
+    selectedCategory: PieChartCategoryType? = null,
 ) {
     val emptyCanvasItem = listOf(
         PieChartData(
-            color = EnumSpendingCategory.NONE.getColor(),
+            color = PieChartCategoryType.None.getColor(),
             amount = detalizationInfo?.totalAmount?.takeIf { it != 0.0 }?.toFloat() ?: 100.0f,
-            type = EnumSpendingCategory.NONE
+            type = PieChartCategoryType.None
         )
     )
 
@@ -67,7 +69,7 @@ fun PieChart(
         PieChartData(
             color = it.type?.getColor() ?: colorResource(R.color.gray_6),
             amount = it.totalCharge ?: 0f,
-            type = it.type ?: EnumSpendingCategory.NONE
+            type = it.type ?: PieChartCategoryType.None
         )
     }.orEmpty()
 
@@ -97,8 +99,8 @@ private fun PieChartCanvas(
     params: PieChartParams,
     canvasItems: List<PieChartData>,
     totalAmount: Double,
-    onSliceClick: (EnumSpendingCategory) -> Unit,
-    selectedCategory: EnumSpendingCategory?,
+    onSliceClick: (PieChartCategoryType) -> Unit,
+    selectedCategory: PieChartCategoryType?,
 ) {
     var selectedCategoryType by remember { mutableStateOf(selectedCategory) }
     val localDensity = LocalDensity.current
@@ -130,7 +132,7 @@ private fun PieChartCanvas(
                             angle = angle
                         )
                         selectedCategoryType = foundCategory?.type
-                        onSliceClick(foundCategory?.type ?: EnumSpendingCategory.NONE)
+                        onSliceClick(foundCategory?.type ?: PieChartCategoryType.None)
                     })
                 }
         ) {
@@ -265,10 +267,10 @@ private fun PieChart_Preview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PieChart(
-                detalizationInfo = DetalizationInfo(listOfCategories.value.totalAmount, listOfItems),
+                detalizationInfo = listOfCategories.value.mapToPieChartInfo(),
                 params = PieChartParams.Default,
                 onSliceClick = { println("clicked $it") },
-                selectedCategory = EnumSpendingCategory.SMS
+                selectedCategory = PieChartCategoryType.Orange
             )
         }
     }

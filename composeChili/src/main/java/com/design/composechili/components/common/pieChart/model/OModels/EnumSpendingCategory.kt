@@ -1,4 +1,4 @@
-package com.design.composechili.components.common.pieChart.model
+package com.design.composechili.components.common.pieChart.model.OModels
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

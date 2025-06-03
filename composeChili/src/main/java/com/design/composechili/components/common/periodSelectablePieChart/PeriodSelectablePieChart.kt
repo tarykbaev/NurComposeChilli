@@ -1,14 +1,5 @@
 package com.design.composechili.components.common.periodSelectablePieChart
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,26 +7,20 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,18 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetContent
@@ -62,22 +40,29 @@ import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBo
 import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.card.AccentCardPreview
+import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategories
+import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategoriesParams
+import com.design.composechili.components.card.cardWithExpandableCategories.toEnumSpendingCategory
+import com.design.composechili.components.card.cardWithExpandableCategories.toExpandableCategoryCellModel
+import com.design.composechili.components.card.cardWithExpandableCategories.toExpandableCategoryCellType
 import com.design.composechili.components.common.pieChart.PieChart
-import com.design.composechili.components.common.pieChart.model.DetalizationInfo
-import com.design.composechili.components.common.pieChart.model.EnumSpendingCategory
-import com.design.composechili.components.common.pieChart.model.EnumSpendingSubCategory
+import com.design.composechili.components.common.pieChart.mapper.mapToPieChartInfo
+import com.design.composechili.components.common.pieChart.mapper.toEnumSpendingCategory
+import com.design.composechili.components.common.pieChart.mapper.toPieChartCategoryType
+import com.design.composechili.components.common.pieChart.model.OModels.DetalizationInfo
+import com.design.composechili.components.common.pieChart.model.OModels.EnumSpendingCategory
+import com.design.composechili.components.common.pieChart.model.OModels.EnumSpendingSubCategory
+import com.design.composechili.components.common.pieChart.model.OModels.SpendingCategory
+import com.design.composechili.components.common.pieChart.model.OModels.SpendingSubCategory
+import com.design.composechili.components.common.pieChart.model.PieChartCategoryType
+import com.design.composechili.components.common.pieChart.model.PieChartInfo
 import com.design.composechili.components.common.pieChart.model.PieChartParams
-import com.design.composechili.components.common.pieChart.model.SpendingCategory
-import com.design.composechili.components.common.pieChart.model.SpendingSubCategory
-import com.design.composechili.components.common.pieChart.model.getColor
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
 import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
 import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 import com.design.composechili.utils.DATE_PATTERN
-import com.design.composechili.utils.addCurrency
 import com.design.composechili.utils.expand
 import com.design.composechili.utils.formatByRegex
 import com.design.composechili.utils.getFirstDayOfMonth
@@ -94,18 +79,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 @Composable
 fun PeriodSelectablePieChart(
     modifier: Modifier,
+    periodTitleSingle: String,
+    periodTitleStartToEnd: Pair<String, String>,
     periodSelectablePieChartParams: PeriodSelectablePieChartParams = PeriodSelectablePieChartParams.Default,
     detalizationPeriod: Pair<String, String>?,
-    detalizationInfo: DetalizationInfo,
+    pieChartInfo: PieChartInfo,
     onPeriodClick: () -> Unit,
     periodType: PeriodType?,
     dateRangeListener: (startDate: String, endDate: String) -> Unit,
-    onSelectedCategory: (EnumSpendingCategory?) -> Unit,
-    selectedCategory: EnumSpendingCategory?,
+    onSelectedCategory: (PieChartCategoryType?) -> Unit,
+    selectedCategory: PieChartCategoryType?,
 ) {
     Box(
         modifier = Modifier
@@ -170,12 +159,12 @@ fun PeriodSelectablePieChart(
                 modifier = Modifier
                     .padding(vertical = periodSelectablePieChartParams.periodTextVerticalPadding)
                     .clickable { onPeriodClick() },
-                text = getPeriodText(detalizationPeriod),
+                text = getPeriodText(detalizationPeriod, periodTitleSingle, periodTitleStartToEnd),
                 style = periodSelectablePieChartParams.periodTextStyle,
                 textAlign = TextAlign.Center
             )
             PieChart(
-                detalizationInfo = detalizationInfo,
+                detalizationInfo = pieChartInfo,
                 params = PieChartParams.Default,
                 onSliceClick = { onSelectedCategory(it) },
                 selectedCategory = selectedCategory
@@ -192,19 +181,23 @@ private fun disableColorFilter(detalizationPeriod: Pair<String, String>?) =
 private fun checkIfPeriodAvailable(detalizationPeriod: Pair<String, String>?) =
     detalizationPeriod?.let { it.second.toLocalDate() < LocalDate.now() } ?: false
 
-private fun getPeriodText(detalizationPeriod: Pair<String, String>?): String {
+private fun getPeriodText(
+    detalizationPeriod: Pair<String, String>?,
+    periodTitleSingle: String,
+    periodTitleStartToEnd: Pair<String, String>
+): String {
     return when {
-        detalizationPeriod == null -> getInitDate()
+        detalizationPeriod == null -> getInitDate(periodTitleSingle)
         detalizationPeriod.first == detalizationPeriod.second ->
-            "Детализация на ${detalizationPeriod.first}"
+            "${periodTitleSingle}${detalizationPeriod.first}"
 
         else ->
-            "Детализация с ${detalizationPeriod.first} по ${detalizationPeriod.second}"
+            "${periodTitleStartToEnd.first}${detalizationPeriod.first} ${periodTitleStartToEnd.second} ${detalizationPeriod.second}"
     }
 }
 
-private fun getInitDate(): String {
-    return "Детализация на ".plus(LocalDateTime.now().formatByRegex(DATE_PATTERN))
+private fun getInitDate(periodTitleSingle: String): String {
+    return periodTitleSingle.plus(LocalDateTime.now().formatByRegex(DATE_PATTERN))
 }
 
 private fun getPreviousPeriod(
@@ -280,27 +273,46 @@ fun PeriodSelectablePieChart_Preview() {
                     Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_16dp)))
                     PeriodSelectablePieChart(
                         modifier = Modifier.fillMaxWidth(),
+                        periodTitleSingle = "Детализация на ",
+                        periodTitleStartToEnd = Pair("Детализация с ", "по"),
                         detalizationPeriod = uiState.value.dateRange,
-                        detalizationInfo = uiState.value.detalizationInfo,
+                        pieChartInfo = uiState.value.detalizationInfo.mapToPieChartInfo(),
                         onPeriodClick = { coScope.launch { sheetState.expand() } },
                         dateRangeListener = { start, end ->
                             uiState.value = uiState.value.copy(dateRange = Pair(start, end))
+                            val randomCountOfCategories = Random.nextInt(0..8)
+                            uiState.value = uiState.value.copy(
+                                detalizationInfo = DetalizationInfo(
+                                    totalAmount = DetalizationUiState()
+                                        .detalizationInfo.category
+                                        ?.take(randomCountOfCategories)
+                                        ?.sumOf { it.totalCharge?.toDouble() ?: 0.0 }
+                                        ?: 0.0,
+                                    category = DetalizationUiState()
+                                        .detalizationInfo.category
+                                        ?.take(randomCountOfCategories)
+                                )
+                            )
                         },
                         periodType = uiState.value.periodType,
-                        onSelectedCategory = { uiState.value = uiState.value.copy(selectedCategory = it) },
-                        selectedCategory = uiState.value.selectedCategory
-                    )
-                    CardWithCategoriesDetails(
-                        listOfCategories = uiState.value.detalizationInfo.category,
-                        onCategoryClick = {
-                            if (uiState.value.selectedCategory == it) {
-                                uiState.value =
-                                    uiState.value.copy(selectedCategory = null)
-                            } else
-                                uiState.value =
-                                    uiState.value.copy(selectedCategory = it)
+                        onSelectedCategory = {
+                            uiState.value =
+                                uiState.value.copy(selectedCategory = it?.toEnumSpendingCategory())
                         },
-                        selectedCategory = uiState.value.selectedCategory
+                        selectedCategory = uiState.value.selectedCategory?.toPieChartCategoryType(),
+                    )
+                    CardWithExpandableCategories(
+                        params = CardWithExpandableCategoriesParams.Default.copy(currency = "c"),
+                        listOfCategories = uiState.value.detalizationInfo.category?.map { it.toExpandableCategoryCellModel() },
+                        onCategoryClick = {
+                            uiState.value =
+                                uiState.value.copy(
+                                    selectedCategory =
+                                        if (uiState.value.selectedCategory == it?.toEnumSpendingCategory()) null
+                                        else it?.toEnumSpendingCategory()
+                                )
+                        },
+                        selectedCategory = uiState.value.selectedCategory?.toExpandableCategoryCellType()
                     )
                     //todo just for check if last items shown
                     AccentCardPreview()
@@ -313,174 +325,7 @@ fun PeriodSelectablePieChart_Preview() {
     }
 }
 
-@Composable
-private fun CardWithCategoriesDetails(
-    listOfCategories: List<SpendingCategory>?,
-    selectedCategory: EnumSpendingCategory?,
-    onCategoryClick: (EnumSpendingCategory) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = dimensionResource(R.dimen.padding_16dp))
-            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.radius_12dp)))
-            .background(Color.White),
-    ) {
-        AnimatedVisibility(listOfCategories != null) {
-            Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)))
-        }
-        listOfCategories?.let { category ->
-            category.forEach { categoryDetails ->
-                key(categoryDetails.hashCode()) {
-                    CategoryList(
-                        categoryDetails = categoryDetails,
-                        selectedSpendingCategory = selectedCategory,
-                        onClick = { it?.let { onCategoryClick(it) } },
-                        checkIfLastItem = {
-                            listOfCategories.last() != categoryDetails
-                        })
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun CategoryList(
-    categoryDetails: SpendingCategory,
-    selectedSpendingCategory: EnumSpendingCategory?,
-    onClick: (EnumSpendingCategory?) -> Unit,
-    checkIfLastItem: (SpendingCategory) -> Boolean
-) {
-    val expandedState = remember { mutableStateOf(false) }
-    expandedState.value = categoryDetails.type == selectedSpendingCategory
-
-    val expandedContentHeight = remember { mutableStateOf(0.dp) }
-    val animatedCanvasHeight by animateDpAsState(
-        targetValue = if (expandedState.value) expandedContentHeight.value else 12.dp,
-        animationSpec = tween(300)
-    )
-    val canvasColor = categoryDetails.type?.getColor() ?: colorResource(R.color.gray_6)
-
-    Row(
-        modifier = Modifier
-            .clickable { onClick(categoryDetails.type) }
-            .padding(top = dimensionResource(R.dimen.padding_4dp))
-            .padding(start = dimensionResource(R.dimen.padding_18dp))
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column {
-            Canvas(
-                modifier = Modifier
-                    .padding(end = dimensionResource(R.dimen.padding_18dp))
-                    .padding(bottom = dimensionResource(R.dimen.padding_4dp))
-                    .width(dimensionResource(R.dimen.view_8dp))
-                    .height(animatedCanvasHeight)
-                    .animateContentSize()
-            ) {
-                if (expandedState.value)
-                    drawRoundRect(
-                        color = canvasColor,
-                        cornerRadius = CornerRadius(6.dp.toPx())
-                    ) else drawCircle(canvasColor)
-            }
-        }
-        Column {
-            Row(
-                modifier = Modifier.padding(
-                    top = dimensionResource(R.dimen.padding_12dp),
-                    bottom = dimensionResource(R.dimen.padding_14dp)
-                )
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = categoryDetails.name ?: "",
-                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                )
-                Text(
-                    modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
-                    text = categoryDetails.totalCharge?.addCurrency() ?: buildAnnotatedString { append("") },
-                    color = ChiliTheme.Colors.ChiliValueTextColor,
-                    fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                )
-            }
-            if (checkIfLastItem(categoryDetails))
-                HorizontalDivider(color = ChiliTheme.Colors.ChiliDividerColor)
-
-            AnimatedVisibility(
-                visible = expandedState.value,
-                enter = fadeIn() + expandVertically(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessVeryLow
-                    )
-                )
-            ) {
-                InternalCategoryDetailsRow(
-                    expandedState = expandedState.value,
-                    onExpandedContentHeightChange = { expandedContentHeight.value = it },
-                    categoryDetails = categoryDetails
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun InternalCategoryDetailsRow(
-    expandedState: Boolean,
-    onExpandedContentHeightChange: (Dp) -> Unit,
-    categoryDetails: SpendingCategory
-) {
-    val localDensity = LocalDensity.current
-    val padding = dimensionResource(R.dimen.padding_4dp)
-
-    Column(modifier = Modifier.onSizeChanged { size ->
-        if (expandedState) {
-            onExpandedContentHeightChange(with(localDensity) { size.height.toDp() + padding })
-        }
-    }) {
-        categoryDetails.subCategories?.let {
-            it.forEach { subCategory ->
-                key(it.hashCode()) {
-                    Column(
-                        modifier = Modifier
-                            .padding(top = dimensionResource(R.dimen.padding_8dp))
-                            .fillMaxWidth(),
-                    ) {
-                        Row {
-                            Text(
-                                modifier = Modifier.weight(1f),
-                                text = subCategory.name ?: "",
-                                fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                            )
-                            Text(
-                                modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_8dp)),
-                                text = subCategory.charge?.addCurrency()
-                                    ?: buildAnnotatedString { append("") },
-                                color = ChiliTheme.Colors.ChiliPrimaryTextColor,
-                                fontSize = ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7
-                            )
-                        }
-                        Row {
-                            Text(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(top = dimensionResource(R.dimen.padding_8dp)),
-                                text = subCategory.getPaymentDate()
-                            )
-                        }
-                    }
-                }
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_4dp)),
-                    color = ChiliTheme.Colors.ChiliDividerColor
-                )
-            }
-        }
-    }
-}
+//Below functions are examples of using PieChart with DatePicker can be tested in a preview
 
 @Composable
 private fun DatePickerDialog(uiState: MutableState<DetalizationUiState>) {

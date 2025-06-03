@@ -16,20 +16,29 @@ fun String.safeTake(n: Int): String {
     }
 }
 
-fun Float.addCurrency(): AnnotatedString {
+fun Float.addCurrency(currency: String): AnnotatedString {
     return buildAnnotatedString {
         append("${this@addCurrency} ")
         withStyle(SpanStyle(textDecoration = TextDecoration.Underline)) {
-            append("с")
+            append(currency)
         }
     }
 }
 
-fun Double.addCurrency(): AnnotatedString {
+fun String.addCurrency(currency: String): AnnotatedString {
     return buildAnnotatedString {
         append("${this@addCurrency} ")
         withStyle(SpanStyle(textDecoration = TextDecoration.Underline)) {
-            append("с")
+            append(currency)
+        }
+    }
+}
+
+fun Double.addCurrency(currency: String): AnnotatedString {
+    return buildAnnotatedString {
+        append("${this@addCurrency} ")
+        withStyle(SpanStyle(textDecoration = TextDecoration.Underline)) {
+            append(currency)
         }
     }
 }
