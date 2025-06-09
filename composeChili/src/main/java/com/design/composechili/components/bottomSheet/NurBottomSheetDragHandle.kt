@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.theme.ChiliTheme
 
 @Composable
-fun BottomSheetDragHandle(
+fun NurBottomSheetDragHandle(
     modifier: Modifier = Modifier,
     width: Dp = 40.dp,
     height: Dp = 3.dp,
@@ -43,6 +43,6 @@ fun BottomSheetDragHandle(
 @Preview
 fun BottomSheetDragHandlePreview() {
     ChiliTheme {
-        BottomSheetDragHandle()
+        NurBottomSheetDragHandle()
     }
 }

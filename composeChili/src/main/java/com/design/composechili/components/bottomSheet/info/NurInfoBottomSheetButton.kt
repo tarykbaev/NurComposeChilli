@@ -1,4 +1,4 @@
-package com.design.composechili.components.bottomSheet.infoBottomSheet
+package com.design.composechili.components.bottomSheet.info
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -8,7 +8,7 @@ import com.design.composechili.theme.textStyle.ChiliTextStyle
 import com.design.composechili.theme.ChiliTheme
 
 @Stable
-data class InfoBottomSheetButton(
+data class NurInfoBottomSheetButton(
     val onClick: () -> Unit,
     val title: String,
     val buttonStyle: ChiliButtonStyle

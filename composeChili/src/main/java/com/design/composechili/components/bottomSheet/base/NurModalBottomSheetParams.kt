@@ -1,7 +1,10 @@
-package com.design.composechili.components.bottomSheet.baseBottomSheet
+package com.design.composechili.components.bottomSheet.base
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
@@ -15,7 +18,8 @@ import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
 
 @Stable
-data class NurChiliModalBottomSheetParams(
+@OptIn(ExperimentalMaterial3Api::class)
+data class NurModalBottomSheetParams(
     val backgroundColor: Color,
     val topCornerRadius: Dp,
     val bottomCornerRadius: Dp,
@@ -24,13 +28,14 @@ data class NurChiliModalBottomSheetParams(
     val backgroundDimmingColor: Color,
     val shadowElevation: Dp,
     val closeIcon: Painter,
-    val topRoundedCornerShape: Shape
+    val topRoundedCornerShape: Shape,
+    val contentWindowInsets: @Composable () -> WindowInsets,
 ) {
 
     companion object {
         val Default
             @Composable
-            get() = NurChiliModalBottomSheetParams(
+            get() = NurModalBottomSheetParams(
                 backgroundColor = ChiliTheme.Colors.ChiliBottomSheetBackgroundColor,
                 topCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius,
                 bottomCornerRadius = ChiliTheme.Attribute.ChiliBottomSheetBottomCornerRadius,
@@ -42,7 +47,8 @@ data class NurChiliModalBottomSheetParams(
                 topRoundedCornerShape = RoundedCornerShape(
                     topStart = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius,
                     topEnd = ChiliTheme.Attribute.ChiliBottomSheetTopCornerRadius
-                )
+                ),
+                contentWindowInsets = { WindowInsets.systemBars }
             )
     }
 }

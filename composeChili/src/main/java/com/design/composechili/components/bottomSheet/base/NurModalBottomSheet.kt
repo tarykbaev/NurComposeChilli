@@ -1,13 +1,12 @@
-package com.design.composechili.components.bottomSheet.baseBottomSheet
+package com.design.composechili.components.bottomSheet.base
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetDefaults
 import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,21 +22,23 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NurChiliModalBottomSheet(
+fun NurModalBottomSheet(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     hasCloseIcon: Boolean = true,
     swipeToDismissEnabled: Boolean = true,
     dragHandle: @Composable () -> Unit = { BottomSheetDefaults.DragHandle() },
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
-    params: NurChiliModalBottomSheetParams = NurChiliModalBottomSheetParams.Default,
+    params: NurModalBottomSheetParams = NurModalBottomSheetParams.Default,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var internalVisibleState by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { swipeToDismissEnabled }
+        confirmValueChange = { newState ->
+            if (!swipeToDismissEnabled) newState != SheetValue.Hidden else true
+        }
     )
     val coroutineScope = rememberCoroutineScope()
 
@@ -61,11 +62,11 @@ fun NurChiliModalBottomSheet(
             shape = RectangleShape,
             tonalElevation = params.shadowElevation,
             dragHandle = dragHandle,
-            contentWindowInsets = { WindowInsets.systemBars },
+            contentWindowInsets = params.contentWindowInsets,
             properties = properties,
             onDismissRequest = onDismissRequest
         ) {
-            NurChiliModalBottomSheetContent(
+            NurModalBottomSheetContent(
                 modifier = modifier,
                 hasCloseIcon = hasCloseIcon,
                 params = params,
