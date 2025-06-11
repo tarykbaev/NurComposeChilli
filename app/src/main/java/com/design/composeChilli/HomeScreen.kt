@@ -32,7 +32,8 @@ fun HomeScreen() {
         Pair("Grouping container", ChiliScreens.GroupingContainer),
         Pair("Tooltip", ChiliScreens.Tooltip),
         Pair("Dialog", ChiliScreens.Dialog),
-        Pair("BottomSheetPreview", ChiliScreens.BottomSheetPreview)
+        Pair("BottomSheetPreview", ChiliScreens.BottomSheetPreview),
+        Pair("PieChartPreview", ChiliScreens.PieChart)
     )
 
     LazyColumn(verticalArrangement = Arrangement.spacedBy(24.dp)) {

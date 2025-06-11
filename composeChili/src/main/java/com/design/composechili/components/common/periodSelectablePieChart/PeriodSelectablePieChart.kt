@@ -16,11 +16,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,56 +27,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetContent
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
 import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
-import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.card.AccentCardPreview
 import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategories
 import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategoriesParams
 import com.design.composechili.components.card.cardWithExpandableCategories.toEnumSpendingCategory
 import com.design.composechili.components.card.cardWithExpandableCategories.toExpandableCategoryCellModel
 import com.design.composechili.components.card.cardWithExpandableCategories.toExpandableCategoryCellType
+import com.design.composechili.components.common.periodSelectablePieChart.mock.DatePickerBottomSheet
+import com.design.composechili.components.common.periodSelectablePieChart.mock.DatePickerDialog
+import com.design.composechili.components.common.periodSelectablePieChart.model.DetalizationUiState
 import com.design.composechili.components.common.pieChart.PieChart
 import com.design.composechili.components.common.pieChart.mapper.mapToPieChartInfo
 import com.design.composechili.components.common.pieChart.mapper.toEnumSpendingCategory
 import com.design.composechili.components.common.pieChart.mapper.toPieChartCategoryType
 import com.design.composechili.components.common.pieChart.model.OModels.DetalizationInfo
-import com.design.composechili.components.common.pieChart.model.OModels.EnumSpendingCategory
-import com.design.composechili.components.common.pieChart.model.OModels.EnumSpendingSubCategory
-import com.design.composechili.components.common.pieChart.model.OModels.SpendingCategory
-import com.design.composechili.components.common.pieChart.model.OModels.SpendingSubCategory
 import com.design.composechili.components.common.pieChart.model.PieChartCategoryType
 import com.design.composechili.components.common.pieChart.model.PieChartInfo
 import com.design.composechili.components.common.pieChart.model.PieChartParams
-import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerDialog
-import com.design.composechili.components.picker.chiliDatePicker.ChiliDatePickerParams
-import com.design.composechili.components.picker.chiliDatePicker.DatePickerTimeParams
 import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.utils.DATE_PATTERN
 import com.design.composechili.utils.expand
-import com.design.composechili.utils.formatByRegex
-import com.design.composechili.utils.getFirstDayOfMonth
-import com.design.composechili.utils.getFirstDayOfWeek
-import com.design.composechili.utils.getLastDayOfMonth
-import com.design.composechili.utils.getLastDayOfMonthNotInFuture
-import com.design.composechili.utils.getLastDayOfWeek
-import com.design.composechili.utils.getLastDayOfWeekNotInFuture
-import com.design.composechili.utils.hide
 import com.design.composechili.utils.softLayerShadow
-import com.design.composechili.utils.toLocalDate
-import com.design.composechili.utils.toLocalDateTime
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -112,7 +88,7 @@ fun PeriodSelectablePieChart(
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
                         detalizationPeriod?.let {
-                            getPreviousPeriod(it.first, it.second, periodType)
+                            PieChartUtils.getPreviousPeriod(it.first, it.second, periodType)
                         }?.let { dateRangeListener(it.first, it.second) }
                         onSelectedCategory(null)
                     }
@@ -127,12 +103,12 @@ fun PeriodSelectablePieChart(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .clickable(
-                        enabled = checkIfPeriodAvailable(detalizationPeriod),
+                        enabled = PieChartUtils.checkIfPeriodAvailable(detalizationPeriod),
                         indication = ripple(),
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
                         detalizationPeriod?.let {
-                            getNextPeriod(it.first, detalizationPeriod.second, periodType)
+                            PieChartUtils.getNextPeriod(it.first, detalizationPeriod.second, periodType)
                         }?.let { dateRangeListener(it.first, it.second) }
                         onSelectedCategory(null)
                     }
@@ -143,7 +119,7 @@ fun PeriodSelectablePieChart(
                     .rotate(periodSelectablePieChartParams.rightChevronRotateDegree),
                 painter = periodSelectablePieChartParams.chevronPainter,
                 contentDescription = null,
-                colorFilter = disableColorFilter(detalizationPeriod)
+                colorFilter = PieChartUtils.disableColorFilter(detalizationPeriod)
             )
         }
         Column(
@@ -159,7 +135,11 @@ fun PeriodSelectablePieChart(
                 modifier = Modifier
                     .padding(vertical = periodSelectablePieChartParams.periodTextVerticalPadding)
                     .clickable { onPeriodClick() },
-                text = getPeriodText(detalizationPeriod, periodTitleSingle, periodTitleStartToEnd),
+                text = PieChartUtils.getPeriodText(
+                    detalizationPeriod,
+                    periodTitleSingle,
+                    periodTitleStartToEnd
+                ),
                 style = periodSelectablePieChartParams.periodTextStyle,
                 textAlign = TextAlign.Center
             )
@@ -170,79 +150,6 @@ fun PeriodSelectablePieChart(
                 selectedCategory = selectedCategory
             )
         }
-    }
-}
-
-private fun disableColorFilter(detalizationPeriod: Pair<String, String>?) =
-    if (checkIfPeriodAvailable(detalizationPeriod))
-        ColorFilter.lighting(Color.Transparent, Color.Transparent)
-    else ColorFilter.lighting(Color.Gray, Color.Gray)
-
-private fun checkIfPeriodAvailable(detalizationPeriod: Pair<String, String>?) =
-    detalizationPeriod?.let { it.second.toLocalDate() < LocalDate.now() } ?: false
-
-private fun getPeriodText(
-    detalizationPeriod: Pair<String, String>?,
-    periodTitleSingle: String,
-    periodTitleStartToEnd: Pair<String, String>
-): String {
-    return when {
-        detalizationPeriod == null -> getInitDate(periodTitleSingle)
-        detalizationPeriod.first == detalizationPeriod.second ->
-            "${periodTitleSingle}${detalizationPeriod.first}"
-
-        else ->
-            "${periodTitleStartToEnd.first}${detalizationPeriod.first} ${periodTitleStartToEnd.second} ${detalizationPeriod.second}"
-    }
-}
-
-private fun getInitDate(periodTitleSingle: String): String {
-    return periodTitleSingle.plus(LocalDateTime.now().formatByRegex(DATE_PATTERN))
-}
-
-private fun getPreviousPeriod(
-    startDate: String,
-    endDate: String,
-    periodType: PeriodType
-): Pair<String, String> {
-    return when (periodType) {
-        PeriodType.DAY -> Pair(
-            startDate.toLocalDateTime().minusDays(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDateTime().minusDays(1).formatByRegex(DATE_PATTERN)
-        )
-
-        PeriodType.WEEK -> Pair(
-            startDate.toLocalDateTime().minusWeeks(1).formatByRegex(DATE_PATTERN),
-            startDate.toLocalDate().minusWeeks(1).getLastDayOfWeek()
-        )
-
-        PeriodType.MONTH -> Pair(
-            startDate.toLocalDateTime().minusMonths(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDateTime().minusMonths(1).getLastDayOfMonth()
-        )
-    }
-}
-
-private fun getNextPeriod(
-    startDate: String,
-    endDate: String,
-    periodType: PeriodType
-): Pair<String, String> {
-    return when (periodType) {
-        PeriodType.DAY -> Pair(
-            startDate.toLocalDateTime().plusDays(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDateTime().plusDays(1).formatByRegex(DATE_PATTERN)
-        )
-
-        PeriodType.WEEK -> Pair(
-            startDate.toLocalDateTime().plusWeeks(1).formatByRegex(DATE_PATTERN),
-            startDate.toLocalDate().plusWeeks(1).getLastDayOfWeekNotInFuture()
-        )
-
-        PeriodType.MONTH -> Pair(
-            startDate.toLocalDateTime().plusMonths(1).formatByRegex(DATE_PATTERN),
-            endDate.toLocalDateTime().plusMonths(1).getLastDayOfMonthNotInFuture()
-        )
     }
 }
 
@@ -325,758 +232,3 @@ fun PeriodSelectablePieChart_Preview() {
     }
 }
 
-//Below functions are examples of using PieChart with DatePicker can be tested in a preview
-
-@Composable
-private fun DatePickerDialog(uiState: MutableState<DetalizationUiState>) {
-    ChiliDatePickerDialog(
-        modifier = Modifier,
-        onDismissRequest = { },
-        datePickedParams = ChiliDatePickerParams(
-            firstDate = DatePickerTimeParams(
-                startDateTime = LocalDateTime.now(),
-                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
-                maxDateTime = LocalDateTime.now(),
-            ),
-            secondDate = DatePickerTimeParams(
-                startDateTime = LocalDateTime.now(),
-                minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0),
-                maxDateTime = LocalDateTime.now(),
-            ),
-        ),
-        startDateTitle = "Начальная Дата",
-        endDateTitle = "Конечная Дата",
-        submitBtnTitle = "Готово",
-        calendarLocale = "ru",
-        onSubmitBtn = { startDate, endDate ->
-            if (startDate != null && endDate != null) {
-                uiState.value = uiState.value.copy(
-                    dateRange = Pair(
-                        startDate.formatByRegex(DATE_PATTERN),
-                        endDate.formatByRegex(DATE_PATTERN),
-                    ),
-                    detalizationInfo = DetalizationInfo(
-                        900.44,
-                        uiState.value.detalizationInfo.category
-                    ),
-                    periodType = null
-                )
-                uiState.value = uiState.value.copy(showDatePicker = false)
-            }
-        },
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun DatePickerBottomSheet(
-    coScope: CoroutineScope,
-    sheetState: BottomSheetScaffoldState,
-    onStateChange: (DetalizationUiState) -> Unit
-) {
-    ActionBottomSheetContent(
-        buttons = listOf(
-            ActionBottomSheetParams(
-                title = "Today",
-                buttonStyle = ChiliButtonStyle.Primary
-            ) {
-                coScope.launch {
-                    sheetState.hide()
-                    //todo will be implemented vm logic to get info from server
-                    onStateChange(
-                        DetalizationUiState().copy(
-                            detalizationInfo = DetalizationInfo(
-                                totalAmount = 0.0,
-                                category = emptyList()
-                            ),
-                            dateRange = Pair(
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                                LocalDateTime.now().formatByRegex(DATE_PATTERN),
-                            ),
-                            periodType = PeriodType.DAY
-                        )
-                    )
-                }
-            },
-            ActionBottomSheetParams(
-                title = "One week",
-                buttonStyle = ChiliButtonStyle.Primary
-            ) {
-                coScope.launch {
-                    sheetState.hide()
-                    onStateChange(
-                        DetalizationUiState().copy(
-                            detalizationInfo = DetalizationInfo(
-                                totalAmount = 450.44,
-                                category = DetalizationUiState().detalizationInfo.category?.takeLast(5)
-                            ),
-                            dateRange = Pair(
-                                LocalDate.now().getFirstDayOfWeek(),
-                                LocalDate.now().getLastDayOfWeekNotInFuture()
-                            ),
-                            periodType = PeriodType.WEEK
-                        )
-                    )
-                }
-            },
-            ActionBottomSheetParams(
-                title = "One Month",
-                buttonStyle = ChiliButtonStyle.Primary
-            ) {
-                coScope.launch {
-                    sheetState.hide()
-                    onStateChange(
-                        DetalizationUiState().copy(
-                            detalizationInfo = DetalizationInfo(
-                                totalAmount = 450.0,
-                                category = DetalizationUiState().detalizationInfo.category?.take(5)
-                            ),
-                            dateRange = Pair(
-                                LocalDateTime.now().getFirstDayOfMonth(),
-                                LocalDateTime.now().getLastDayOfMonthNotInFuture(),
-                            ),
-                            periodType = PeriodType.MONTH
-                        )
-                    )
-                }
-            },
-            ActionBottomSheetParams(
-                title = "Choose period manually",
-                buttonStyle = ChiliButtonStyle.Primary
-            ) {
-                coScope.launch {
-                    sheetState.hide()
-                    onStateChange(DetalizationUiState().copy(showDatePicker = true))
-                }
-            },
-        )
-    )
-}
-
-data class DetalizationUiState(
-    val detalizationInfo: DetalizationInfo = DetalizationInfo(
-        totalAmount = 900.44, category = listOf(
-            SpendingCategory(
-                "Subscriptions",
-                type = EnumSpendingCategory.SUBSCRIPTION_FEE,
-                totalCharge = 10f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Banking", type = EnumSpendingCategory.OMONEY, totalCharge = 190f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Services", type = EnumSpendingCategory.SERVICES, totalCharge = 100f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Internet", type = EnumSpendingCategory.INTERNET, totalCharge = 100f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Internet Package",
-                type = EnumSpendingCategory.INTERNET_PACKAGE,
-                totalCharge = 50f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Roaming", type = EnumSpendingCategory.ROAMING, totalCharge = 100f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Out Voice", type = EnumSpendingCategory.OUT_VOICE, totalCharge = 50f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "SMS", type = EnumSpendingCategory.SMS, totalCharge = 250f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "InnerVoice", type = EnumSpendingCategory.INNER_VOICE, totalCharge = 50.44f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-            SpendingCategory(
-                "Other", type = EnumSpendingCategory.NONE, totalCharge = 0f,
-                subCategories = listOf(
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум",
-                        charge = 7.32,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                    SpendingSubCategory(
-                        name = "O!TV Премиум 2",
-                        charge = 7.33,
-                        date = 1745535333000,
-                        subType = EnumSpendingSubCategory.INCOMING_CALL,
-                        amount = 0.0
-                    ),
-                )
-            ),
-        )
-    ),
-    val dateRange: Pair<String, String> = Pair(
-        LocalDateTime.now().formatByRegex(DATE_PATTERN),
-        LocalDateTime.now().formatByRegex(DATE_PATTERN)
-    ),
-    val showDatePicker: Boolean = false,
-    val periodType: PeriodType? = PeriodType.DAY,
-    val selectedCategory: EnumSpendingCategory? = null
-)

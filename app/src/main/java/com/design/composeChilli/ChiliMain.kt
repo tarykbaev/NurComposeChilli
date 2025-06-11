@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.design.composeChilli.ChiliScreens.PieChart
 import com.design.composeChilli.navigation.ChiliComposeNavigator
 import com.design.composeChilli.screen.BottomSheetPreviewScreen
 import com.design.composeChilli.screen.ButtonsScreen
@@ -30,6 +31,7 @@ import com.design.composeChilli.screen.HighlighterContainersScreen
 import com.design.composeChilli.screen.InputFieldsScreen
 import com.design.composeChilli.screen.NavigationBarScreen
 import com.design.composeChilli.screen.PickersScreen
+import com.design.composeChilli.screen.PieChartScreen
 import com.design.composeChilli.screen.SnackbarScreen
 import com.design.composeChilli.screen.TextAppearanceScreen
 import com.design.composeChilli.screen.ToolbarsScreen
@@ -60,8 +62,7 @@ fun ChiliMain(
             containerColor = ChiliTheme.Colors.ChiliSurfaceBackground,
             topBar = {
                 // TODO (remove in future), this case using reflection
-                val isNotHomeScreen =
-                    backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
+                val isNotHomeScreen = backStack.value?.destination?.route != ChiliScreens.Home::class.java.canonicalName.orEmpty()
 
                 ChiliBaseTopAppBar(
                     isNavigationButtonEnabled = isNotHomeScreen,
@@ -113,5 +114,6 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
         composable<ChiliScreens.Dialog> { DialogScreen() }
         composable<ChiliScreens.BottomSheetPreview> { BottomSheetPreviewScreen() }
+        composable<ChiliScreens.PieChart> { PieChartScreen() }
     }
 }

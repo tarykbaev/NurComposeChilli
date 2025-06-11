@@ -75,4 +75,7 @@ sealed interface ChiliScreens {
     @Serializable
     data object BottomSheetPreview : ChiliScreens
 
+    @Serializable
+    data object PieChart : ChiliScreens
+
 }
