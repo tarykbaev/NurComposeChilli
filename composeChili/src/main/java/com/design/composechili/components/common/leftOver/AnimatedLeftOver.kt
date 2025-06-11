@@ -1,7 +1,5 @@
 package com.design.composechili.components.common.leftOver
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
@@ -14,8 +12,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,18 +34,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.UiMode
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import com.design.composechili.R
+import coil.compose.AsyncImage
 import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.ABSOLUTE_PROGRESS_ANGLE
 import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.ARC_ANIMATION_DURATION
 import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.BACKGROUND_ARC_WIDTH_DIVIDER
@@ -53,15 +48,31 @@ import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams
 import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.START_PROGRESS_ANGLE
 import com.design.composechili.components.common.leftOver.AnimatedLeftOverParams.Companion.TETHERING_ANIMATION_DURATION
 import com.design.composechili.theme.ChiliTheme
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
 import kotlinx.coroutines.delay
+
+/**
+ * Displays an animated circular progress arc with an optional image overlay that cycles periodically.
+ * Useful for visualizing usage like internet or call limits.
+ *
+ * @param modifier Modifier to be applied to the container.
+ * @param leftOverParams UI parameters including arc size, colors, and image resource.
+ * @param limit Total value for the limit (e.g., total data).
+ * @param left Remaining value of the limit (e.g., data left).
+ * @param isUnlimited If true, the progress arc shows as full.
+ * @param isAnimationActive If true animate images from bottomUrlImageList.
+ * @param bottomUrlImageList Optional list of image URLs that will rotate periodically at the bottom.
+ *
+ */
 
 @Composable
 fun AnimatedLeftOver(
     modifier: Modifier = Modifier,
     leftOverParams: AnimatedLeftOverParams,
-    limit: Long = 0L,
-    left: Long = 0L,
+    limit: Long = leftOverParams.limit,
+    left: Long = leftOverParams.left,
     isUnlimited: Boolean,
+    isAnimationActive: Boolean = true,
     bottomUrlImageList: List<String>? = listOf(),
 ) {
     val imageIndex = remember { mutableIntStateOf(0) }
@@ -82,7 +93,7 @@ fun AnimatedLeftOver(
     LaunchedEffect(left, limit, isUnlimited) {
         progress = 0f
         delay(ARC_ANIMATION_DURATION)
-        val countLimitInPercents = (left * 100) / limit
+        val countLimitInPercents = if (limit != 0L && left != 0L) (left * 100) / limit else 0L
         val arcRangePercent = absoluteProgressAngle / 100f
         progress =
             if (isUnlimited) absoluteProgressAngle
@@ -91,8 +102,8 @@ fun AnimatedLeftOver(
             )
     }
 
-    LaunchedEffect(Unit) {
-        while (true) {
+    LaunchedEffect(!bottomUrlImageList.isNullOrEmpty()) {
+        while (isAnimationActive) {
             animate.value = true
             delay(TETHERING_ANIMATION_DURATION)
             animate.value = false
@@ -109,20 +120,27 @@ fun AnimatedLeftOver(
             painter = painterResource(leftOverParams.centeredImage),
             contentDescription = ""
         )
-        Canvas(modifier = Modifier.size(leftOverParams.size),
+        Canvas(
+            modifier = Modifier.size(leftOverParams.size),
             onDraw = {
                 drawArc(
                     color = leftOverParams.arcBackgroundColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = absoluteProgressAngle,
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / BACKGROUND_ARC_WIDTH_DIVIDER),
+                    style = Stroke(
+                        cap = StrokeCap.Round,
+                        width = leftOverParams.size.value / BACKGROUND_ARC_WIDTH_DIVIDER
+                    ),
                     useCenter = false,
                 )
                 drawArc(
                     color = leftOverParams.arcProgressColor,
                     startAngle = startDegreeAngle,
                     sweepAngle = progressAnimation.coerceIn(0f..absoluteProgressAngle),
-                    style = Stroke(cap = StrokeCap.Round, width = leftOverParams.size.value / PROGRESS_ARC_WIDTH_DIVIDER),
+                    style = Stroke(
+                        cap = StrokeCap.Round,
+                        width = leftOverParams.size.value / PROGRESS_ARC_WIDTH_DIVIDER
+                    ),
                     useCenter = false,
                 )
             })
@@ -135,49 +153,13 @@ fun AnimatedLeftOver(
                 .size(leftOverParams.size / 3, leftOverParams.size / 3)
                 .offset(x = 0.dp, y = 8.dp),
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = bottomUrlImageList?.getOrNull(imageIndex.intValue),
-                    onSuccess = { it.painter },
-                ),
-                contentDescription = "",
+            AsyncImage(
+                model = bottomUrlImageList?.getOrNull(imageIndex.intValue),
+                contentDescription = "Tethering animated icons"
             )
         }
     }
 }
-
-data class AnimatedLeftOverParams(
-    val size: Dp,
-    val arcBackgroundColor: Color,
-    val arcProgressColor: Color,
-    @DrawableRes val centeredImage: Int = R.drawable.ic_internet_32_dp,
-) {
-    companion object {
-
-        const val ABSOLUTE_PROGRESS_ANGLE = 300f
-        const val START_PROGRESS_ANGLE = 120f
-        const val ARC_ANIMATION_DURATION = 500L
-        const val TETHERING_ANIMATION_DURATION = 1000L
-        const val BACKGROUND_ARC_WIDTH_DIVIDER = 4.5f
-        const val PROGRESS_ARC_WIDTH_DIVIDER = 3.5f
-
-        val Internet
-            @Composable get() = AnimatedLeftOverParams(
-                size = 60.dp,
-                arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
-                arcProgressColor = colorResource(R.color.cyan_1),
-                centeredImage = R.drawable.ic_internet_32_dp,
-            )
-        val Call
-            @Composable get() = AnimatedLeftOverParams(
-                size = 60.dp,
-                arcBackgroundColor = ChiliTheme.Colors.ChiliLeftOverBackgroundColor,
-                arcProgressColor = colorResource(R.color.green_1),
-                centeredImage = R.drawable.ic_calls_outer_32_dp
-            )
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
@@ -193,24 +175,38 @@ fun Preview_Arc() {
 
     ChiliTheme {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(ChiliTheme.Colors.ChiliCardViewBackground),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
                 value = limit.toString(),
-                onValueChange = { limit = it.toLong() },
+                onValueChange = {
+                    limit = if (it.isNotBlank()) it.filter { char -> !char.isWhitespace() && char.isDigit() }
+                        .toLong() else 0L
+                },
                 label = { Text("Type total limit") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                textStyle = ChiliTextStyleBuilder.H7.Primary.Default
             )
             OutlinedTextField(
                 left.toString(),
-                onValueChange = { left = it.toLong() },
+                onValueChange = {
+                    left = if (it.isNotBlank()) it.filter { char -> !char.isWhitespace() && char.isDigit() }
+                        .toLong() else 0L
+                },
                 label = { Text("Type limit left") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                textStyle = ChiliTextStyleBuilder.H7.Primary.Default
             )
 
-            Row {
+            Row(
+                modifier = Modifier
+                    .height(IntrinsicSize.Max)
+                    .padding(vertical = 8.dp)
+            ) {
                 AnimatedLeftOver(
                     modifier = Modifier.padding(12.dp),
                     limit = limit,
@@ -219,61 +215,7 @@ fun Preview_Arc() {
                     bottomUrlImageList = listOfSmallIcons,
                     leftOverParams = AnimatedLeftOverParams.Internet
                 )
-                VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
 
-                AnimatedLeftOver(
-                    modifier = Modifier.padding(12.dp),
-                    limit = limit,
-                    left = left,
-                    isUnlimited = false,
-                    bottomUrlImageList = listOfSmallIcons,
-                    leftOverParams = AnimatedLeftOverParams.Call
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun Preview_Arc_Dark() {
-    var limit by remember { mutableLongStateOf(51200L) }
-    var left by remember { mutableLongStateOf(24000L) }
-    val listOfSmallIcons = listOf(
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_on.png",
-        "https://minio.o.kg/lkab/services/circle_icon/light/tetering_off.png",
-    )
-
-    ChiliTheme {
-        Column(
-            modifier = Modifier.fillMaxSize().background(ChiliTheme.Background.color),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
-                value = limit.toString(),
-                onValueChange = { limit = it.toLong() },
-                label = { Text("Type total limit") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-            OutlinedTextField(
-                left.toString(),
-                onValueChange = { left = it.toLong() },
-                label = { Text("Type limit left") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-
-            Row {
-                AnimatedLeftOver(
-                    modifier = Modifier.padding(12.dp),
-                    limit = limit,
-                    left = left,
-                    isUnlimited = false,
-                    bottomUrlImageList = listOfSmallIcons,
-                    leftOverParams = AnimatedLeftOverParams.Internet
-                )
                 VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp))
 
                 AnimatedLeftOver(

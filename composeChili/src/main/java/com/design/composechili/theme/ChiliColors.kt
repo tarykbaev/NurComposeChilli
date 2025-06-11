@@ -364,8 +364,7 @@ data class ChiliColors(
             ChiliInputViewErrorMessageTextColor = colorResource(id = R.color.red_1),
             ChiliCardViewBackground = colorResource(id = R.color.white_1),
             ChiliLoaderColor = colorResource(id = R.color.magenta_1),
-            ChiliLeftOverBackgroundColor = colorResource( id = R.color.gray_3)
+            ChiliLeftOverBackgroundColor = colorResource( id = R.color.white_1)
         )
-
     }
 }

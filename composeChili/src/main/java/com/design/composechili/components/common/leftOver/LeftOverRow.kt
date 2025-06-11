@@ -1,6 +1,9 @@
 package com.design.composechili.components.common.leftOver
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,26 +11,49 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.utils.toThreeDigitsFormat
-import kotlin.math.ln
-import kotlin.math.pow
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
+import com.design.composechili.utils.LeftOverUtils
+
+/**
+ * A composable that displays a row item showing package usage information (internet/calls) with:
+ * - An animated circular progress indicator
+ * - Title and usage description
+ * - Optional end icon
+ * - Click handling
+ *
+ * @param modifier Modifier to be applied to the layout
+ * @param title The title text to display (e.g., "Internet" or "Calls")
+ * @param limit The total limit/allowance of the package (in bytes for internet, seconds for calls)
+ * @param remain The remaining amount of the package (in bytes for internet, seconds for calls)
+ * @param isSuspended Whether the package is currently suspended/inactive
+ * @param packageType The type of package (Internet/Call) which determines styling and units
+ * @param showUnlim Whether to show the package as unlimited (affects progress indicator)
+ * @param pieChartIcons Optional list of image URLs to display as rotating icons in the progress indicator
+ * @param endIcon Resource ID of the icon to display at the end of the row
+ * @param onClick Callback when the row is clicked
+ */
 
 @Composable
 fun LeftOverRow(
     modifier: Modifier = Modifier,
     title: String,
-    limit: Long = 50000000000L,
-    remain: Long = 20000000000L,
+    limit: Long = AnimatedLeftOverParams.Call.limit,
+    remain: Long = AnimatedLeftOverParams.Call.left,
     isSuspended: Boolean = false,
     packageType: AnimatedLeftOverParams,
     showUnlim: Boolean = false,
@@ -36,15 +62,33 @@ fun LeftOverRow(
         AnimatedLeftOverParams.Internet -> R.drawable.ic_more_internet
         AnimatedLeftOverParams.Call -> R.drawable.ic_more_calls
         else -> R.drawable.ic_more_internet
-    }
+    },
+    onClick: () -> Unit = {},
+    onAddClick: () -> Unit = {},
 ) {
-    val descriptionText = getDescriptionText(isSuspended, limit, remain, packageType)
+    val locale = Locale.current.language
+    val descriptionText =
+        LeftOverUtils.getDescriptionText(
+            isSuspended,
+            limit,
+            remain,
+            packageType.typeName,
+            locale,
+            LocalContext.current
+        )
 
     Column(modifier, verticalArrangement = Arrangement.Center) {
         Row(
             modifier = Modifier
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple(
+                        color = ChiliTheme.Colors.СhiliRippleForegroundColor
+                    )
+                ) { onClick() }
+                .background(ChiliTheme.Colors.ChiliCardViewBackground)
                 .fillMaxWidth()
-                .padding(vertical = 12.dp),
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AnimatedLeftOver(
@@ -60,80 +104,24 @@ fun LeftOverRow(
                     .padding(horizontal = 12.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(title)
-                    Image(painter = painterResource(R.drawable.chili_ic_chevron), null)
+                    Text(text = title, style = ChiliTextStyleBuilder.H8.Primary.Default)
+                    Image(painter = painterResource(AnimatedLeftOverParams.Call.chevron), "chevron icon")
                 }
-                Text(descriptionText)
+                Text(text = descriptionText, style = ChiliTextStyleBuilder.H8.Primary.Bold)
             }
             Spacer(modifier = Modifier.weight(1f))
-            Image(painter = painterResource(endIcon), null)
+            Image(
+                painter = painterResource(endIcon),
+                contentDescription = "icon add",
+                modifier = Modifier
+                    .clip(packageType.iconRippleShape)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = ripple(color = ChiliTheme.Colors.СhiliRippleForegroundColor)
+                    ) { onAddClick() },
+            )
         }
     }
-}
-
-@Composable
-private fun getDescriptionText(
-    isSuspended: Boolean,
-    limit: Long,
-    remain: Long,
-    type: AnimatedLeftOverParams
-): String {
-
-    val GIGABYTE = 3
-    val TERRABYTE = 4
-
-    val locale = Locale.current
-    val internetUnits = when (locale.language) {
-        "en" -> arrayOf("B", "KB", "MB", "GB", "TB")
-        else -> arrayOf("Б", "КБ", "MБ", "ГБ", "ТБ")
-    }
-    val callsUnit = when (locale.language) {
-        "en" -> "min"
-        else -> "мин"
-    }
-
-    val suffix = when (locale.language) {
-        "ru" -> ""
-        "kg" -> if (type == AnimatedLeftOverParams.Call) "тон" else "тан"
-        else -> ""
-    }
-
-    val prefix = when (locale.language) {
-        "ru" -> "из"
-        "en" -> "from"
-        else -> ""
-    }
-
-    val unitMultiplier = 1024.0
-    val limitIndex = (ln(limit.toDouble()) / ln(unitMultiplier)).toInt()
-    val limitUnitsFromSize = limit / unitMultiplier.pow(limitIndex.toDouble())
-    val remainIndex = (ln(remain.toDouble()) / ln(unitMultiplier)).toInt()
-    val remainUnitsFromSize = remain / unitMultiplier.pow(remainIndex.toDouble())
-
-    val limitUnitName =
-        if (type == AnimatedLeftOverParams.Call) callsUnit else internetUnits[limitIndex]
-    val remainUnitName =
-        if (type == AnimatedLeftOverParams.Call) callsUnit else internetUnits[limitIndex]
-
-    val limitText = when {
-        isSuspended -> "Inactive"
-        type == AnimatedLeftOverParams.Call -> "${limit / 60} $limitUnitName$suffix"
-        limitIndex == GIGABYTE || limitIndex == TERRABYTE -> {
-            "${limitUnitsFromSize.toThreeDigitsFormat} $limitUnitName$suffix"
-        }
-        else -> "${limitUnitsFromSize.toInt()} $limitUnitName$suffix"
-    }
-
-    val remainText = when {
-        isSuspended -> ""
-        type == AnimatedLeftOverParams.Call -> "$prefix ${remain / 60} $remainUnitName"
-        remainIndex == GIGABYTE || remainIndex == TERRABYTE -> {
-            "$prefix ${remainUnitsFromSize.toThreeDigitsFormat} $remainUnitName"
-        }
-        else -> "$prefix ${remainUnitsFromSize.toInt()} $remainUnitName"
-    }
-
-    return "$limitText $remainText"
 }
 
 @Preview(showBackground = true)

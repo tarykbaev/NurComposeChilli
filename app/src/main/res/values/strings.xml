@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">NurComposeChili</string>
+    <string name="app_name" translatable="false">NurComposeChili</string>
+    <string name="locale_en">en</string>
+    <string name="locale_ru">ru</string>
+    <string name="locale_kg">kg</string>
 
-    <string name="agree_terms"><![CDATA[Я согласен с условиями <a href="https://o.kg">пользовательского соглашения</a> и условиями\n<a href="https://o.kg">оферты сервиса «О!Деньги»</a>]]></string>
+    <string name="agree_terms" translatable="false"><![CDATA[Я согласен с условиями <a href="https://o.kg">пользовательского соглашения</a> и условиями\n<a href="https://o.kg">оферты сервиса «О!Деньги»</a>]]></string>
 
 </resources>

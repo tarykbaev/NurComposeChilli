@@ -14,46 +14,56 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composechili.R
+import com.design.composechili.components.common.leftOver.model.LeftOverUiModel
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.textStyle.ChiliTextStyle
+import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder
+
+/**
+ * A composable card that displays information about the current tariff leftovers
+ * such as internet and call package balances.
+ *
+ * It shows a title, a description (e.g., next charge date), and a list of usage packages.
+ *
+ * @param title The title of the card (e.g., tariff name).
+ * @param description The description below the title (e.g., "250с будет списано 01.03.2025").
+ * @param lisOfLeftOvers A list of [LeftOverUiModel] representing the remaining and total amounts.
+ * @param params UI customization parameters from [TariffLeftOverCardParams].
+ */
 
 @Composable
 fun TariffLeftOverCard(
     title: String = "",
     description: String = "",
-    lisOfLeftOvers: List<LeftOverUiModel> = listOf()
+    lisOfLeftOvers: List<LeftOverUiModel> = listOf(),
+    onClick: () -> Unit = {},
+    onAddClick: () -> Unit = {},
+    params: TariffLeftOverCardParams = TariffLeftOverCardParams.Default,
 ) {
+
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors()
             .copy(containerColor = ChiliTheme.Colors.ChiliCardViewBackground)
     ) {
-        Column(modifier = Modifier.padding(bottom = 24.dp)) {
+        Column(modifier = Modifier.padding(bottom = params.cardBottomPadding)) {
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 12.dp)
+                    .padding(horizontal = params.rowHorizontalPadding)
+                    .padding(vertical = params.rowVerticalPadding)
             ) {
                 Column {
                     Text(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        text = title, style = ChiliTextStyle.get(
-                            ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH7,
-                            ChiliTheme.Colors.ChiliPrimaryTextColor,
-                            ChiliTheme.Attribute.ChiliBoldTextFont
-                        )
+                        modifier = Modifier.padding(bottom = params.titleBottomPadding),
+                        text = title, style = ChiliTextStyleBuilder.H8.Primary.Regular
                     )
-                    Text(
-                        description, style = ChiliTextStyle.get(
-                            ChiliTheme.Attribute.ChiliTextDimensions.TextSizeH8,
-                            ChiliTheme.Colors.ChiliPrimaryTextColor,
-                            ChiliTheme.Attribute.ChiliRegularTextFont
-                        )
-                    )
+                    Text(description, style = ChiliTextStyleBuilder.H8.Primary.Regular)
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Image(painter = painterResource(R.drawable.chili_ic_chevron), null)
@@ -68,17 +78,19 @@ fun TariffLeftOverCard(
                     LeftOverRow(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 12.dp),
+                            .padding(horizontal = params.leftOverRowHorizontalPadding),
                         packageType = item.packageType,
                         isSuspended = false,
                         limit = item.limit,
                         remain = item.remain,
                         pieChartIcons = item.pieChartIcons,
-                        title = when(item.packageType){
-                            AnimatedLeftOverParams.Internet -> "Internet"
-                            AnimatedLeftOverParams.Call -> "Call"
+                        title = when (item.packageType) {
+                            AnimatedLeftOverParams.Internet -> context.getString(R.string.package_name_internet)
+                            AnimatedLeftOverParams.Call -> context.getString(R.string.package_name_call)
                             else -> ""
-                        }
+                        },
+                        onClick = onClick,
+                        onAddClick = onAddClick
                     )
                 }
             }
@@ -86,21 +98,15 @@ fun TariffLeftOverCard(
     }
 }
 
-data class LeftOverUiModel(
-    val packageType: AnimatedLeftOverParams,
-    var limit: Long = 0,
-    var remain: Long = 0,
-    var expiryDate: String? = null,
-    var showUnlim: Boolean = false,
-    var isSuspended: Boolean = false,
-    var pieChartIcons: List<String>? = null
-)
-
 @Preview(showBackground = false)
 @Composable
 fun TariffLeftOverCard_Preview() {
-    ChiliTheme{
-        Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
+    ChiliTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
             TariffLeftOverCard(
                 title = "Служебный 250+ (на месяц)",
                 description = "250с будет списано 01.03.2025",

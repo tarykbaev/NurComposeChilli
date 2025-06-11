@@ -1,44 +1,21 @@
 package com.design.composeChilli
 
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.design.composeChilli.navigation.currentComposeNavigator
 import com.design.composechili.components.buttons.baseButton.NurChiliButton
-import com.design.composechili.components.common.leftOver.Preview_Arc
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen() {
 
     val composeNavigator = currentComposeNavigator
-    val context = LocalContext.current
-
-    val internetPermissionState = rememberPermissionState(android.Manifest.permission.INTERNET){
-        val intent = Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", context.applicationContext.packageName, null)
-        )
-        if(!it){ context.startActivity(intent) } else { Toast.makeText(context, "Internet access granted", Toast.LENGTH_SHORT).show() }
-    }
-
-    LaunchedEffect(Unit) {
-        internetPermissionState.launchPermissionRequest()
-    }
 
     val homeScreenItems = listOf(
         Pair("Text Appearances", ChiliScreens.TextAppearance),
@@ -63,11 +40,8 @@ fun HomeScreen() {
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 painter = painterResource(id = R.drawable.cover),
-                contentDescription = null
+                contentDescription = "Cover"
             )
-        }
-        item {
-            Preview_Arc()
         }
         items(homeScreenItems){
             NurChiliButton(
