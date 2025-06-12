@@ -30,9 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.design.composechili.R
-import com.design.composechili.components.bottomSheet.baseBottomSheet.BaseBottomSheet
 import com.design.composechili.components.card.AccentCardPreview
 import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategories
 import com.design.composechili.components.card.cardWithExpandableCategories.CardWithExpandableCategoriesParams
@@ -50,9 +48,7 @@ import com.design.composechili.components.common.pieChart.model.OModels.Detaliza
 import com.design.composechili.components.common.pieChart.model.PieChartCategoryType
 import com.design.composechili.components.common.pieChart.model.PieChartInfo
 import com.design.composechili.components.common.pieChart.model.PieChartParams
-import com.design.composechili.extensions.getBottomSheetState
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.utils.expand
 import com.design.composechili.utils.softLayerShadow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -160,72 +156,69 @@ fun PeriodSelectablePieChart_Preview() {
     val uiState = remember { mutableStateOf(DetalizationUiState()) }
 
     val coScope = rememberCoroutineScope()
-    val sheetState = getBottomSheetState().apply { coScope.launch { bottomSheetState.hide() } }
+    val sheetState = remember { mutableStateOf(false) }
 
     ChiliTheme {
-        BaseBottomSheet(peekHeight = 0.dp, sheetState = sheetState, bottomSheetContent = {
-            DatePickerBottomSheet(coScope, sheetState) { uiState.value = it }
-        }) {
-            Box(
+        DatePickerBottomSheet(coScope, sheetState.value) { uiState.value = it; sheetState.value = false }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .softLayerShadow()
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .softLayerShadow()
+                    .padding(dimensionResource(R.dimen.padding_8dp))
+                    .verticalScroll(rememberScrollState())
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_8dp))
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_16dp)))
-                    PeriodSelectablePieChart(
-                        modifier = Modifier.fillMaxWidth(),
-                        periodTitleSingle = "Детализация на ",
-                        periodTitleStartToEnd = Pair("Детализация с ", "по"),
-                        detalizationPeriod = uiState.value.dateRange,
-                        pieChartInfo = uiState.value.detalizationInfo.mapToPieChartInfo(),
-                        onPeriodClick = { coScope.launch { sheetState.expand() } },
-                        dateRangeListener = { start, end ->
-                            uiState.value = uiState.value.copy(dateRange = Pair(start, end))
-                            val randomCountOfCategories = Random.nextInt(0..8)
-                            uiState.value = uiState.value.copy(
-                                detalizationInfo = DetalizationInfo(
-                                    totalAmount = DetalizationUiState()
-                                        .detalizationInfo.category
-                                        ?.take(randomCountOfCategories)
-                                        ?.sumOf { it.totalCharge?.toDouble() ?: 0.0 }
-                                        ?: 0.0,
-                                    category = DetalizationUiState()
-                                        .detalizationInfo.category
-                                        ?.take(randomCountOfCategories)
-                                )
+                Spacer(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_16dp)))
+                PeriodSelectablePieChart(
+                    modifier = Modifier.fillMaxWidth(),
+                    periodTitleSingle = "Детализация на ",
+                    periodTitleStartToEnd = Pair("Детализация с ", "по"),
+                    detalizationPeriod = uiState.value.dateRange,
+                    pieChartInfo = uiState.value.detalizationInfo.mapToPieChartInfo(),
+                    onPeriodClick = { coScope.launch { sheetState.value = true } },
+                    dateRangeListener = { start, end ->
+                        uiState.value = uiState.value.copy(dateRange = Pair(start, end))
+                        val randomCountOfCategories = Random.nextInt(0..8)
+                        uiState.value = uiState.value.copy(
+                            detalizationInfo = DetalizationInfo(
+                                totalAmount = DetalizationUiState()
+                                    .detalizationInfo.category
+                                    ?.take(randomCountOfCategories)
+                                    ?.sumOf { it.totalCharge?.toDouble() ?: 0.0 }
+                                    ?: 0.0,
+                                category = DetalizationUiState()
+                                    .detalizationInfo.category
+                                    ?.take(randomCountOfCategories)
                             )
-                        },
-                        periodType = uiState.value.periodType,
-                        onSelectedCategory = {
-                            uiState.value =
-                                uiState.value.copy(selectedCategory = it?.toEnumSpendingCategory())
-                        },
-                        selectedCategory = uiState.value.selectedCategory?.toPieChartCategoryType(),
-                    )
-                    CardWithExpandableCategories(
-                        params = CardWithExpandableCategoriesParams.Default.copy(currency = "c"),
-                        listOfCategories = uiState.value.detalizationInfo.category?.map { it.toExpandableCategoryCellModel() },
-                        onCategoryClick = {
-                            uiState.value =
-                                uiState.value.copy(
-                                    selectedCategory =
-                                        if (uiState.value.selectedCategory == it?.toEnumSpendingCategory()) null
-                                        else it?.toEnumSpendingCategory()
-                                )
-                        },
-                        selectedCategory = uiState.value.selectedCategory?.toExpandableCategoryCellType()
-                    )
-                    //todo just for check if last items shown
-                    AccentCardPreview()
-                    if (uiState.value.showDatePicker) {
-                        DatePickerDialog(uiState)
-                    }
+                        )
+                    },
+                    periodType = uiState.value.periodType,
+                    onSelectedCategory = {
+                        uiState.value =
+                            uiState.value.copy(selectedCategory = it?.toEnumSpendingCategory())
+                    },
+                    selectedCategory = uiState.value.selectedCategory?.toPieChartCategoryType(),
+                )
+                CardWithExpandableCategories(
+                    params = CardWithExpandableCategoriesParams.Default.copy(currency = "c"),
+                    listOfCategories = uiState.value.detalizationInfo.category?.map { it.toExpandableCategoryCellModel() },
+                    onCategoryClick = {
+                        uiState.value =
+                            uiState.value.copy(
+                                selectedCategory =
+                                    if (uiState.value.selectedCategory == it?.toEnumSpendingCategory()) null
+                                    else it?.toEnumSpendingCategory()
+                            )
+                    },
+                    selectedCategory = uiState.value.selectedCategory?.toExpandableCategoryCellType()
+                )
+                //todo just for check if last items shown
+                AccentCardPreview()
+                if (uiState.value.showDatePicker) {
+                    DatePickerDialog(uiState)
                 }
             }
         }

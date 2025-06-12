@@ -1,10 +1,9 @@
 package com.design.composechili.components.common.periodSelectablePieChart.mock
 
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetContent
-import com.design.composechili.components.bottomSheet.actionBottomSheet.ActionBottomSheetParams
+import com.design.composechili.components.bottomSheet.action.NurActionBottomSheet
+import com.design.composechili.components.bottomSheet.action.NurActionBottomSheetParams
 import com.design.composechili.components.buttons.baseButton.ChiliButtonStyle
 import com.design.composechili.components.common.periodSelectablePieChart.PeriodType
 import com.design.composechili.components.common.periodSelectablePieChart.model.DetalizationUiState
@@ -15,7 +14,6 @@ import com.design.composechili.utils.getFirstDayOfMonth
 import com.design.composechili.utils.getFirstDayOfWeek
 import com.design.composechili.utils.getLastDayOfMonthNotInFuture
 import com.design.composechili.utils.getLastDayOfWeekNotInFuture
-import com.design.composechili.utils.hide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -25,17 +23,19 @@ import java.time.LocalDateTime
 @Composable
 fun DatePickerBottomSheet(
     coScope: CoroutineScope,
-    sheetState: BottomSheetScaffoldState,
+    sheetState: Boolean,
     onStateChange: (DetalizationUiState) -> Unit
 ) {
-    ActionBottomSheetContent(
+
+    NurActionBottomSheet(
+        isVisible = sheetState,
+        onDismissRequest = {},
         buttons = listOf(
-            ActionBottomSheetParams(
+            NurActionBottomSheetParams(
                 title = "Today",
                 buttonStyle = ChiliButtonStyle.Primary
             ) {
                 coScope.launch {
-                    sheetState.hide()
                     //todo will be implemented vm logic to get info from server
                     onStateChange(
                         DetalizationUiState().copy(
@@ -52,12 +52,11 @@ fun DatePickerBottomSheet(
                     )
                 }
             },
-            ActionBottomSheetParams(
+            NurActionBottomSheetParams(
                 title = "One week",
                 buttonStyle = ChiliButtonStyle.Primary
             ) {
                 coScope.launch {
-                    sheetState.hide()
                     onStateChange(
                         DetalizationUiState().copy(
                             detalizationInfo = DetalizationInfo(
@@ -73,12 +72,11 @@ fun DatePickerBottomSheet(
                     )
                 }
             },
-            ActionBottomSheetParams(
+            NurActionBottomSheetParams(
                 title = "One Month",
                 buttonStyle = ChiliButtonStyle.Primary
             ) {
                 coScope.launch {
-                    sheetState.hide()
                     onStateChange(
                         DetalizationUiState().copy(
                             detalizationInfo = DetalizationInfo(
@@ -94,12 +92,11 @@ fun DatePickerBottomSheet(
                     )
                 }
             },
-            ActionBottomSheetParams(
+            NurActionBottomSheetParams(
                 title = "Choose period manually",
                 buttonStyle = ChiliButtonStyle.Primary
             ) {
                 coScope.launch {
-                    sheetState.hide()
                     onStateChange(DetalizationUiState().copy(showDatePicker = true))
                 }
             },
