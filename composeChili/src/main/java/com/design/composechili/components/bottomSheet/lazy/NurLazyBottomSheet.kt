@@ -1,9 +1,10 @@
 package com.design.composechili.components.bottomSheet.lazy
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -17,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composechili.components.bottomSheet.base.NurModalBottomSheet
 import com.design.composechili.components.cell.radioButtonCell.RadioButtonCell
 import com.design.composechili.theme.ChiliTheme
-import kotlin.random.Random
+import com.design.composechili.values.ChiliPadding
 
 /**
  * RecycleBottomSheet is a reusable component that displays a bottom sheet with a customizable list.
@@ -45,11 +46,12 @@ fun <T> NurLazyBottomSheet(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     swipeToDismissEnabled: Boolean = false,
-    title: String,
-    subtitle: String,
+    title: String? = null,
+    subtitle: String? = null,
     listOfItems: List<T>,
     onItemClick: (T) -> Unit = {},
     isVisibleDivider: Boolean = true,
+    lazyColumnContentPadding: ChiliPadding = ChiliPadding(),
     params: NurLazyBottomSheetContentParams = NurLazyBottomSheetContentParams.Default,
     composableItem: @Composable LazyItemScope.(T, (T) -> Unit) -> Unit,
     onDismissRequest: () -> Unit,
@@ -68,6 +70,7 @@ fun <T> NurLazyBottomSheet(
             listOfItems = listOfItems,
             onItemClick = onItemClick,
             isVisibleDivider = isVisibleDivider,
+            lazyColumnContentPadding = lazyColumnContentPadding,
             params = params,
             composableItem = composableItem
         )
@@ -76,35 +79,46 @@ fun <T> NurLazyBottomSheet(
 
 @Composable
 private fun <T> NurLazyBottomSheetContent(
-    title: String,
-    subtitle: String,
+    title: String?,
+    subtitle: String?,
     listOfItems: List<T>,
     onItemClick: (T) -> Unit,
     isVisibleDivider: Boolean,
+    lazyColumnContentPadding: ChiliPadding,
     params: NurLazyBottomSheetContentParams,
     composableItem: @Composable LazyItemScope.(T, (T) -> Unit) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(
+        contentPadding = lazyColumnContentPadding.toPaddingValues()
+    ) {
         item {
-            Column(
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
-            ) {
-                Text(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = title,
-                    style = params.titleStyle
-                )
-                Text(
-                    text = subtitle,
-                    style = params.subtitleStyle
-                )
+            Column {
+                title?.let {
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        text = it,
+                        style = params.titleStyle
+                    )
+                }
+                subtitle?.let {
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        text = it,
+                        style = params.subtitleStyle
+                    )
+                }
             }
         }
         itemsIndexed(listOfItems) { index, itemData ->
             composableItem(itemData, onItemClick)
             if (index != listOfItems.lastIndex && isVisibleDivider) {
                 HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     color = ChiliTheme.Colors.ChiliDividerColor,
                     thickness = ChiliTheme.Attribute.ChiliDividerHeightSize
                 )
@@ -118,12 +132,13 @@ private fun <T> NurLazyBottomSheetContent(
 private fun NurLazyBottomSheetContentPreview() {
     ChiliTheme {
         NurLazyBottomSheetContent(
-            title = "Choose option",
-            subtitle = "Select one from list",
+            title = null,
+            subtitle = null,
             listOfItems = listOf("One", "Two", "Three"),
             onItemClick = {},
             isVisibleDivider = true,
             params = NurLazyBottomSheetContentParams.Default,
+            lazyColumnContentPadding = ChiliPadding(),
             composableItem = { item, onClick ->
                 RadioButtonCell(
                     title = item,
