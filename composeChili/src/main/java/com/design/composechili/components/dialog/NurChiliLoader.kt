@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -22,36 +21,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H6
 
 @Composable
 fun NurChiliLoader(
     isVisible: Boolean,
+    loaderText: String? = null,
+    params: NurChiliLoaderParams = NurChiliLoaderParams.Default,
     onDismissRequest: () -> Unit = { }
 ) {
     if (isVisible) {
         Dialog(
-            onDismissRequest,
-            DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false,
-                usePlatformDefaultWidth = false
-            )
+            onDismissRequest = onDismissRequest,
+            properties = params.dialogProperties,
         ) {
             Card(
                 modifier = Modifier
                     .wrapContentSize(),
-                colors = CardDefaults.cardColors(containerColor = ChiliTheme.Colors.ChiliSurfaceBackground),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(
+                    containerColor = params.backgroundColor
+                ),
+                shape = RoundedCornerShape(params.backgroundCornerRadius)
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(vertical = 16.dp, horizontal = 48.dp)
-                        .defaultMinSize(minHeight = 100.dp, minWidth = 150.dp)
+                        .padding(16.dp)
                         .wrapContentSize()
-                        .background(ChiliTheme.Background.color),
+                        .background(params.backgroundColor),
                     verticalArrangement = Arrangement.Center
                 ) {
                     AnimatedVisibility(
@@ -60,18 +56,21 @@ fun NurChiliLoader(
                         enter = fadeIn()
                     ) {
                         CircularProgressIndicator(
-                            color = ChiliTheme.Colors.ChiliLoaderColor,
-                            strokeWidth = 4.dp
+                            color = params.progressColor,
+                            strokeWidth = params.progressWidth,
                         )
                     }
-                    Spacer(modifier = Modifier.size(16.dp))
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally),
-                        text = "Loading...",
-                        textAlign = TextAlign.Center,
-                        style = H6.Primary.Medium
-                    )
+                    loaderText?.let {
+                        Spacer(modifier = Modifier.size(16.dp))
+                        Text(
+                            text = it,
+                            textAlign = TextAlign.Center,
+                            style = params.textStyle,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(horizontal = 48.dp)
+                        )
+                    }
                 }
             }
         }
