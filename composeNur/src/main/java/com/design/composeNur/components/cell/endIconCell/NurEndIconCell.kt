@@ -179,7 +179,7 @@ fun NurEndIconCell(
 
 @Preview
 @Composable
-fun NurNurEndIconCell_Preview() {
+fun NurEndIconCell_Preview() {
     NurTheme {
         NurEndIconCell(
             title = "Nur Nur End Icon Cell Title",

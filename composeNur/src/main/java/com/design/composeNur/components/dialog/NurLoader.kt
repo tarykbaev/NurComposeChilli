@@ -79,7 +79,7 @@ fun NurLoader(
 
 @Preview
 @Composable
-fun NurChiliLoader_Preview() {
+fun NurLoader_Preview() {
     NurTheme {
         NurLoader(isVisible = true)
     }

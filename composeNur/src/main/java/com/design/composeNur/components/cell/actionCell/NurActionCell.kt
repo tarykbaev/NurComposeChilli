@@ -134,7 +134,7 @@ fun NurActionCell(
 
 @Preview
 @Composable
-private fun NurNurActionCell_Preview() {
+private fun NurActionCell_Preview() {
     NurTheme {
         NurActionCell(
             title = "Nur Action Cell shfsjahfka ahkasdhfkasajshfkasd",

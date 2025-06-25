@@ -170,7 +170,7 @@ fun NurBaseCell(
 
 @Preview
 @Composable
-fun NurNurBaseCellPreview() {
+fun NurBaseCellPreview() {
     NurTheme {
         NurBaseCell(
             title = "Test",

@@ -68,16 +68,16 @@ fun CellsScreen() {
         Spacer(modifier = Modifier.size(32.dp))
         AdditionalDoubleButtonsGroup()
         Spacer(modifier = Modifier.size(32.dp))
-        NurNurEndIconCellGroup()
+        NurEndIconCellGroup()
         Spacer(modifier = Modifier.size(32.dp))
-        NurNurActionCellGroup()
+        NurActionCellGroup()
 
         Spacer(modifier = Modifier.size(32.dp))
     }
 }
 
 @Composable
-fun NurNurActionCellGroup() {
+fun NurActionCellGroup() {
     Column(
         modifier = Modifier.padding(horizontal = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -114,7 +114,7 @@ fun NurNurActionCellGroup() {
 }
 
 @Composable
-fun NurNurEndIconCellGroup() {
+fun NurEndIconCellGroup() {
     val context = LocalContext.current
 
     Column(
@@ -123,12 +123,12 @@ fun NurNurEndIconCellGroup() {
     ) {
         Text(
             style = NurTextStyleBuilder.H8.Primary.Default,
-            text = "NurNurEndIconCell iconSize = SMALL (32dp)"
+            text = "NurEndIconCell iconSize = SMALL (32dp)"
         )
         NurEndIconCell(
             modifier = Modifier.softLayerShadow(),
-            title = "NurNurEndIconCell Title",
-            subtitle = "NurNurEndIconCell Subtitle",
+            title = "NurEndIconCell Title",
+            subtitle = "NurEndIconCell Subtitle",
             startIcon = painterResource(R.drawable.ic_squircle_phone),
             endIcon = painterResource(R.drawable.ic_cat),
             onStartIconClick = { context.showToast("onStartIconClicked") },

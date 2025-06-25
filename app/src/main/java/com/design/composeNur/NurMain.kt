@@ -66,7 +66,7 @@ fun NurMain(
                 NurBaseTopAppBar(
                     isNavigationButtonEnabled = isNotHomeScreen,
                     navigationIcon = painterResource(id = com.design.composenur.R.drawable.nur_ic_chevron_left),
-                    title = "NurComposeNur",
+                    title = "NurCompose",
                     isDividerVisible = true,
                     isCenteredTitle = true,
                     endIcon = painterResource(id = R.drawable.ic_dark_mode),

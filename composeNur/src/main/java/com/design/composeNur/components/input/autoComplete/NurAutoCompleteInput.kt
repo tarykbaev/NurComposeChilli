@@ -18,7 +18,7 @@ import com.design.composeNur.components.input.inputFieldWithDescAndAction.NurAut
 /**
  * A composable function for displaying an input field with autocomplete functionality.
  *
- * @param T The type of items in the autocomplete dropdown. Must implement [NurNurAutoCompleteItem].
+ * @param T The type of items in the autocomplete dropdown. Must implement [AutoCompleteItem].
  * @param modifier The [Modifier] to be applied to the container of this composable.
  * @param autoCompleteItems A list of items to be displayed in the autocomplete dropdown menu.
  * @param onDropDownMenuDismiss A callback triggered when the dropdown menu is dismissed. Default is an empty lambda.
@@ -31,7 +31,7 @@ import com.design.composeNur.components.input.inputFieldWithDescAndAction.NurAut
  *
  * Example usage:
  * ```
- * NurNurAutoCompleteInput(
+ * NurAutoCompleteInput(
  *     modifier = Modifier.fillMaxWidth(),
  *     autoCompleteItems = listOf(MyItem("Option 1"), MyItem("Option 2")),
  *     onDropDownMenuDismiss = { /* Handle dismiss */ },

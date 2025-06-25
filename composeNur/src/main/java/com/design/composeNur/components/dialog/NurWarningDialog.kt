@@ -129,7 +129,7 @@ fun NurWarningDialog(
 
 @Preview(showBackground = true)
 @Composable
-fun NurNurWarningDialog_Preview() {
+fun NurWarningDialog_Preview() {
     NurTheme {
         NurWarningDialog(
             title = "Title",
