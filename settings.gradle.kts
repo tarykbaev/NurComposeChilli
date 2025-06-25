@@ -27,6 +27,6 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 
-rootProject.name = "NurComposeChili"
+rootProject.name = "NurCompose"
 include(":app")
-include(":composeChili")
+include(":composeNur")

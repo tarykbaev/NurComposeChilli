@@ -14,14 +14,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_new_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NurComposeChili"
+        android:theme="@style/Theme.NurComposeNur"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.NurComposeChili">
+            android:theme="@style/Theme.NurComposeNur">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
