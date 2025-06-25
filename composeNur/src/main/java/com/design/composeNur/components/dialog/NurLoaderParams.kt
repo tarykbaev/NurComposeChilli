@@ -1,4 +1,4 @@
-package com.design.composechili.components.dialog
+package com.design.composeNur.components.dialog
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -6,10 +6,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.design.composechili.theme.ChiliTheme
-import com.design.composechili.theme.textStyle.ChiliTextStyleBuilder.Companion.H6
+import com.design.composeNur.theme.NurTheme
+import com.design.composeNur.theme.textStyle.NurTextStyleBuilder.Companion.H6
 
-data class NurChiliLoaderParams(
+data class NurLoaderParams(
     val textStyle: TextStyle,
     val backgroundColor: Color,
     val backgroundCornerRadius: Dp,
@@ -20,11 +20,11 @@ data class NurChiliLoaderParams(
 
     companion object {
         val Default
-            @Composable get() = NurChiliLoaderParams(
+            @Composable get() = NurLoaderParams(
                 textStyle = H6.Primary.Medium,
-                backgroundColor = ChiliTheme.Colors.ChiliSurfaceBackground,
+                backgroundColor = NurTheme.Colors.NurSurfaceBackground,
                 backgroundCornerRadius = 16.dp,
-                progressColor = ChiliTheme.Colors.ChiliLoaderColor,
+                progressColor = NurTheme.Colors.NurLoaderColor,
                 progressWidth = 4.dp,
                 dialogProperties = DialogProperties(
                     dismissOnBackPress = false,

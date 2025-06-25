@@ -1,4 +1,4 @@
-package com.design.composechili.components.dialog
+package com.design.composeNur.components.dialog
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -21,13 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.design.composechili.theme.ChiliTheme
+import com.design.composeNur.theme.NurTheme
 
 @Composable
-fun NurChiliLoader(
+fun NurLoader(
     isVisible: Boolean,
     loaderText: String? = null,
-    params: NurChiliLoaderParams = NurChiliLoaderParams.Default,
+    params: NurLoaderParams = NurLoaderParams.Companion.Default,
     onDismissRequest: () -> Unit = { }
 ) {
     if (isVisible) {
@@ -80,7 +80,7 @@ fun NurChiliLoader(
 @Preview
 @Composable
 fun NurChiliLoader_Preview() {
-    ChiliTheme {
-        NurChiliLoader(isVisible = true)
+    NurTheme {
+        NurLoader(isVisible = true)
     }
 }
