@@ -1,0 +1,21 @@
+<resources>
+    <string name="locale_en">en</string>
+    <string name="locale_ru">ru</string>
+    <string name="locale_kg">kg</string>
+
+    <string-array name="internet_units">
+        <item>B</item>
+        <item>KB</item>
+        <item>MB</item>
+        <item>GB</item>
+        <item>TB</item>
+    </string-array>
+
+    <string name="from_prefix">from</string>
+    <string name="from_suffix_min"> </string>
+    <string name="from_suffix_internet"> </string>
+    <string name="text_inactive">Inactive</string>
+    <string name="text_minutes">min</string>
+    <string name="package_name_internet">Internet</string>
+    <string name="package_name_call">Call</string>
+</resources>

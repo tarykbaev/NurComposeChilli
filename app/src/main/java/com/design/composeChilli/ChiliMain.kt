@@ -28,6 +28,7 @@ import com.design.composeChilli.screen.DialogScreen
 import com.design.composeChilli.screen.GroupingContainerScreen
 import com.design.composeChilli.screen.HighlighterContainersScreen
 import com.design.composeChilli.screen.InputFieldsScreen
+import com.design.composeChilli.screen.LeftOverScreen
 import com.design.composeChilli.screen.NavigationBarScreen
 import com.design.composeChilli.screen.PickersScreen
 import com.design.composeChilli.screen.SnackbarScreen
@@ -113,5 +114,6 @@ fun ChiliNavHost(navHostController: NavHostController) {
         composable<ChiliScreens.Tooltip> { TooltipScreen() }
         composable<ChiliScreens.Dialog> { DialogScreen() }
         composable<ChiliScreens.BottomSheetPreview> { BottomSheetPreviewScreen() }
+        composable<ChiliScreens.LeftOver> { LeftOverScreen() }
     }
 }

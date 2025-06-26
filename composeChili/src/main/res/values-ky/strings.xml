@@ -1,0 +1,21 @@
+<resources>
+    <string name="locale_en">en</string>
+    <string name="locale_ru">ru</string>
+    <string name="locale_kg">kg</string>
+
+    <string-array name="internet_units">
+        <item>B</item>
+        <item>KB</item>
+        <item>MB</item>
+        <item>GB</item>
+        <item>TB</item>
+    </string-array>
+
+    <string name="from_prefix"> </string>
+    <string name="from_suffix_min">тон</string>
+    <string name="from_suffix_internet">тан</string>
+    <string name="text_inactive">Неактивен</string>
+    <string name="text_minutes">мин</string>
+    <string name="package_name_internet">Интернет</string>
+    <string name="package_name_call">Звонки</string>
+</resources>
