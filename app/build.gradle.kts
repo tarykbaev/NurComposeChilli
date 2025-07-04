@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.design.composeChilli"
+    namespace = "com.design.composeNur"
     compileSdk = AppConfiguration.COMPILE_SDK
 
     defaultConfig {
-        applicationId = "com.design.composeChilli"
+        applicationId = "com.design.composeNur"
         minSdk = AppConfiguration.MIN_SDK
         targetSdk = AppConfiguration.TARGET_SDK
         versionCode = 1
@@ -52,8 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.composeChili)
-
+    implementation(projects.composeNur)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
