@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composeNur.R
 import com.design.composeNur.components.checkbox.NurCheckbox
 import com.design.composeNur.components.common.carousel.CarouselItem
-import com.design.composeNur.components.common.carousel.ImageCarousel
+import com.design.composeNur.components.common.carousel.NurImageCarousel
 import com.design.composeNur.components.common.nurAgreement.DisplayMode
 import com.design.composeNur.components.common.nurAgreement.NurAgreementItem
 import com.design.composeNur.components.common.nurMaterialDesignSlider.NurMaterialDesignSlider
@@ -173,7 +173,7 @@ fun CommonsScreen() {
             text = "ImageCarousel",
             style = NurTextStyleBuilder.H8.Primary.Regular
         )
-        ImageCarousel(
+        NurImageCarousel(
             modifier = Modifier
                 .height(210.dp)
                 .padding(16.dp),
