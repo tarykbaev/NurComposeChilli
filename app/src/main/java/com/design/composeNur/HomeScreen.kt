@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.design.composeNur.navigation.currentComposeNavigator
 import com.design.composeNur.components.buttons.baseButton.NurButton
+import com.design.composeNur.navigation.currentComposeNavigator
 
 @Composable
 fun HomeScreen() {

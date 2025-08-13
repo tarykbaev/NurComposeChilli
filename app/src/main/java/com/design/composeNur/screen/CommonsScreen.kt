@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeNur.R
 import com.design.composeNur.components.checkbox.NurCheckbox
+import com.design.composeNur.components.common.carousel.CarouselItem
+import com.design.composeNur.components.common.carousel.NurImageCarousel
 import com.design.composeNur.components.common.nurAgreement.DisplayMode
 import com.design.composeNur.components.common.nurAgreement.NurAgreementItem
 import com.design.composeNur.components.common.nurMaterialDesignSlider.NurMaterialDesignSlider
@@ -165,6 +168,28 @@ fun CommonsScreen() {
         ) {
             isSecondSwitchChecked = it
         }
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "ImageCarousel",
+            style = NurTextStyleBuilder.H8.Primary.Regular
+        )
+        NurImageCarousel(
+            modifier = Modifier
+                .height(210.dp)
+                .padding(16.dp),
+            items = listOf(
+                CarouselItem(
+                    imageDrawable = R.drawable.cover,
+                    item = R.drawable.cover
+                ), CarouselItem(
+                    imageDrawable = com.design.composenur.R.drawable.ic_cat,
+                    item = com.design.composenur.R.drawable.ic_cat
+                ), CarouselItem(
+                    imageDrawable = com.design.composenur.R.drawable.test_image,
+                    item = com.design.composenur.R.drawable.test_image
+                )
+            )
+        )
     }
 }
 
