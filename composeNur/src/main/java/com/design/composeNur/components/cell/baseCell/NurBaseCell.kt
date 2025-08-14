@@ -30,17 +30,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeNur.components.cell.model.CellCornerMode
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
 import com.design.composenur.R
 
 /**
- * TODO (add shimmer effect)
+ *
  * @param [title] accept [String] and showing on the start in cell
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [isChevronVisible] u can set visibility state of chevron which will show on the end in cell
  * @param [isDividerVisible] u can set visibility state of divider which will show on the bottom in cell
  * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
  * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [isShimmering] if true, the cell will show a shimmer effect instead of content.
  * @param [params] cell visual transformation params and paddings
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample NurBaseCellParams.Default
@@ -55,6 +57,7 @@ fun NurBaseCell(
     isDividerVisible: Boolean = false,
     startIcon: Painter? = null,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    isShimmering: Boolean = false,
     params: NurBaseCellParams = NurBaseCellParams.Default,
     onClick: (() -> Unit)? = null,
 ) {
@@ -80,17 +83,30 @@ fun NurBaseCell(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                Image(
+                ShimmerOrContent(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
                             vertical = params.iconSize.verticalPadding,
                             horizontal = params.iconSize.horizontalPadding
-                        )
-                        .size(params.iconSize.size),
-                    painter = startIcon,
-                    contentDescription = "Base cell start icon"
-                )
+                        ),
+                    isShimmering = isShimmering,
+                    shimmerWidth = params.iconSize.size,
+                    shimmerHeight = params.iconSize.size
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(
+                                vertical = params.iconSize.verticalPadding,
+                                horizontal = params.iconSize.horizontalPadding
+                            )
+                            .size(params.iconSize.size),
+                        painter = startIcon,
+                        contentDescription = "Base cell start icon"
+                    )
+                }
+
             }
 
             Box(
@@ -114,32 +130,48 @@ fun NurBaseCell(
                         }
                     )
 
-                    Text(
-                        text = title,
+                    ShimmerOrContent(
                         modifier = Modifier
-                            .wrapContentSize()
-                            .padding(
-                                adjustedTitlePadding.toPaddingValues()
-                            ),
-                        style = params.titleTextStyle,
-                        maxLines = params.textMaxLines,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                            .padding(adjustedTitlePadding.toPaddingValues()),
+                        isShimmering = isShimmering,
+                        shimmerWidth = 200.dp,
+                        shimmerHeight = 8.dp
+                    ) {
+                        Text(
+                            text = title,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(
+                                    adjustedTitlePadding.toPaddingValues()
+                                ),
+                            style = params.titleTextStyle,
+                            maxLines = params.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
                     val subTitlePadding = params.subtitlePadding.copy(
                         start = if (startIcon != null) 0.dp else params.subtitlePadding.start
                     )
 
                     if (subtitle.isNotBlank()) {
-                        Text(
-                            text = subtitle,
+                        ShimmerOrContent(
                             modifier = Modifier
-                                .wrapContentSize()
                                 .padding(subTitlePadding.toPaddingValues()),
-                            style = params.subTitleTextStyle,
-                            maxLines = params.textMaxLines,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                            isShimmering = isShimmering,
+                            shimmerWidth = 82.dp,
+                            shimmerHeight = 8.dp
+                        ) {
+                            Text(
+                                text = subtitle,
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(subTitlePadding.toPaddingValues()),
+                                style = params.subTitleTextStyle,
+                                maxLines = params.textMaxLines,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                 }
             }

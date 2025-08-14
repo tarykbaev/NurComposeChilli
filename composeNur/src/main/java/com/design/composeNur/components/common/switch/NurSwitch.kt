@@ -25,7 +25,7 @@ fun NurSwitch(
     modifier: Modifier = Modifier,
     checkedState: Boolean,
     paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
-    description: String = "Switch animation on items",
+    description: String = "",
     onValueChange: (Boolean) -> Unit,
 ) {
     Row(

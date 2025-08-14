@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeNur.components.cell.model.CellCornerMode
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
 import com.design.composenur.R
 
@@ -46,6 +47,7 @@ fun NurEndIconCell(
     startIcon: Painter? = null,
     isDividerVisible: Boolean = false,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    isShimmering: Boolean = false,
     params: NurEndIconCellParams = NurEndIconCellParams.Default,
     onEndIconClick: (() -> Unit)? = null,
     onStartIconClick: (() -> Unit)? = null,
@@ -72,24 +74,37 @@ fun NurEndIconCell(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                Image(
+                ShimmerOrContent(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
                             vertical = params.startIconSize.verticalPadding,
                             horizontal = params.startIconSize.horizontalPadding
                         )
-                        .size(params.startIconSize.size)
-                        .clickable(
-                            onClick = { if (onStartIconClick != null) onStartIconClick() else onClick?.invoke() },
-                            interactionSource = interactionSource,
-                            indication = ripple(
-                                color = NurTheme.Colors.СhiliRippleForegroundColor
+                        .size(params.startIconSize.size),
+                    isShimmering = isShimmering,
+                    shimmerWidth = params.startIconSize.size,
+                    shimmerHeight = params.endIconSize.size
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(
+                                vertical = params.startIconSize.verticalPadding,
+                                horizontal = params.startIconSize.horizontalPadding
                             )
-                        ),
-                    painter = startIcon,
-                    contentDescription = "Base cell start icon"
-                )
+                            .size(params.startIconSize.size)
+                            .clickable(
+                                onClick = { if (onStartIconClick != null) onStartIconClick() else onClick?.invoke() },
+                                interactionSource = interactionSource,
+                                indication = ripple(
+                                    color = NurTheme.Colors.СhiliRippleForegroundColor
+                                )
+                            ),
+                        painter = startIcon,
+                        contentDescription = "Base cell start icon"
+                    )
+                }
             }
 
             Box(
@@ -113,58 +128,87 @@ fun NurEndIconCell(
                         }
                     )
 
-                    Text(
-                        text = title,
+                    ShimmerOrContent(
                         modifier = Modifier
-                            .wrapContentSize()
-                            .padding(
-                                adjustedTitlePadding.toPaddingValues()
-                            ),
-                        style = params.titleTextStyle,
-                        maxLines = params.textMaxLines,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                            .padding(adjustedTitlePadding.toPaddingValues()),
+                        shimmerWidth = 200.dp,
+                        shimmerHeight = 8.dp,
+                        isShimmering = isShimmering
+                    ) {
+                        Text(
+                            text = title,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(
+                                    adjustedTitlePadding.toPaddingValues()
+                                ),
+                            style = params.titleTextStyle,
+                            maxLines = params.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
                     val subTitlePadding = params.subtitlePadding.copy(
                         start = if (startIcon != null) 0.dp else params.subtitlePadding.start
                     )
 
                     if (subtitle.isNotBlank()) {
-                        Text(
-                            text = subtitle,
+                        ShimmerOrContent(
                             modifier = Modifier
-                                .wrapContentSize()
                                 .padding(subTitlePadding.toPaddingValues()),
-                            style = params.subTitleTextStyle,
-                            maxLines = params.textMaxLines,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                            shimmerWidth = 82.dp,
+                            shimmerHeight = 8.dp,
+                            isShimmering = isShimmering
+                        ) {
+                            Text(
+                                text = subtitle,
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(subTitlePadding.toPaddingValues()),
+                                style = params.subTitleTextStyle,
+                                maxLines = params.textMaxLines,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                 }
             }
 
             if (endIcon != null) {
-                Image(
+                ShimmerOrContent(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
                             vertical = params.endIconSize.verticalPadding,
                             horizontal = params.endIconSize.horizontalPadding
                         )
-                        .size(params.endIconSize.size)
-                        .clickable(
-                            onClick = { if (onEndIconClick != null) onEndIconClick() else onClick?.invoke() },
-                            interactionSource = interactionSource,
-                            indication = ripple(
-                                color = NurTheme.Colors.СhiliRippleForegroundColor
+                        .size(params.endIconSize.size),
+                    shimmerWidth = params.endIconSize.size,
+                    shimmerHeight = params.endIconSize.size,
+                    isShimmering = isShimmering
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(
+                                vertical = params.endIconSize.verticalPadding,
+                                horizontal = params.endIconSize.horizontalPadding
                             )
-                        ),
-                    painter = endIcon,
-                    contentDescription = "end navigation icon",
-                    colorFilter = ColorFilter.tint(
-                        params.endIconTint, BlendMode.SrcIn
+                            .size(params.endIconSize.size)
+                            .clickable(
+                                onClick = { if (onEndIconClick != null) onEndIconClick() else onClick?.invoke() },
+                                interactionSource = interactionSource,
+                                indication = ripple(
+                                    color = NurTheme.Colors.СhiliRippleForegroundColor
+                                )
+                            ),
+                        painter = endIcon,
+                        contentDescription = "end navigation icon",
+                        colorFilter = ColorFilter.tint(
+                            params.endIconTint, BlendMode.SrcIn
+                        )
                     )
-                )
+                }
             }
         }
         if (isDividerVisible) {

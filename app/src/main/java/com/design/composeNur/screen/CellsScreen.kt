@@ -12,17 +12,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.design.composeNur.utils.showToast
-import com.design.composenur.R
 import com.design.composeNur.components.cell.NurAdditionalDoubleButtons
-import com.design.composeNur.components.cell.actionCell.NurActionCellParams
 import com.design.composeNur.components.cell.actionCell.NurActionCell
+import com.design.composeNur.components.cell.actionCell.NurActionCellParams
 import com.design.composeNur.components.cell.additionalText.AdditionalTextCell
 import com.design.composeNur.components.cell.additionalText.AdditionalTextCellParams
 import com.design.composeNur.components.cell.baseCell.NurBaseCell
@@ -32,14 +32,18 @@ import com.design.composeNur.components.cell.expandableCell.ExpandableCell
 import com.design.composeNur.components.cell.model.CellCornerMode
 import com.design.composeNur.components.cell.model.CellIconSize
 import com.design.composeNur.components.cell.toggle.ToggleCell
+import com.design.composeNur.components.common.switch.NurSwitch
 import com.design.composeNur.theme.NurTheme
 import com.design.composeNur.theme.textStyle.NurTextStyleBuilder
+import com.design.composeNur.utils.showToast
 import com.design.composeNur.utils.softLayerShadow
+import com.design.composenur.R
 
 @Composable
 fun CellsScreen() {
 
     val scrollState = rememberScrollState()
+    var isShimmering by remember { mutableStateOf(false) }
 
     Column(
         Modifier
@@ -48,17 +52,22 @@ fun CellsScreen() {
             .verticalScroll(scrollState)
     ) {
         Spacer(modifier = Modifier.size(32.dp))
-        RegularCellsGroup()
+        NurSwitch(
+            description = "Shimmer effect",
+            checkedState = isShimmering,
+        ) { isShimmering = it }
         Spacer(modifier = Modifier.size(32.dp))
-        SmallIconSizeGroup()
+        RegularCellsGroup(isShimmering)
         Spacer(modifier = Modifier.size(32.dp))
-        MediumIconSizeGroup()
+        SmallIconSizeGroup(isShimmering)
         Spacer(modifier = Modifier.size(32.dp))
-        LargeIconSizeGroup()
+        MediumIconSizeGroup(isShimmering)
         Spacer(modifier = Modifier.size(32.dp))
-        CustomIconSizeGroup()
+        LargeIconSizeGroup(isShimmering)
         Spacer(modifier = Modifier.size(32.dp))
-        MaxCharGroup()
+        CustomIconSizeGroup(isShimmering)
+        Spacer(modifier = Modifier.size(32.dp))
+        MaxCharGroup(isShimmering)
         Spacer(modifier = Modifier.size(32.dp))
         ToggleCellGroup()
         Spacer(modifier = Modifier.size(32.dp))
@@ -139,7 +148,8 @@ fun NurEndIconCellGroup() {
 }
 
 @Composable
-fun RegularCellsGroup() {
+fun RegularCellsGroup(isShimmering: Boolean = false) {
+
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -155,6 +165,7 @@ fun RegularCellsGroup() {
                 title = "Заголовок",
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Top
             )
 
@@ -162,6 +173,7 @@ fun RegularCellsGroup() {
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Bottom
             )
         }
@@ -177,6 +189,7 @@ fun RegularCellsGroup() {
                 title = "Заголовок",
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Top
             )
 
@@ -185,6 +198,7 @@ fun RegularCellsGroup() {
                 title = "Заголовок",
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Middle
             )
 
@@ -192,6 +206,7 @@ fun RegularCellsGroup() {
                 modifier = Modifier,
                 title = "Заголовок",
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Bottom
             )
         }
@@ -207,6 +222,7 @@ fun RegularCellsGroup() {
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Single
             )
         }
@@ -223,6 +239,7 @@ fun RegularCellsGroup() {
                 subtitle = "Подзаголовок",
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Top
             )
 
@@ -232,6 +249,7 @@ fun RegularCellsGroup() {
                 subtitle = "Подзаголовок",
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Middle
             )
 
@@ -240,6 +258,7 @@ fun RegularCellsGroup() {
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Bottom
             )
         }
@@ -247,7 +266,7 @@ fun RegularCellsGroup() {
 }
 
 @Composable
-fun SmallIconSizeGroup() {
+fun SmallIconSizeGroup(isShimmering: Boolean = false) {
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -269,6 +288,7 @@ fun SmallIconSizeGroup() {
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Single
             )
         }
@@ -284,6 +304,7 @@ fun SmallIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Top
             )
 
@@ -292,6 +313,7 @@ fun SmallIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Middle
             )
 
@@ -299,6 +321,7 @@ fun SmallIconSizeGroup() {
                 title = "Заголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Bottom
             )
         }
@@ -315,6 +338,7 @@ fun SmallIconSizeGroup() {
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Single
             )
         }
@@ -331,6 +355,7 @@ fun SmallIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Top
             )
 
@@ -340,6 +365,7 @@ fun SmallIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 isDividerVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Middle
             )
 
@@ -348,6 +374,7 @@ fun SmallIconSizeGroup() {
                 subtitle = "Подзаголовок",
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
+                isShimmering = isShimmering,
                 cellCornerMode = CellCornerMode.Bottom
             )
         }
@@ -355,7 +382,7 @@ fun SmallIconSizeGroup() {
 }
 
 @Composable
-fun MediumIconSizeGroup() {
+fun MediumIconSizeGroup(isShimmering: Boolean = false) {
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -378,6 +405,7 @@ fun MediumIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
         }
@@ -395,6 +423,7 @@ fun MediumIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
@@ -404,6 +433,7 @@ fun MediumIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
@@ -412,6 +442,7 @@ fun MediumIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
         }
@@ -430,6 +461,7 @@ fun MediumIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
         }
@@ -448,6 +480,7 @@ fun MediumIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
@@ -458,6 +491,7 @@ fun MediumIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
 
@@ -467,6 +501,7 @@ fun MediumIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
         }
@@ -474,7 +509,7 @@ fun MediumIconSizeGroup() {
 }
 
 @Composable
-fun LargeIconSizeGroup() {
+fun LargeIconSizeGroup(isShimmering: Boolean = false) {
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -498,6 +533,7 @@ fun LargeIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
         }
@@ -515,6 +551,7 @@ fun LargeIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
@@ -524,6 +561,7 @@ fun LargeIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
@@ -532,6 +570,7 @@ fun LargeIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
         }
@@ -550,6 +589,7 @@ fun LargeIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
         }
@@ -568,6 +608,7 @@ fun LargeIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Top,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
@@ -578,6 +619,7 @@ fun LargeIconSizeGroup() {
                 isChevronVisible = true,
                 isDividerVisible = true,
                 cellCornerMode = CellCornerMode.Middle,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
 
@@ -587,6 +629,7 @@ fun LargeIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Bottom,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.LARGE)
             )
         }
@@ -594,7 +637,7 @@ fun LargeIconSizeGroup() {
 }
 
 @Composable
-fun CustomIconSizeGroup() {
+fun CustomIconSizeGroup(isShimmering: Boolean = false) {
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -619,6 +662,7 @@ fun CustomIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_cat),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
             )
 
@@ -630,6 +674,7 @@ fun CustomIconSizeGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize(72.dp, 14.dp, 12.dp))
             )
         }
@@ -637,7 +682,7 @@ fun CustomIconSizeGroup() {
 }
 
 @Composable
-fun MaxCharGroup() {
+fun MaxCharGroup(isShimmering: Boolean = false) {
     Column(
         modifier = Modifier
             .wrapContentSize()
@@ -661,6 +706,7 @@ fun MaxCharGroup() {
                 startIcon = painterResource(R.drawable.ic_squircle_phone),
                 isChevronVisible = true,
                 cellCornerMode = CellCornerMode.Single,
+                isShimmering = isShimmering,
                 params = NurBaseCellParams.Default.copy(iconSize = CellIconSize.MEDIUM)
             )
         }

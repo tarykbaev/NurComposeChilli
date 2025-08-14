@@ -182,7 +182,7 @@ data class NurColors(
             NurSwitchBoxCheckedBackground = colorResource(id = R.color.magenta_1_alpha_40),
             NurSwitchBoxUncheckedBackground = colorResource(id = R.color.black_5),
             NurSwitchBoxCheckedToggleColor = colorResource(id = R.color.magenta_1),
-            NurSwitchBoxUncheckedToggleColor = colorResource(id = R.color.black_5),
+            NurSwitchBoxUncheckedToggleColor = colorResource(id = R.color.black_3),
             NurPrimaryButtonBackgroundActive = colorResource(id = R.color.green_1),
             NurPrimaryButtonBackgroundDisabled = colorResource(id = R.color.green_2),
             NurPrimaryButtonTextColorActive = colorResource(id = R.color.white_1),

@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,12 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.design.composeNur.components.shimmer.Shimmer
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
 import com.design.composenur.R
 
@@ -49,7 +54,7 @@ import com.design.composenur.R
 @Composable
 fun CardCell(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int? = null,
+    icon: Painter? = null,
     title: String,
     subtitle: String = String(),
     value: String? = null,
@@ -57,6 +62,7 @@ fun CardCell(
     isMain: Boolean = false,
     isUniqueStated: Boolean = false,
     isSurfaceClickable: Boolean = true,
+    isShimmering: Boolean = false,
     cardCellParams: CardCellParams = CardCellParams.Default,
     onClickListener: () -> Unit = {}
 ) {
@@ -87,10 +93,18 @@ fun CardCell(
                     )
             ) {
                 if (icon != null) {
-                    Image(
-                        painter = painterResource(id = icon),
-                        contentDescription = "Card Cell Icon"
-                    )
+                    ShimmerOrContent(
+                        shimmerWidth = cardCellParams.iconWidth,
+                        shimmerHeight = cardCellParams.iconHeight,
+                        isShimmering = isShimmering
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            painter = icon,
+                            contentDescription = "Card Cell Icon"
+                        )
+                    }
                 }
                 if (isBlocked) {
                     Image(
@@ -130,11 +144,17 @@ fun CardCell(
                                 .toPaddingValues()
                         )
                 ) {
-                    Text(
-                        text = title,
-                        maxLines = cardCellParams.titleMaxLines,
-                        style = cardCellParams.titleTextStyle,
-                    )
+                    ShimmerOrContent(
+                        shimmerWidth = 200.dp,
+                        shimmerHeight = 8.dp,
+                        isShimmering = isShimmering
+                    ) {
+                        Text(
+                            text = title,
+                            maxLines = cardCellParams.titleMaxLines,
+                            style = cardCellParams.titleTextStyle,
+                        )
+                    }
 
                     if (isMain) {
                         Image(
@@ -154,16 +174,23 @@ fun CardCell(
                         isUniqueStated -> NurTheme.Colors.NurCardErrorTextColor
                         else -> NurTheme.Colors.NurSecondaryTextColor
                     }
-
-                    Text(
-                        text = subtitle,
+                    ShimmerOrContent(
                         modifier = Modifier
-                            .wrapContentSize()
                             .padding(cardCellParams.subtitlePadding.toPaddingValues()),
-                        maxLines = cardCellParams.subtitleMaxLines,
-                        color = textColor,
-                        style = cardCellParams.subtitleTextStyle
-                    )
+                        shimmerWidth = 82.dp,
+                        shimmerHeight = 8.dp,
+                        isShimmering = isShimmering
+                    ) {
+                        Text(
+                            text = subtitle,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(cardCellParams.subtitlePadding.toPaddingValues()),
+                            maxLines = cardCellParams.subtitleMaxLines,
+                            color = textColor,
+                            style = cardCellParams.subtitleTextStyle
+                        )
+                    }
                 }
             }
             if (value != null) {
@@ -172,16 +199,25 @@ fun CardCell(
                     else -> NurTheme.Colors.NurSecondaryTextColor
                 }
 
-                Text(
+                ShimmerOrContent(
                     modifier = Modifier
-                        .alpha(alpha)
                         .padding(cardCellParams.valuePadding.toPaddingValues()),
-                    text = value,
-                    textAlign = TextAlign.End,
-                    color = textColor,
-                    maxLines = cardCellParams.valueMaxLines,
-                    style = cardCellParams.valueTextStyle
-                )
+                    isShimmering = isShimmering,
+                    shimmerWidth = 64.dp,
+                    shimmerHeight = 8.dp,
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .alpha(alpha)
+                            .padding(cardCellParams.valuePadding.toPaddingValues()),
+                        text = value,
+                        textAlign = TextAlign.End,
+                        color = textColor,
+                        maxLines = cardCellParams.valueMaxLines,
+                        style = cardCellParams.valueTextStyle
+                    )
+                }
+
             }
 
             if (cardCellParams.isChevronVisible) {
@@ -202,7 +238,7 @@ fun CardCell(
 fun CardCellViewPreviewLight() {
     NurTheme {
         CardCell(
-            icon = R.drawable.ic_deposit,
+            icon = painterResource(R.drawable.ic_deposit),
             cardCellParams = CardCellParams.Default.copy(
                 iconWidth = dimensionResource(id = R.dimen.view_32dp),
                 iconHeight = dimensionResource(id = R.dimen.view_32dp)
@@ -219,7 +255,7 @@ fun CardCellViewPreviewLight() {
 fun CardCellViewPreview() {
     NurTheme {
         CardCell(
-            icon = R.drawable.nur_ic_card_default,
+            icon = painterResource(R.drawable.nur_ic_card_default),
             title = "Title",
             subtitle = "Subtitle",
             isBlocked = true,
