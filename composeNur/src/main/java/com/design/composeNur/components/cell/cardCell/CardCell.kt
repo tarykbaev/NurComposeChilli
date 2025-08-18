@@ -46,6 +46,7 @@ import com.design.composenur.R
  * @param [isMain] adds a star icon next to [title]
  * @param [isUniqueStated] sets specific error color to [subtitle] and [value] text
  * @param [isSurfaceClickable] sets clicking animation on surface enabled/disabled
+ * @param [isShimmering] if true, the cell will show a shimmer effect instead of content
  * @param [onClickListener] called when surface of cell is clicked
  * @param [cardCellParams] cell's visual transformation params and paddings
  * @sample CardCellParams.Default

@@ -865,7 +865,7 @@ fun AdditionalTextCellGroup() {
                 title = "Заголовок",
                 additionalTitle = "Additional icon",
                 isChevronVisible = true,
-                startIcon = R.drawable.nur_ic_airpods,
+                startIcon = painterResource(R.drawable.nur_ic_airpods),
                 cellCornerMode = CellCornerMode.Single,
                 params = AdditionalTextCellParams.Default.copy(
                     nurBaseCellParams = NurBaseCellParams.Default.copy(
@@ -903,7 +903,7 @@ fun AdditionalTextCellGroup() {
                 subtitle = "1447",
                 additionalTitle = "Value",
                 additionalSubTitle = "1337",
-                startIcon = R.drawable.ic_bonus_new,
+                startIcon = painterResource(R.drawable.ic_bonus_new),
                 cellCornerMode = CellCornerMode.Single
             )
         }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,18 +17,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
-import com.design.composeNur.theme.textStyle.NurTextStyle
 import com.design.composenur.R
 
 /**
@@ -41,7 +40,6 @@ import com.design.composenur.R
  * @param [endIcon] Optional drawable resource ID for the icon displayed at the end of the card.
  * @param [cardParams] The colors used for the card, provided by the [AccentCardParams].
  * @param [onClick] Callback triggered when the card is clicked.
- *
  * @sample AccentCardPreview
  */
 
@@ -52,6 +50,7 @@ fun AccentCard(
     description: String,
     startIcon: Painter? = null,
     endIcon: Painter? = null,
+    isShimmering: Boolean = false,
     cardParams: AccentCardParams,
     onClick: () -> Unit
 ) {
@@ -69,35 +68,76 @@ fun AccentCard(
                 MutableInteractionSource()
             }, indication = LocalIndication.current, onClick = onClick)
             .fillMaxWidth()
-            .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
-            .padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
+            .padding(
+                vertical = dimensionResource(id = R.dimen.padding_8dp),
+                horizontal = dimensionResource(id = R.dimen.padding_16dp)
+            ),
     ) {
-        Column(modifier = Modifier.weight(3f)) {
-            Row {
-                if (startIcon != null)
-                    Image(
-                        modifier = Modifier.padding(end = dimensionResource(id = R.dimen.padding_4dp)),
-                        painter = startIcon,
-                        contentDescription = null
+        Box(
+            modifier = Modifier
+                .weight(3f)
+                .align(Alignment.CenterVertically)
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    startIcon?.let {
+                        ShimmerOrContent(
+                            modifier = Modifier
+                                .padding(end = dimensionResource(id = R.dimen.padding_4dp)),
+                            shimmerWidth = cardParams.startIconSize,
+                            shimmerHeight = cardParams.startIconSize,
+                            isShimmering = isShimmering
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .size(cardParams.startIconSize)
+                                    .padding(end = dimensionResource(id = R.dimen.padding_4dp)),
+                                painter = it,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                    ShimmerOrContent(
+                        shimmerWidth = dimensionResource(R.dimen.view_200dp),
+                        shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                        isShimmering = isShimmering
+                    ) {
+                        Text(
+                            text = title,
+                            style = cardParams.titleStyle
+                        )
+                    }
+                }
+                ShimmerOrContent(
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_8dp)),
+                    shimmerWidth = dimensionResource(R.dimen.view_82dp),
+                    shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                    isShimmering = isShimmering
+                ) {
+                    Text(
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_8dp)),
+                        text = description,
+                        style = cardParams.descriptionStyle
                     )
-                Text(
-                    text = title,
-                    style = cardParams.titleStyle
-                )
+                }
             }
-            Text(
-                modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.padding_8dp)),
-                text = description,
-                style = cardParams.descriptionStyle
-            )
         }
         Spacer(modifier = Modifier.weight(1f))
-        if (endIcon != null)
-            Image(
-                modifier = Modifier.size(dimensionResource(id = R.dimen.view_56dp)),
-                painter = endIcon,
-                contentDescription = null
-            )
+        endIcon?.let {
+            ShimmerOrContent(
+                shimmerWidth = dimensionResource(R.dimen.view_56dp),
+                shimmerHeight = dimensionResource(R.dimen.view_56dp),
+                isShimmering = isShimmering
+            ) {
+                Image(
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.view_56dp)),
+                    painter = it,
+                    contentDescription = null
+                )
+            }
+        }
     }
 }
 
@@ -134,56 +174,5 @@ fun AccentCardPreview() {
 
             }
         }
-    }
-}
-
-data class AccentCardParams(
-    val containerColor: Color,
-    val titleStyle: TextStyle,
-    val descriptionStyle: TextStyle,
-) {
-    companion object {
-        val accentCardFucsia
-            @Composable get() = AccentCardParams(
-                containerColor = colorResource(id = R.color.folly_1),
-                titleStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH7,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.white_1)
-                ),
-                descriptionStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH8,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.white_1)
-                )
-            )
-        val accentCardBlack
-            @Composable get() = AccentCardParams(
-                containerColor = colorResource(id = R.color.black_4),
-                titleStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH7,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.white_1)
-                ),
-                descriptionStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH8,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.white_1)
-                )
-            )
-        val accentCardWhite
-            @Composable get() = AccentCardParams(
-                containerColor = colorResource(id = R.color.white_1),
-                titleStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH7,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.black_1)
-                ),
-                descriptionStyle = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH8,
-                    font = NurTheme.Attribute.NurRegularTextFont,
-                    color = colorResource(id = R.color.black_1)
-                )
-            )
     }
 }

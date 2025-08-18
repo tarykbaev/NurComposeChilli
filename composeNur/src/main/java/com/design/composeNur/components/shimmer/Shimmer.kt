@@ -62,7 +62,7 @@ fun Shimmer(
 @Composable
 fun ShimmerOrContent(
     modifier: Modifier = Modifier,
-    shimmerHeight: Dp = 16.dp,
+    shimmerHeight: Dp = 8.dp,
     shimmerWidth: Dp = 200.dp,
     shimmerRoundRadius: Dp = NurTheme.Attribute.NurCellCornerRadius,
     isShimmering: Boolean = false,

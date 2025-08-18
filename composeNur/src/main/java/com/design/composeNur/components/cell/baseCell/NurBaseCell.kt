@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
@@ -134,8 +135,8 @@ fun NurBaseCell(
                         modifier = Modifier
                             .padding(adjustedTitlePadding.toPaddingValues()),
                         isShimmering = isShimmering,
-                        shimmerWidth = 200.dp,
-                        shimmerHeight = 8.dp
+                        shimmerWidth = dimensionResource(R.dimen.view_200dp),
+                        shimmerHeight = dimensionResource(R.dimen.view_8dp)
                     ) {
                         Text(
                             text = title,
@@ -157,10 +158,11 @@ fun NurBaseCell(
                     if (subtitle.isNotBlank()) {
                         ShimmerOrContent(
                             modifier = Modifier
+                                .padding(top = dimensionResource(R.dimen.padding_4dp))
                                 .padding(subTitlePadding.toPaddingValues()),
                             isShimmering = isShimmering,
-                            shimmerWidth = 82.dp,
-                            shimmerHeight = 8.dp
+                            shimmerWidth = dimensionResource(R.dimen.view_82dp),
+                            shimmerHeight = dimensionResource(R.dimen.view_8dp)
                         ) {
                             Text(
                                 text = subtitle,

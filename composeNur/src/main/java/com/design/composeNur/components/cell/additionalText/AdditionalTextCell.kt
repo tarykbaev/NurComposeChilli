@@ -38,7 +38,6 @@ import com.design.composeNur.utils.softLayerShadow
 import com.design.composenur.R
 
 /**
- * TODO (add shimmer effect)
  * @param [title] accept [String] and showing on the start in cell
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [additionalTitle] accept [String] and showing below [subtitle] in cell
@@ -48,6 +47,7 @@ import com.design.composenur.R
  * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
  * @param [params] cell visual transformation params and paddings
  * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [isShimmering] if true, the cell will show a shimmer effect instead of content.
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample AdditionalTextCellParams.Default
  */
@@ -143,16 +143,14 @@ fun AdditionalTextCell(
                         ShimmerOrContent(
                             modifier = Modifier
                                 .padding(adjustedTitlePadding.toPaddingValues()),
-                            shimmerWidth = 120.dp,
-                            shimmerHeight = 8.dp,
+                            shimmerWidth = dimensionResource(R.dimen.view_120dp),
+                            shimmerHeight = dimensionResource(R.dimen.view_8dp),
                             isShimmering = isShimmering
                         ) {
                             Text(
                                 modifier = Modifier
                                     .wrapContentSize()
-                                    .padding(
-                                        adjustedTitlePadding.toPaddingValues()
-                                    ),
+                                    .padding(adjustedTitlePadding.toPaddingValues()),
                                 text = title,
                                 style = baseCellParams.titleTextStyle,
                                 maxLines = baseCellParams.textMaxLines,
@@ -168,8 +166,8 @@ fun AdditionalTextCell(
                             ShimmerOrContent(
                                 modifier = Modifier
                                     .padding(subTitlePadding.toPaddingValues()),
-                                shimmerWidth = 62.dp,
-                                shimmerHeight = 8.dp,
+                                shimmerWidth = dimensionResource(R.dimen.view_60dp),
+                                shimmerHeight = dimensionResource(R.dimen.view_8dp),
                                 isShimmering = isShimmering
                             ) {
                                 Text(
@@ -201,8 +199,8 @@ fun AdditionalTextCell(
                         ShimmerOrContent(
                             modifier = Modifier
                                 .padding(adjustedAdditionalTitlePadding.toPaddingValues()),
-                            shimmerWidth = 120.dp,
-                            shimmerHeight = 8.dp,
+                            shimmerWidth = dimensionResource(R.dimen.view_120dp),
+                            shimmerHeight = dimensionResource(R.dimen.view_8dp),
                             isShimmering = isShimmering
                         ) {
                             Text(
@@ -227,8 +225,8 @@ fun AdditionalTextCell(
                             ShimmerOrContent(
                                 modifier = Modifier
                                     .padding(additionalSubTitlePadding.toPaddingValues()),
-                                shimmerWidth = 62.dp,
-                                shimmerHeight = 8.dp,
+                                shimmerWidth = dimensionResource(R.dimen.view_60dp),
+                                shimmerHeight = dimensionResource(R.dimen.view_8dp),
                                 isShimmering = isShimmering
                             ) {
                                 Text(
@@ -283,6 +281,7 @@ fun AdditionalTextCell_Preview() {
                     .softLayerShadow(),
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
+                isShimmering = true,
                 additionalTitle = "Additional",
                 additionalSubTitle = "Additional Sub",
                 isChevronVisible = true,
