@@ -55,12 +55,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.minimumInteractiveComponentSize
-import androidx.compose.material.ripple
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -305,7 +303,6 @@ fun MaterialDesignSlider(
  * parts in different state. See [SliderDefaults.colors] to customize.
  */
 @Composable
-@ExperimentalMaterialApi
 fun RangeSlider(
     value: ClosedFloatingPointRange<Float>,
     onValueChange: (ClosedFloatingPointRange<Float>) -> Unit,
@@ -496,14 +493,14 @@ object SliderDefaultsM2 {
      */
     @Composable
     fun colors(
-        thumbColor: Color = MaterialTheme.colors.primary,
-        disabledThumbColor: Color = MaterialTheme.colors.onSurface
-            .copy(alpha = ContentAlpha.disabled)
-            .compositeOver(MaterialTheme.colors.surface),
-        activeTrackColor: Color = MaterialTheme.colors.primary,
+        thumbColor: Color = MaterialTheme.colorScheme.primary,
+        disabledThumbColor: Color = MaterialTheme.colorScheme.onSurface
+            .copy(alpha = 0.38f)
+            .compositeOver(MaterialTheme.colorScheme.surface),
+        activeTrackColor: Color = MaterialTheme.colorScheme.primary,
         inactiveTrackColor: Color = activeTrackColor.copy(alpha = InactiveTrackAlpha),
         disabledActiveTrackColor: Color =
-            MaterialTheme.colors.onSurface.copy(alpha = DisabledActiveTrackAlpha),
+            MaterialTheme.colorScheme.onSurface.copy(alpha = DisabledActiveTrackAlpha),
         disabledInactiveTrackColor: Color =
             disabledActiveTrackColor.copy(alpha = DisabledInactiveTrackAlpha),
         activeTickColor: Color = contentColorFor(activeTrackColor).copy(alpha = TickAlpha),

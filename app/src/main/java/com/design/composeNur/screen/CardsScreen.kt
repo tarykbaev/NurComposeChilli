@@ -15,11 +15,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.design.composenur.R
 import com.design.composeNur.components.card.AccentCard
 import com.design.composeNur.components.card.AccentCardParams
 import com.design.composeNur.components.card.CardContainer
@@ -32,6 +32,7 @@ import com.design.composeNur.components.card.base.NurBaseCard
 import com.design.composeNur.theme.NurTheme
 import com.design.composeNur.theme.textStyle.NurTextStyle
 import com.design.composeNur.utils.softLayerShadow
+import com.design.composenur.R
 
 @Composable
 fun CardsScreen() {
@@ -92,16 +93,17 @@ fun CardsScreen() {
                                 .softLayerShadow()
                                 .padding(vertical = 16.dp),
                             title = "Переводы",
-                            painter = painterResource(id = R.drawable.ic_payment),
-                            categoryCardParams = CategoryCardParams.LeftAligned
+                            icon = painterResource(id = R.drawable.ic_payment)
                         ) {}
                         CategoryCard(
                             modifier = Modifier
                                 .softLayerShadow()
                                 .padding(vertical = 16.dp),
                             title = "Centered",
-                            painter = painterResource(id = R.drawable.ic_payment),
-                            categoryCardParams = CategoryCardParams.Centered
+                            icon = painterResource(id = R.drawable.ic_payment),
+                            categoryCardParams = CategoryCardParams.Default.copy(
+                                iconAlignment = Alignment.CenterHorizontally
+                            )
                         ) {}
                     }
                 }
@@ -121,13 +123,14 @@ fun CardsScreen() {
                                 .softLayerShadow()
                                 .padding(vertical = 16.dp),
                             title = "Кофейня.\nБонусная.",
-                            painter = painterResource(id = R.drawable.ic_payment),
-                            categoryCardParams = CategoryCardParams.LeftAligned8Dp,
-                            rootPadding = PaddingValues(
-                                top = 8.dp,
-                                bottom = 8.dp,
-                                end = 64.dp,
-                                start = 8.dp
+                            icon = painterResource(id = R.drawable.ic_payment),
+                            categoryCardParams = CategoryCardParams.Default.copy(
+                                containerPadding = PaddingValues(
+                                    top = 8.dp,
+                                    bottom = 8.dp,
+                                    end = 64.dp,
+                                    start = 8.dp
+                                )
                             )
                         ) {}
                         CategoryCard(
@@ -135,13 +138,14 @@ fun CardsScreen() {
                                 .softLayerShadow()
                                 .padding(vertical = 16.dp),
                             title = "Народный\nБонусная",
-                            painter = painterResource(id = R.drawable.ic_payment),
-                            categoryCardParams = CategoryCardParams.LeftAligned8Dp,
-                            rootPadding = PaddingValues(
-                                top = 8.dp,
-                                bottom = 8.dp,
-                                end = 64.dp,
-                                start = 8.dp
+                            icon = painterResource(id = R.drawable.ic_payment),
+                            categoryCardParams = CategoryCardParams.Default.copy(
+                                containerPadding = PaddingValues(
+                                    top = 8.dp,
+                                    bottom = 8.dp,
+                                    end = 64.dp,
+                                    start = 8.dp
+                                )
                             )
                         ) {}
                     }

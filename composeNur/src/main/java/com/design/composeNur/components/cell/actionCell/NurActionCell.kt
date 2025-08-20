@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ripple
+import androidx.compose.material3.ripple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.design.composeNur.components.buttons.baseButton.NurButton
 import com.design.composeNur.components.buttons.baseButton.NurButtonStyle
 import com.design.composeNur.components.cell.model.CellCornerMode
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
 import com.design.composenur.R
 
@@ -45,6 +46,7 @@ fun NurActionCell(
     params: NurActionCellParams = NurActionCellParams.Default,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
     isActionEnabled: Boolean = true,
+    isShimmering: Boolean = false,
     onActionClick: (() -> Unit)? = null,
     onClick: () -> Unit = {}
 ) {
@@ -70,17 +72,29 @@ fun NurActionCell(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                Image(
+                ShimmerOrContent(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
                             vertical = params.startIconSize.verticalPadding,
                             horizontal = params.startIconSize.horizontalPadding
-                        )
-                        .size(params.startIconSize.size),
-                    painter = startIcon,
-                    contentDescription = "action cell start icon"
-                )
+                        ),
+                    shimmerHeight = params.startIconSize.size,
+                    shimmerWidth = params.startIconSize.size,
+                    isShimmering = isShimmering
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(
+                                vertical = params.startIconSize.verticalPadding,
+                                horizontal = params.startIconSize.horizontalPadding
+                            )
+                            .size(params.startIconSize.size),
+                        painter = startIcon,
+                        contentDescription = "action cell start icon"
+                    )
+                }
             }
 
             Box(
@@ -94,14 +108,20 @@ fun NurActionCell(
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        text = title,
-                        modifier = Modifier
-                            .wrapContentSize(),
-                        style = params.titleStyle,
-                        maxLines = params.textMaxLines,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    ShimmerOrContent(
+                        shimmerWidth = 160.dp,
+                        shimmerHeight = 8.dp,
+                        isShimmering = isShimmering
+                    ) {
+                        Text(
+                            text = title,
+                            modifier = Modifier
+                                .wrapContentSize(),
+                            style = params.titleStyle,
+                            maxLines = params.textMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
 

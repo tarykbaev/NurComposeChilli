@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ripple
+import androidx.compose.material3.ripple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,12 +32,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeNur.components.cell.model.CellCornerMode
+import com.design.composeNur.components.shimmer.ShimmerOrContent
 import com.design.composeNur.theme.NurTheme
 import com.design.composeNur.utils.softLayerShadow
 import com.design.composenur.R
 
 /**
- * TODO (add shimmer effect)
  * @param [title] accept [String] and showing on the start in cell
  * @param [subtitle] accept [String] and showing on the start and below [title] in cell
  * @param [additionalTitle] accept [String] and showing below [subtitle] in cell
@@ -46,6 +47,7 @@ import com.design.composenur.R
  * @param [startIcon] accept [DrawableRes] and set [Image] on the start in cell
  * @param [params] cell visual transformation params and paddings
  * @param [cellCornerMode] defines the corner shape of the cell, with options for rounded corners or straight edges.
+ * @param [isShimmering] if true, the cell will show a shimmer effect instead of content.
  * @param [onClick] optional click event handler that gets triggered when the cell is clicked.
  * @sample AdditionalTextCellParams.Default
  */
@@ -59,8 +61,9 @@ fun AdditionalTextCell(
     additionalSubTitle: String = String(),
     isChevronVisible: Boolean = false,
     isDividerVisible: Boolean = false,
-    @DrawableRes startIcon: Int? = null,
+    startIcon: Painter? = null,
     cellCornerMode: CellCornerMode = CellCornerMode.Single,
+    isShimmering: Boolean = false,
     params: AdditionalTextCellParams = AdditionalTextCellParams.Default,
     onClick: (() -> Unit)? = null
 ) {
@@ -87,17 +90,29 @@ fun AdditionalTextCell(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (startIcon != null) {
-                Image(
+                ShimmerOrContent(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
                             vertical = baseCellParams.iconSize.verticalPadding,
                             horizontal = baseCellParams.iconSize.horizontalPadding
-                        )
-                        .size(baseCellParams.iconSize.size),
-                    painter = painterResource(id = startIcon),
-                    contentDescription = "Base cell start icon"
-                )
+                        ),
+                    shimmerHeight = baseCellParams.iconSize.size,
+                    shimmerWidth = baseCellParams.iconSize.size,
+                    isShimmering = isShimmering
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(
+                                vertical = baseCellParams.iconSize.verticalPadding,
+                                horizontal = baseCellParams.iconSize.horizontalPadding
+                            )
+                            .size(baseCellParams.iconSize.size),
+                        painter = startIcon,
+                        contentDescription = "Base cell start icon"
+                    )
+                }
             }
 
             Box(
@@ -125,32 +140,46 @@ fun AdditionalTextCell(
                             }
                         )
 
-                        Text(
+                        ShimmerOrContent(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .padding(
-                                    adjustedTitlePadding.toPaddingValues()
-                                ),
-                            text = title,
-                            style = baseCellParams.titleTextStyle,
-                            maxLines = baseCellParams.textMaxLines,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                                .padding(adjustedTitlePadding.toPaddingValues()),
+                            shimmerWidth = dimensionResource(R.dimen.view_120dp),
+                            shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                            isShimmering = isShimmering
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(adjustedTitlePadding.toPaddingValues()),
+                                text = title,
+                                style = baseCellParams.titleTextStyle,
+                                maxLines = baseCellParams.textMaxLines,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
 
                         val subTitlePadding = baseCellParams.subtitlePadding.copy(
                             start = if (startIcon != null) 0.dp else baseCellParams.subtitlePadding.start
                         )
 
                         if (subtitle.isNotBlank()) {
-                            Text(
+                            ShimmerOrContent(
                                 modifier = Modifier
-                                    .wrapContentSize()
                                     .padding(subTitlePadding.toPaddingValues()),
-                                text = subtitle,
-                                style = baseCellParams.subTitleTextStyle,
-                                maxLines = baseCellParams.textMaxLines,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                                shimmerWidth = dimensionResource(R.dimen.view_60dp),
+                                shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                                isShimmering = isShimmering
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .wrapContentSize()
+                                        .padding(subTitlePadding.toPaddingValues()),
+                                    text = subtitle,
+                                    style = baseCellParams.subTitleTextStyle,
+                                    maxLines = baseCellParams.textMaxLines,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
                     }
 
@@ -167,17 +196,25 @@ fun AdditionalTextCell(
                             else dimensionResource(R.dimen.padding_12dp)
                         )
 
-                        Text(
+                        ShimmerOrContent(
                             modifier = Modifier
-                                .align(Alignment.End)
-                                .wrapContentSize()
                                 .padding(adjustedAdditionalTitlePadding.toPaddingValues()),
-                            text = additionalTitle,
-                            style = params.additionalTitleStyle,
-                            maxLines = baseCellParams.textMaxLines,
-                            overflow = TextOverflow.Ellipsis,
-                            textAlign = TextAlign.End
-                        )
+                            shimmerWidth = dimensionResource(R.dimen.view_120dp),
+                            shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                            isShimmering = isShimmering
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.End)
+                                    .wrapContentSize()
+                                    .padding(adjustedAdditionalTitlePadding.toPaddingValues()),
+                                text = additionalTitle,
+                                style = params.additionalTitleStyle,
+                                maxLines = baseCellParams.textMaxLines,
+                                overflow = TextOverflow.Ellipsis,
+                                textAlign = TextAlign.End
+                            )
+                        }
 
                         if (additionalSubTitle.isNotBlank()) {
                             val additionalSubTitlePadding = params.additionalSubTitlePadding.copy(
@@ -185,18 +222,27 @@ fun AdditionalTextCell(
                                 else dimensionResource(R.dimen.padding_12dp)
                             )
 
-                            Text(
+                            ShimmerOrContent(
                                 modifier = Modifier
-                                    .align(Alignment.End)
-                                    .wrapContentSize()
-                                    .padding(
-                                        additionalSubTitlePadding.toPaddingValues()
-                                    ),
-                                text = additionalSubTitle,
-                                style = params.additionalSubTitleStyle,
-                                maxLines = baseCellParams.textMaxLines,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                                    .padding(additionalSubTitlePadding.toPaddingValues()),
+                                shimmerWidth = dimensionResource(R.dimen.view_60dp),
+                                shimmerHeight = dimensionResource(R.dimen.view_8dp),
+                                isShimmering = isShimmering
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .align(Alignment.End)
+                                        .wrapContentSize()
+                                        .padding(
+                                            additionalSubTitlePadding.toPaddingValues()
+                                        ),
+                                    text = additionalSubTitle,
+                                    style = params.additionalSubTitleStyle,
+                                    maxLines = baseCellParams.textMaxLines,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+
                         }
                     }
                 }
@@ -235,6 +281,7 @@ fun AdditionalTextCell_Preview() {
                     .softLayerShadow(),
                 title = "Заголовок",
                 subtitle = "Подзаголовок",
+                isShimmering = true,
                 additionalTitle = "Additional",
                 additionalSubTitle = "Additional Sub",
                 isChevronVisible = true,

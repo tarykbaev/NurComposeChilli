@@ -4,47 +4,35 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.design.composeNur.components.cell.model.CellIconSize
 import com.design.composeNur.theme.NurTheme
 import com.design.composeNur.theme.textStyle.NurTextStyle
+import com.design.composenur.R
 
 @Stable
 data class CategoryCardParams(
-    val style: TextStyle,
-    val alignment: Alignment.Horizontal,
-    val iconPaddings: PaddingValues
+    val textStyle: TextStyle,
+    val containerPadding: PaddingValues,
+    val titlePadding: PaddingValues,
+    val iconAlignment: Alignment.Horizontal,
+    val iconSize: Dp
 ) {
     companion object {
-        val LeftAligned
+        val Default
             @Composable get() = CategoryCardParams(
-                style = NurTextStyle.get(
+                textStyle = NurTextStyle.get(
                     textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH7,
                     color = NurTheme.Colors.NurPrimaryTextColor,
                     font = NurTheme.Attribute.NurBoldTextFont
                 ),
-                alignment = Alignment.Start,
-                iconPaddings = PaddingValues(top = 12.dp)
-            )
-        val Centered
-            @Composable get() = CategoryCardParams(
-                style = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH7,
-                    color = NurTheme.Colors.NurPrimaryTextColor,
-                    font = NurTheme.Attribute.NurBoldTextFont
-                ),
-                alignment = Alignment.CenterHorizontally,
-                iconPaddings = PaddingValues(top = 12.dp)
-            )
-        val LeftAligned8Dp
-            @Composable get() = CategoryCardParams(
-                style = NurTextStyle.get(
-                    textSize = NurTheme.Attribute.NurTextDimensions.TextSizeH8,
-                    color = NurTheme.Colors.NurPrimaryTextColor,
-                    font = NurTheme.Attribute.NurRegularTextFont
-                ),
-                alignment = Alignment.Start,
-                iconPaddings = PaddingValues(top = 8.dp)
+                iconAlignment = Alignment.Start,
+                containerPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                titlePadding = PaddingValues(top = 12.dp),
+                iconSize = dimensionResource(R.dimen.view_24dp)
             )
     }
 }

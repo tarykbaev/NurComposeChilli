@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.design.composeNur.theme.NurTheme
 import com.design.composeNur.theme.textStyle.NurTextStyle
@@ -58,5 +59,17 @@ fun RadioButtonCell(
             selected = !selected
             onItemClick()
         })
+    }
+}
+
+@Preview
+@Composable
+fun RadioButtonCellPreview() {
+    NurTheme {
+        RadioButtonCell(
+            title = "Radio Button Title",
+            subtitle = "This is a subtitle for the radio button cell",
+            onItemClick = {}
+        )
     }
 }
